@@ -39,6 +39,7 @@ class _LoginFormState extends State<LoginForm> {
             MyTextFormField(
               labelText: "Email",
               hintText: 'Email',
+              intialLabel: '123@gmail.com',
               isEmail: true,
               validator: (String value) {
                 if (!validator.isEmail(value)) {
@@ -53,6 +54,8 @@ class _LoginFormState extends State<LoginForm> {
             MyTextFormField(
               labelText: "Password",
               hintText: 'Password',
+              intialLabel: '123456789',
+
               suffixIcon: IconButton(
                 icon: Icon(
                   // Based on passwordVisible state choose the icon

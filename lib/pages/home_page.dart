@@ -3,7 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/global.dart';
 import 'package:provider/provider.dart';
+import 'package:shoppingapp/modal/category.dart';
+import 'package:shoppingapp/modal/productmodel.dart';
 import 'package:shoppingapp/pages/product_detail.dart';
+import 'package:shoppingapp/service/categoryservice.dart';
+import 'package:shoppingapp/service/productdervice.dart';
 import 'package:shoppingapp/utils/dummy_data/discountImages.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
@@ -21,7 +25,24 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _carouselCurrentPage = 0;
+   List<Category> maincat;
+  Future<List<ProductModel>>productDiscount,productNew,moreSale,productview,product_low_priced;
+  @override
+  void initState() {
+    CategoryService().getMainCategory().then((value) {
+      setState(() {
+        maincat=value;
+      });
+    });
+    productDiscount=ProductService.getAllProductsSale();
+    product_low_priced=ProductService.getLow_Priced_Products();
+    productNew=ProductService.getNewProducts();
+    moreSale=ProductService.getMoreSaleProducts();
+    productview=ProductService.getRecentviewProducts('1810,1800,1802');
 
+    super.initState();
+
+  }
   void showDemoActionSheet({BuildContext context, Widget child}) {
     showCupertinoModalPopup<String>(
         context: context,
@@ -45,7 +66,7 @@ class _HomePageState extends State<HomePage> {
 //                },
 //                child: Text(translate('button.change_language')),
 //              ),
-          CategoryListView(),
+          CategoryListView(maincat),
           InkWell(
             onTap: () {
               Nav.route(context, ProductDetailPage());
@@ -66,6 +87,7 @@ class _HomePageState extends State<HomePage> {
           ),
           SliderDot(current: _carouselCurrentPage),
           DiscountList(
+            product: productDiscount,
             themeColor: themeColor,
             productListTitleBar: ProductListTitleBar(
               themeColor: themeColor,
@@ -78,6 +100,7 @@ class _HomePageState extends State<HomePage> {
           ),
           ProductList(
             themeColor: themeColor,
+            product: productNew,
             productListTitleBar: ProductListTitleBar(
               themeColor: themeColor,
               title: "Products You May Like",
@@ -110,6 +133,7 @@ class _HomePageState extends State<HomePage> {
           ),
           ProductList(
             themeColor: themeColor,
+            product: moreSale,
             productListTitleBar: ProductListTitleBar(
               themeColor: themeColor,
               title: "Most Top Rated",
@@ -118,6 +142,7 @@ class _HomePageState extends State<HomePage> {
           ),
           DiscountList(
             themeColor: themeColor,
+            product: product_low_priced,
             productListTitleBar: ProductListTitleBar(
               themeColor: themeColor,
               title: "Low-Priced Products",
@@ -129,6 +154,7 @@ class _HomePageState extends State<HomePage> {
           ),
           ProductList(
             themeColor: themeColor,
+            product: productview,
             productListTitleBar: ProductListTitleBar(
               themeColor: themeColor,
               title: "Most recently looked",

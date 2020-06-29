@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -6,9 +7,11 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shoppingapp/modal/productmodel.dart';
 import 'package:shoppingapp/pages/filter_page.dart';
 import 'package:shoppingapp/pages/product_detail.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
+import 'package:shoppingapp/service/productdervice.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
@@ -20,7 +23,20 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   String deneme = "Dursun";
+  bool _isLoading = false;
 
+  List<ProductModel> filteredProduct = List();
+  List<ProductModel> productModel;
+  String oldest='order=asc&filter[meta_key]=total_sales&status=publish&';
+  String New='order=desc&filter[meta_key]=total_sales&status=publish&';
+  String LowToHigh='order=asc&orderby=price&filter[meta_key]=total_sales&status=publish&';
+  String HighToLow='order=desc&orderby=price&filter[meta_key]=total_sales&status=publish&';
+
+  @override
+  void initState() {
+    ubdateCategory(New);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ThemeNotifier>(context);
@@ -231,26 +247,8 @@ class _SearchPageState extends State<SearchPage> {
                   SizedBox(
                     height: 32,
                   ),
-                  GridView.count(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.7,
-                    children: <Widget>[
-                      productSearchItem(context, themeColor),
-                      productSearchItem(context, themeColor),
-                      productSearchItem(context, themeColor),
-                      productSearchItem(context, themeColor),
-                      productSearchItem(context, themeColor),
-                      productSearchItem(context, themeColor),
-                      productSearchItem(context, themeColor),
-                      productSearchItem(context, themeColor),
-                      productSearchItem(context, themeColor),
-                      productSearchItem(context, themeColor),
-                      productSearchItem(context, themeColor),
-                      productSearchItem(context, themeColor),
-                    ],
-                  )
+                  Container(height: 600,
+                      child: list(themeColor)),
                 ],
               ),
             ),
@@ -373,13 +371,38 @@ class _SearchPageState extends State<SearchPage> {
           );
         });
   }
-
-  Stack productSearchItem(BuildContext context, ThemeNotifier themeColor) {
+  Widget list(ThemeNotifier themeColor) {
+    return GridView.builder(
+      primary: false,
+      gridDelegate:
+      SliverGridDelegateWithFixedCrossAxisCount(
+        childAspectRatio: 0.7,
+        crossAxisCount: 2,
+      ),
+      itemCount: filteredProduct == null ? 0 : filteredProduct.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Padding(
+          padding: const EdgeInsets.all(4.0),
+          child:productSearchItem(context, themeColor ,index),
+        );
+      },
+    );
+  }
+  void ubdateCategory(String url) {
+    ProductService.getAllProducts(url).then((usersFromServer) {
+      setState(() {
+        productModel = usersFromServer;
+        filteredProduct = productModel;
+        _isLoading=false;
+      });
+    });
+  }
+  Stack productSearchItem(BuildContext context, ThemeNotifier themeColor,int index) {
     return Stack(
       children: <Widget>[
         InkWell(
           onTap: () {
-            Nav.route(context, ProductDetailPage());
+            Nav.route(context, ProductDetailPage(product: filteredProduct[index],));
           },
           child: Container(
             width: ScreenUtil.getWidth(context) / 2,
@@ -413,9 +436,12 @@ class _SearchPageState extends State<SearchPage> {
                                 topLeft: Radius.circular(8),
                                 topRight: Radius.circular(8),
                               ),
-                              child: Image.asset(
-                                "assets/images/category_image3.png",
+                              child: CachedNetworkImage(
                                 fit: BoxFit.cover,
+                                imageUrl: (filteredProduct[index].images!=[])?
+                                filteredProduct[index].images[0].src:
+                                'http://arabimagefoundation.com/images/defaultImage.png',
+                                errorWidget: (context, url, error) => Icon(Icons.error),
                               ),
                             )),
                         Positioned(
@@ -447,7 +473,7 @@ class _SearchPageState extends State<SearchPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         AutoSizeText(
-                          'T-shirt Rainbow UFO Mens',
+                          filteredProduct[index].name,
                           style: GoogleFonts.poppins(
                             fontSize: 12,
                             color: Color(0xFF5D6A78),
@@ -463,7 +489,7 @@ class _SearchPageState extends State<SearchPage> {
                           children: <Widget>[
                             RatingBar(
                               ignoreGestures: true,
-                              initialRating: 3,
+                              initialRating: double.parse(filteredProduct[index].averageRating),
                               itemSize: 14.0,
                               minRating: 1,
                               direction: Axis.horizontal,
@@ -481,7 +507,7 @@ class _SearchPageState extends State<SearchPage> {
                               width: 8,
                             ),
                             Text(
-                              "(395)",
+                              filteredProduct[index].averageRating,
                               style: GoogleFonts.poppins(
                                   fontSize: 9, fontWeight: FontWeight.w400),
                             )
@@ -497,14 +523,14 @@ class _SearchPageState extends State<SearchPage> {
                                   height: 4,
                                 ),
                                 Text(
-                                  "\$120",
+                                  filteredProduct[index].oldPrice,
                                   style: GoogleFonts.poppins(
                                       decoration: TextDecoration.lineThrough,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w300),
                                 ),
                                 Text(
-                                  "\$478",
+                                  filteredProduct[index].price,
                                   style: GoogleFonts.poppins(
                                       color: themeColor.getColor(),
                                       fontSize: 18,

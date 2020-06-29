@@ -8,6 +8,8 @@ class MyTextFormField extends StatelessWidget {
   final IconButton suffixIcon;
   final bool isPassword;
   final bool isEmail;
+  final String intialLabel;
+
 
   MyTextFormField({
     this.hintText,
@@ -17,6 +19,7 @@ class MyTextFormField extends StatelessWidget {
     this.isEmail = false,
     this.labelText,
     this.suffixIcon,
+    this.intialLabel
   });
 
   @override
@@ -24,6 +27,7 @@ class MyTextFormField extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 16),
       child: TextFormField(
+        initialValue: intialLabel==null?'':intialLabel,
         decoration: InputDecoration(
           hintText: hintText,
           contentPadding: EdgeInsets.all(15.0),

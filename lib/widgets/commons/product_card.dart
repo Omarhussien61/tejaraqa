@@ -1,9 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shoppingapp/modal/productmodel.dart';
 import 'package:shoppingapp/pages/product_detail.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
 import 'package:shoppingapp/utils/navigator.dart';
@@ -16,11 +18,11 @@ class ProductCard extends StatelessWidget {
   const ProductCard({
     Key key,
     @required this.themeColor,
-    this.imageUrl,
+    this.product,
   }) : super(key: key);
 
   final ThemeNotifier themeColor;
-  final String imageUrl;
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class ProductCard extends StatelessWidget {
       children: <Widget>[
         InkWell(
           onTap: () {
-            Nav.route(context, ProductDetailPage());
+            Nav.route(context, ProductDetailPage(product: product,));
           },
           child: Container(
             width: ScreenUtil.getWidth(context) / 2,
@@ -64,9 +66,11 @@ class ProductCard extends StatelessWidget {
                                 topLeft: Radius.circular(8),
                                 topRight: Radius.circular(8),
                               ),
-                              child: Image.asset(
-                                "assets/images/$imageUrl",
-                                fit: BoxFit.cover,
+                              child: CachedNetworkImage(
+                                imageUrl: (product.images == null)
+                                    ? 'http://arabimagefoundation.com/images/defaultImage.png'
+                                    : product.images[0].src,
+                                errorWidget: (context, url, error) => Icon(Icons.error),
                               ),
                             )),
                         Align(
@@ -82,7 +86,7 @@ class ProductCard extends StatelessWidget {
                             child: Align(
                               alignment: Alignment.center,
                               child: Text(
-                                "FREE CARGO",
+                                product.categories[0].name,
                                 style: GoogleFonts.poppins(
                                   fontSize: 12,
                                   color: themeColor.getColor(),
@@ -122,7 +126,7 @@ class ProductCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         AutoSizeText(
-                          'T-shirt Rainbow UFO Mens',
+                          product.name,
                           style: GoogleFonts.poppins(
                             fontSize: 12,
                             color: Color(0xFF5D6A78),
@@ -138,7 +142,7 @@ class ProductCard extends StatelessWidget {
                           children: <Widget>[
                             RatingBar(
                               ignoreGestures: true,
-                              initialRating: 3,
+                              initialRating: double.parse(product.averageRating),
                               itemSize: 14.0,
                               minRating: 1,
                               direction: Axis.horizontal,
@@ -156,7 +160,7 @@ class ProductCard extends StatelessWidget {
                               width: 8,
                             ),
                             Text(
-                              "(395)",
+                              product.averageRating,
                               style: GoogleFonts.poppins(
                                   fontSize: 9, fontWeight: FontWeight.w400),
                             )
@@ -172,14 +176,14 @@ class ProductCard extends StatelessWidget {
                                   height: 4,
                                 ),
                                 Text(
-                                  "\$120",
+                                  product.oldPrice,
                                   style: GoogleFonts.poppins(
                                       decoration: TextDecoration.lineThrough,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w300),
                                 ),
                                 Text(
-                                  "\$478",
+                                  product.price,
                                   style: GoogleFonts.poppins(
                                       color: themeColor.getColor(),
                                       fontSize: 18,

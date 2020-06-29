@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -6,7 +7,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:getflutter/components/button/gf_button.dart';
 import 'package:getflutter/types/gf_button_type.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:html/parser.dart';
 import 'package:like_button/like_button.dart';
+import 'package:shoppingapp/modal/productmodel.dart';
 import 'package:shoppingapp/pages/product_detail.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
@@ -17,15 +20,15 @@ import '../../config.dart';
 
 class DiscountItem extends StatelessWidget {
   final themeColor;
-  final String imageUrl;
+  final ProductModel product;
 
-  DiscountItem({Key key, this.themeColor, this.imageUrl}) : super(key: key);
+  DiscountItem({Key key, this.themeColor, this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Nav.route(context, ProductDetailPage());
+        Nav.route(context, ProductDetailPage(product: product,));
       },
       child: Stack(
         children: <Widget>[
@@ -48,9 +51,11 @@ class DiscountItem extends StatelessWidget {
                 Container(
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
-                      child: Image.asset(
-                        "assets/images/$imageUrl",
-                        fit: BoxFit.cover,
+                      child: CachedNetworkImage(
+                        imageUrl: (product.images == null)
+                            ? 'http://arabimagefoundation.com/images/defaultImage.png'
+                            : product.images[0].src,
+                        errorWidget: (context, url, error) => Icon(Icons.error),
                       )),
                   width: ScreenUtil.getWidth(context) * 0.30,
                   decoration: BoxDecoration(
@@ -67,7 +72,7 @@ class DiscountItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       AutoSizeText(
-                        'T-shirt Rainbow UFO Mens',
+                        product.name,
                         style: GoogleFonts.poppins(
                           fontSize: 12,
                           color: Color(0xFF5D6A78),
@@ -80,7 +85,7 @@ class DiscountItem extends StatelessWidget {
                         children: <Widget>[
                           RatingBar(
                             ignoreGestures: true,
-                            initialRating: 3,
+                            initialRating: double.parse(product.averageRating),
                             itemSize: 14.0,
                             minRating: 1,
                             direction: Axis.horizontal,
@@ -98,7 +103,7 @@ class DiscountItem extends StatelessWidget {
                             width: 8,
                           ),
                           Text(
-                            "(395)",
+                            product.averageRating,
                             style: GoogleFonts.poppins(
                                 fontSize: 9, fontWeight: FontWeight.w400),
                           )
@@ -107,7 +112,7 @@ class DiscountItem extends StatelessWidget {
                       Row(
                         children: <Widget>[
                           Text(
-                            "\$473",
+                            product.oldPrice,
                             style: GoogleFonts.poppins(
                                 decoration: TextDecoration.lineThrough,
                                 fontSize: 14,
@@ -117,7 +122,7 @@ class DiscountItem extends StatelessWidget {
                             width: 4,
                           ),
                           Text(
-                            "\$89",
+                            product.price,
                             style: GoogleFonts.poppins(
                                 color: themeColor.getColor(),
                                 fontSize: 18,
@@ -125,12 +130,28 @@ class DiscountItem extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Text(
-                        "Free Cargo",
-                        style: GoogleFonts.poppins(
-                            color: themeColor.getColor(),
-                            fontSize: 10,
-                            fontWeight: FontWeight.w300),
+                      Container(
+                        width: 180,
+                        child: Text(
+                          (parse(product.sortDescription.toString().trim())
+                                          .body
+                                          .text
+                                          .trim()
+                                          .length >
+                                      0 ||
+                                  product.sortDescription.toString().trim() ==
+                                      '')
+                              ? parse(product.sortDescription.toString().trim())
+                                  .body
+                                  .text
+                                  .trim()
+                              : "Best",
+                          maxLines: 2,
+                          style: GoogleFonts.poppins(
+                              color: themeColor.getColor(),
+                              fontSize: 10,
+                              fontWeight: FontWeight.w300),
+                        ),
                       ),
                       Container(
                         child: Row(

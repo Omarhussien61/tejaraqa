@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,8 +11,12 @@ import 'package:getflutter/components/button/gf_button.dart';
 import 'package:getflutter/getflutter.dart';
 import 'package:getflutter/shape/gf_button_shape.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:html/parser.dart';
 import 'package:provider/provider.dart';
+import 'package:shoppingapp/modal/Product_review.dart';
+import 'package:shoppingapp/modal/productmodel.dart';
 import 'package:shoppingapp/pages/order_page.dart';
+import 'package:shoppingapp/service/productdervice.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/dummy_data/discountImages.dart';
 import 'package:shoppingapp/utils/navigator.dart';
@@ -23,7 +28,10 @@ import 'package:shoppingapp/widgets/homepage/product_list_titlebar.dart';
 import 'package:shoppingapp/widgets/product_detail/slider_dot.dart';
 
 class ProductDetailPage extends StatefulWidget {
-  ProductDetailPage({Key key}) : super(key: key);
+    ProductDetailPage({Key key,
+      @required this.product,
+    }) : super(key: key);
+    final ProductModel product;
 
   @override
   _ProductDetailPageState createState() => _ProductDetailPageState();
@@ -33,11 +41,12 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     with TickerProviderStateMixin {
   AnimationController controller;
   Animation<double> animation;
+  Future<List<ProductModel>> productRelated;
   int _carouselCurrentPage = 0;
   ScrollController tempScroll = ScrollController();
   double radius = 40;
   int piece = 1;
-
+  List<Product_review> product_review=new  List<Product_review>();
   @override
   void initState() {
     tempScroll = ScrollController()
@@ -46,7 +55,12 @@ class _ProductDetailPageState extends State<ProductDetailPage>
           print(tempScroll.position.viewportDimension);
         });
       });
-
+    productRelated=ProductService.getRelatedProducts(widget.product.related_ids.toString());
+    ProductService.getReviewer(widget.product.id).then((usersFromServer) {
+      setState(() {
+        product_review = usersFromServer;
+      });
+    });
     super.initState();
     controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 300));
@@ -63,12 +77,12 @@ class _ProductDetailPageState extends State<ProductDetailPage>
 
   bool isLiked = false;
 
-  Widget _buildBox({Color color}) {
+  Widget _buildBox({Color color,String name}) {
     return Container(
       child: Align(
           alignment: Alignment.center,
           child: Text(
-            "Aqua Color",
+            name,
             style: GoogleFonts.poppins(color: Color(0xFF5D6A78), fontSize: 10),
           )),
       decoration: BoxDecoration(
@@ -90,7 +104,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
           statusBarBrightness: Brightness.dark,
           statusBarIconBrightness: Brightness.dark),
     );
-    List<Widget> imageSliders = discountImageList
+    List<Widget> imageSliders = widget.product.images
         .map((item) => Container(
               padding: EdgeInsets.only(bottom: 12),
               height: ScreenUtil.getHeight(context) / 1.3,
@@ -102,8 +116,12 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                           width: ScreenUtil.getWidth(context),
                           height: ScreenUtil.getHeight(context) / 1.3,
                           color: themeColor.getColor(),
-                          child: Image.asset(item,
-                              fit: BoxFit.cover, width: 220.0))),
+                          child: CachedNetworkImage(
+                            imageUrl: (widget.product.images == null)
+                                ? 'http://arabimagefoundation.com/images/defaultImage.png'
+                                : widget.product.images[0].src,
+                            errorWidget: (context, url, error) => Icon(Icons.error),
+                          ))),
                 ],
               ),
             ))
@@ -290,7 +308,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
-                                        Text("Mens Stand Collar Zip",
+                                        Text(widget.product.name,
                                             style: GoogleFonts.poppins(
                                                 fontSize: 19,
                                                 fontWeight: FontWeight.w400,
@@ -298,7 +316,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                         Row(
                                           children: <Widget>[
                                             RatingBar(
-                                              initialRating: 3,
+                                              initialRating: double.parse(widget.product.averageRating),
                                               itemSize: 18.0,
                                               minRating: 1,
                                               direction: Axis.horizontal,
@@ -321,7 +339,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                               width: 8,
                                             ),
                                             Text(
-                                              "(395)",
+                                              widget.product.averageRating,
                                               style: GoogleFonts.poppins(
                                                   fontSize: 11,
                                                   fontWeight: FontWeight.w400),
@@ -359,8 +377,9 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                 height: 24,
                                 child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  itemBuilder: (_, __) =>
-                                      _buildBox(color: Colors.orange),
+                                  itemCount: widget.product.categories.length,
+                                  itemBuilder: (_, i) =>
+                                      _buildBox(color: Colors.orange,name: widget.product.categories[i].name),
                                 ),
                               ),
                               Container(
@@ -379,7 +398,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                         fontSize: 12),
                                   ),
                                   expanded: Text(
-                                    "Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.",
+                                    widget.product.description   ,
                                     softWrap: true,
                                     style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w300,
@@ -407,7 +426,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                                 fontSize: 18),
                                           ),
                                           Text(
-                                            "\$ 1250",
+                                            widget.product.price,
                                             style: GoogleFonts.poppins(
                                                 color: themeColor.getColor(),
                                                 fontSize: 18),
@@ -418,7 +437,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                         height: 6,
                                       ),
                                       Text(
-                                        "Last 26 Items",
+                                        widget.product.stockStatus,
                                         style: GoogleFonts.poppins(
                                             color: themeColor.getColor(),
                                             fontSize: 12,
@@ -428,7 +447,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                         height: 6,
                                       ),
                                       Text(
-                                        "Free cargo",
+                                        widget.product.categories[0].name,
                                         style: GoogleFonts.poppins(
                                             color: Color(0xFF5D6A78),
                                             fontSize: 12,
@@ -608,7 +627,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                               Row(
                                 children: <Widget>[
                                   RatingBar(
-                                    initialRating: 3,
+                                    initialRating: double.parse(widget.product.averageRating),
                                     itemSize: 16.0,
                                     minRating: 1,
                                     direction: Axis.horizontal,
@@ -631,7 +650,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                     width: 12,
                                   ),
                                   Text(
-                                    "4.5",
+                                    widget.product.averageRating,
                                     style: GoogleFonts.poppins(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w400),
@@ -651,7 +670,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                       height: 4,
                                     ),
                                     RatingBar(
-                                      initialRating: 3,
+                                      initialRating: double.parse(widget.product.averageRating),
                                       itemSize: 20.0,
                                       minRating: 1,
                                       direction: Axis.horizontal,
@@ -673,7 +692,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                     SizedBox(
                                       height: 4,
                                     ),
-                                    Text("4 star",
+                                    Text( widget.product.averageRating+" star",
                                         style: GoogleFonts.poppins(
                                             fontSize: 13,
                                             fontWeight: FontWeight.w300,
@@ -736,255 +755,88 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                   )
                                 ],
                               ),
-                              ListView(
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                children: <Widget>[
-                                  Container(
-                                    margin: EdgeInsets.symmetric(vertical: 5),
-                                    padding: EdgeInsets.all(12),
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                        color: Color(0xFFEEEEF3),
-                                        borderRadius:
-                                        BorderRadius.circular(12)),
-                                    child: Row(
-                                      children: <Widget>[
-                                        CircleAvatar(
-                                          backgroundImage: AssetImage(
-                                              "assets/images/category_image1.png"),
-                                        ),
-                                        SizedBox(
-                                          width: 12,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                              Container(
+                                height: 300,
+                                child: ListView.builder(
+                                    physics: new NeverScrollableScrollPhysics(),
+                                    itemCount:  product_review == null ? 0 : product_review.length,
+                                    itemBuilder: (BuildContext context, int position) {
+                                      return Container(
+                                        margin: EdgeInsets.symmetric(vertical: 5),
+                                        padding: EdgeInsets.all(12),
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                            color: Color(0xFFEEEEF3),
+                                            borderRadius:
+                                            BorderRadius.circular(12)),
+                                        child: Row(
                                           children: <Widget>[
-                                            RatingBar(
-                                              initialRating: 3,
-                                              itemSize: 14.0,
-                                              minRating: 1,
-                                              direction: Axis.horizontal,
-                                              allowHalfRating: true,
-                                              itemCount: 5,
-                                              itemBuilder: (context, _) =>
-                                                  Container(
-                                                    height: 12,
-                                                    child: SvgPicture.asset(
-                                                      "assets/icons/ic_star.svg",
-                                                      color: themeColor
-                                                          .getColor(),
-                                                      width: 9,
-                                                    ),
-                                                  ),
-                                              onRatingUpdate: (rating) {
-                                                print(rating);
-                                              },
+                                            CircleAvatar(
+                                              backgroundImage: NetworkImage(
+                                                  product_review[0].reviewer),
                                             ),
                                             SizedBox(
-                                              height: 8,
+                                              width: 12,
                                             ),
-                                            Text("John Doe",
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w300,
-                                                    color: Color(0xFF5D6A78))),
-                                            Text(
-                                                "I am very pleased for this product",
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w300,
-                                                    color: Color(0xFF5D6A78)))
+                                            Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                RatingBar(
+                                                  initialRating: product_review[position].rating.toDouble(),
+                                                  itemSize: 14.0,
+                                                  minRating: 1,
+                                                  direction: Axis.horizontal,
+                                                  allowHalfRating: true,
+                                                  itemCount: 5,
+                                                  itemBuilder: (context, _) =>
+                                                      Container(
+                                                        height: 12,
+                                                        child: SvgPicture.asset(
+                                                          "assets/icons/ic_star.svg",
+                                                          color: themeColor
+                                                              .getColor(),
+                                                          width: 9,
+                                                        ),
+                                                      ),
+                                                  onRatingUpdate: (rating) {
+                                                    print(rating);
+                                                  },
+                                                ),
+                                                SizedBox(
+                                                  height: 8,
+                                                ),
+                                                Text(product_review[0].reviewer,
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 12,
+                                                        fontWeight: FontWeight.w300,
+                                                        color: Color(0xFF5D6A78))),
+                                                Text(
+                                                    ( product_review[position].review
+                                                        .toString()
+                                                        .trim()
+                                                        .length >
+                                                        0 ||
+                                                        product_review[position].review
+                                                            .toString()
+                                                            .trim() ==
+                                                            '') ? parse( product_review[position].review
+                                                        .toString()
+                                                        .trim())
+                                                        .body
+                                                        .text
+                                                        .trim()
+                                                        : "Best",
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 12,
+                                                        fontWeight: FontWeight.w300,
+                                                        color: Color(0xFF5D6A78)))
+                                              ],
+                                            )
                                           ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.symmetric(vertical: 5),
-                                    padding: EdgeInsets.all(12),
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                        color: Color(0xFFEEEEF3),
-                                        borderRadius:
-                                        BorderRadius.circular(12)),
-                                    child: Row(
-                                      children: <Widget>[
-                                        CircleAvatar(
-                                          backgroundImage: AssetImage(
-                                              "assets/images/category_image1.png"),
                                         ),
-                                        SizedBox(
-                                          width: 12,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            RatingBar(
-                                              initialRating: 3,
-                                              itemSize: 14.0,
-                                              minRating: 1,
-                                              direction: Axis.horizontal,
-                                              allowHalfRating: true,
-                                              itemCount: 5,
-                                              itemBuilder: (context, _) =>
-                                                  Container(
-                                                    height: 12,
-                                                    child: SvgPicture.asset(
-                                                      "assets/icons/ic_star.svg",
-                                                      color: themeColor
-                                                          .getColor(),
-                                                      width: 9,
-                                                    ),
-                                                  ),
-                                              onRatingUpdate: (rating) {
-                                                print(rating);
-                                              },
-                                            ),
-                                            SizedBox(
-                                              height: 8,
-                                            ),
-                                            Text("John Doe",
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w300,
-                                                    color: Color(0xFF5D6A78))),
-                                            Text(
-                                                "I am very pleased for this product",
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w300,
-                                                    color: Color(0xFF5D6A78)))
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.symmetric(vertical: 5),
-                                    padding: EdgeInsets.all(12),
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                        color: Color(0xFFEEEEF3),
-                                        borderRadius:
-                                        BorderRadius.circular(12)),
-                                    child: Row(
-                                      children: <Widget>[
-                                        CircleAvatar(
-                                          backgroundImage: AssetImage(
-                                              "assets/images/category_image1.png"),
-                                        ),
-                                        SizedBox(
-                                          width: 12,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            RatingBar(
-                                              initialRating: 3,
-                                              itemSize: 14.0,
-                                              minRating: 1,
-                                              direction: Axis.horizontal,
-                                              allowHalfRating: true,
-                                              itemCount: 5,
-                                              itemBuilder: (context, _) =>
-                                                  Container(
-                                                    height: 12,
-                                                    child: SvgPicture.asset(
-                                                      "assets/icons/ic_star.svg",
-                                                      color: themeColor
-                                                          .getColor(),
-                                                      width: 9,
-                                                    ),
-                                                  ),
-                                              onRatingUpdate: (rating) {
-                                                print(rating);
-                                              },
-                                            ),
-                                            SizedBox(
-                                              height: 8,
-                                            ),
-                                            Text("John Doe",
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w300,
-                                                    color: Color(0xFF5D6A78))),
-                                            Text(
-                                                "I am very pleased for this product",
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w300,
-                                                    color: Color(0xFF5D6A78)))
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.symmetric(vertical: 5),
-                                    padding: EdgeInsets.all(12),
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                        color: Color(0xFFEEEEF3),
-                                        borderRadius:
-                                        BorderRadius.circular(12)),
-                                    child: Row(
-                                      children: <Widget>[
-                                        CircleAvatar(
-                                          backgroundImage: AssetImage(
-                                              "assets/images/category_image1.png"),
-                                        ),
-                                        SizedBox(
-                                          width: 12,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            RatingBar(
-                                              initialRating: 3,
-                                              itemSize: 14.0,
-                                              minRating: 1,
-                                              direction: Axis.horizontal,
-                                              allowHalfRating: true,
-                                              itemCount: 5,
-                                              itemBuilder: (context, _) =>
-                                                  Container(
-                                                    height: 12,
-                                                    child: SvgPicture.asset(
-                                                      "assets/icons/ic_star.svg",
-                                                      color: themeColor
-                                                          .getColor(),
-                                                      width: 9,
-                                                    ),
-                                                  ),
-                                              onRatingUpdate: (rating) {
-                                                print(rating);
-                                              },
-                                            ),
-                                            SizedBox(
-                                              height: 8,
-                                            ),
-                                            Text("John Doe",
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w300,
-                                                    color: Color(0xFF5D6A78))),
-                                            Text(
-                                                "I am very pleased for this product",
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w300,
-                                                    color: Color(0xFF5D6A78)))
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
+                                      );
+                                    }),
                               ),
                               Container(
                                 margin: EdgeInsets.symmetric(vertical: 10),
@@ -1023,6 +875,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                             children: <Widget>[
                               ProductList(
                                 themeColor: themeColor,
+                                product: productRelated,
                                 productListTitleBar: ProductListTitleBar(
                                   themeColor: themeColor,
                                   title: "Similar Products",
