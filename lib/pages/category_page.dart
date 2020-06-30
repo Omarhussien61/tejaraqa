@@ -3,134 +3,72 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shoppingapp/modal/category.dart';
+import 'package:shoppingapp/service/categoryservice.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/dummy_data/category.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
 import 'package:shoppingapp/utils/vertical_tab/vertical_tab.dart';
-
 class CategoryPage extends StatefulWidget {
   @override
   _CategoryPageState createState() => _CategoryPageState();
 }
-
 class _CategoryPageState extends State<CategoryPage> {
+
+   List<Category> maincat,subcats;
+   List<Widget> contents;
+@override
+  void initState() {
+ CategoryService().getMainCategory().then((value) {
+   setState(() {
+     maincat=value;
+   });
+ });
+ CategoryService().getSubCategory().then((value) {
+   setState(() {
+     subcats=value;
+   });
+
+ });
+  super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ThemeNotifier>(context);
     return Scaffold(
       backgroundColor: greyBackground,
-      body: VerticalTabs(
+      body:maincat!=null?subcats!=null? VerticalTabs(
         indicatorColor: themeColor.getColor(),
         selectedTabBackgroundColor: whiteColor,
         tabBackgroundColor: themeColor.getColor(),
         backgroundColor: greyBackground,
         direction: TextDirection.rtl,
         tabsWidth: 48,
-        tabsTitle: categories,
-        tabs: <Tab>[
-          Tab(
-              child: RotatedBox(
-                quarterTurns: 1,
-                child: RichText(
-                  text: TextSpan(
-                    text: 'Flutter',
-                    style: DefaultTextStyle.of(context).style.copyWith(),
-                  ),
-                ),
-              ),
-              icon: Icon(Icons.phone)),
-          Tab(
-              child: RotatedBox(
-            quarterTurns: 1,
-            child: RichText(
-              text: TextSpan(
-                text: 'Flutter',
-                style: DefaultTextStyle.of(context).style,
-              ),
-            ),
-          )),
-          Tab(
-            child: Container(
-                margin: EdgeInsets.only(bottom: 1),
-                child: RotatedBox(
-                  quarterTurns: 1,
-                  child: RichText(
-                    text: TextSpan(
-                      text: 'Flutter',
-                      style: DefaultTextStyle.of(context).style,
-                    ),
-                  ),
-                )),
-          ),
-          Tab(
-              child: RotatedBox(
-            quarterTurns: 1,
-            child: RichText(
-              text: TextSpan(
-                text: 'Flutter',
-                style: DefaultTextStyle.of(context).style,
-              ),
-            ),
-          )),
-          Tab(
-              child: RotatedBox(
-            quarterTurns: 1,
-            child: RichText(
-              text: TextSpan(
-                text: 'Flutter',
-                style: DefaultTextStyle.of(context).style,
-              ),
-            ),
-          )),
-          Tab(
-              child: RotatedBox(
-            quarterTurns: 1,
-            child: RichText(
-              text: TextSpan(
-                text: 'Flutter',
-                style: DefaultTextStyle.of(context).style,
-              ),
-            ),
-          )),
-          Tab(
-              child: RotatedBox(
-            quarterTurns: 1,
-            child: RichText(
-              text: TextSpan(
-                text: 'Flutter',
-                style: DefaultTextStyle.of(context).style,
-              ),
-            ),
-          )),
-        ],
-        contents: <Widget>[
-          tabsContent(themeColor, 'Flutter',
-              'Change page by scrolling content is disabled in settings. Changing contents pages is only available via tapping on tabs'),
-          tabsContent(themeColor, 'Dart'),
-          tabsContent(themeColor, 'Javascript'),
-          tabsContent(themeColor, 'NodeJS'),
-          tabsContent(themeColor, 'HTML 5'),
-          tabsContent(themeColor, 'HTML 5'),
-          tabsContent(themeColor, 'HTML 5'),
-        ],
-      ),
+        maincat: maincat,
+        subcats: subcats,
+        contents: contents,
+      ):Center(child:
+      CircularProgressIndicator(
+          valueColor:  AlwaysStoppedAnimation<Color>(themeColor.getColor()))):
+      Center(child:
+      CircularProgressIndicator(
+          valueColor:  AlwaysStoppedAnimation<Color>(themeColor.getColor()))),
     );
   }
-
   Widget tabsContent(ThemeNotifier themeColor, String caption,
       [String description = '']) {
     return Container(
       padding: EdgeInsets.only(left: 5, right: 5),
       color: greyBackground,
       child: ListView.builder(
-        itemCount: subCategories.length,
+        itemCount: subcats.length,
         itemBuilder: (context, index) {
-          return expansionTile(themeColor, subCategories[index]);
+          contents.add(expansionTile(themeColor, subcats[index].name));
+          return expansionTile(themeColor, subcats[index].name);
         },
       ),
     );
   }
-
   Widget expansionTile(themeColor, String title) {
     return Theme(
       data: ThemeData(accentColor: themeColor.getColor()),

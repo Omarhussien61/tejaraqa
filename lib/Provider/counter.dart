@@ -4,6 +4,7 @@ import 'package:shoppingapp/modal/Theme.dart';
 
 class counter with ChangeNotifier {
   int theme_index = 1;
+  int countCart = 1;
 
   String local = 'ar';
   Color color;
@@ -15,7 +16,6 @@ class counter with ChangeNotifier {
     notifyListeners();
   }
 
-
   intcnt(int st) {
     theme_index = st;
     if (theme_index == 1) {
@@ -26,6 +26,11 @@ class counter with ChangeNotifier {
     else {
       setColor(Colors.amber);
     }
+    notifyListeners();
+  }
+
+  intcountCart(int st) {
+    countCart = st;
     notifyListeners();
   }
 

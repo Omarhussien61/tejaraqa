@@ -15,12 +15,14 @@ import 'package:shoppingapp/pages/home_navigator.dart';
 import 'package:shoppingapp/pages/my_profile_page.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
 import 'package:shoppingapp/pages/splash_screen.dart';
+import 'package:shoppingapp/util/sql_helper.dart';
 import 'package:shoppingapp/utils/drawer_menu/hidden_drawer/hidden_drawer_menu.dart';
 import 'package:shoppingapp/utils/drawer_menu/hidden_drawer/screen_hidden_drawer.dart';
 import 'package:shoppingapp/utils/drawer_menu/menu/item_hidden_menu.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
 
+import 'Provider/counter.dart';
 import 'config.dart';
 
 void main() async {
@@ -32,7 +34,9 @@ void main() async {
     Color color = mainColor;
     if (prefs.getInt('color') != null) {
       color = Color(prefs.getInt('color'));
+
     }
+
 
     runApp(
       ChangeNotifierProvider<ThemeNotifier>(
@@ -49,6 +53,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ThemeNotifier>(context);
@@ -56,23 +61,30 @@ class MyApp extends StatelessWidget {
 
     return LocalizationProvider(
       state: LocalizationProvider.of(context).state,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Shopping App',
-        localizationsDelegates: [
-          GlobalMaterialLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          localizationDelegate
-        ],
-        supportedLocales: localizationDelegate.supportedLocales,
-        locale: localizationDelegate.currentLocale,
-        theme: ThemeData(
-          pageTransitionsTheme: PageTransitionsTheme(builders: {
-            TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-          }),
-          primaryColor: themeColor.getColor(),
+      child: MultiProvider(
+        providers:[
+          ChangeNotifierProvider(
+            builder: (_)=>counter(),
+          )
+        ] ,
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Shopping App',
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            localizationDelegate
+          ],
+          supportedLocales: localizationDelegate.supportedLocales,
+          locale: localizationDelegate.currentLocale,
+          theme: ThemeData(
+            pageTransitionsTheme: PageTransitionsTheme(builders: {
+              TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+            }),
+            primaryColor: themeColor.getColor(),
+          ),
+          home: SplashScreen(),
         ),
-        home: SplashScreen(),
       ),
     );
   }
@@ -85,6 +97,7 @@ class InitPage extends StatefulWidget {
 
 class _InitPageState extends State<InitPage> {
   List<ScreenHiddenDrawer> items = new List();
+  SQL_Helper helper = new SQL_Helper();
 
   @override
   void initState() {
@@ -101,7 +114,6 @@ class _InitPageState extends State<InitPage> {
           colorLineSelected: Colors.transparent,
         ),
         HomeNavigator()));
-
     items.add(new ScreenHiddenDrawer(
         new ItemHiddenMenu(
           icon: Icon(
@@ -155,6 +167,9 @@ class _InitPageState extends State<InitPage> {
         ),
         MyProfilePage()));
 
+    helper.getCount().then((value) {
+      Provider.of<counter>(context).intcountCart(value);
+    });
     super.initState();
   }
 
@@ -176,7 +191,7 @@ class _InitPageState extends State<InitPage> {
       backgroundColorAppBar: Color.fromARGB(255, 252, 252, 252),
       tittleAppBar: Padding(
         child: Text(
-          "rosen",
+          "Woo2Comm",
           style: GoogleFonts.poppins(
             fontSize: 26,
             color: themeColor.getColor(),
@@ -186,29 +201,28 @@ class _InitPageState extends State<InitPage> {
         padding: EdgeInsets.only(bottom: 18),
       ),
       actionsAppBar: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(right: 16, top: 8),
-          child: InkWell(
-            onTap: () {
-              Nav.route(context, ShoppingCartPage());
-//
-            },
-            child: Badge(
-              badgeColor: Color(0xFF5D6A78),
-              alignment: Alignment(-0.5, -1.0),
-              padding: EdgeInsets.all(4),
-              badgeContent: Text(
-                '3',
-                style: TextStyle(color: Colors.white, fontSize: 10),
-              ),
-              child: SvgPicture.asset(
-                "assets/icons/ic_shopping_cart.svg",
-                color: themeColor.getColor(),
-                height: 26,
-              ),
-            ),
-          ),
-        )
+//        Padding(
+//          padding: EdgeInsets.only(right: 16, top: 8),
+//          child: InkWell(
+//            onTap: () {
+//              Nav.route(context, ShoppingCartPage());
+//            },
+//            child: Badge(
+//              badgeColor: Color(0xFF5D6A78),
+//              alignment: Alignment(-0.5, -1.0),
+//              padding: EdgeInsets.all(4),
+//              badgeContent: Text(
+//                Provider.of<counter>(context).countCart.toString(),
+//                style: TextStyle(color: Colors.white, fontSize: 10),
+//              ),
+//              child: SvgPicture.asset(
+//                "assets/icons/ic_shopping_cart.svg",
+//                color: themeColor.getColor(),
+//                height: 26,
+//              ),
+//            ),
+//          ),
+//        )
       ],
       backgroundColorMenu: Colors.blueGrey,
       screens: items,

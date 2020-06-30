@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 import 'package:shoppingapp/modal/category.dart';
 import 'package:shoppingapp/pages/search_page.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
+import 'package:shoppingapp/utils/theme_notifier.dart';
 
 class CategoryListView extends StatelessWidget {
   List<Category> maincat;
@@ -37,7 +39,9 @@ class CategoriesListView extends StatelessWidget {
       margin: EdgeInsets.only(top: 14, left: 4),
       height: 95,
       child: Center(
-        child: ListView.builder(
+        child:categories==null?Center(child:
+        CircularProgressIndicator(
+            valueColor:  AlwaysStoppedAnimation<Color>(Provider.of<ThemeNotifier>(context).getColor()))): ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount:categories==null?0:categories.length,
           itemBuilder: (BuildContext context, int index) {

@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shoppingapp/modal/category.dart';
 
 enum IndicatorSide { start, end }
 
 /// A vertical tab widget for flutter
 class VerticalTabs extends StatefulWidget {
+  final List<Category>  maincat,subcats;
+
   final Key key;
   final int initialIndex;
   final double tabsWidth;
   final double indicatorWidth;
   final IndicatorSide indicatorSide;
-  final List<Tab> tabs;
-  final List<String> tabsTitle;
+  //final List<String> tabsTitle;
   final List<Widget> contents;
   final TextDirection direction;
   final Color indicatorColor;
@@ -30,7 +32,8 @@ class VerticalTabs extends StatefulWidget {
 
   VerticalTabs(
       {this.key,
-      @required this.tabs,
+        this.maincat,
+        this.subcats,
       @required this.contents,
       this.tabsWidth = 200,
       this.indicatorWidth = 3,
@@ -50,9 +53,10 @@ class VerticalTabs extends StatefulWidget {
       this.tabsElevation = 2.0,
       this.onSelect,
       this.backgroundColor,
-      this.tabsTitle})
+      //this.tabsTitle
+      })
       : assert(
-            tabs != null && contents != null && tabs.length == contents.length),
+  maincat != null ),
         super(key: key);
 
   @override
@@ -77,7 +81,7 @@ class _VerticalTabsState extends State<VerticalTabs>
   @override
   void initState() {
     _selectedIndex = widget.initialIndex;
-    for (int i = 0; i < widget.tabs.length; i++) {
+    for (int i = 0; i < widget.maincat.length; i++) {
       animationControllers.add(AnimationController(
         duration: const Duration(milliseconds: 400),
         vsync: this,
@@ -118,18 +122,8 @@ class _VerticalTabsState extends State<VerticalTabs>
                   Container(
                     width: widget.tabsWidth,
                     child: ListView.builder(
-                      itemCount: widget.tabs.length,
+                      itemCount: widget.maincat==null?0:widget.maincat.length,
                       itemBuilder: (context, index) {
-                        Tab tab = widget.tabs[index];
-
-                        if (widget.direction == TextDirection.rtl) {}
-
-                        if (tab.child != null) {
-                        } else {}
-
-                        if (_selectedIndex == index) if (widget.direction ==
-                            TextDirection.rtl) {
-                        } else {}
 
                         return Stack(
                           children: <Widget>[
@@ -163,7 +157,7 @@ class _VerticalTabsState extends State<VerticalTabs>
                                               quarterTurns: 3,
                                               child: RichText(
                                                 text: TextSpan(
-                                                  text: widget.tabsTitle[index],
+                                                  text: widget.maincat[index].name,
                                                   style: GoogleFonts.poppins(
                                                     fontSize: 12,
                                                     color: widget
@@ -187,8 +181,7 @@ class _VerticalTabsState extends State<VerticalTabs>
                                             quarterTurns: 3,
                                             child: RichText(
                                               text: TextSpan(
-                                                text: widget.tabsTitle[
-                                                    index == 6 ? 5 : index],
+                                                text: widget.maincat[index ].name,
                                                 style: GoogleFonts.poppins(
                                                   fontSize: 12,
                                                   color: Colors.white,
@@ -204,7 +197,10 @@ class _VerticalTabsState extends State<VerticalTabs>
                     ),
                   ),
                   Expanded(
-                    child: PageView.builder(
+                    child:widget.contents==null?Center(child:
+                    CircularProgressIndicator(
+                        valueColor:  AlwaysStoppedAnimation<Color>(widget.tabBackgroundColor))):
+                    PageView.builder(
                       scrollDirection: widget.contentScrollAxis,
                       physics: pageScrollPhysics,
                       onPageChanged: (index) {

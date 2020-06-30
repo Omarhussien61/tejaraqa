@@ -3,11 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/global.dart';
 import 'package:provider/provider.dart';
+import 'package:shoppingapp/Provider/counter.dart';
+import 'package:shoppingapp/modal/Recentview.dart';
 import 'package:shoppingapp/modal/category.dart';
 import 'package:shoppingapp/modal/productmodel.dart';
 import 'package:shoppingapp/pages/product_detail.dart';
 import 'package:shoppingapp/service/categoryservice.dart';
 import 'package:shoppingapp/service/productdervice.dart';
+import 'package:shoppingapp/util/recentId.dart';
+import 'package:shoppingapp/util/sql_helper.dart';
 import 'package:shoppingapp/utils/dummy_data/discountImages.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
@@ -17,6 +21,7 @@ import 'package:shoppingapp/widgets/homepage/product_list.dart';
 import 'package:shoppingapp/widgets/homepage/product_list_titlebar.dart';
 import 'package:shoppingapp/widgets/homepage/search_box.dart';
 import 'package:shoppingapp/widgets/homepage/slider_dot.dart';
+import 'package:sqflite/sqflite.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -26,9 +31,15 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _carouselCurrentPage = 0;
    List<Category> maincat;
+  SQL_Helper helper = new SQL_Helper();
+  SQL_Rercent sql_rercent = new SQL_Rercent();
+  String contVeiw;
+
   Future<List<ProductModel>>productDiscount,productNew,moreSale,productview,product_low_priced;
   @override
   void initState() {
+    updateListView();
+    countCart();
     CategoryService().getMainCategory().then((value) {
       setState(() {
         maincat=value;
@@ -38,11 +49,30 @@ class _HomePageState extends State<HomePage> {
     product_low_priced=ProductService.getLow_Priced_Products();
     productNew=ProductService.getNewProducts();
     moreSale=ProductService.getMoreSaleProducts();
-    productview=ProductService.getRecentviewProducts('1810,1800,1802');
-
     super.initState();
 
   }
+  updateListView(){
+    final Future<Database> db = helper.initializedDatabase();
+    db.then((database) {
+      Future<List<Recentview>> ProductView = sql_rercent.getRecentViewList();
+      ProductView.then((theList) {
+        setState(() {
+          contVeiw=theList[0].id.toString();
+          for (int i = 1; i <= theList.length-1 ; i++){
+            //items.add(this.recents[i].id.toString());
+            contVeiw=contVeiw+','+theList[i].id.toString();
+          }
+          print('go $contVeiw');
+          productview=ProductService.getRecentviewProducts(contVeiw);
+        });
+      });
+    });
+
+
+  }
+
+
   void showDemoActionSheet({BuildContext context, Widget child}) {
     showCupertinoModalPopup<String>(
         context: context,
@@ -60,12 +90,15 @@ class _HomePageState extends State<HomePage> {
       body: ListView(
         children: <Widget>[
           SearchBox(),
+
 //              FlatButton(
 //                onPressed: () {
 //                  _onActionSheetPress(context);
 //                },
 //                child: Text(translate('button.change_language')),
 //              ),
+
+
           CategoryListView(maincat),
           InkWell(
             onTap: () {
@@ -168,4 +201,12 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  void countCart() async {
+    helper.getCount().then((value) {
+      Provider.of<counter>(context).intcountCart(value);
+    });
+
+  }
+
 }

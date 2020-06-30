@@ -1,9 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shoppingapp/modal/cart.dart';
+import 'package:shoppingapp/modal/productmodel.dart';
 import 'package:shoppingapp/utils/drop_down_menu/find_dropdown.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
@@ -12,9 +15,10 @@ class ShoppingCartItem extends StatelessWidget {
   const ShoppingCartItem({
     Key key,
     @required this.themeColor,
+    @required this.productModel,
     this.imageUrl,
   }) : super(key: key);
-
+  final Cart productModel;
   final ThemeNotifier themeColor;
   final String imageUrl;
 
@@ -40,8 +44,10 @@ class ShoppingCartItem extends StatelessWidget {
               Container(
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    child: Image.asset(
-                      "assets/images/$imageUrl",
+                    child: CachedNetworkImage(
+                      imageUrl: (productModel.image == null)
+                          ? 'http://arabimagefoundation.com/images/defaultImage.png'
+                          : productModel.image,
                       fit: BoxFit.cover,
                       width: ScreenUtil.getWidth(context) * 0.30,
                     )),
@@ -61,7 +67,7 @@ class ShoppingCartItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     AutoSizeText(
-                      'Sunt planetaes aperto mirabilis,',
+                      productModel.name,
                       style: GoogleFonts.poppins(
                         fontSize: 12,
                         color: Color(0xFF5D6A78),
@@ -70,63 +76,11 @@ class ShoppingCartItem extends StatelessWidget {
                       maxLines: 2,
                       minFontSize: 11,
                     ),
-                    Row(
-                      children: <Widget>[
-                        RatingBar(
-                          initialRating: 3,
-                          itemSize: 14.0,
-                          minRating: 1,
-                          direction: Axis.horizontal,
-                          allowHalfRating: true,
-                          itemCount: 5,
-                          itemBuilder: (context, _) => Container(
-                            height: 12,
-                            child: SvgPicture.asset(
-                              "assets/icons/ic_star.svg",
-                              color: themeColor.getColor(),
-                              width: 9,
-                            ),
-                          ),
-                          onRatingUpdate: (rating) {
-                            print(rating);
-                          },
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Text(
-                          "(395)",
-                          style: GoogleFonts.poppins(
-                              fontSize: 9, fontWeight: FontWeight.w400),
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          "\$89",
-                          style: GoogleFonts.poppins(
-                              decoration: TextDecoration.lineThrough,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w300),
-                        ),
-                        SizedBox(
-                          width: 4,
-                        ),
-                        Text(
-                          "\$259",
-                          style: GoogleFonts.poppins(
-                              color: themeColor.getColor(),
-                              fontSize: 18,
-                              fontWeight: FontWeight.w300),
-                        ),
-                      ],
-                    ),
                     Text(
-                      "Free Cargo",
+                      productModel.pass.toString(),
                       style: GoogleFonts.poppins(
                           color: themeColor.getColor(),
-                          fontSize: 10,
+                          fontSize: 18,
                           fontWeight: FontWeight.w300),
                     ),
                   ],
@@ -151,15 +105,74 @@ class ShoppingCartItem extends StatelessWidget {
           bottom: 24,
           right: 32,
           child: Container(
-            width: 48,
+            width: 100,
             margin: EdgeInsets.only(top: 26),
             child: Align(
               alignment: Alignment.centerRight,
-              child: FindDropdown(
-                items: ["1", "2", "3", "4"],
-                onChanged: (String item) => print(item),
-                selectedItem: "1",
-                isUnderLine: false,
+              child:  Container(
+                padding: EdgeInsets.only(
+                    left: 8, right: 8, top: 4, bottom: 4),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(18),
+                  color: themeColor.getColor(),
+                ),
+                child: Row(
+
+                  mainAxisAlignment:
+                  MainAxisAlignment.center,
+                  crossAxisAlignment:
+                  CrossAxisAlignment.center,
+                  children: <Widget>[
+                    InkWell(
+                        onTap: () {
+
+                            if (productModel.quantity != 0) {
+                              productModel.quantity--;
+                            }
+
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              right: 16.0),
+                          child: Text(
+                            "-",
+                            style: TextStyle(
+                                fontSize: 24,
+                                color: Colors.white),
+                          ),
+                        )),
+                    Container(
+                        decoration: BoxDecoration(
+                          borderRadius:
+                          BorderRadius.circular(18),
+                          color: Color(0xFF707070),
+                        ),
+                        child: Container(
+                          alignment: Alignment.center,
+                          width: 24,
+                          padding:
+                          const EdgeInsets.all(8.0),
+                          child: Text(productModel.quantity.toString(),
+                              style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                  fontSize: 16)),
+                        )),
+                    InkWell(
+                        onTap: () {
+
+                            if (productModel.quantity != 9) {
+                              productModel.quantity++;
+                            }
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 16.0),
+                          child: Text("+",
+                              style: TextStyle(
+                                  color: Colors.white)),
+                        )),
+                  ],
+                ),
               ),
             ),
           ),

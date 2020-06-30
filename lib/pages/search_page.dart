@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +26,7 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   String deneme = "Dursun";
   bool _isLoading = false;
-
+  final debouncer = Debouncer(milliseconds: 1000);
   List<ProductModel> filteredProduct = List();
   List<ProductModel> productModel;
   String oldest='order=asc&filter[meta_key]=total_sales&status=publish&';
@@ -63,193 +65,210 @@ class _SearchPageState extends State<SearchPage> {
       child: Scaffold(
         backgroundColor: Color.fromARGB(255, 252, 252, 252),
         key: _drawerKey, // assign key to Scaffold
-
         body: Stack(
           children: <Widget>[
-            SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Row(
+            Row(
+              children: <Widget>[
+                Container(
+                  width: 32,
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.chevron_left,
+                      color: themeColor.getColor(),
+                      size: 32,
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+                Container(
+                  width: ScreenUtil.getWidth(context) - 80,
+                  margin: EdgeInsets.only(left: 22, top: 14),
+                  padding: EdgeInsets.only(left: 18, right: 18),
+                  height: 44,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.grey[200],
+                          blurRadius: 8.0,
+                          spreadRadius: 1,
+                          offset: Offset(0.0, 3)
+                      )
+                    ],
+                    color: Theme.of(context).bottomAppBarColor,
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: Row(
                     children: <Widget>[
-                      Container(
-                        width: 32,
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.chevron_left,
-                            color: themeColor.getColor(),
-                            size: 32,
-                          ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        ),
+                      SvgPicture.asset(
+                        "assets/icons/ic_search.svg",
+                        color: Colors.black45,
+                        height: 12,
                       ),
-                      Container(
-                        width: ScreenUtil.getWidth(context) - 80,
-                        margin: EdgeInsets.only(left: 22, top: 14),
-                        padding: EdgeInsets.only(left: 18, right: 18),
-                        height: 44,
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.grey[200],
-                                blurRadius: 8.0,
-                                spreadRadius: 1,
-                                offset: Offset(0.0, 3))
-                          ],
-                          color: Theme.of(context).bottomAppBarColor,
-                          borderRadius: BorderRadius.circular(24),
-                        ),
-                        child: Row(
-                          children: <Widget>[
-                            SvgPicture.asset(
-                              "assets/icons/ic_search.svg",
-                              color: Colors.black45,
-                              height: 12,
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Expanded(
-                              child: Container(
-                                padding: EdgeInsets.only(bottom: 4),
-                                height: 72,
-                                child: TextFormField(
-                                  key: _formKey,
-                                  decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      hintText: "Brand Search",
-                                      hintStyle: GoogleFonts.poppins(
-                                        fontSize: 13,
-                                        color: Color(0xFF5D6A78),
-                                        fontWeight: FontWeight.w400,
-                                      )),
-                                ),
-                              ),
-                            ),
-                          ],
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.only(bottom: 4),
+                          height: 72,
+                          child: TextFormField(
+                            key: _formKey,
+                            onChanged: (string) {
+                              debouncer.run(() {
+                                setState(() {
+                                  //title = Provider.of<counter>(context).themeModel.searchContent[0];
+                                  filteredProduct = productModel.where((u) =>
+                                  (u.name.toLowerCase().contains(string.toLowerCase())) ||
+                                      (u.categories[0].name.toLowerCase().contains(string.toLowerCase()))||
+                                      (u.sortDescription.toLowerCase().contains(string.toLowerCase()))
+                                      ||
+                                      (u.description.toLowerCase().contains(string.toLowerCase()))
+                                  ).toList();
+                                });
+                              });
+                            },
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "Brand Search",
+                                hintStyle: GoogleFonts.poppins(
+                                  fontSize: 13,
+                                  color: Color(0xFF5D6A78),
+                                  fontWeight: FontWeight.w400,
+                                )),
+                          ),
                         ),
                       ),
                     ],
                   ),
-                  Container(
-                    width: ScreenUtil.getWidth(context) - 20,
-                    margin: EdgeInsets.only(top: 24, left: 8),
-                    padding: EdgeInsets.only(left: 18, right: 22),
-                    height: 44,
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.grey[200],
-                            blurRadius: 8.0,
-                            spreadRadius: 1,
-                            offset: Offset(0.0, 3))
-                      ],
-                      color: Theme.of(context).bottomAppBarColor,
-                      borderRadius: BorderRadius.circular(24),
+                ),
+              ],
+            ),
+            Padding(
+              padding:  EdgeInsets.only(top: 50),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      width: ScreenUtil.getWidth(context) - 20,
+                      margin: EdgeInsets.only(top: 24, left: 8),
+                      padding: EdgeInsets.only(left: 18, right: 22),
+                      height: 44,
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.grey[200],
+                              blurRadius: 8.0,
+                              spreadRadius: 1,
+                              offset: Offset(0.0, 3))
+                        ],
+                        color: Theme.of(context).bottomAppBarColor,
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Material(
+                            color: Colors.white,
+                            child: InkWell(
+                              onTap: () {
+                                _sortingBottomSheet();
+                              },
+                              child: Container(
+                                margin: EdgeInsets.all(12),
+                                child: Row(children: <Widget>[
+                                  RotatedBox(
+                                      quarterTurns: 3,
+                                      child: Icon(
+                                        Ionicons.ios_swap,
+                                        size: 16,
+                                      )),
+                                  SizedBox(
+                                    width: 3,
+                                  ),
+                                  Text(
+                                    "Sort",
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 13, color: Color(0xFF5D6A78)),
+                                  ),
+                                ]),
+                              ),
+                            ),
+                          ),
+                          Material(
+                            color: Colors.white,
+                            child: InkWell(
+                              onTap: () {
+                                Nav.route(context, FilterPage());
+                              },
+                              child: Container(
+                                margin: EdgeInsets.all(12),
+                                child: Row(children: <Widget>[
+                                  SvgPicture.asset(
+                                    "assets/icons/funnel.svg",
+                                    height: 14,
+                                    color: Color(0xFF5D6A78),
+                                  ),
+                                  SizedBox(
+                                    width: 3,
+                                  ),
+                                  Text(
+                                    "Filter",
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 13, color: Color(0xFF5D6A78)),
+                                  )
+                                ]),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Material(
-                          color: Colors.white,
-                          child: InkWell(
-                            onTap: () {
-                              _sortingBottomSheet();
-                            },
+                    Container(
+                      margin: EdgeInsets.only(top: 18, left: 16),
+                      height: 42,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: prodcutListType.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                            onTap: () {},
                             child: Container(
-                              margin: EdgeInsets.all(12),
-                              child: Row(children: <Widget>[
-                                RotatedBox(
-                                    quarterTurns: 3,
-                                    child: Icon(
-                                      Ionicons.ios_swap,
-                                      size: 16,
-                                    )),
-                                SizedBox(
-                                  width: 3,
-                                ),
-                                Text(
-                                  "Sort",
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 13, color: Color(0xFF5D6A78)),
-                                ),
-                              ]),
+                              margin: EdgeInsets.only(right: 8, bottom: 8),
+                              padding: EdgeInsets.only(left: 12, right: 12),
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.grey[200],
+                                      blurRadius: 8.0,
+                                      spreadRadius: 1,
+                                      offset: Offset(0.0, 3))
+                                ],
+                                color: Theme.of(context).bottomAppBarColor,
+                                borderRadius: BorderRadius.circular(24),
+                              ),
+                              child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    prodcutListType[index],
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 13, color: Color(0xFF5D6A78)),
+                                  )),
                             ),
-                          ),
-                        ),
-                        Material(
-                          color: Colors.white,
-                          child: InkWell(
-                            onTap: () {
-                              Nav.route(context, FilterPage());
-                            },
-                            child: Container(
-                              margin: EdgeInsets.all(12),
-                              child: Row(children: <Widget>[
-                                SvgPicture.asset(
-                                  "assets/icons/funnel.svg",
-                                  height: 14,
-                                  color: Color(0xFF5D6A78),
-                                ),
-                                SizedBox(
-                                  width: 3,
-                                ),
-                                Text(
-                                  "Filter",
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 13, color: Color(0xFF5D6A78)),
-                                )
-                              ]),
-                            ),
-                          ),
-                        )
-                      ],
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 18, left: 16),
-                    height: 42,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: prodcutListType.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return GestureDetector(
-                          onTap: () {},
-                          child: Container(
-                            margin: EdgeInsets.only(right: 8, bottom: 8),
-                            padding: EdgeInsets.only(left: 12, right: 12),
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.grey[200],
-                                    blurRadius: 8.0,
-                                    spreadRadius: 1,
-                                    offset: Offset(0.0, 3))
-                              ],
-                              color: Theme.of(context).bottomAppBarColor,
-                              borderRadius: BorderRadius.circular(24),
-                            ),
-                            child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  prodcutListType[index],
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 13, color: Color(0xFF5D6A78)),
-                                )),
-                          ),
-                        );
-                      },
+                    SizedBox(
+                      height: 32,
                     ),
-                  ),
-                  SizedBox(
-                    height: 32,
-                  ),
-                  Container(height: 600,
-                      child: list(themeColor)),
-                ],
+                    Container(height: 600,
+                        child: list(themeColor)),
+                  ],
+                ),
               ),
             ),
           ],
@@ -588,5 +607,20 @@ class _SearchPageState extends State<SearchPage> {
         )
       ],
     );
+  }
+}
+
+class Debouncer {
+  final int milliseconds;
+  VoidCallback action;
+  Timer _timer;
+
+  Debouncer({this.milliseconds});
+
+  run(VoidCallback action) {
+    if (null != _timer) {
+      _timer.cancel();
+    }
+    _timer = Timer(Duration(milliseconds: milliseconds), action);
   }
 }

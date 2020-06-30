@@ -12,11 +12,18 @@ import 'package:getflutter/getflutter.dart';
 import 'package:getflutter/shape/gf_button_shape.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:html/parser.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:shoppingapp/Provider/counter.dart';
 import 'package:shoppingapp/modal/Product_review.dart';
+import 'package:shoppingapp/modal/Product_variations.dart';
+import 'package:shoppingapp/modal/Recentview.dart';
+import 'package:shoppingapp/modal/cart.dart';
 import 'package:shoppingapp/modal/productmodel.dart';
 import 'package:shoppingapp/pages/order_page.dart';
 import 'package:shoppingapp/service/productdervice.dart';
+import 'package:shoppingapp/util/recentId.dart';
+import 'package:shoppingapp/util/sql_helper.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/dummy_data/discountImages.dart';
 import 'package:shoppingapp/utils/navigator.dart';
@@ -40,15 +47,23 @@ class ProductDetailPage extends StatefulWidget {
 class _ProductDetailPageState extends State<ProductDetailPage>
     with TickerProviderStateMixin {
   AnimationController controller;
+  SQL_Helper helper = new SQL_Helper();
+  SQL_Rercent helperRecent = new SQL_Rercent();
+  Recentview recentview;
+  Cart cart;
+  int checkboxValueA,checkboxValueB ;
+  List<Product_variations> product_variations;
   Animation<double> animation;
   Future<List<ProductModel>> productRelated;
   int _carouselCurrentPage = 0;
   ScrollController tempScroll = ScrollController();
   double radius = 40;
   int piece = 1;
+  static int count =0;
   List<Product_review> product_review=new  List<Product_review>();
   @override
   void initState() {
+    countCart();
     tempScroll = ScrollController()
       ..addListener(() {
         setState(() {
@@ -67,6 +82,16 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     animation = Tween<double>(begin: 0, end: 1).animate(
         CurvedAnimation(parent: controller, curve: Curves.easeInToLinear));
     controller.forward();
+    _addtoRecentview();
+  }
+  void _addtoRecentview() async {
+    recentview=new Recentview(widget.product.id, count++);
+    int result;
+    if (await helperRecent.checkItem(recentview.id) == true) {
+      result =  await helperRecent.insertRecentView(recentview);
+    } else {
+      result = await helperRecent.updateRecentView(recentview);
+    }
   }
 
   @override
@@ -83,6 +108,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
           alignment: Alignment.center,
           child: Text(
             name,
+            maxLines: 1,
             style: GoogleFonts.poppins(color: Color(0xFF5D6A78), fontSize: 10),
           )),
       decoration: BoxDecoration(
@@ -119,7 +145,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                           child: CachedNetworkImage(
                             imageUrl: (widget.product.images == null)
                                 ? 'http://arabimagefoundation.com/images/defaultImage.png'
-                                : widget.product.images[0].src,
+                                : item.src,
+                            fit: BoxFit.fill,
                             errorWidget: (context, url, error) => Icon(Icons.error),
                           ))),
                 ],
@@ -183,7 +210,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                   position: BadgePosition.bottomRight(),
                   padding: EdgeInsets.all(8),
                   badgeContent: Text(
-                    isLiked ? '4' : '5',
+                    Provider.of<counter>(context).countCart.toString(),
                     style: TextStyle(color: whiteColor, fontSize: 10),
                   ),
                   child: SvgPicture.asset(
@@ -546,9 +573,10 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                       width: 140,
                                       child: GFButton(
                                         onPressed: () {
-                                          Nav.route(context, OrderPage());
+                                          //Nav.route(context, OrderPage());
                                           setState(() {
-                                            isLiked = !isLiked;
+                                           // isLiked = !isLiked;
+                                            _save();
                                           });
                                         },
                                         icon: Icon(
@@ -933,4 +961,33 @@ class _ProductDetailPageState extends State<ProductDetailPage>
           );
         });
   }
+
+  void _save() async {
+    double myInt = await double.parse(widget.product.price);
+    myInt=num.parse(myInt.toStringAsFixed(2));
+    cart= new Cart(await widget.product.id, await widget.product.name, piece, myInt,
+        DateFormat.yMMMd().format(DateTime.now()),await widget.product.images[0].src);
+    if(product_variations!=null){cart.idVariation=checkboxValueB;}
+    int result;
+    if (await helper.checkItem(cart.id) == true) {
+      result =  await helper.insertCart(cart);
+    } else {
+      result = await helper.updateCart(cart);
+    }
+    if (result == 0) {
+     // showAlertDialog(getTransrlate(context, 'sorry'), getTransrlate(context, 'notSavedcart'));
+    } else {
+     // showAlertDialog(getTransrlate(context, 'Alert'),getTransrlate(context, 'Savedcart'));
+      print('doneeeeeeeeeeeeeeeeeeeeeeeee');
+      countCart();
+    }
+  }
+  void countCart() async {
+    helper.getCount().then((value) {
+      Provider.of<counter>(context).intcountCart(value);
+
+    });
+
+  }
+
 }
