@@ -46,8 +46,9 @@ class _CategoryPageState extends State<CategoryPage> {
         tabsWidth: 48,
         maincat: maincat,
         subcats: subcats,
-        contents: contents,
-      ):Center(child:
+        contents:  getChildren(subcats, maincat[3]),
+    )
+      :Center(child:
       CircularProgressIndicator(
           valueColor:  AlwaysStoppedAnimation<Color>(themeColor.getColor()))):
       Center(child:
@@ -63,7 +64,7 @@ class _CategoryPageState extends State<CategoryPage> {
       child: ListView.builder(
         itemCount: subcats.length,
         itemBuilder: (context, index) {
-          contents.add(expansionTile(themeColor, subcats[index].name));
+         // contents.add(expansionTile(themeColor, subcats[index].name));
           return expansionTile(themeColor, subcats[index].name);
         },
       ),
@@ -137,4 +138,54 @@ class _CategoryPageState extends State<CategoryPage> {
       ),
     );
   }
+   List showCategories(){
+     List<Widget> widgets = [];
+     if (maincat!= null) {
+       var list =  maincat;
+       for (var index in list) {
+         widgets.add(
+           ExpansionTile(
+             title: Padding(
+               padding: const EdgeInsets.only(left: 0.0),
+               child: Text(
+                 index.name.toUpperCase(),
+                 style: TextStyle(
+                     fontSize: 14,
+                     fontWeight: FontWeight.w600,
+                     color: Colors.black),
+               ),
+             ),
+             children: getChildren(subcats, index),
+           ),
+         );
+       }
+     }else  CircularProgressIndicator(
+         valueColor:  AlwaysStoppedAnimation<Color>(Provider.of<ThemeNotifier>(context).getColor()));
+     return widgets;
+   }
+   List getChildren(List<Category> categories, Category category) {
+     List<Widget> list = [];
+     var children = categories.where((o) => o.parent == category.id).toList();
+     for (var i in children) {
+       list.add(
+         ListTile(
+           leading: Padding(
+             child: Text(i.name,
+               style: TextStyle(
+                   fontSize: 14,
+                   fontWeight: FontWeight.w600,
+                   color: Colors.black),          ),
+             padding: EdgeInsets.only(left: 20),
+           ),
+           trailing: Icon(
+             Icons.arrow_forward_ios,
+             size: 12,
+           ),
+           onTap: () {
+           },
+         ),
+       );
+     }
+     return list;
+   }
 }
