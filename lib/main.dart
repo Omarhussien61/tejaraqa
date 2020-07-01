@@ -248,4 +248,8 @@ class _InitPageState extends State<InitPage> {
 //          fit: BoxFit.cover),
     );
   }
+
+
+
+
 }

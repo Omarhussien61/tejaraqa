@@ -9,6 +9,7 @@ import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';
 
 import '../config.dart';
+import '../main.dart';
 
 class OnboardingPage extends StatefulWidget {
   OnboardingPage({Key key}) : super(key: key);
@@ -103,7 +104,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           duration: Duration(milliseconds: 400),
                           curve: Curves.linear);
                       setState(() {});
-                      Nav.routeReplacement(context, LoginPage());
+                      Nav.routeReplacement(context, InitPage());
                     },
                     splashColor: Colors.blue[50],
                     child: Text(
@@ -148,7 +149,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     type: GFButtonType.outline,
                     shape: GFButtonShape.pills,
                     onPressed: () {
-                      Nav.routeReplacement(context, LoginPage());
+                      Nav.routeReplacement(context, InitPage());
                     },
                     child: Text(
                       "GET STARTED",

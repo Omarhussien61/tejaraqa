@@ -32,7 +32,6 @@ class LoginService {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString("user_email", userInfo.user.email);
         prefs.setString("user_displayname", userInfo.user.firstname);
-
         prefs.setString("token", userInfo.cookie);
         prefs.setInt("user_id", userInfo.user.id);
         prefs.setString("password", password);
@@ -41,13 +40,12 @@ class LoginService {
         Constatnt.RegisterState=true;
         return userInfo;
       }
+
     } catch (e) {
       print(e);
     } finally {}
     return userInfo;
   }
-
-
   Future<dynamic>  Register(String email, String f_Name, String L_Name, String Username,String passwords) async {
     Map<String, dynamic> body = {
       'email': email,

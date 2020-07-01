@@ -41,7 +41,8 @@ class CategoriesListView extends StatelessWidget {
       child: Center(
         child:categories==null?Center(child:
         CircularProgressIndicator(
-            valueColor:  AlwaysStoppedAnimation<Color>(Provider.of<ThemeNotifier>(context).getColor()))): ListView.builder(
+            valueColor:  AlwaysStoppedAnimation<Color>(Provider.of<ThemeNotifier>(context).getColor()))):
+        ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount:categories==null?0:categories.length,
           itemBuilder: (BuildContext context, int index) {

@@ -6,6 +6,14 @@ class counter with ChangeNotifier {
   int theme_index = 1;
   int countCart = 1;
 
+  bool isLogin = false;
+
+
+  setLogin( bool isLog) {
+    isLogin = isLog;
+    notifyListeners();
+  }
+
   String local = 'ar';
   Color color;
   ThemeModel themeModel;

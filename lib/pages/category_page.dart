@@ -1,10 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shoppingapp/modal/ExeansionTile.dart';
 import 'package:shoppingapp/modal/category.dart';
+import 'package:shoppingapp/modal/productmodel.dart';
 import 'package:shoppingapp/service/categoryservice.dart';
+import 'package:shoppingapp/service/productdervice.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/dummy_data/category.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
@@ -16,12 +20,19 @@ class CategoryPage extends StatefulWidget {
 class _CategoryPageState extends State<CategoryPage> {
 
    List<Category> maincat,subcats;
+   List<ProductModel>products;
+
    List<Widget> contents;
 @override
   void initState() {
  CategoryService().getMainCategory().then((value) {
    setState(() {
      maincat=value;
+   });
+ });
+ ProductService.getNewProducts().then((value) {
+   setState(() {
+     products=value;
    });
  });
  CategoryService().getSubCategory().then((value) {
@@ -46,7 +57,7 @@ class _CategoryPageState extends State<CategoryPage> {
         tabsWidth: 48,
         maincat: maincat,
         subcats: subcats,
-        contents:  getChildren(subcats, maincat[3]),
+        contents:  showCategories(),
     )
       :Center(child:
       CircularProgressIndicator(
@@ -56,136 +67,92 @@ class _CategoryPageState extends State<CategoryPage> {
           valueColor:  AlwaysStoppedAnimation<Color>(themeColor.getColor()))),
     );
   }
-  Widget tabsContent(ThemeNotifier themeColor, String caption,
-      [String description = '']) {
-    return Container(
-      padding: EdgeInsets.only(left: 5, right: 5),
-      color: greyBackground,
-      child: ListView.builder(
-        itemCount: subcats.length,
-        itemBuilder: (context, index) {
-         // contents.add(expansionTile(themeColor, subcats[index].name));
-          return expansionTile(themeColor, subcats[index].name);
-        },
-      ),
-    );
-  }
-  Widget expansionTile(themeColor, String title) {
-    return Theme(
-      data: ThemeData(accentColor: themeColor.getColor()),
-      child: ExpansionTile(
-        title: Text(
-          title,
-          style: GoogleFonts.poppins(color: Color(0xFF5D6A78)),
-          textDirection: TextDirection.ltr,
-        ),
-        leading: null,
-//        trailing: Icon(
-//          Icons.add,
-//          size: 0,
-//        ),
-        children: [
-          ListView(
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            children: <Widget>[
-              GridView.count(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                childAspectRatio: 1.045,
-                // Create a grid with 2 columns. If you change the scrollDirection to
-                // horizontal, this produces 2 rows.
-                crossAxisCount: 3,
-                mainAxisSpacing: 16,
-                // Generate 100 widgets that display their index in the List.
-                children: List.generate(subCategoriesImages.length, (index) {
-                  return Center(
-                    child: Container(
-                      child: Column(
-                        children: <Widget>[
-                          ClipRRect(
-                            child: Image.asset(
-                              "assets/images/${subCategoriesImages[index]}.png",
-                              height: 75,
-                              width: 84,
-                              fit: BoxFit.cover,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(top: 2.0, bottom: 1.0),
-                            child: AutoSizeText(
-                              subCategoriesTitle[index],
-                              maxLines: 2,
-                              minFontSize: 7,
-                              style: GoogleFonts.poppins(
-                                fontSize: 10,
-                                color: Color(0xFF5D6A78),
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  );
-                }),
-              )
-            ],
-          )
-        ],
-      ),
-    );
-  }
+
    List showCategories(){
      List<Widget> widgets = [];
      if (maincat!= null) {
        var list =  maincat;
-       for (var index in list) {
-         widgets.add(
-           ExpansionTile(
-             title: Padding(
-               padding: const EdgeInsets.only(left: 0.0),
-               child: Text(
-                 index.name.toUpperCase(),
-                 style: TextStyle(
-                     fontSize: 14,
-                     fontWeight: FontWeight.w600,
-                     color: Colors.black),
-               ),
-             ),
-             children: getChildren(subcats, index),
-           ),
-         );
+       for (var i in list) {
+         widgets.add(getChildren(subcats, i));
        }
      }else  CircularProgressIndicator(
          valueColor:  AlwaysStoppedAnimation<Color>(Provider.of<ThemeNotifier>(context).getColor()));
      return widgets;
    }
-   List getChildren(List<Category> categories, Category category) {
-     List<Widget> list = [];
+   Widget getChildren(List<Category> categories, Category category) {
      var children = categories.where((o) => o.parent == category.id).toList();
-     for (var i in children) {
-       list.add(
-         ListTile(
-           leading: Padding(
-             child: Text(i.name,
-               style: TextStyle(
-                   fontSize: 14,
-                   fontWeight: FontWeight.w600,
-                   color: Colors.black),          ),
-             padding: EdgeInsets.only(left: 20),
+     return ListView.builder(
+       itemCount: children.length,
+       itemBuilder: (context, index) {
+         return ExpansionTile(
+           title: Text(
+             children[index].name,
+             style: GoogleFonts.poppins(color: Color(0xFF5D6A78)),
+             textDirection: TextDirection.rtl,
            ),
-           trailing: Icon(
-             Icons.arrow_forward_ios,
-             size: 12,
-           ),
-           onTap: () {
-           },
-         ),
-       );
-     }
-     return list;
+           leading: null,
+           children: [
+             getProducet(products,children[index])
+           ],
+         );
+       },
+     );
    }
+   Widget getProducet(List<ProductModel> products, Category category) {
+     var childr = products.where((o) => o.categories[0].id == category.id).toList();
+
+     return GridView.builder(
+       primary: false,
+       shrinkWrap: true,
+       physics: NeverScrollableScrollPhysics(),
+       gridDelegate:
+       SliverGridDelegateWithFixedCrossAxisCount(
+         childAspectRatio: 1.045,
+         crossAxisCount: 3,
+         mainAxisSpacing: 16,
+       ),
+       itemCount: childr == null ? 0 : childr.length,
+       itemBuilder: (BuildContext context, int index) {
+         return Padding(
+           padding: const EdgeInsets.all(4.0),
+           child:Center(
+             child: Container(
+               child: Column(
+                 children: <Widget>[
+                   ClipRRect(
+                     child: CachedNetworkImage(
+                       imageUrl: childr[index].images==null?
+                       '':childr[index].images[0].src,
+                       height: 75,
+                       width: 84,
+                       fit: BoxFit.cover,
+                     ),
+                     borderRadius: BorderRadius.circular(8),
+                   ),
+                   Padding(
+                     padding:
+                     const EdgeInsets.only(top: 2.0, bottom: 1.0),
+                     child: Container(
+                       width: 45,
+                       child: AutoSizeText(
+                         childr[index].name,
+                         maxLines: 2,
+                         minFontSize: 7,
+                         style: GoogleFonts.poppins(
+                           fontSize: 12,
+                           color: Color(0xFF5D6A78),
+                           fontWeight: FontWeight.w400,
+                         ),
+                       ),
+                     ),
+                   )
+                 ],
+               ),
+             ),
+           ),
+         );
+       },
+     );
+   }
+
 }

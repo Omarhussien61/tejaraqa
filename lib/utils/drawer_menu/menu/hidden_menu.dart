@@ -1,11 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shoppingapp/Provider/counter.dart';
 import 'package:shoppingapp/pages/about_page.dart';
 import 'package:shoppingapp/pages/change_password_page.dart';
 import 'package:shoppingapp/pages/contact_page.dart';
+import 'package:shoppingapp/pages/login_page.dart';
 import 'package:shoppingapp/pages/profile_settings_page.dart';
+import 'package:shoppingapp/util/shared_preferences_helper.dart';
 import 'package:shoppingapp/utils/drawer_menu/simple_hidden_drawer/animated_drawer_content.dart';
 import 'package:shoppingapp/utils/drawer_menu/simple_hidden_drawer/provider/simple_hidden_drawer_provider.dart';
 import 'package:shoppingapp/utils/navigator.dart';
@@ -58,9 +62,19 @@ class HiddenMenu extends StatefulWidget {
 class _HiddenMenuState extends State<HiddenMenu> {
   int _indexSelected;
   bool isconfiguredListern = false;
+  int id;
+  String username,name,photo;
+
+  Future fetchUserId() async{
+    id = await SharedPreferencesHelper.getUserId();
+    username = await SharedPreferencesHelper.getEmail();
+    name = await SharedPreferencesHelper.getname();
+    photo = await SharedPreferencesHelper.getUserimage();
+  }
 
   @override
   void initState() {
+    fetchUserId();
     _indexSelected = widget.initPositionSelected;
     super.initState();
   }
@@ -90,12 +104,10 @@ class _HiddenMenuState extends State<HiddenMenu> {
               ),
               ListTile(
                 title: Text(
-                  "Jon Doe",
+                  name==null?'user':name,
                   style: GoogleFonts.poppins(color: Colors.white),
                 ),
-                leading: CircleAvatar(
-                  backgroundImage: AssetImage("assets/images/man.png"),
-                ),
+                leading: CircleAvatar(child: CachedNetworkImage(imageUrl: photo)),
               ),
               Container(
                 padding: EdgeInsets.only(
@@ -312,6 +324,32 @@ class _HiddenMenuState extends State<HiddenMenu> {
                           colorLineSelected: Colors.orange,
                         ),
                       ),
+                      InkWell(
+                        onTap: () {
+                          if (Provider.of<counter>(context).local==false){
+                            Nav.route(context, LoginPage());
+                          }
+                          else {
+                          SharedPreferencesHelper.cleanlocal();
+                          Provider.of<counter>(context).setLogin(false);
+                          Nav.route(context, LoginPage());
+                          }
+                        },
+                        child: ItemHiddenMenu(
+                          icon: Icon(
+                            Icons.arrow_back,
+                            size: 19,
+                            color: Colors.white,
+                          ),
+                          name:Provider.of<counter>(context).local==false?'Log in':'Log out',
+                          baseStyle: GoogleFonts.poppins(
+                              color: Colors.white.withOpacity(0.6),
+                              fontSize: 19.0,
+                              fontWeight: FontWeight.w200),
+                          colorLineSelected: Colors.orange,
+                        ),
+                      ),
+
                     ],
                   ),
                 ),
