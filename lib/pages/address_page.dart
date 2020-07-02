@@ -25,8 +25,12 @@ class _AddressPageState extends State<AddressPage> {
           statusBarBrightness: Brightness.dark,
           statusBarIconBrightness: Brightness.dark),
     );
+
+
+
     return SafeArea(
       child: Scaffold(
+
         bottomNavigationBar: InkWell(
           onTap: () {
             Nav.routeReplacement(context, NewAddressPage());

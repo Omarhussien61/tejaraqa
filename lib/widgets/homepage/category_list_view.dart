@@ -46,14 +46,13 @@ class CategoriesListView extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           itemCount:categories==null?0:categories.length,
           itemBuilder: (BuildContext context, int index) {
-            print(categories[0].image.src);
             return GestureDetector(
               onTap: () {
                 Navigator.push(
                   context,
                   PageTransition(
                     type: PageTransitionType.fade,
-                    child: SearchPage(),
+                    child: SearchPage(searchEditor: categories[index].name),
                   ),
                 );
               },

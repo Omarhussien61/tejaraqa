@@ -21,6 +21,7 @@ import 'package:shoppingapp/modal/Recentview.dart';
 import 'package:shoppingapp/modal/cart.dart';
 import 'package:shoppingapp/modal/productmodel.dart';
 import 'package:shoppingapp/pages/order_page.dart';
+import 'package:shoppingapp/pages/shopping_cart_page.dart';
 import 'package:shoppingapp/service/productdervice.dart';
 import 'package:shoppingapp/util/recentId.dart';
 import 'package:shoppingapp/util/sql_helper.dart';
@@ -559,7 +560,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                       width: 140,
                                       child: GFButton(
                                         onPressed: () {
-                                          Nav.route(context, OrderPage());
+                                          Nav.route(context, ShoppingCartPage());
                                         },
                                         child: Text("Buy",
                                             style: GoogleFonts.poppins(
@@ -784,7 +785,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                 ],
                               ),
                               Container(
-                                height: 300,
+                                height: product_review == null ? 100 : product_review.length*110.toDouble(),
                                 child: ListView.builder(
                                     physics: new NeverScrollableScrollPhysics(),
                                     itemCount:  product_review == null ? 0 : product_review.length,

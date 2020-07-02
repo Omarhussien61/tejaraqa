@@ -34,6 +34,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
   static double total=0;
   int count = 0;
   List<LineItems> items;
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -55,7 +56,17 @@ class HomeWidgetState extends State<ShoppingCartPage>
     }
     return SafeArea(
       child: Scaffold(
-        bottomSheet: shoppingCartBottomSummary(themeColor),
+        key: scaffoldKey,
+        bottomSheet: CartList.isEmpty?
+        Center(
+          child:Hero(
+            tag: 'icon',
+            child:CachedNetworkImage(
+                errorWidget: (context, url, error) => Icon(Icons.error),
+                imageUrl: 'https://d2.woo2.app/wp-content/uploads/2020/07/Capture.png'
+            ),
+          ),
+        ):shoppingCartBottomSummary(themeColor),
         backgroundColor: whiteColor,
         body: Stack(
           children: <Widget>[
@@ -73,7 +84,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
                 ),
 
                 Container(
-                    height:400,
+                    height:600,
                     child: getCartList())
               ],
             )),
@@ -122,7 +133,6 @@ class HomeWidgetState extends State<ShoppingCartPage>
       });
     });
   }
-
   Widget shoppingCartInfo() {
     return Container(
       margin: EdgeInsets.only(left: 24),
@@ -147,7 +157,6 @@ class HomeWidgetState extends State<ShoppingCartPage>
       ),
     );
   }
-
   Widget shoppingCartBottomSummary(ThemeNotifier themeColor) {
     return Container(
       decoration: BoxDecoration(
@@ -192,7 +201,14 @@ class HomeWidgetState extends State<ShoppingCartPage>
               style: GoogleFonts.poppins(color: whiteColor, fontSize: 10),
             ),
             onPressed: () {
-              Nav.route(context, OrderPage());
+              if(CartList.length==0||CartList.isEmpty||CartList==null){
+                final snackbar = SnackBar(
+                  content: Text('Cart Empty !'),
+                );
+                scaffoldKey.currentState.showSnackBar(snackbar);
+              }else{
+                Nav.route(context, OrderPage(CartList));
+              }
             },
             type: GFButtonType.solid,
             shape: GFButtonShape.pills,

@@ -19,6 +19,11 @@ import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
 
 class SearchPage extends StatefulWidget {
+  String searchEditor ;
+
+
+  SearchPage({this.searchEditor});
+
   @override
   _SearchPageState createState() => _SearchPageState();
 }
@@ -49,22 +54,12 @@ class _SearchPageState extends State<SearchPage> {
         systemNavigationBarIconBrightness: Brightness.dark,
         statusBarIconBrightness: Brightness.dark,
         statusBarBrightness: Brightness.dark));
-    List<String> prodcutListType = [
-      'Bestsellers',
-      'Favourites',
-      'The best',
-      'The most recent',
-      'Bestsellers',
-      'Favourites',
-      'The best',
-      'The most recent',
-    ];
+
     GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
 
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color.fromARGB(255, 252, 252, 252),
-        key: _drawerKey, // assign key to Scaffold
         body: Stack(
           children: <Widget>[
             Row(
@@ -115,11 +110,10 @@ class _SearchPageState extends State<SearchPage> {
                           padding: EdgeInsets.only(bottom: 4),
                           height: 72,
                           child: TextFormField(
-                            key: _formKey,
+                            initialValue: widget.searchEditor==null?'':widget.searchEditor,
                             onChanged: (string) {
                               debouncer.run(() {
                                 setState(() {
-                                  //title = Provider.of<counter>(context).themeModel.searchContent[0];
                                   filteredProduct = productModel.where((u) =>
                                   (u.name.toLowerCase().contains(string.toLowerCase())) ||
                                       (u.categories[0].name.toLowerCase().contains(string.toLowerCase()))||
@@ -203,6 +197,7 @@ class _SearchPageState extends State<SearchPage> {
                             child: InkWell(
                               onTap: () {
                                 Nav.route(context, FilterPage());
+
                               },
                               child: Container(
                                 margin: EdgeInsets.all(12),
@@ -227,46 +222,13 @@ class _SearchPageState extends State<SearchPage> {
                         ],
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(top: 18, left: 16),
-                      height: 42,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: prodcutListType.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                            onTap: () {},
-                            child: Container(
-                              margin: EdgeInsets.only(right: 8, bottom: 8),
-                              padding: EdgeInsets.only(left: 12, right: 12),
-                              decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Colors.grey[200],
-                                      blurRadius: 8.0,
-                                      spreadRadius: 1,
-                                      offset: Offset(0.0, 3))
-                                ],
-                                color: Theme.of(context).bottomAppBarColor,
-                                borderRadius: BorderRadius.circular(24),
-                              ),
-                              child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    prodcutListType[index],
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 13, color: Color(0xFF5D6A78)),
-                                  )),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
                     SizedBox(
                       height: 32,
                     ),
                     Container(height: 600,
-                        child: list(themeColor)),
+                        child: productModel==null?Center(child:
+                        CircularProgressIndicator(
+                            valueColor:  AlwaysStoppedAnimation<Color>(Provider.of<ThemeNotifier>(context).getColor()))):list(themeColor)),
                   ],
                 ),
               ),
@@ -300,7 +262,9 @@ class _SearchPageState extends State<SearchPage> {
                     )),
                 InkWell(
                   onTap: () {
+                    ubdateCategory(LowToHigh);
                     Navigator.pop(context);
+
                   },
                   child: Container(
                       margin: EdgeInsets.only(left: 32, top: 24),
@@ -321,7 +285,9 @@ class _SearchPageState extends State<SearchPage> {
                 ),
                 InkWell(
                   onTap: () {
+                    ubdateCategory(New);
                     Navigator.pop(context);
+
                   },
                   child: Container(
                       margin: EdgeInsets.only(left: 32, top: 20),
@@ -342,7 +308,9 @@ class _SearchPageState extends State<SearchPage> {
                 ),
                 InkWell(
                   onTap: () {
+                    ubdateCategory(LowToHigh);
                     Navigator.pop(context);
+
                   },
                   child: Container(
                       margin: EdgeInsets.only(left: 32, top: 20),
@@ -363,6 +331,7 @@ class _SearchPageState extends State<SearchPage> {
                 ),
                 InkWell(
                   onTap: () {
+                    ubdateCategory(HighToLow);
                     Navigator.pop(context);
                   },
                   child: Container(
@@ -411,9 +380,18 @@ class _SearchPageState extends State<SearchPage> {
     ProductService.getAllProducts(url).then((usersFromServer) {
       setState(() {
         productModel = usersFromServer;
-        filteredProduct = productModel;
         _isLoading=false;
+        widget.searchEditor==null?filteredProduct = productModel:filteredProduct = productModel.where((u) =>
+            (u.name.toLowerCase().contains(widget.searchEditor.toLowerCase())) ||
+                (u.categories[0].name.toLowerCase().contains(widget.searchEditor.toLowerCase()))||
+                (u.sortDescription.toLowerCase().contains(widget.searchEditor.toLowerCase()))
+                ||
+                (u.description.toLowerCase().contains(widget.searchEditor.toLowerCase()))
+            ).toList();
+
+
       });
+
     });
   }
   Stack productSearchItem(BuildContext context, ThemeNotifier themeColor,int index) {

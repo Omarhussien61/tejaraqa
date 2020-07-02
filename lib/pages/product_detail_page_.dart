@@ -9,6 +9,7 @@ import 'package:getflutter/shape/gf_button_shape.dart';
 import 'package:getflutter/types/gf_button_type.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shoppingapp/pages/shopping_cart_page.dart';
 import 'package:shoppingapp/utils/dummy_data/discountImages.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';
@@ -333,7 +334,7 @@ class _ProductDetailPageAlternativeState
                           width: 140,
                           child: GFButton(
                             onPressed: () {
-                              Nav.route(context, OrderPage());
+                              Nav.route(context, ShoppingCartPage());
                             },
                             child: Text("Buy",
                                 style: GoogleFonts.poppins(
@@ -348,7 +349,7 @@ class _ProductDetailPageAlternativeState
                           child: GFButton(
                             onPressed: () {
                               setState(() {
-                                Nav.route(context, OrderPage());
+                                Nav.route(context, ShoppingCartPage());
                                 isLiked = !isLiked;
                               });
                             },

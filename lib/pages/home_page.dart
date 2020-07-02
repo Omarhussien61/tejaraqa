@@ -84,25 +84,15 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ThemeNotifier>(context);
-
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 252, 252, 252),
       body: ListView(
         children: <Widget>[
           SearchBox(),
-
-//              FlatButton(
-//                onPressed: () {
-//                  _onActionSheetPress(context);
-//                },
-//                child: Text(translate('button.change_language')),
-//              ),
-
-
           CategoryListView(maincat),
           InkWell(
             onTap: () {
-              Nav.route(context, ProductDetailPage());
+             // Nav.route(context, ProductDetailPage());
             },
             child: CarouselSlider(
               items: imageSliders,
@@ -201,7 +191,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
   void countCart() async {
     helper.getCount().then((value) {
       Provider.of<counter>(context).intcountCart(value);

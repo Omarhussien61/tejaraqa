@@ -9,6 +9,7 @@ class NewAddressInput extends StatelessWidget {
   final IconButton suffixIcon;
   final bool isPassword;
   final bool isEmail;
+  TextEditingController controller;
 
   NewAddressInput({
     this.hintText,
@@ -18,11 +19,13 @@ class NewAddressInput extends StatelessWidget {
     this.isEmail = false,
     this.labelText,
     this.suffixIcon,
+    this.controller
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       decoration: InputDecoration(
           hintText: hintText,
           labelStyle: GoogleFonts.poppins(fontSize: 12),

@@ -5,7 +5,9 @@ import 'package:getflutter/components/button/gf_button.dart';
 import 'package:getflutter/getflutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shoppingapp/modal/Address_shiping.dart';
 import 'package:shoppingapp/pages/credit_cart_page.dart';
+import 'package:shoppingapp/util/sql_address.dart';
 import 'package:shoppingapp/utils/drop_down_menu/find_dropdown.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
@@ -21,11 +23,14 @@ class _NewAddressPageState extends State<NewAddressPage> {
   String selectedValue;
   String preselectedValue = "dolor sit";
   List<int> selectedItems = [];
-  final List<DropdownMenuItem> items = [];
+  TextEditingController _cityController,_CountryController;
+  TextEditingController _AddressController,_buildingController,_streeetController;
 
+  final List<DropdownMenuItem> items = [];
+  Address_shiping address;
+  SQL_Address helper = new SQL_Address();
   final String loremIpsum =
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqu";
-
   @override
   void initState() {
     @override
@@ -49,9 +54,16 @@ class _NewAddressPageState extends State<NewAddressPage> {
             value: "add",
           ));
         }
+
         wordPair = "";
       }
     });
+
+    _CountryController = TextEditingController();
+    _cityController = TextEditingController();
+    _AddressController = TextEditingController();
+    _buildingController = TextEditingController();
+    _streeetController = TextEditingController();
     super.initState();
 
     super.initState();
@@ -72,7 +84,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
       child: Scaffold(
         bottomNavigationBar: InkWell(
           onTap: () {
-            Nav.routeReplacement(context, CreditCartPage());
+            _save();
           },
           child: Container(
             margin: EdgeInsets.only(left: 14, right: 14),
@@ -116,6 +128,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
                 Column(
                   children: <Widget>[
                     NewAddressInput(
+                      controller: _CountryController,
                       labelText: "Address Title",
                       hintText: '',
                       isEmail: true,
@@ -129,6 +142,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
                     ),
                     NewAddressInput(
                       labelText: "Name Surname",
+                      controller: _streeetController,
                       hintText: '',
                       isEmail: true,
                       validator: (String value) {},
@@ -164,6 +178,8 @@ class _NewAddressPageState extends State<NewAddressPage> {
                       height: 16,
                     ),
                     NewAddressInput(
+                      controller: _AddressController,
+
                       labelText: "Address",
                       hintText: '',
                       isEmail: true,
@@ -176,6 +192,8 @@ class _NewAddressPageState extends State<NewAddressPage> {
                       height: 16,
                     ),
                     NewAddressInput(
+                      controller: _streeetController,
+
                       labelText: "Invoice Code",
                       hintText: '',
                       isEmail: true,
@@ -188,6 +206,8 @@ class _NewAddressPageState extends State<NewAddressPage> {
                       height: 16,
                     ),
                     NewAddressInput(
+                      controller: _cityController,
+
                       labelText: "Mobile Phone",
                       hintText: '',
                       isEmail: true,
@@ -247,4 +267,24 @@ class _NewAddressPageState extends State<NewAddressPage> {
       ),
     );
   }
+
+  Future<void> _save()  async {
+    address=new Address_shiping(
+        _CountryController.text,
+        _cityController.text,
+        _streeetController.text,
+        _buildingController.text,
+        _AddressController.text);
+    int result;
+    result =  await helper.insertStudent(address);
+    if (result == 0) {
+
+    } else {
+      Nav.routeReplacement(context, CreditCartPage());
+
+    }
+  }
+
+
+
 }

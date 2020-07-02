@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     _auth();
     Timer(
-        Duration(seconds: 3),
+        Duration(seconds: 6),
         () =>_auth()
     );
   }

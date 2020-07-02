@@ -58,7 +58,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ThemeNotifier>(context);
     var localizationDelegate = LocalizedApp.of(context).delegate;
-
     return LocalizationProvider(
       state: LocalizationProvider.of(context).state,
       child: MultiProvider(
