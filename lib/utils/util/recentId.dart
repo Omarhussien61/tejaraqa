@@ -1,6 +1,6 @@
 
 import 'package:shoppingapp/modal/Recentview.dart';
-import 'package:shoppingapp/util/sql_helper.dart';
+import 'package:shoppingapp/utils/util/sql_helper.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 import 'dart:io';

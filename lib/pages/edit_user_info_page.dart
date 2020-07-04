@@ -93,6 +93,7 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
                 Column(
                   children: <Widget>[
                     NewAddressInput(
+
                       labelText: "Name surname",
                       hintText: 'Name surname',
                       isEmail: true,

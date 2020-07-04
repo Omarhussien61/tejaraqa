@@ -3,19 +3,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shoppingapp/modal/Address_shiping.dart';
 import 'package:shoppingapp/pages/new_adress_page.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
+import 'package:shoppingapp/utils/util/sql_address.dart';
+import 'package:sqflite/sqflite.dart';
 
 class AddressPage extends StatefulWidget {
+
+
   @override
   _AddressPageState createState() => _AddressPageState();
 }
 
 class _AddressPageState extends State<AddressPage> {
+
+  List<Address_shiping> addressList;
+  SQL_Address helper = new SQL_Address();
+
+  @override
+  void initState() {
+    updateListView();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (addressList == null) {
+      addressList = new List<Address_shiping>();
+      setState(() {
+        updateListView();
+      });
+    }
     final themeColor = Provider.of<ThemeNotifier>(context);
 
     SystemChrome.setSystemUIOverlayStyle(
@@ -25,7 +46,6 @@ class _AddressPageState extends State<AddressPage> {
           statusBarBrightness: Brightness.dark,
           statusBarIconBrightness: Brightness.dark),
     );
-
 
 
     return SafeArea(
@@ -76,13 +96,14 @@ class _AddressPageState extends State<AddressPage> {
                 ),
                 Container(
                   margin: EdgeInsets.all(8),
-                  child: ListView(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    children: <Widget>[
-                      buildAddressItem(context),
-                      buildAddressItem(context),
-                    ],
+                  child: Container(
+                    height: ScreenUtil.getHeight(context),
+                    child: ListView.builder(
+                      itemCount: addressList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                       return buildAddressItem(context,addressList[0]);
+                      },
+                    ),
                   ),
                 )
               ],
@@ -93,7 +114,7 @@ class _AddressPageState extends State<AddressPage> {
     );
   }
 
-  Container buildAddressItem(BuildContext context) {
+  Container buildAddressItem(BuildContext context, Address_shiping address) {
     return Container(
       decoration: BoxDecoration(
           color: Colors.white,
@@ -115,8 +136,22 @@ class _AddressPageState extends State<AddressPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                address.Country,
+                style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w300,
+                    color: Color(0xFF5D6A78)),
+              ),
+              InkWell(onTap: () => _delete(context,address),
+                  child: Icon(Icons.delete_forever, color:Provider.of<ThemeNotifier>(context).getColor() ,))
+            ],
+          ),
           Text(
-            "My Home Address",
+            address.city,
             style: GoogleFonts.poppins(
                 fontSize: 16,
                 fontWeight: FontWeight.w300,
@@ -125,12 +160,12 @@ class _AddressPageState extends State<AddressPage> {
           Container(width: 64, child: Divider()),
           Expanded(
               child: Text(
-            "Galatae ferox stella est. Galatae ferox stella est. Galatae ferox stella est.",
-            style: GoogleFonts.poppins(
-                fontSize: 14,
-                fontWeight: FontWeight.w300,
-                color: Color(0xFF5D6A78)),
-          )),
+                address.addres1,
+                style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w300,
+                    color: Color(0xFF5D6A78)),
+              )),
           Container(width: 64, child: Divider()),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -179,5 +214,24 @@ class _AddressPageState extends State<AddressPage> {
       ),
       padding: EdgeInsets.only(top: 24, left: 24, right: 24, bottom: 24),
     );
+  }
+
+  void updateListView() {
+    final Future<Database> db = helper.initializedDatabase();
+    db.then((database) {
+      Future<List<Address_shiping>> students = helper.getStudentList();
+      students.then((theList) {
+        setState(() {
+          this.addressList = theList;
+        });
+      });
+    });
+  }
+
+  void _delete(BuildContext context, Address_shiping student) async {
+    int ressult = await helper.deleteStudent(student.id);
+    if (ressult != 0) {
+      updateListView();
+    }
   }
 }

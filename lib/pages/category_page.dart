@@ -7,10 +7,12 @@ import 'package:provider/provider.dart';
 import 'package:shoppingapp/modal/ExeansionTile.dart';
 import 'package:shoppingapp/modal/category.dart';
 import 'package:shoppingapp/modal/productmodel.dart';
+import 'package:shoppingapp/pages/product_detail.dart';
 import 'package:shoppingapp/service/categoryservice.dart';
 import 'package:shoppingapp/service/productdervice.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/dummy_data/category.dart';
+import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
 import 'package:shoppingapp/utils/vertical_tab/vertical_tab.dart';
 class CategoryPage extends StatefulWidget {
@@ -30,7 +32,7 @@ class _CategoryPageState extends State<CategoryPage> {
      maincat=value;
    });
  });
- ProductService.getNewProducts().then((value) {
+ ProductService.getAllProducts('order=desc&filter[meta_key]=total_sales&status=publish&').then((value) {
    setState(() {
      products=value;
    });
@@ -48,7 +50,7 @@ class _CategoryPageState extends State<CategoryPage> {
     final themeColor = Provider.of<ThemeNotifier>(context);
     return Scaffold(
       backgroundColor: greyBackground,
-      body:maincat!=null?subcats!=null? VerticalTabs(
+      body:maincat!=null?subcats!=null&&products!=null? VerticalTabs(
         indicatorColor: themeColor.getColor(),
         selectedTabBackgroundColor: whiteColor,
         tabBackgroundColor: themeColor.getColor(),
@@ -72,7 +74,10 @@ class _CategoryPageState extends State<CategoryPage> {
      List<Widget> widgets = [];
      if (maincat!= null) {
        var list =  maincat;
+
        for (var i in list) {
+         var childr = products.where((o) => o.categories[0].id == i.id).toList();
+         childr.length!=0? widgets.add(getProducet(products, i)):
          widgets.add(getChildren(subcats, i));
        }
      }else  CircularProgressIndicator(
@@ -115,8 +120,12 @@ class _CategoryPageState extends State<CategoryPage> {
        itemBuilder: (BuildContext context, int index) {
          return Padding(
            padding: const EdgeInsets.all(4.0),
-           child:Center(
+           child: InkWell(
+             onTap: () {
+               Nav.route(context, ProductDetailPage(product: childr[index],));
+             },
              child: Container(
+               width: 85,
                child: Column(
                  children: <Widget>[
                    ClipRRect(
@@ -129,20 +138,15 @@ class _CategoryPageState extends State<CategoryPage> {
                      ),
                      borderRadius: BorderRadius.circular(8),
                    ),
-                   Padding(
-                     padding:
-                     const EdgeInsets.only(top: 2.0, bottom: 1.0),
-                     child: Container(
-                       width: 45,
-                       child: AutoSizeText(
-                         childr[index].name,
-                         maxLines: 2,
-                         minFontSize: 7,
-                         style: GoogleFonts.poppins(
-                           fontSize: 12,
-                           color: Color(0xFF5D6A78),
-                           fontWeight: FontWeight.w400,
-                         ),
+                   Container(
+                     width: 84,
+                     child: Text(
+                       childr[index].name,
+                       maxLines: 1,
+                       style: GoogleFonts.poppins(
+                         fontSize: 12,
+                         color: Color(0xFF5D6A78),
+                         fontWeight: FontWeight.w400,
                        ),
                      ),
                    )
@@ -154,5 +158,4 @@ class _CategoryPageState extends State<CategoryPage> {
        },
      );
    }
-
 }

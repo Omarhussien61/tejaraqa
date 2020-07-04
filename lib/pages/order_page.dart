@@ -13,12 +13,13 @@ import 'package:shoppingapp/modal/cart.dart';
 import 'package:shoppingapp/modal/createOrder.dart';
 import 'package:shoppingapp/pages/credit_cart_page.dart';
 import 'package:shoppingapp/service/OrderService.dart';
-import 'package:shoppingapp/util/shared_preferences_helper.dart';
-import 'package:shoppingapp/util/sql_address.dart';
+
 import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
+import 'package:shoppingapp/utils/util/shared_preferences_helper.dart';
+import 'package:shoppingapp/utils/util/sql_address.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'ditails_Payment.dart';

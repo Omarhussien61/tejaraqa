@@ -10,11 +10,12 @@ import 'package:shoppingapp/modal/productmodel.dart';
 import 'package:shoppingapp/pages/product_detail.dart';
 import 'package:shoppingapp/service/categoryservice.dart';
 import 'package:shoppingapp/service/productdervice.dart';
-import 'package:shoppingapp/util/recentId.dart';
-import 'package:shoppingapp/util/sql_helper.dart';
+
 import 'package:shoppingapp/utils/dummy_data/discountImages.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
+import 'package:shoppingapp/utils/util/recentId.dart';
+import 'package:shoppingapp/utils/util/sql_helper.dart';
 import 'package:shoppingapp/widgets/homepage/category_list_view.dart';
 import 'package:shoppingapp/widgets/homepage/discount_list.dart';
 import 'package:shoppingapp/widgets/homepage/product_list.dart';
@@ -63,15 +64,12 @@ class _HomePageState extends State<HomePage> {
             //items.add(this.recents[i].id.toString());
             contVeiw=contVeiw+','+theList[i].id.toString();
           }
-          print('go $contVeiw');
           productview=ProductService.getRecentviewProducts(contVeiw);
         });
       });
     });
 
-
   }
-
 
   void showDemoActionSheet({BuildContext context, Widget child}) {
     showCupertinoModalPopup<String>(

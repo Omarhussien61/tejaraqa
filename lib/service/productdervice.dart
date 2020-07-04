@@ -11,7 +11,7 @@ import 'package:shoppingapp/modal/createOrder.dart';
 import 'package:shoppingapp/modal/productmodel.dart';
 import 'package:shoppingapp/modal/reviews.dart';
 import 'package:shoppingapp/service/API_CONFIQ.dart';
-import 'package:shoppingapp/util/sql_helper.dart';
+import 'package:shoppingapp/utils/util/sql_helper.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:flutter/rendering.dart';

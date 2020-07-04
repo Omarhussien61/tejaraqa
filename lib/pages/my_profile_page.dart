@@ -118,19 +118,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                       style: GoogleFonts.poppins(
                           fontSize: 15, color: Color(0xFF5D6A78))),
                 ),
-                SizedBox(
-                  height: 12,
-                ),
-                ListTile(
-                  onTap: () {
-                    Nav.route(context, ProductDetailPage());
-                  },
-                  leading: Image.asset("assets/icons/ic_ticket.png",
-                      width: 22, color: Color(0xFF5D6A78)),
-                  title: Text("Coupons",
-                      style: GoogleFonts.poppins(
-                          fontSize: 15, color: Color(0xFF5D6A78))),
-                ),
+
                 SizedBox(
                   height: 12,
                 ),

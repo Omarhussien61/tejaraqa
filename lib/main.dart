@@ -15,12 +15,12 @@ import 'package:shoppingapp/pages/home_navigator.dart';
 import 'package:shoppingapp/pages/my_profile_page.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
 import 'package:shoppingapp/pages/splash_screen.dart';
-import 'package:shoppingapp/util/sql_helper.dart';
 import 'package:shoppingapp/utils/drawer_menu/hidden_drawer/hidden_drawer_menu.dart';
 import 'package:shoppingapp/utils/drawer_menu/hidden_drawer/screen_hidden_drawer.dart';
 import 'package:shoppingapp/utils/drawer_menu/menu/item_hidden_menu.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
+import 'package:shoppingapp/utils/util/sql_helper.dart';
 
 import 'Provider/counter.dart';
 import 'config.dart';
