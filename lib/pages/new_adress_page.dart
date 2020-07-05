@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shoppingapp/modal/Address_shiping.dart';
 import 'package:shoppingapp/pages/credit_cart_page.dart';
-import 'package:shoppingapp/util/sql_address.dart';
+import 'package:shoppingapp/utils/util/sql_address.dart';
 import 'package:shoppingapp/utils/drop_down_menu/find_dropdown.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';

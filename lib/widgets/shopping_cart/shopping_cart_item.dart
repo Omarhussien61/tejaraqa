@@ -10,6 +10,7 @@ import 'package:shoppingapp/modal/productmodel.dart';
 import 'package:shoppingapp/utils/drop_down_menu/find_dropdown.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
+import 'package:shoppingapp/utils/util/sql_helper.dart';
 
 class ShoppingCartItem extends StatelessWidget {
   const ShoppingCartItem({
@@ -87,18 +88,6 @@ class ShoppingCartItem extends StatelessWidget {
                 ),
               )
             ],
-          ),
-        ),
-        Positioned(
-          top: 0,
-          right: 12,
-          child: IconButton(
-            icon: Icon(
-              Feather.trash,
-              size: 18,
-              color: Color(0xFF5D6A78),
-            ),
-            onPressed: () {},
           ),
         ),
         Positioned(
@@ -180,4 +169,13 @@ class ShoppingCartItem extends StatelessWidget {
       ],
     );
   }
+  void delete(BuildContext context, Cart student) async {
+    SQL_Helper helper = new SQL_Helper();
+
+    int ressult = await helper.deleteCart(student.id);
+    if (ressult != 0) {
+      //updateListView();
+    }
+  }
+
 }

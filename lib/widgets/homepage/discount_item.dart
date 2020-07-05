@@ -12,6 +12,7 @@ import 'package:like_button/like_button.dart';
 import 'package:shoppingapp/modal/productmodel.dart';
 import 'package:shoppingapp/pages/product_detail.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
+import 'package:shoppingapp/utils/commons/AddToCart.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';
@@ -210,10 +211,12 @@ class DiscountItem extends StatelessWidget {
             child: Container(
               child: GFButton(
                 onPressed: () {
+                  save(product);
+                  countCart(context);
+
                   Scaffold.of(context).showSnackBar(SnackBar(
                       backgroundColor: mainColor,
                       content: Text('Product added to cart')));
-                  Nav.route(context, ShoppingCartPage());
                 },
                 icon: SvgPicture.asset(
                   "assets/icons/ic_product_shopping_cart.svg",

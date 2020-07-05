@@ -6,9 +6,9 @@ import 'package:shoppingapp/modal/User.dart';
 import 'package:shoppingapp/modal/productmodel.dart';
 import 'package:shoppingapp/modal/usermodal.dart';
 import 'package:shoppingapp/service/API_CONFIQ.dart';
-import 'package:shoppingapp/util/Constant.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shoppingapp/utils/util/Constant.dart';
 
 class LoginService {
   UserModal userInfo;

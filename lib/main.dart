@@ -190,7 +190,7 @@ class _InitPageState extends State<InitPage> {
       backgroundColorAppBar: Color.fromARGB(255, 252, 252, 252),
       tittleAppBar: Padding(
         child: Text(
-          "Woo2Comm",
+          "Store",
           style: GoogleFonts.poppins(
             fontSize: 26,
             color: themeColor.getColor(),

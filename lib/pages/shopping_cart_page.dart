@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:getflutter/components/button/gf_button.dart';
 import 'package:getflutter/getflutter.dart';
 import 'package:getflutter/types/gf_button_type.dart';
@@ -10,7 +11,8 @@ import 'package:shoppingapp/Provider/counter.dart';
 import 'package:shoppingapp/modal/cart.dart';
 import 'package:shoppingapp/modal/createOrder.dart';
 import 'package:shoppingapp/pages/order_page.dart';
-import 'package:shoppingapp/util/sql_helper.dart';
+import 'package:shoppingapp/utils/commons/AddToCart.dart';
+import 'package:shoppingapp/utils/util/sql_helper.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
@@ -31,14 +33,13 @@ class HomeWidgetState extends State<ShoppingCartPage>
     with SingleTickerProviderStateMixin {
   List<Cart> CartList;
   SQL_Helper helper = new SQL_Helper();
-  static double total=0;
+  static double total = 0;
   int count = 0;
   List<LineItems> items;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
-
     super.initState();
   }
 
@@ -57,16 +58,17 @@ class HomeWidgetState extends State<ShoppingCartPage>
     return SafeArea(
       child: Scaffold(
         key: scaffoldKey,
-        bottomSheet: CartList.isEmpty?
-        Center(
-          child:Hero(
-            tag: 'icon',
-            child:CachedNetworkImage(
-                errorWidget: (context, url, error) => Icon(Icons.error),
-                imageUrl: 'https://d2.woo2.app/wp-content/uploads/2020/07/Capture.png'
-            ),
-          ),
-        ):shoppingCartBottomSummary(themeColor),
+        bottomSheet: CartList.isEmpty
+            ? Center(
+                child: Hero(
+                  tag: 'icon',
+                  child: CachedNetworkImage(
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                      imageUrl:
+                          'https://d2.woo2.app/wp-content/uploads/2020/07/Capture.png'),
+                ),
+              )
+            : shoppingCartBottomSummary(themeColor),
         backgroundColor: whiteColor,
         body: Stack(
           children: <Widget>[
@@ -82,10 +84,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
                 SizedBox(
                   height: 12,
                 ),
-
-                Container(
-                    height:600,
-                    child: getCartList())
+                Container(height: 600, child: getCartList())
               ],
             )),
           ],
@@ -93,16 +92,39 @@ class HomeWidgetState extends State<ShoppingCartPage>
       ),
     );
   }
+
   ListView getCartList() {
     return ListView.builder(
-        itemCount:CartList.length,
+        itemCount: CartList.length,
         itemBuilder: (BuildContext context, int position) {
-          double x= this.CartList[position].pass*this.CartList[position].quantity;
-          return ShoppingCartItem(
-            productModel: CartList[position],
-             themeColor:Provider.of<ThemeNotifier>(context), imageUrl: "prodcut1.png");
+          double x =
+              this.CartList[position].pass * this.CartList[position].quantity;
+          return Stack(
+            children: <Widget>[
+              ShoppingCartItem(
+                  productModel: CartList[position],
+                  themeColor: Provider.of<ThemeNotifier>(context),
+                  imageUrl: "prodcut1.png"),
+              Positioned(
+                top: 0,
+                right: 12,
+                child: IconButton(
+                  icon: Icon(
+                    Feather.trash,
+                    size: 18,
+                    color: Color(0xFF5D6A78),
+                  ),
+                  onPressed: () {
+                    delete(context,CartList[position]);
+                  },
+                ),
+              ),
+
+            ],
+          );
         });
   }
+
   void updateListView() {
     final Future<Database> db = helper.initializedDatabase();
     db.then((database) {
@@ -110,29 +132,28 @@ class HomeWidgetState extends State<ShoppingCartPage>
       students.then((theList) {
         setState(() {
           this.CartList = theList;
-          total=0;
+          total = 0;
           items = new List<LineItems>();
-          for (int i = 0; i <=  theList.length-1 ; i++){
+          for (int i = 0; i <= theList.length - 1; i++) {
             print(this.CartList[i].idVariation);
-            total+=this.CartList[i].quantity*this.CartList[i].pass;
-            if (this.CartList[i].idVariation==null)
-            { items.add(new LineItems(
-              productId: this.CartList[i].id,
-              quantity: this.CartList[i].quantity,
-
-            ));}
-            else{ items.add(new LineItems(
+            total += this.CartList[i].quantity * this.CartList[i].pass;
+            if (this.CartList[i].idVariation == null) {
+              items.add(new LineItems(
                 productId: this.CartList[i].id,
                 quantity: this.CartList[i].quantity,
-                variationId: this.CartList[i].idVariation
-            ));}
-
+              ));
+            } else {
+              items.add(new LineItems(
+                  productId: this.CartList[i].id,
+                  quantity: this.CartList[i].quantity,
+                  variationId: this.CartList[i].idVariation));
+            }
           }
-
         });
       });
     });
   }
+
   Widget shoppingCartInfo() {
     return Container(
       margin: EdgeInsets.only(left: 24),
@@ -148,7 +169,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
           SizedBox(
             width: 16,
           ),
-          Text(Provider.of<counter>(context).countCart.toString()+" products",
+          Text(Provider.of<counter>(context).countCart.toString() + " products",
               style: GoogleFonts.poppins(
                   fontWeight: FontWeight.w400,
                   fontSize: 12,
@@ -157,6 +178,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
       ),
     );
   }
+
   Widget shoppingCartBottomSummary(ThemeNotifier themeColor) {
     return Container(
       decoration: BoxDecoration(
@@ -201,12 +223,14 @@ class HomeWidgetState extends State<ShoppingCartPage>
               style: GoogleFonts.poppins(color: whiteColor, fontSize: 10),
             ),
             onPressed: () {
-              if(CartList.length==0||CartList.isEmpty||CartList==null){
+              if (CartList.length == 0 ||
+                  CartList.isEmpty ||
+                  CartList == null) {
                 final snackbar = SnackBar(
                   content: Text('Cart Empty !'),
                 );
                 scaffoldKey.currentState.showSnackBar(snackbar);
-              }else{
+              } else {
                 Nav.route(context, OrderPage(CartList));
               }
             },
@@ -217,4 +241,15 @@ class HomeWidgetState extends State<ShoppingCartPage>
       ),
     );
   }
+
+  void delete(BuildContext context, Cart student) async {
+    int ressult = await helper.deleteCart(student.id);
+    if (ressult != 0) {
+      updateListView();
+      countCart(context);
+
+    }
+  }
+
+
 }

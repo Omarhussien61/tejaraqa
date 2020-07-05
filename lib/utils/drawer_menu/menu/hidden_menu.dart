@@ -9,7 +9,7 @@ import 'package:shoppingapp/pages/change_password_page.dart';
 import 'package:shoppingapp/pages/contact_page.dart';
 import 'package:shoppingapp/pages/login_page.dart';
 import 'package:shoppingapp/pages/profile_settings_page.dart';
-import 'package:shoppingapp/util/shared_preferences_helper.dart';
+import 'package:shoppingapp/utils/util/shared_preferences_helper.dart';
 import 'package:shoppingapp/utils/drawer_menu/simple_hidden_drawer/animated_drawer_content.dart';
 import 'package:shoppingapp/utils/drawer_menu/simple_hidden_drawer/provider/simple_hidden_drawer_provider.dart';
 import 'package:shoppingapp/utils/navigator.dart';
@@ -107,7 +107,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                   name==null?'user':name,
                   style: GoogleFonts.poppins(color: Colors.white),
                 ),
-                leading: CircleAvatar(child: CachedNetworkImage(imageUrl: photo)),
+                leading: CircleAvatar(child: CachedNetworkImage(imageUrl: photo==null?'user':photo)),
               ),
               Container(
                 padding: EdgeInsets.only(

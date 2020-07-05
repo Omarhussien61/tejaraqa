@@ -80,243 +80,257 @@ class _OrderPageState extends State<OrderPage> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Color(0xFFFCFCFC),
-        body: Container(
-          padding: EdgeInsets.all(16),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Text(
-                    "Addresses",
-                    style: GoogleFonts.poppins(
-                        fontSize: 12, color: Color(0xFF5D6A78)),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.all(8),
-                  child: ListView(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    children: <Widget>[
-                      buildAddressItem(context, themeColor),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Text(
-                    "Select a payment method",
-                    style: GoogleFonts.poppins(
-                        fontSize: 12, color: Color(0xFF5D6A78)),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.all(8),
-                  child: ListView(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(.2),
-                                blurRadius: 6.0, // soften the shadow
-                                spreadRadius: 0.0, //extend the shadow
-                                offset: Offset(
-                                  0.0, // Move to right 10  horizontally
-                                  1.0, // Move to bottom 10 Vertically
-                                ),
-                              )
-                            ]),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            PaymentList!=null? Container(
-                              height: PaymentList == null ? 50 :PaymentList.length*50.toDouble(),
-                              child:ListView.builder(
-                                  itemCount:PaymentList == null ? 0 :PaymentList.length,
-                                  itemBuilder: (BuildContext context, int pos) {
-                                    return  buildPayMethodItem(context, PaymentList[pos].title, themeColor,pos);
-                                  }),
-                            ):Center(child: CircularProgressIndicator()),
-
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0, top: 16, bottom: 8),
-                  child: Text(
-                    "Order Note",
-                    style: GoogleFonts.poppins(
-                        fontSize: 12, color: Color(0xFF5D6A78)),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 8, right: 8, left: 8),
-                  child: ListView(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(.2),
-                                blurRadius: 6.0, // soften the shadow
-                                spreadRadius: 0.0, //extend the shadow
-                                offset: Offset(
-                                  0.0, // Move to right 10  horizontally
-                                  1.0, // Move to bottom 10 Vertically
-                                ),
-                              )
-                            ]),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: themeColor.getColor()),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: textColor),
-                                    ),
-                                    labelStyle: new TextStyle(
-                                        color: const Color(0xFF424242)),
-                                    hintText: "Enter the order Notes",
-                                    hintStyle: GoogleFonts.poppins(
-                                        fontSize: 12, color: textColor)),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0, top: 16, bottom: 8),
-                  child: Text(
-                    "Phone Number",
-                    style: GoogleFonts.poppins(
-                        fontSize: 12, color: Color(0xFF5D6A78)),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 8, right: 8, left: 8),
-                  child: ListView(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(.2),
-                                blurRadius: 6.0, // soften the shadow
-                                spreadRadius: 0.0, //extend the shadow
-                                offset: Offset(
-                                  0.0, // Move to right 10  horizontally
-                                  1.0, // Move to bottom 10 Vertically
-                                ),
-                              )
-                            ]),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: themeColor.getColor()),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: textColor),
-                                    ),
-                                    labelStyle: new TextStyle(
-                                        color: const Color(0xFF424242)),
-                                    hintText: "Enter the Phone Number",
-                                    hintStyle: GoogleFonts.poppins(
-                                        fontSize: 12, color: textColor)),
-                                onChanged: (String value){
-                                  phone=value;
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0, right: 8),
-                  child: GFButton(
-                    borderShape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                        6,
+        body: Stack(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.all(16),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Text(
+                        "Addresses",
+                        style: GoogleFonts.poppins(
+                            fontSize: 12, color: Color(0xFF5D6A78)),
                       ),
                     ),
-                    child: Text("ORDER COMPLETE"),
-                    color: themeColor.getColor(),
-                    onPressed: () {
-                      //Nav.route(context, CreditCartPage());
-                      if(phone!=null)
-                      {
-                        if(checkboxValueA==null){
-                          final snackbar = SnackBar(
-                            content: Text('Address not Selected'),
-                          );
-                          scaffoldKey.currentState.showSnackBar(snackbar);
-                        }else{
-                          create_New_order(phone);
-                          setState(() {
-                            _isLoading=true;
-                          });
-                        }
+                    Container(
+                      margin: EdgeInsets.all(8),
+                      child: ListView(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        children: <Widget>[
+                          buildAddressItem(context, themeColor),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Text(
+                        "Select a payment method",
+                        style: GoogleFonts.poppins(
+                            fontSize: 12, color: Color(0xFF5D6A78)),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.all(8),
+                      child: ListView(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(.2),
+                                    blurRadius: 6.0, // soften the shadow
+                                    spreadRadius: 0.0, //extend the shadow
+                                    offset: Offset(
+                                      0.0, // Move to right 10  horizontally
+                                      1.0, // Move to bottom 10 Vertically
+                                    ),
+                                  )
+                                ]),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                PaymentList!=null? Container(
+                                  height: PaymentList == null ? 50 :PaymentList.length*50.toDouble(),
+                                  child:ListView.builder(
+                                      itemCount:PaymentList == null ? 0 :PaymentList.length,
+                                      itemBuilder: (BuildContext context, int pos) {
+                                        return  buildPayMethodItem(context, PaymentList[pos].title, themeColor,pos);
+                                      }),
+                                ):Center(child: CircularProgressIndicator()),
 
-                      }
-                      else
-                      {
-                        final snackbar = SnackBar(
-                          content: Text('Not phone'),
-                        );
-                        scaffoldKey.currentState.showSnackBar(snackbar);
-                      }
-                    },
-                    type: GFButtonType.solid,
-                    fullWidthButton: true,
-                  ),
-                )
-              ],
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0, top: 16, bottom: 8),
+                      child: Text(
+                        "Phone Number",
+                        style: GoogleFonts.poppins(
+                            fontSize: 12, color: Color(0xFF5D6A78)),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 8, right: 8, left: 8),
+                      child: ListView(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(.2),
+                                    blurRadius: 6.0, // soften the shadow
+                                    spreadRadius: 0.0, //extend the shadow
+                                    offset: Offset(
+                                      0.0, // Move to right 10  horizontally
+                                      1.0, // Move to bottom 10 Vertically
+                                    ),
+                                  )
+                                ]),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: TextFormField(
+
+                                    decoration: InputDecoration(
+
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: themeColor.getColor()),
+                                        ),
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(color: textColor),
+                                        ),
+                                        labelStyle: new TextStyle(
+                                            color: const Color(0xFF424242)),
+                                        hintText: "Enter the Phone Number",
+                                        hintStyle: GoogleFonts.poppins(
+                                            fontSize: 12, color: textColor)),
+                                    onChanged: (String value){
+                                      phone=value;
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0, top: 16, bottom: 8),
+                      child: Text(
+                        "Order Note",
+                        style: GoogleFonts.poppins(
+                            fontSize: 12, color: Color(0xFF5D6A78)),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 8, right: 8, left: 8),
+                      child: ListView(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(.2),
+                                    blurRadius: 6.0, // soften the shadow
+                                    spreadRadius: 0.0, //extend the shadow
+                                    offset: Offset(
+                                      0.0, // Move to right 10  horizontally
+                                      1.0, // Move to bottom 10 Vertically
+                                    ),
+                                  )
+                                ]),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: TextFormField(
+                                    decoration: InputDecoration(
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: themeColor.getColor()),
+                                        ),
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(color: textColor),
+                                        ),
+                                        labelStyle: new TextStyle(
+                                            color: const Color(0xFF424242)),
+                                        hintText: "Enter the order Notes",
+                                        hintStyle: GoogleFonts.poppins(
+                                            fontSize: 12, color: textColor)),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0, right: 8),
+                      child: GFButton(
+                        borderShape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                            6,
+                          ),
+                        ),
+                        child: Text("ORDER COMPLETE"),
+                        color: themeColor.getColor(),
+                        onPressed: () {
+                          //Nav.route(context, CreditCartPage());
+                          if(phone!=null)
+                          {
+                            if(checkboxValueA==null){
+                              final snackbar = SnackBar(
+                                content: Text('Address not Selected'),
+                              );
+                              scaffoldKey.currentState.showSnackBar(snackbar);
+                            }else{
+                              create_New_order(phone);
+                              setState(() {
+                                _isLoading=true;
+                              });
+                            }
+
+                          }
+                          else
+                          {
+                            final snackbar = SnackBar(
+                              content: Text('Not phone'),
+                            );
+                            scaffoldKey.currentState.showSnackBar(snackbar);
+                          }
+                        },
+                        type: GFButtonType.solid,
+                        fullWidthButton: true,
+                      ),
+                    )
+                  ],
+                ),
+              ),
             ),
-          ),
+            _isLoading ? Container(
+                height: double.infinity,
+                width: double.infinity,
+                color: Colors.black45,
+                child: Center(child: CircularProgressIndicator(valueColor:  AlwaysStoppedAnimation<Color>(themeColor.getColor()),
+                )))
+                : Container()
+          ],
         ),
       ),
     );
@@ -454,52 +468,6 @@ class _OrderPageState extends State<OrderPage> {
     );
   }
 
-  openAlertBox(context, themeColor) {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(8.0))),
-            contentPadding: EdgeInsets.only(top: 10.0),
-            content: Container(
-              width: 300.0,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  SizedBox(
-                    height: 32,
-                  ),
-                  Container(
-                    width: 180,
-                    child: Text("Your order has been successfully completed.",
-                        style: GoogleFonts.poppins(color: Color(0xFF5D6A78))),
-                  ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  Container(
-                    width: 220,
-                    child: RaisedButton(
-                      onPressed: () {
-                        Nav.routeReplacement(context, InitPage());
-                      },
-                      color: themeColor.getColor(),
-                      child: Text(
-                        "OKEY",
-                        style: GoogleFonts.poppins(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
 
 
   void _delete(BuildContext context, Address_shiping student) async {

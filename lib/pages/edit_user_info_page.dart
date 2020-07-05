@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shoppingapp/modal/usermodal.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/drop_down_menu/find_dropdown.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
+import 'package:shoppingapp/utils/util/shared_preferences_helper.dart';
 import 'package:shoppingapp/widgets/new_adress_input.dart';
 
 class EditUserInfoPage extends StatefulWidget {
@@ -20,37 +22,17 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
   String preselectedValue = "dolor sit";
   List<int> selectedItems = [];
   final List<DropdownMenuItem> items = [];
+  String email,name,_username;
+  TextEditingController _nameController,_EmailController,_UserNameController;
+  UserModal userModal;
 
-  final String loremIpsum =
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqu";
 
   @override
   void initState() {
-    @override
-    String wordPair = "";
-    loremIpsum
-        .toLowerCase()
-        .replaceAll(",", "")
-        .replaceAll(".", "")
-        .split(" ")
-        .forEach((word) {
-      if (wordPair.isEmpty) {
-        wordPair = word + " ";
-      } else {
-        wordPair += word;
-        if (items.indexWhere((item) {
-              return (item.value == wordPair);
-            }) ==
-            -1) {
-          items.add(DropdownMenuItem(
-            child: Text("sfsdf"),
-            value: "sdfsdfsdf",
-          ));
-        }
-        wordPair = "";
-      }
-    });
-    super.initState();
+    getInfo();
+    _nameController=TextEditingController();
+    _EmailController=TextEditingController();
+    _UserNameController=TextEditingController();
 
     super.initState();
   }
@@ -93,7 +75,7 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
                 Column(
                   children: <Widget>[
                     NewAddressInput(
-
+                      controller:_nameController ,
                       labelText: "Name surname",
                       hintText: 'Name surname',
                       isEmail: true,
@@ -106,6 +88,7 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
                       height: 16,
                     ),
                     NewAddressInput(
+                      controller:_EmailController ,
                       labelText: "E-mail address",
                       hintText: 'example@example.com',
                       isEmail: true,
@@ -157,7 +140,6 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
       ),
     );
   }
-
   Container buildAddressItem(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -241,4 +223,16 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
       padding: EdgeInsets.only(top: 24, left: 24, right: 24, bottom: 24),
     );
   }
+
+  getInfo() async {
+    email = await SharedPreferencesHelper.getEmail();
+    name = await SharedPreferencesHelper.getname();
+    setState(() {
+      _nameController.text=name;
+      _EmailController.text=email;
+
+    });
+  }
+
+
 }

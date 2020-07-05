@@ -21,9 +21,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _auth();
     Timer(
-        Duration(seconds: 6),
+        Duration(seconds: 3),
         () =>_auth()
     );
   }
@@ -41,8 +40,8 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: mainColor,
       body: Center(
         child: Container(
-          height: 240,
-          width: ScreenUtil.getWidth(context) / 2,
+          height: 400,
+          width: ScreenUtil.getWidth(context) /1.7,
           child: Image.asset('assets/images/rosen.png'),
         ),
       ),

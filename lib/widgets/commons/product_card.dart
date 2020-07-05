@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shoppingapp/modal/productmodel.dart';
 import 'package:shoppingapp/pages/product_detail.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
+import 'package:shoppingapp/utils/commons/AddToCart.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
@@ -206,10 +207,13 @@ class ProductCard extends StatelessWidget {
           right: 22,
           child: InkWell(
             onTap: () {
+              save(product);
+              countCart(context);
+
               Scaffold.of(context).showSnackBar(SnackBar(
                   backgroundColor: mainColor,
                   content: Text('Product added to cart')));
-              Nav.route(context, ShoppingCartPage());
+
             },
             child: Container(
               padding: EdgeInsets.only(top: 8, left: 8, bottom: 8, right: 8),
