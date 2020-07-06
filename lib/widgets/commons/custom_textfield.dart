@@ -8,6 +8,8 @@ class MyTextFormField extends StatelessWidget {
   final IconButton suffixIcon;
   final bool isPassword;
   final bool isEmail;
+  final bool isPhone;
+
   final String intialLabel;
 
 
@@ -17,6 +19,7 @@ class MyTextFormField extends StatelessWidget {
     this.onSaved,
     this.isPassword = false,
     this.isEmail = false,
+    this.isPhone = false,
     this.labelText,
     this.suffixIcon,
     this.intialLabel
@@ -46,7 +49,7 @@ class MyTextFormField extends StatelessWidget {
         obscureText: isPassword ? true : false,
         validator: validator,
         onSaved: onSaved,
-        keyboardType: isEmail ? TextInputType.emailAddress : TextInputType.text,
+        keyboardType: isEmail ?isPhone?TextInputType.number :TextInputType.emailAddress : TextInputType.text,
       ),
     );
   }

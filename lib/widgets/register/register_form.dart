@@ -93,6 +93,26 @@ class _RegisterFormState extends State<RegisterForm> {
                     },
                   ),
                 ),
+                Container(
+                  alignment: Alignment.topCenter,
+                  child: MyTextFormField(
+                    labelText: "Phone number",
+                    hintText: 'Phone number',
+                    isPhone: true,
+                    validator: (String value) {
+                      if (value.isEmpty) {
+                        return 'Enter your Phone number';
+                      } else if (value.length < 10) {
+                        return 'Enter your Phone number';
+                      }
+                      return null;
+                    },
+                    onSaved: (String value) {
+                      model.Phone = value;
+                    },
+                  ),
+                ),
+
                 MyTextFormField(
                   labelText: "Email",
                   hintText: 'Email',
@@ -153,11 +173,7 @@ class _RegisterFormState extends State<RegisterForm> {
                         if (_formKey.currentState.validate()) {
                           _formKey.currentState.save();
                           var result =  await LoginService().Register(
-                              model.email,
-                              model.firstName,
-                              model.lastName,
-                              model.userName,
-                              model.email );
+                             model );
                         if(result.runtimeType==String)
                           {
                             setState(() => _isLoading = false);

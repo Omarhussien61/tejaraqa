@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 
+import 'package:dio/dio.dart';
 import 'package:shoppingapp/modal/User.dart';
 import 'package:shoppingapp/modal/productmodel.dart';
 import 'package:shoppingapp/modal/usermodal.dart';
@@ -9,6 +10,7 @@ import 'package:shoppingapp/service/API_CONFIQ.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shoppingapp/utils/util/Constant.dart';
+import 'package:shoppingapp/widgets/register/register_form_model.dart';
 
 class LoginService {
   UserModal userInfo;
@@ -46,13 +48,10 @@ class LoginService {
     } finally {}
     return userInfo;
   }
-  Future<dynamic>  Register(String email, String f_Name, String L_Name, String Username,String passwords) async {
+  Future<dynamic>  Register(Model model) async {
+    print(model.email);
     Map<String, dynamic> body = {
-      'email': email,
-      'first_name': f_Name,
-      'last_name': L_Name,
-      'username': Username,
-      'password': passwords
+
     };
     Map<String, String> header = new Map();
     String username = APICONFIQ.consumer_key;
@@ -61,14 +60,30 @@ class LoginService {
     header.putIfAbsent("Authorization", () {
       return valore;
     });
-    var response = await http.post(
-        APICONFIQ.Register,headers: header, body: body);
-    print(response.body);
+    var dio = Dio();
+
+    var response = await dio.post(
+        APICONFIQ.Register+APICONFIQ.Key,
+        data: {
+          'email': model.email,
+          'first_name': model.firstName,
+          'last_name': model.lastName,
+          'username': model.userName,
+          'password': model.password,
+          'meta_data': [
+            {
+              "key": "phonenumber",
+              "value": model.Phone
+            }
+          ],
+
+        });
+    print(response.data);
     if (response.statusCode == 201) {
-     return loginUser(email,passwords);
+     return loginUser(model.email,model.password);
     }
     else{
-      var data=jsonDecode(response.body);
+      var data=jsonDecode(response.data);
       return data['message'];
     }
   }

@@ -38,7 +38,7 @@ class APICONFIQ{
   static String getOrders=url+'/orders?';
   static String Login=Base_url+'/api/auth/generate_auth_cookie/';
   //Register
-  static String Register=url+'/customers';
+  static String Register=url+'/customers?';
 
   static Future<Config_Model> getNewConfiq() async {
     var client = new http.Client();

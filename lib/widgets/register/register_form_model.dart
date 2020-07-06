@@ -4,6 +4,7 @@ class Model {
   String userName;
   String email;
   String password;
+  String Phone;
 
-  Model({this.firstName, this.lastName, this.email, this.password,this.userName});
+  Model({this.firstName, this.lastName, this.email, this.password,this.userName,this.Phone});
 }
