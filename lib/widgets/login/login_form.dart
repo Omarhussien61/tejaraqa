@@ -49,7 +49,7 @@ class _LoginFormState extends State<LoginForm> {
                 MyTextFormField(
                   labelText: "Email",
                   hintText: 'Email',
-                  intialLabel: 'oh134@gmail.com',
+                  intialLabel: 'omarhussien61@gmail.com',
                   isEmail: true,
                   validator: (String value) {
                     if (!validator.isEmail(value)) {

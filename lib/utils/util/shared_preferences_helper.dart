@@ -43,7 +43,11 @@ class SharedPreferencesHelper {
 
     return prefs.setString('image_url', image);
   }
+  static getphone() async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
 
+    return await prefs.getString('phone') ?? 'no phone';
+  }
   static getUserimage() async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('image_url') ??

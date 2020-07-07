@@ -20,7 +20,7 @@ class Config_Model {
     consumerSecret = json['consumer_secret'];
     login = json['Login'];
     kGoogleApiKey = json['kGoogleApiKey'];
-    local = json['local'];
+    local = json ['local'];
   }
 
   Map<String, dynamic> toJson() {

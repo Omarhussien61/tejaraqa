@@ -27,6 +27,14 @@ class LoginService {
       var response = await client.post(
           APICONFIQ.Login,body: body);
       code = response.statusCode;
+      Map<String, String> header = new Map();
+      String username = APICONFIQ.consumer_key;
+      String password = APICONFIQ.consumer_secret;
+      var valore = "Basic " + base64Encode(utf8.encode('$username:$password'));
+      header.putIfAbsent("Authorization", () {
+        return valore;
+      });
+
       print(response.body);
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
@@ -39,6 +47,11 @@ class LoginService {
         prefs.setString("password", password);
         prefs.setString("user_nicename", userInfo.user.nicename);
         prefs.setString("image_url", userInfo.user.avatar);
+        var resp =await client.get(APICONFIQ.Register+userInfo.user.id.toString(),
+            headers:header);
+          var da = json.decode(resp.body)['meta_data'];
+          prefs.setString("phone", da[0]['value']);
+
         Constatnt.RegisterState=true;
         return userInfo;
       }
@@ -50,9 +63,7 @@ class LoginService {
   }
   Future<dynamic>  Register(Model model) async {
     print(model.email);
-    Map<String, dynamic> body = {
 
-    };
     Map<String, String> header = new Map();
     String username = APICONFIQ.consumer_key;
     String password = APICONFIQ.consumer_secret;
@@ -60,8 +71,8 @@ class LoginService {
     header.putIfAbsent("Authorization", () {
       return valore;
     });
-    var dio = Dio();
 
+    var dio = Dio();
     var response = await dio.post(
         APICONFIQ.Register+APICONFIQ.Key,
         data: {
@@ -70,14 +81,27 @@ class LoginService {
           'last_name': model.lastName,
           'username': model.userName,
           'password': model.password,
+          "billing": {
+            "first_name": model.firstName,
+            "last_name": model.lastName,
+            "company": "",
+            "address_1": "",
+            "address_2": "",
+            "city": "",
+            "state": "",
+            "postcode":"",
+            "country": "",
+            "email": model.email,
+            "phone": model.Phone
+          },
           'meta_data': [
             {
               "key": "phonenumber",
               "value": model.Phone
             }
           ],
-
-        });
+        }
+        );
     print(response.data);
     if (response.statusCode == 201) {
      return loginUser(model.email,model.password);

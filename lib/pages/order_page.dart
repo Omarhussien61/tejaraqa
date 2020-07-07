@@ -158,68 +158,72 @@ class _OrderPageState extends State<OrderPage> {
                       ),
                     ),
 
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0, top: 16, bottom: 8),
-                      child: Text(
-                        "Phone Number",
-                        style: GoogleFonts.poppins(
-                            fontSize: 12, color: Color(0xFF5D6A78)),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(bottom: 8, right: 8, left: 8),
-                      child: ListView(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(.2),
-                                    blurRadius: 6.0, // soften the shadow
-                                    spreadRadius: 0.0, //extend the shadow
-                                    offset: Offset(
-                                      0.0, // Move to right 10  horizontally
-                                      1.0, // Move to bottom 10 Vertically
-                                    ),
-                                  )
-                                ]),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: TextFormField(
-
-                                    decoration: InputDecoration(
-
-                                        enabledBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: themeColor.getColor()),
-                                        ),
-                                        focusedBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(color: textColor),
-                                        ),
-                                        labelStyle: new TextStyle(
-                                            color: const Color(0xFF424242)),
-                                        hintText: "Enter the Phone Number",
-                                        hintStyle: GoogleFonts.poppins(
-                                            fontSize: 12, color: textColor)),
-                                    onChanged: (String value){
-                                      phone=value;
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
+                    phone==null?Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0, top: 16, bottom: 8),
+                          child: Text(
+                            "Phone Number",
+                            style: GoogleFonts.poppins(
+                                fontSize: 12, color: Color(0xFF5D6A78)),
                           ),
-                        ],
-                      ),
-                    ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(bottom: 8, right: 8, left: 8),
+                          child: ListView(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            children: <Widget>[
+                              Container(
+                                padding: EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(8),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(.2),
+                                        blurRadius: 6.0, // soften the shadow
+                                        spreadRadius: 0.0, //extend the shadow
+                                        offset: Offset(
+                                          0.0, // Move to right 10  horizontally
+                                          1.0, // Move to bottom 10 Vertically
+                                        ),
+                                      )
+                                    ]),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: TextFormField(
+
+                                        decoration: InputDecoration(
+
+                                            enabledBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: themeColor.getColor()),
+                                            ),
+                                            focusedBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(color: textColor),
+                                            ),
+                                            labelStyle: new TextStyle(
+                                                color: const Color(0xFF424242)),
+                                            hintText: "Enter the Phone Number",
+                                            hintStyle: GoogleFonts.poppins(
+                                                fontSize: 12, color: textColor)),
+                                        onChanged: (String value){
+                                          phone=value;
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ):Container(),
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0, top: 16, bottom: 8),
                       child: Text(
@@ -519,6 +523,7 @@ class _OrderPageState extends State<OrderPage> {
     username = await SharedPreferencesHelper.getUserimage();
     name = await SharedPreferencesHelper.getname();
     id = await SharedPreferencesHelper.getUserId();
+    phone=await SharedPreferencesHelper.getphone();
   }
   List<LineItems> setItemlins(List<Cart> items){
     List<LineItems> item = new List<LineItems>();

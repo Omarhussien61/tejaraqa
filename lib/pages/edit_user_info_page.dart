@@ -22,8 +22,8 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
   String preselectedValue = "dolor sit";
   List<int> selectedItems = [];
   final List<DropdownMenuItem> items = [];
-  String email,name,_username;
-  TextEditingController _nameController,_EmailController,_UserNameController;
+  String email,name,phone;
+  TextEditingController _nameController,_EmailController,_PhoneController;
   UserModal userModal;
 
 
@@ -32,7 +32,7 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
     getInfo();
     _nameController=TextEditingController();
     _EmailController=TextEditingController();
-    _UserNameController=TextEditingController();
+    _PhoneController=TextEditingController();
 
     super.initState();
   }
@@ -112,6 +112,7 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
 //                      },
 //                    ),
                     NewAddressInput(
+                      controller: _PhoneController,
                       labelText: "Mobile phone",
                       hintText: 'xxxx xxx xxx xx',
                       isEmail: true,
@@ -227,9 +228,12 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
   getInfo() async {
     email = await SharedPreferencesHelper.getEmail();
     name = await SharedPreferencesHelper.getname();
+    phone = await SharedPreferencesHelper.getphone();
+
     setState(() {
       _nameController.text=name;
       _EmailController.text=email;
+      _PhoneController.text=phone;
 
     });
   }
