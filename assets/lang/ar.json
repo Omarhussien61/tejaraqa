@@ -1,0 +1,115 @@
+{
+  "SortByPricemore": "الأعلى سعراً",
+  "SortByPriceLess": "الأقل سعراً",
+  "SortByNew": "الاجدد",
+  "SortByold": "الاقدم",
+  "Sort": "رتب حسب",
+
+  "your_profile": "الملف الشخصى",
+  "edit": "تعديل",
+  "profile_name": "الاسم",
+  "mail": "البريد الألكترونى",
+  "display_name": "الاسم الظاهر",
+  "save": "حفظ",
+  "cancel": "إلغاء",
+
+  "codeInveild": "كود غير صالح",
+  "codeUsage": "لقد استخدمت الكود",
+  "codeDone": "لقد تفعيل الكود",
+
+  "NotConnection": "لا يوجد اتصال بالأنترنت",
+  "doneDelete": "تم إزالة المنتج",
+  "Alert": "تنبية",
+  "AskDelete": "هل تريد حذف المنتج من العربة",
+  "yes": "نعم",
+
+  "welcome":"مرحباً بكم",
+  "browsing":"تصفح الأن",
+
+  "login": "تسجيل دخول",
+  "RegisterNew":"تسجيل جديد",
+  "phone": "رقم الهاتف",
+  "Register":"تسجيل",
+  "AreadyAccount":"لديك حساب بالفعل ؟",
+
+  "invildpassword":"الايميل او كلمة السر غير صالح",
+
+  "Email":"الايميل ",
+  "password":"كلمة المرور",
+  "Required":"أدخل الأتى",
+
+  "paymentMethod":"طريقة الدفع",
+  "addressShipping":"عنوان الشحن",
+  "totalOrder":"إجمالى الطلب ",
+  "totalShipping":"إجمالى الشحن",
+  "totaldiscount":"قيمة الخصم",
+  "total":"الإجمالى",
+  "placeorder":"أشترى الأن",
+
+  "CheckOut": "إنهاء",
+
+  "addressSelected":"لا توجد عناوين محددة",
+  "changeAddress":"تغير العنوان",
+
+  "Address":"العنواين",
+  "NoAddressFound":"لا يوجد عناوين مححدة",
+  "Addnaw":"أضف الأن",
+
+  "AddNewAddress":"أضافة عنوان جديد",
+  "Countroy":"الدولة",
+  "City":"المدينة",
+  "Addres":"العنوان",
+
+  "Street":"الشارع",
+  "Building":"العمارة / الشقة",
+  "Done":"تم",
+
+  "sorry":"نأسف",
+  "notSavedAddress":"لم يتم أضافة العنوان",
+  "SavedAddress":"تم أضافة العنوان ",
+
+  "notSavedcart":"لم يتم أضافة الى العربة",
+  "Savedcart":"تم أضافة الى العربة ",
+  "product":"منتجات",
+
+  "notlogin":"لم  يتم تسجيل حساب",
+  "PleaseLogin":"برجاء تسجيل حساب ",
+
+
+  "close":"إغلاق",
+  "closeMessage":"هل تريد إغلاق التطبيق ؟",
+
+  "Reviews":"تقيمات",
+  "NoReviews":"لا توجد تقيمات",
+
+  "LocationSelected":"تحديد موقعك",
+  "SaveNaw":"حفظ الأن",
+  "OrderDone":"تم الطلب !",
+
+  "OrderNO":"رقم الطلب",
+  "OrderState":"الحالة",
+  "Sale": "خصم",
+
+  "Available":"متوفر الأن",
+  "notAvailable":"غير متوفر ألان",
+  "notAvailableOrder":"المنتج نفذ من المخزن الان !",
+
+
+  "OrderDitails":"رقم الطلب",
+  "OrderDate":"تاريخ الطلب",
+  "OrderShipping":"بيانات الشحن",
+  "custCode":"كود العميل",
+
+  "name":"ألاسم",
+  "shipingclass":"شريحة الشحن",
+  "orderTotal":"مدفوعات الطلب",
+  "OrderContent":"محتويات الطلب",
+  "CodeConfirm":"كود التاكيد",
+  "Confirm":"تأكيد",
+
+  "Firstname":"الاسم الاول",
+  "Lastname":"الاسم التالى",
+  "Username":"اسم المستخدم",
+  "UsernameError":"اسم المستخدم فصير جداً",
+  "RegisterError":"خطأ فى التسجيلً"
+}

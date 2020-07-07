@@ -2,10 +2,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:shoppingapp/Provider/counter.dart';
 import 'package:shoppingapp/modal/cart.dart';
 import 'package:shoppingapp/modal/productmodel.dart';
 import 'package:shoppingapp/utils/util/sql_helper.dart';
+
+import '../theme_notifier.dart';
 
 void save(ProductModel productModel) async {
   SQL_Helper helper = new SQL_Helper();
@@ -31,7 +32,7 @@ void countCart(BuildContext context) async {
   SQL_Helper helper = new SQL_Helper();
 
   helper.getCount().then((value) {
-    Provider.of<counter>(context).intcountCart(value);
+    Provider.of<ThemeNotifier>(context).intcountCart(value);
   });
 
 }

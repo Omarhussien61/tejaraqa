@@ -97,7 +97,7 @@ class HiddenDrawerMenu extends StatelessWidget {
     this.contentCornerRadius = 10.0,
     this.enableScaleAnimin = true,
     this.enableCornerAnimin = true,
-    this.typeOpen = TypeOpen.FROM_LEFT,
+    this.typeOpen ,
   });
 
   @override
@@ -120,7 +120,6 @@ class HiddenDrawerMenu extends StatelessWidget {
       initPositionSelected: initPositionSelected,
       screenSelectedBuilder: (position, bloc) {
         List<Widget> actions = List();
-
         if (typeOpen == TypeOpen.FROM_RIGHT) {
           actions.add(IconButton(
               icon: iconMenuAppBar,

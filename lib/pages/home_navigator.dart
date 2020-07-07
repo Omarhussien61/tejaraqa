@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:shoppingapp/Provider/counter.dart';
 import 'package:shoppingapp/pages/category_page.dart';
 import 'package:shoppingapp/pages/favorite_products_page.dart';
 import 'package:shoppingapp/pages/home_page.dart';
@@ -80,7 +79,7 @@ class _HomeNavigatorState extends State<HomeNavigator> {
                 badgeColor: themeColor.getColor(),
                 padding: EdgeInsets.all(4),
                 badgeContent: Text(
-                  Provider.of<counter>(context).countCart.toString(),
+                  Provider.of<ThemeNotifier>(context).countCart.toString(),
                   style: TextStyle(color: Colors.white, fontSize: 10),
                 ),
                 child: SvgPicture.asset(

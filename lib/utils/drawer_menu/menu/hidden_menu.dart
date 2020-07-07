@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:shoppingapp/Provider/counter.dart';
 import 'package:shoppingapp/pages/about_page.dart';
 import 'package:shoppingapp/pages/change_password_page.dart';
 import 'package:shoppingapp/pages/contact_page.dart';
@@ -326,12 +325,12 @@ class _HiddenMenuState extends State<HiddenMenu> {
                       ),
                       InkWell(
                         onTap: () {
-                          if (Provider.of<counter>(context).local==false){
+                          if (Provider.of<ThemeNotifier>(context).local==false){
                             Nav.route(context, LoginPage());
                           }
                           else {
                           SharedPreferencesHelper.cleanlocal();
-                          Provider.of<counter>(context).setLogin(false);
+                          Provider.of<ThemeNotifier>(context).setLogin(false);
                           Nav.route(context, LoginPage());
                           }
                         },
@@ -341,7 +340,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                             size: 19,
                             color: Colors.white,
                           ),
-                          name:Provider.of<counter>(context).local==false?'Log in':'Log out',
+                          name:Provider.of<ThemeNotifier>(context).isLogin==false?'Log in':'Log out',
                           baseStyle: GoogleFonts.poppins(
                               color: Colors.white.withOpacity(0.6),
                               fontSize: 19.0,

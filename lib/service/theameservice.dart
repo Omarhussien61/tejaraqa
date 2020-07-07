@@ -7,7 +7,7 @@ import 'package:dio_http_cache/dio_http_cache.dart';
 class theame_service{
   static Future<ThemeModel> getNewTheme() async {
     var dio = Dio();
-    String URL='http://192.168.1.6/api/get_theme.php';
+    String URL='http://192.168.1.10:8080/api/get_theme.php';
     dio.interceptors.add(DioCacheManager(
         CacheConfig(baseUrl:URL))
         .interceptor);

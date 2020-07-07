@@ -14,7 +14,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:shoppingapp/Provider/counter.dart';
 import 'package:shoppingapp/modal/Product_review.dart';
 import 'package:shoppingapp/modal/Product_variations.dart';
 import 'package:shoppingapp/modal/Recentview.dart';
@@ -211,7 +210,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                   position: BadgePosition.bottomRight(),
                   padding: EdgeInsets.all(8),
                   badgeContent: Text(
-                    Provider.of<counter>(context).countCart.toString(),
+                    Provider.of<ThemeNotifier>(context).countCart.toString(),
                     style: TextStyle(color: whiteColor, fontSize: 10),
                   ),
                   child: SvgPicture.asset(
@@ -985,7 +984,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   }
   void countCart() async {
     helper.getCount().then((value) {
-      Provider.of<counter>(context).intcountCart(value);
+      Provider.of<ThemeNotifier>(context).intcountCart(value);
 
     });
 

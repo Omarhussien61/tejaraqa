@@ -7,7 +7,6 @@ import 'package:getflutter/getflutter.dart';
 import 'package:getflutter/types/gf_button_type.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:shoppingapp/Provider/counter.dart';
 import 'package:shoppingapp/modal/cart.dart';
 import 'package:shoppingapp/modal/createOrder.dart';
 import 'package:shoppingapp/pages/order_page.dart';
@@ -169,7 +168,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
           SizedBox(
             width: 16,
           ),
-          Text(Provider.of<counter>(context).countCart.toString() + " products",
+          Text(Provider.of<ThemeNotifier>(context).countCart.toString() + " products",
               style: GoogleFonts.poppins(
                   fontWeight: FontWeight.w400,
                   fontSize: 12,

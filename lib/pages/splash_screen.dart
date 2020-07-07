@@ -1,12 +1,13 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shoppingapp/Provider/counter.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';
+import 'package:shoppingapp/utils/theme_notifier.dart';
 
 import '../config.dart';
 import '../main.dart';
@@ -42,7 +43,10 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Container(
           height: 400,
           width: ScreenUtil.getWidth(context) /1.7,
-          child: Image.asset('assets/images/rosen.png'),
+          child: CachedNetworkImage(
+            imageUrl:  Provider.of<ThemeNotifier>(context).themeModel==null?
+            '':Provider.of<ThemeNotifier>(context).themeModel.imageSplash,
+          ),
         ),
       ),
     );
@@ -50,10 +54,10 @@ class _SplashScreenState extends State<SplashScreen> {
   void _auth() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     if (null != prefs.getString("token")) {
-      Provider.of<counter>(context).setLogin(true);
+      Provider.of<ThemeNotifier>(context).setLogin(true);
       Nav.routeReplacement(context, InitPage());
     } else {
-      Provider.of<counter>(context).setLogin(false);
+      Provider.of<ThemeNotifier>(context).setLogin(false);
       Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (BuildContext context) => OnboardingPage()));
     }

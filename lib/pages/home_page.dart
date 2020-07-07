@@ -1,9 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/global.dart';
 import 'package:provider/provider.dart';
-import 'package:shoppingapp/Provider/counter.dart';
 import 'package:shoppingapp/modal/Recentview.dart';
 import 'package:shoppingapp/modal/category.dart';
 import 'package:shoppingapp/modal/productmodel.dart';
@@ -71,13 +69,6 @@ class _HomePageState extends State<HomePage> {
 
   }
 
-  void showDemoActionSheet({BuildContext context, Widget child}) {
-    showCupertinoModalPopup<String>(
-        context: context,
-        builder: (BuildContext context) => child).then((String value) {
-      changeLocale(context, value);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,23 +79,18 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           SearchBox(),
           CategoryListView(maincat),
-          InkWell(
-            onTap: () {
-             // Nav.route(context, ProductDetailPage());
-            },
-            child: CarouselSlider(
-              items: imageSliders,
-              options: CarouselOptions(
-                  autoPlay: false,
-                  height: 175,
-                  viewportFraction: 1.0,
-                  enlargeCenterPage: false,
-                  onPageChanged: (index, reason) {
-                    setState(() {
-                      _carouselCurrentPage = index;
-                    });
-                  }),
-            ),
+          CarouselSlider(
+            items: imageSliders,
+            options: CarouselOptions(
+                autoPlay: false,
+                height: 175,
+                viewportFraction: 1.0,
+                enlargeCenterPage: false,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    _carouselCurrentPage = index;
+                  });
+                }),
           ),
           SliderDot(current: _carouselCurrentPage),
           DiscountList(
@@ -131,23 +117,18 @@ class _HomePageState extends State<HomePage> {
           SizedBox(
             height: 8,
           ),
-          InkWell(
-            onTap: () {
-              Nav.route(context, ProductDetailPage());
-            },
-            child: CarouselSlider(
-              items: imageSliders,
-              options: CarouselOptions(
-                  autoPlay: false,
-                  height: 175,
-                  viewportFraction: 1.0,
-                  enlargeCenterPage: false,
-                  onPageChanged: (index, reason) {
-                    setState(() {
-                      _carouselCurrentPage = index;
-                    });
-                  }),
-            ),
+          CarouselSlider(
+            items: imageSliders,
+            options: CarouselOptions(
+                autoPlay: false,
+                height: 175,
+                viewportFraction: 1.0,
+                enlargeCenterPage: false,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    _carouselCurrentPage = index;
+                  });
+                }),
           ),
           SizedBox(
             height: 8,
@@ -191,7 +172,7 @@ class _HomePageState extends State<HomePage> {
   }
   void countCart() async {
     helper.getCount().then((value) {
-      Provider.of<counter>(context).intcountCart(value);
+      Provider.of<ThemeNotifier>(context).intcountCart(value);
     });
 
   }

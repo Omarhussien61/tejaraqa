@@ -1,11 +1,8 @@
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
-import 'package:flutter_translate/localization_delegate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,81 +12,121 @@ import 'package:shoppingapp/pages/home_navigator.dart';
 import 'package:shoppingapp/pages/my_profile_page.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
 import 'package:shoppingapp/pages/splash_screen.dart';
+import 'package:shoppingapp/service/API_CONFIQ.dart';
+import 'package:shoppingapp/service/theameservice.dart';
 import 'package:shoppingapp/utils/drawer_menu/hidden_drawer/hidden_drawer_menu.dart';
 import 'package:shoppingapp/utils/drawer_menu/hidden_drawer/screen_hidden_drawer.dart';
 import 'package:shoppingapp/utils/drawer_menu/menu/item_hidden_menu.dart';
-import 'package:shoppingapp/utils/navigator.dart';
+import 'package:shoppingapp/utils/drawer_menu/simple_hidden_drawer/animated_drawer_content.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
+import 'package:shoppingapp/utils/util/AppLocalizations.dart';
 import 'package:shoppingapp/utils/util/sql_helper.dart';
 
-import 'Provider/counter.dart';
 import 'config.dart';
+import 'modal/Theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  var delegate = await LocalizationDelegate.create(
-      fallbackLocale: 'en_US', supportedLocales: ['en_US', 'es', 'fa', 'ar']);
+
 
   SharedPreferences.getInstance().then((prefs) {
     Color color = mainColor;
     if (prefs.getInt('color') != null) {
       color = Color(prefs.getInt('color'));
-
     }
-
 
     runApp(
       ChangeNotifierProvider<ThemeNotifier>(
         create: (_) => ThemeNotifier(color),
         child: Phoenix(
-          child: LocalizedApp(
-            delegate,
-            MyApp(),
-          ),
+          child: MyApp(),
         ),
       ),
     );
   });
+
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  static void setlocal(BuildContext context,Locale locale)
+  {
+    _MyAppState state =context.findAncestorStateOfType<_MyAppState>();
+    state.setlocal(locale);
+  }
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Locale _locale;
+  @override
+  void initState() {
+    theame_service.getNewTheme().then((onValue){
+      Provider.of<ThemeNotifier>(context).setTheme(onValue);
+      Provider.of<ThemeNotifier>(context).setColor(Color(int.parse(onValue.primaryCoustom)));
+      Provider.of<ThemeNotifier>(context).intcnt(onValue.themeNo);
+    });
+
+    APICONFIQ.getNewConfiq().then((onValue){
+      setState(() {
+        APICONFIQ.Base_url=onValue.baseUrl;
+        APICONFIQ.consumer_key=onValue.consumerKey;
+        APICONFIQ.consumer_secret=onValue.consumerSecret;
+        APICONFIQ.kGoogleApiKey=onValue.kGoogleApiKey;
+        // MyApp.setlocal(context, Locale('ar',''));
+        Provider.of<ThemeNotifier>(context).setLocal(onValue.local);
+      });
+    });
+    super.initState();
+  }
+  void setlocal(Locale locale){
+    setState(() {
+      _locale=locale;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ThemeNotifier>(context);
-    var localizationDelegate = LocalizedApp.of(context).delegate;
-    return LocalizationProvider(
-      state: LocalizationProvider.of(context).state,
-      child: MultiProvider(
-        providers:[
-          ChangeNotifierProvider(
-            builder: (_)=>counter(),
-          )
-        ] ,
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Shopping App',
-          localizationsDelegates: [
-            GlobalMaterialLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            localizationDelegate
-          ],
-          supportedLocales: localizationDelegate.supportedLocales,
-          locale: localizationDelegate.currentLocale,
-          theme: ThemeData(
-            pageTransitionsTheme: PageTransitionsTheme(builders: {
-              TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-            }),
-            primaryColor: themeColor.getColor(),
-          ),
-          home: SplashScreen(),
-        ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Shopping App',
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale("en", ""),
+        Locale("ar", ""), // OR Locale('ar', 'AE') OR Other RTL locales
+      ],
+      localeResolutionCallback: (locale, supportedLocales) {
+        // Check if the current device locale is supported
+        for (var supportedLocale in supportedLocales) {
+          if (supportedLocale.languageCode == locale.languageCode &&
+              supportedLocale.countryCode == locale.countryCode) {
+            return supportedLocale;
+          }
+        }
+        return supportedLocales.first;
+      },
+
+      theme: ThemeData(
+        pageTransitionsTheme: PageTransitionsTheme(builders: {
+          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+        }),
+        primaryColor: themeColor.getColor(),
       ),
-    );
+      home: SplashScreen(),
+      );
   }
 }
 
+
 class InitPage extends StatefulWidget {
+
+
   @override
   _InitPageState createState() => _InitPageState();
 }
@@ -100,6 +137,7 @@ class _InitPageState extends State<InitPage> {
 
   @override
   void initState() {
+
     items.add(new ScreenHiddenDrawer(
         new ItemHiddenMenu(
           icon: Icon(
@@ -167,9 +205,8 @@ class _InitPageState extends State<InitPage> {
         MyProfilePage()));
 
     helper.getCount().then((value) {
-      Provider.of<counter>(context).intcountCart(value);
+      Provider.of<ThemeNotifier>(context).intcountCart(value);
     });
-    super.initState();
   }
 
   @override
@@ -232,6 +269,7 @@ class _InitPageState extends State<InitPage> {
       slidePercent: 70.0,
       verticalScalePercent: 90.0,
       contentCornerRadius: 16.0,
+      typeOpen: TypeOpen.FROM_LEFT,
       //    iconMenuAppBar: Icon(Icons.menu),
       //    backgroundContent: DecorationImage((image: ExactAssetImage('assets/bg_news.jpg'),fit: BoxFit.cover),
       //    whithAutoTittleName: true,
@@ -247,8 +285,5 @@ class _InitPageState extends State<InitPage> {
 //          fit: BoxFit.cover),
     );
   }
-
-
-
 
 }

@@ -1,0 +1,126 @@
+{
+  "Sort": "Sort By",
+
+  "SortByPricemore": "Price to high",
+  "SortByPriceLess": "Price to low",
+  "SortByNew": "Newest",
+  "SortByold": "Oldest",
+
+  "your_profile": "Profile Information",
+  "edit": "Edit Profile",
+  "profile_name": "Name",
+  "mail": "Mail",
+  "display_name": "Display Name",
+  "save": "Save",
+  "cancel": "Cancel",
+  "CheckOut": "Check out",
+  "Sale": "Sale",
+
+
+  "codeInveild": "Code Invalid",
+  "codeUsage": "Code Usage",
+  "codeDone": " Done ",
+  "NotConnection": "No internet Access",
+
+  "doneDelete": "Delete Done",
+  "Alert": "Alert",
+  "AskDelete": "Are you delete ?",
+  "yes": "Delete",
+
+  "welcome":"Welcome",
+  "browsing":"Browsing Now",
+
+
+
+  "login": "Login",
+  "RegisterNew":"Register",
+  "phone": "Phone Number",
+  "Register":"Register New",
+  "AreadyAccount":"Already Registered !",
+  "invildpassword":"Email Or Password Invalid ?",
+
+  "Email":"Email ",
+  "password":"Password",
+  "Required":"Required",
+
+  "paymentMethod":"Payment Method",
+  "addressShipping":"Address Shipping",
+  "totalOrder":"Total Order",
+  "totalShipping":"Total Shipping",
+  "totaldiscount":"Total discount",
+  "total":"Total",
+  "placeorder":"Place Order",
+
+  "addressSelected":"No Address Selected",
+
+
+
+  "changeAddress":"Change Address",
+
+  "Address":"Address",
+  "NoAddressFound":"No Address Found",
+  "Addnaw":"Add Address",
+
+  "AddNewAddress":"Add New Address",
+  "Countroy":"Country",
+  "City":"City",
+  "Addres":"Address",
+
+  "Street":"Street",
+  "Building":"Building",
+
+  "Done":"Done",
+
+  "sorry":"Sorry",
+  "notSavedAddress":"No Address Added",
+  "SavedAddress":"Saved Address",
+
+
+  "notSavedcart":"No Cart Added",
+  "Savedcart":"Saved Cart",
+
+
+  "notlogin":"No have Account",
+  "PleaseLogin":"Please Login Now !",
+
+  "product":"Product",
+
+  "LocationSelected":"Location",
+  "SaveNaw":"Save Now",
+  "OrderDone":"Done !",
+
+
+  "OrderNO":"Order No !",
+  "OrderState":"Order Status",
+
+
+  "OrderDitails":"Order Status",
+  "OrderDate":"Order Status",
+  "OrderShipping":"Order Status",
+  "custCode":"Order Status",
+
+  "name":"Order Statusa",
+  "shipingclass":"Order Status",
+  "orderTotal":"Order Status",
+  "OrderContent":"Order Status",
+  "CodeConfirm":"Code Confirm",
+  "Confirm":"Confirm",
+
+  "close":"Close",
+  "closeMessage":"Are you Close ?",
+
+  "Reviews":"Reviews",
+  "NoReviews":"No Reviews Found",
+
+
+
+  "Available":"Available",
+  "notAvailable":"No Available Now",
+  "notAvailableOrder":"Product out of stock !",
+
+  "Firstname":"Frist name",
+  "Lastname":"Last name",
+  "Username":"User name",
+  "UsernameError":"User name Short !",
+  "RegisterError":"Error in Register Check your information"
+}
