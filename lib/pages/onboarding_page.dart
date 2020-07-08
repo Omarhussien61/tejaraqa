@@ -3,10 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:getflutter/components/button/gf_button.dart';
 import 'package:getflutter/getflutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shoppingapp/pages/login_page.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';
+import 'package:shoppingapp/utils/theme_notifier.dart';
 
 import '../config.dart';
 import '../main.dart';
@@ -37,8 +39,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) =>MyApp.setlocal(context, Locale(Provider.of<ThemeNotifier>(context).local,'')));
+
     saveOnboardPageShared();
     super.initState();
+
   }
 
   Future saveOnboardPageShared() async {
@@ -54,6 +59,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   @override
   Widget build(BuildContext context) {
+
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
           statusBarColor: Colors.white,

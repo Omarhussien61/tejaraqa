@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
           statusBarIconBrightness: Brightness.dark),
     );
     return Scaffold(
-      backgroundColor: mainColor,
+      backgroundColor: Provider.of<ThemeNotifier>(context).getColor(),
       body: Center(
         child: Container(
           height: 400,
@@ -52,6 +52,8 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
   void _auth() async {
+    MyApp.setlocal(context, Locale(Provider.of<ThemeNotifier>(context).local,''));
+
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     if (null != prefs.getString("token")) {
       Provider.of<ThemeNotifier>(context).setLogin(true);

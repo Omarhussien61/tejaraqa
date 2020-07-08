@@ -1,13 +1,17 @@
 library hidden_drawer_menu;
 
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:shoppingapp/utils/drawer_menu/hidden_drawer/screen_hidden_drawer.dart';
 import 'package:shoppingapp/utils/drawer_menu/menu/hidden_menu.dart';
 import 'package:shoppingapp/utils/drawer_menu/menu/item_hidden_menu.dart';
 import 'package:shoppingapp/utils/drawer_menu/simple_hidden_drawer/animated_drawer_content.dart';
 import 'package:shoppingapp/utils/drawer_menu/simple_hidden_drawer/bloc/simple_hidden_drawer_bloc.dart';
 import 'package:shoppingapp/utils/drawer_menu/simple_hidden_drawer/simple_hidden_drawer.dart';
+
+import '../../theme_notifier.dart';
 
 class HiddenDrawerMenu extends StatelessWidget {
   /// List item menu and respective screens
@@ -121,11 +125,6 @@ class HiddenDrawerMenu extends StatelessWidget {
       screenSelectedBuilder: (position, bloc) {
         List<Widget> actions = List();
         if (typeOpen == TypeOpen.FROM_RIGHT) {
-          actions.add(IconButton(
-              icon: iconMenuAppBar,
-              onPressed: () {
-                bloc.toggle();
-              }));
         }
 
         if (actionsAppBar != null) {
@@ -142,7 +141,7 @@ class HiddenDrawerMenu extends StatelessWidget {
               elevation: elevationAppBar,
               title: getTittleAppBar(position),
               centerTitle: isTitleCentered,
-              leading: _buildLeading(bloc),
+              leading: _buildLeading(bloc,context),
               actions: actions,
             ),
           ),
@@ -182,15 +181,28 @@ class HiddenDrawerMenu extends StatelessWidget {
     );
   }
 
-  Widget _buildLeading(SimpleHiddenDrawerBloc bloc) {
-    if (typeOpen == TypeOpen.FROM_LEFT) {
-      return IconButton(
-          icon: iconMenuAppBar,
-          onPressed: () {
-            bloc.toggle();
-          });
-    } else {
-      return null;
+  Widget _buildLeading(SimpleHiddenDrawerBloc bloc,BuildContext context) {
+    if(Provider.of<ThemeNotifier>(context)=='ar'){
+      if (typeOpen == TypeOpen.FROM_RIGHT) {
+        return IconButton(
+            icon: iconMenuAppBar,
+            onPressed: () {
+              bloc.toggle();
+            });
+      } else {
+        return null;
+      }
+    }else{
+      if (typeOpen == TypeOpen.FROM_LEFT) {
+        return IconButton(
+            icon: iconMenuAppBar,
+            onPressed: () {
+              bloc.toggle();
+            });
+      } else {
+        return null;
+      }
+
     }
   }
 }

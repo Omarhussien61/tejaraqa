@@ -22,6 +22,7 @@ class ThemeChanger {
           var prefs = await SharedPreferences.getInstance();
           prefs.setInt('color', color.value);
           themeColor.setColor(color);
+          print(color.value);
         },
       ),
     );

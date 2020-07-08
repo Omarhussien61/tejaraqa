@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -28,7 +29,6 @@ import 'modal/Theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-
   SharedPreferences.getInstance().then((prefs) {
     Color color = mainColor;
     if (prefs.getInt('color') != null) {
@@ -44,7 +44,6 @@ void main() async {
       ),
     );
   });
-
 }
 
 class MyApp extends StatefulWidget {
@@ -56,33 +55,36 @@ class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
-
 class _MyAppState extends State<MyApp> {
   Locale _locale;
+  void setlocal(Locale locale){
+    setState(() {
+      _locale=locale;
+
+    });
+  }
+
   @override
   void initState() {
     theame_service.getNewTheme().then((onValue){
       Provider.of<ThemeNotifier>(context).setTheme(onValue);
       Provider.of<ThemeNotifier>(context).setColor(Color(int.parse(onValue.primaryCoustom)));
       Provider.of<ThemeNotifier>(context).intcnt(onValue.themeNo);
+      SharedPreferences.getInstance().then((prefs){
+        prefs.setInt('color', int.parse(onValue.primaryCoustom));
+      });
+      
     });
-
     APICONFIQ.getNewConfiq().then((onValue){
       setState(() {
-        APICONFIQ.Base_url=onValue.baseUrl;
-        APICONFIQ.consumer_key=onValue.consumerKey;
-        APICONFIQ.consumer_secret=onValue.consumerSecret;
-        APICONFIQ.kGoogleApiKey=onValue.kGoogleApiKey;
-        // MyApp.setlocal(context, Locale('ar',''));
-        Provider.of<ThemeNotifier>(context).setLocal(onValue.local);
+//        APICONFIQ.Base_url=onValue.baseUrl;
+//        APICONFIQ.consumer_key=onValue.consumerKey;
+//        APICONFIQ.consumer_secret=onValue.consumerSecret;
+//        APICONFIQ.kGoogleApiKey=onValue.kGoogleApiKey;
+       Provider.of<ThemeNotifier>(context).setLocal('en');
       });
     });
     super.initState();
-  }
-  void setlocal(Locale locale){
-    setState(() {
-      _locale=locale;
-    });
   }
 
   @override
@@ -91,53 +93,47 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Shopping App',
+
       localizationsDelegates: [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: [
-        Locale("en", ""),
-        Locale("ar", ""), // OR Locale('ar', 'AE') OR Other RTL locales
-      ],
-      localeResolutionCallback: (locale, supportedLocales) {
-        // Check if the current device locale is supported
-        for (var supportedLocale in supportedLocales) {
-          if (supportedLocale.languageCode == locale.languageCode &&
-              supportedLocale.countryCode == locale.countryCode) {
-            return supportedLocale;
+      locale: _locale,
+      localeResolutionCallback: (devicelocale, supportedLocales) {
+        for (var locale in supportedLocales) {
+          if (locale.languageCode == devicelocale.languageCode &&
+              locale.countryCode == devicelocale.countryCode) {
+            return devicelocale;
           }
         }
         return supportedLocales.first;
       },
-
+      supportedLocales: [
+        Locale("en", ""),
+        Locale("ar", ""),
+      ],
       theme: ThemeData(
         pageTransitionsTheme: PageTransitionsTheme(builders: {
           TargetPlatform.android: CupertinoPageTransitionsBuilder(),
         }),
         primaryColor: themeColor.getColor(),
       ),
-      home: SplashScreen(),
+      home:SplashScreen(),
       );
   }
 }
-
-
 class InitPage extends StatefulWidget {
-
 
   @override
   _InitPageState createState() => _InitPageState();
 }
-
 class _InitPageState extends State<InitPage> {
   List<ScreenHiddenDrawer> items = new List();
   SQL_Helper helper = new SQL_Helper();
-
   @override
   void initState() {
-
     items.add(new ScreenHiddenDrawer(
         new ItemHiddenMenu(
           icon: Icon(
@@ -203,16 +199,13 @@ class _InitPageState extends State<InitPage> {
           colorLineSelected: Colors.orange,
         ),
         MyProfilePage()));
-
     helper.getCount().then((value) {
       Provider.of<ThemeNotifier>(context).intcountCart(value);
     });
   }
-
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ThemeNotifier>(context);
-
     return HiddenDrawerMenu(
       iconMenuAppBar: Padding(
         padding: EdgeInsets.only(bottom: 6),
@@ -225,16 +218,11 @@ class _InitPageState extends State<InitPage> {
       isTitleCentered: true,
       elevationAppBar: 0.0,
       backgroundColorAppBar: Color.fromARGB(255, 252, 252, 252),
-      tittleAppBar: Padding(
-        child: Text(
-          "Store",
-          style: GoogleFonts.poppins(
-            fontSize: 26,
-            color: themeColor.getColor(),
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        padding: EdgeInsets.only(bottom: 18),
+      tittleAppBar: CachedNetworkImage(
+        height: 50,
+        width: 180,
+        fit: BoxFit.fill,
+        imageUrl: 'https://d2.woo2.app/wp-content/uploads/2020/04/log-new-1.png',
       ),
       actionsAppBar: <Widget>[
 //        Padding(
@@ -269,7 +257,7 @@ class _InitPageState extends State<InitPage> {
       slidePercent: 70.0,
       verticalScalePercent: 90.0,
       contentCornerRadius: 16.0,
-      typeOpen: TypeOpen.FROM_LEFT,
+      typeOpen:themeColor.local=='ar'?TypeOpen.FROM_RIGHT: TypeOpen.FROM_LEFT,
       //    iconMenuAppBar: Icon(Icons.menu),
       //    backgroundContent: DecorationImage((image: ExactAssetImage('assets/bg_news.jpg'),fit: BoxFit.cover),
       //    whithAutoTittleName: true,
@@ -285,5 +273,4 @@ class _InitPageState extends State<InitPage> {
 //          fit: BoxFit.cover),
     );
   }
-
 }

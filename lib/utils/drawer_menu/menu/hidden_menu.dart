@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shoppingapp/main.dart';
 import 'package:shoppingapp/pages/about_page.dart';
 import 'package:shoppingapp/pages/change_password_page.dart';
 import 'package:shoppingapp/pages/contact_page.dart';
@@ -194,29 +195,16 @@ class _HiddenMenuState extends State<HiddenMenu> {
                     shrinkWrap: true,
                     padding: EdgeInsets.all(0.0),
                     children: <Widget>[
-                      ItemHiddenMenu(
-                        icon: Icon(
-                          Feather.type,
-                          size: 19,
-                          color: Colors.white,
-                        ),
-                        name: 'Language',
-                        baseStyle: GoogleFonts.poppins(
-                            color: Colors.white.withOpacity(0.6),
-                            fontSize: 19.0),
-                        colorLineSelected: Colors.orange,
-                      ),
                       InkWell(
-                        onTap: () {
-                          _themeChanger.openFullMaterialColorPicker(themeColor);
+                        onTap:(){
                         },
                         child: ItemHiddenMenu(
                           icon: Icon(
-                            Feather.check_square,
+                            Feather.type,
                             size: 19,
                             color: Colors.white,
                           ),
-                          name: 'Themes',
+                          name: 'Language',
                           baseStyle: GoogleFonts.poppins(
                               color: Colors.white.withOpacity(0.6),
                               fontSize: 19.0),
