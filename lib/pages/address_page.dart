@@ -101,7 +101,7 @@ class _AddressPageState extends State<AddressPage> {
                     child: ListView.builder(
                       itemCount: addressList.length,
                       itemBuilder: (BuildContext context, int index) {
-                       return buildAddressItem(context,addressList[0]);
+                       return buildAddressItem(context,addressList[index]);
                       },
                     ),
                   ),
@@ -140,7 +140,7 @@ class _AddressPageState extends State<AddressPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                address.Country,
+                address.title,
                 style: GoogleFonts.poppins(
                     fontSize: 16,
                     fontWeight: FontWeight.w300,
@@ -149,6 +149,13 @@ class _AddressPageState extends State<AddressPage> {
               InkWell(onTap: () => _delete(context,address),
                   child: Icon(Icons.delete_forever, color:Provider.of<ThemeNotifier>(context).getColor() ,))
             ],
+          ),
+          Text(
+            address.Country,
+            style: GoogleFonts.poppins(
+                fontSize: 16,
+                fontWeight: FontWeight.w300,
+                color: Color(0xFF5D6A78)),
           ),
           Text(
             address.city,
@@ -174,14 +181,14 @@ class _AddressPageState extends State<AddressPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "Invoice",
+                    "Street",
                     style: GoogleFonts.poppins(
                         fontSize: 14,
                         fontWeight: FontWeight.w300,
                         color: Color(0xFF5D6A78)),
                   ),
                   Text(
-                    "Id No",
+                    address.street,
                     style: GoogleFonts.poppins(
                         fontSize: 14,
                         fontWeight: FontWeight.w300,
@@ -193,14 +200,14 @@ class _AddressPageState extends State<AddressPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "Individual",
+                    "Building NO",
                     style: GoogleFonts.poppins(
                         fontSize: 14,
                         fontWeight: FontWeight.w300,
                         color: Color(0xFF5D6A78)),
                   ),
                   Text(
-                    "xxx xxxx xxx xxx ",
+                    address.buildingNo,
                     style: GoogleFonts.poppins(
                         fontSize: 14,
                         fontWeight: FontWeight.w300,

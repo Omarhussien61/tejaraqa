@@ -114,6 +114,8 @@ class _LoginFormState extends State<LoginForm> {
                             if (userModal.status == 'ok') {
                               setState(() => _isLoading = false);
                               Nav.routeReplacement(context, InitPage());
+                              Provider.of<ThemeNotifier>(context).setLogin(true);
+
                             }
                             else{
                               setState(() => _isLoading = false);

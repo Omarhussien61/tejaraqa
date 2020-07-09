@@ -411,8 +411,8 @@ class _OrderPageState extends State<OrderPage> {
                 splashColor: themeColor.getColor().withOpacity(0.5),
                 color: themeColor.getColor(),
                 type: GFButtonType.outline,
-                onPressed: () {
-                  Nav.route(context, NewAddressPage());
+                onPressed: () async {
+                  _navigateAndDisplaySelection(context);
                 },
                 child: Text("Add address"),
               ),
@@ -547,6 +547,15 @@ class _OrderPageState extends State<OrderPage> {
 
     }
     return item;
+  }
+
+  _navigateAndDisplaySelection(BuildContext context) async {
+
+    checkboxValueA = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => NewAddressPage()),
+    );
+    updateListView();
   }
 
 

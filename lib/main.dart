@@ -34,7 +34,6 @@ void main() async {
     if (prefs.getInt('color') != null) {
       color = Color(prefs.getInt('color'));
     }
-
     runApp(
       ChangeNotifierProvider<ThemeNotifier>(
         create: (_) => ThemeNotifier(color),

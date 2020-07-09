@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,26 +15,27 @@ import 'package:shoppingapp/pages/filter_page.dart';
 import 'package:shoppingapp/pages/product_detail.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
 import 'package:shoppingapp/service/productdervice.dart';
+import 'package:shoppingapp/utils/commons/AddToCart.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
 
 class SearchPage extends StatefulWidget {
   String searchEditor ;
-
-
   SearchPage({this.searchEditor});
 
   @override
   _SearchPageState createState() => _SearchPageState();
 }
-
 class _SearchPageState extends State<SearchPage> {
   String deneme = "Dursun";
   bool _isLoading = false;
   final debouncer = Debouncer(milliseconds: 1000);
   List<ProductModel> filteredProduct = List();
   List<ProductModel> productModel;
+  GlobalKey<AutoCompleteTextFieldState<ProductModel>> key = new GlobalKey();
+  AutoCompleteTextField searchTextField;
+
   String oldest='order=asc&filter[meta_key]=total_sales&status=publish&';
   String New='order=desc&filter[meta_key]=total_sales&status=publish&';
   String LowToHigh='order=asc&orderby=price&filter[meta_key]=total_sales&status=publish&';
@@ -47,15 +49,11 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ThemeNotifier>(context);
-    GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: Color.fromARGB(255, 252, 252, 252),
         systemNavigationBarIconBrightness: Brightness.dark,
         statusBarIconBrightness: Brightness.dark,
         statusBarBrightness: Brightness.dark));
-
-    GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
 
     return SafeArea(
       child: Scaffold(
@@ -109,9 +107,33 @@ class _SearchPageState extends State<SearchPage> {
                         child: Container(
                           padding: EdgeInsets.only(bottom: 4),
                           height: 72,
-                          child: TextFormField(
-                            initialValue: widget.searchEditor==null?'':widget.searchEditor,
-                            onChanged: (string) {
+                          child:searchTextField= AutoCompleteTextField<ProductModel>(
+                            key: key,
+                            clearOnSubmit: false,
+                            suggestions: filteredProduct,
+                            style: TextStyle(color: Colors.black, fontSize: 16.0),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Brand Search",
+                              hintStyle: GoogleFonts.poppins(
+                                fontSize: 13,
+                                color: Color(0xFF5D6A78),
+                                fontWeight: FontWeight.w400,
+                              )),
+                            itemFilter: (item, query) {
+                              return item.name
+                                  .toLowerCase()
+                                  .startsWith(query.toLowerCase());
+                            },
+                            itemSorter: (a, b) {
+                              return a.name.compareTo(b.name);
+                            },
+                            itemSubmitted: (item) {
+                              setState(() {
+                                searchTextField.textField.controller.text = item.name;
+                              });
+                            },
+                            textChanged: (string) {
                               debouncer.run(() {
                                 setState(() {
                                   filteredProduct = productModel.where((u) =>
@@ -124,16 +146,15 @@ class _SearchPageState extends State<SearchPage> {
                                 });
                               });
                             },
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "Brand Search",
-                                hintStyle: GoogleFonts.poppins(
-                                  fontSize: 13,
-                                  color: Color(0xFF5D6A78),
-                                  fontWeight: FontWeight.w400,
-                                )),
+                            itemBuilder: (context, item) {
+                              // ui for the autocompelete row
+                              return row(item);
+                            },
                           ),
+
                         ),
+
+
                       ),
                     ],
                   ),
@@ -238,7 +259,6 @@ class _SearchPageState extends State<SearchPage> {
       ),
     );
   }
-
   void _sortingBottomSheet() {
     showModalBottomSheet(
         backgroundColor: Colors.white,
@@ -388,8 +408,6 @@ class _SearchPageState extends State<SearchPage> {
                 ||
                 (u.description.toLowerCase().contains(widget.searchEditor.toLowerCase()))
             ).toList();
-
-
       });
 
     });
@@ -553,7 +571,7 @@ class _SearchPageState extends State<SearchPage> {
               Scaffold.of(context).showSnackBar(SnackBar(
                   backgroundColor: themeColor.getColor(),
                   content: Text('Product added to cart')));
-              Nav.route(context, ShoppingCartPage());
+              save(filteredProduct[index]);
             },
             child: Container(
               padding: EdgeInsets.only(top: 8, left: 8, bottom: 8, right: 8),
@@ -567,22 +585,32 @@ class _SearchPageState extends State<SearchPage> {
                         spreadRadius: 1,
                         offset: Offset(0.0, 1)),
                   ]),
-              child: InkWell(
-                onTap: () {
-                  print("ssdfsdf");
-
-                  Nav.route(context, ShoppingCartPage());
-                },
-                child: Container(
-                  child: SvgPicture.asset(
-                    "assets/icons/ic_product_shopping_cart.svg",
-                    height: 12,
-                  ),
+              child: Container(
+                child: SvgPicture.asset(
+                  "assets/icons/ic_product_shopping_cart.svg",
+                  height: 12,
                 ),
               ),
             ),
           ),
         )
+      ],
+    );
+  }
+  Widget row(ProductModel productModel) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Text(
+          productModel.name,
+          style: TextStyle(fontSize: 16.0),
+        ),
+        SizedBox(
+          width: 10.0,
+        ),
+        Text(
+          productModel.price,
+        ),
       ],
     );
   }

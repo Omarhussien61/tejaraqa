@@ -9,6 +9,7 @@ class ThemeNotifier with ChangeNotifier {
   int theme_index = 1;
   int countCart = 1;
   bool isLogin = false;
+
   ThemeNotifier(this._themeData);
 
   getColor() => _themeData;

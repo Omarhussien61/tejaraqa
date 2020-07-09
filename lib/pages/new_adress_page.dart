@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:getflutter/components/button/gf_button.dart';
-import 'package:getflutter/getflutter.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shoppingapp/modal/Address_shiping.dart';
 import 'package:shoppingapp/pages/credit_cart_page.dart';
+import 'package:shoppingapp/utils/commons/country.dart';
+import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/util/sql_address.dart';
 import 'package:shoppingapp/utils/drop_down_menu/find_dropdown.dart';
 import 'package:shoppingapp/utils/navigator.dart';
@@ -23,8 +24,11 @@ class _NewAddressPageState extends State<NewAddressPage> {
   String selectedValue;
   String preselectedValue = "dolor sit";
   List<int> selectedItems = [];
-  TextEditingController _cityController,_CountryController;
-  TextEditingController _AddressController,_buildingController,_streeetController;
+  TextEditingController _nameController,_cityController, _CountryController;
+  TextEditingController _AddressController, _buildingController, _streeetController;
+  List<String> city = new List<String>();
+  final _formKey = GlobalKey<FormState>();
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   final List<DropdownMenuItem> items = [];
   Address_shiping address;
@@ -33,6 +37,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqu";
   @override
   void initState() {
+
     @override
     String wordPair = "";
     loremIpsum
@@ -46,8 +51,8 @@ class _NewAddressPageState extends State<NewAddressPage> {
       } else {
         wordPair += word;
         if (items.indexWhere((item) {
-              return (item.value == wordPair);
-            }) ==
+          return (item.value == wordPair);
+        }) ==
             -1) {
           items.add(DropdownMenuItem(
             child: Text("add"),
@@ -58,7 +63,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
         wordPair = "";
       }
     });
-
+    _nameController = TextEditingController();
     _CountryController = TextEditingController();
     _cityController = TextEditingController();
     _AddressController = TextEditingController();
@@ -68,7 +73,6 @@ class _NewAddressPageState extends State<NewAddressPage> {
 
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ThemeNotifier>(context);
@@ -82,6 +86,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
     );
     return SafeArea(
       child: Scaffold(
+        key: scaffoldKey,
         bottomNavigationBar: InkWell(
           onTap: () {
             _save();
@@ -125,140 +130,127 @@ class _NewAddressPageState extends State<NewAddressPage> {
                 SizedBox(
                   height: 16,
                 ),
-                Column(
-                  children: <Widget>[
-                    NewAddressInput(
-                      controller: _CountryController,
-                      labelText: "Address Title",
-                      hintText: '',
-                      isEmail: true,
-                      validator: (String value) {},
-                      onSaved: (String value) {
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      NewAddressInput(
+                        controller: _nameController,
+                        labelText: "Address Title",
+                        hintText: '',
+                        isEmail: true,
+                        validator: (String value) {
+                          if (value.isEmpty){
+                            return 'Title';
+                          }
+                        },
+                        onSaved: (String value) {
 //                        model.email = value;
-                      },
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    NewAddressInput(
-                      labelText: "Name Surname",
-                      controller: _streeetController,
-                      hintText: '',
-                      isEmail: true,
-                      validator: (String value) {},
-                      onSaved: (String value) {
-//                        model.email = value;
-                      },
-                    ),
-                    SizedBox(
-                      height: 32,
-                    ),
-                    FindDropdown(
-                        items: ["Heu", "Medicina", "Byssus", "Locus"],
-                        onChanged: (String item) => print(item),
-                        selectedItem: "City",
-                        isUnderLine: true),
-                    SizedBox(
-                      height: 32,
-                    ),
-                    FindDropdown(
-                        items: ["Heu", "Medicina", "Byssus", "Locus"],
-                        onChanged: (String item) => print(item),
-                        selectedItem: "District",
-                        isUnderLine: true),
-                    SizedBox(
-                      height: 32,
-                    ),
-                    FindDropdown(
-                        items: ["Heu", "Medicina", "Byssus", "Locus"],
-                        onChanged: (String item) => print(item),
-                        selectedItem: "Neighborhood",
-                        isUnderLine: true),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    NewAddressInput(
-                      controller: _AddressController,
+                        },
+                      ),
+                      SizedBox(
+                        height: 32,
+                      ),
+                      FindDropdown(
+                          items: ['Egypt','Saudi Arabia'],
+                          onChanged: (String item) {
+                            setState(() {
+                              _CountryController.text=item;
+                            });
+                            get_City(item);
+                          },
+                          validate: (String value) {
+                            if (value.isEmpty){
+                              return 'Country';
+                            }
+                          },
+                          selectedItem: "Country",
+                          isUnderLine: true),
+                      SizedBox(
+                        height: 32,
+                      ),
+                      FindDropdown(
+                          items: city,
+                          onChanged: (String item) {
+                            setState(() {
+                              _cityController.text=item;
+                            });
+                          },
+                          validate: (String value) {
+                            if (value.isEmpty){
+                              return 'City';
+                            }
+                          },
+                          selectedItem: "City",
+                          isUnderLine: true),
+                      SizedBox(
+                        height: 32,
+                      ),
 
-                      labelText: "Address",
-                      hintText: '',
-                      isEmail: true,
-                      validator: (String value) {},
-                      onSaved: (String value) {
-//                        model.email = value;
-                      },
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    NewAddressInput(
-                      controller: _streeetController,
+                      NewAddressInput(
+                        controller: _AddressController,
 
-                      labelText: "Invoice Code",
-                      hintText: '',
-                      isEmail: true,
-                      validator: (String value) {},
-                      onSaved: (String value) {
+                        labelText: "Address",
+                        hintText: '',
+                        isEmail: true,
+                        validator: (String value) {
+                          if (value.isEmpty){
+                            return 'Address';
+                          }
+                        },
+                        onSaved: (String value) {
 //                        model.email = value;
-                      },
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    NewAddressInput(
-                      controller: _cityController,
+                        },
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                        Container(
+                          width: ScreenUtil.divideWidth(context)/3,
 
-                      labelText: "Mobile Phone",
-                      hintText: '',
-                      isEmail: true,
-                      validator: (String value) {},
-                      onSaved: (String value) {
-//                        model.email = value;
-                      },
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          "Invoice Type",
-                          style: GoogleFonts.poppins(
-                              fontSize: 14, color: Color(0xFF5D6A78)),
+                          child: TextFormField(
+                            controller: _streeetController,
+                            validator: (String value) {
+                              if (value.isEmpty){
+                                return 'Street';
+                              }
+                            },
+                          decoration: InputDecoration(
+                              hintText: 'Street',
+                              labelStyle: GoogleFonts.poppins(fontSize: 12),
+                              helperStyle: GoogleFonts.poppins(fontSize: 12),
+                              hintStyle: GoogleFonts.poppins(fontSize: 12),
+                          ),
+
+                      ),
                         ),
-                        Row(
-                          children: <Widget>[
-                            GFButton(
-                              child: Text(
-                                "Individual",
-                                style: GoogleFonts.poppins(fontSize: 12),
+                        Container(
+                            width: ScreenUtil.divideWidth(context)/3,
+
+                            child: TextFormField(
+                              controller: _buildingController,
+                              validator: (String value) {
+                                if (value.isEmpty){
+                                  return 'Building';
+                                }
+                              },
+                              decoration: InputDecoration(
+                                hintText: 'Building',
+                                labelStyle: GoogleFonts.poppins(fontSize: 12),
+                                helperStyle: GoogleFonts.poppins(fontSize: 12),
+                                hintStyle: GoogleFonts.poppins(fontSize: 12),
                               ),
-                              type: GFButtonType.solid,
-                              color: themeColor.getColor(),
-                              onPressed: () {},
+
                             ),
-                            SizedBox(
-                              width: 14,
-                            ),
-                            GFButton(
-                              child: Text(
-                                "Enterprise",
-                                style: GoogleFonts.poppins(
-                                    fontSize: 12, color: Color(0xFF5D6A78)),
-                              ),
-                              type: GFButtonType.outline,
-                              color: Color(0xFF5D6A78),
-                              onPressed: () {},
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                  ],
+                          ),
+                        ],
+                      ),
+
+                    ],
+                  ),
                 )
               ],
             ),
@@ -267,24 +259,40 @@ class _NewAddressPageState extends State<NewAddressPage> {
       ),
     );
   }
+  Future<void> _save() async {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      if(_CountryController.text.isEmpty||_cityController.text.isEmpty)
+      {
+        scaffoldKey.currentState.showSnackBar(SnackBar(
+            backgroundColor: Provider.of<ThemeNotifier>(context).getColor(),
+            content: Text('City  Or  country not Selected')));
+      }else{
+        address = new Address_shiping(
+            _CountryController.text,
+            _cityController.text,
+            _nameController.text,
+            _streeetController.text,
+            _buildingController.text,
+            _AddressController.text);
+        int result;
+        result = await helper.insertStudent(address);
+        if (result == 0) {
 
-  Future<void> _save()  async {
-    address=new Address_shiping(
-        _CountryController.text,
-        _cityController.text,
-        _streeetController.text,
-        _buildingController.text,
-        _AddressController.text);
-    int result;
-    result =  await helper.insertStudent(address);
-    if (result == 0) {
-
-    } else {
-      Nav.routeReplacement(context, CreditCartPage());
-
+        } else {
+          Navigator.pop(context);
+        }
+      }
     }
   }
-
-
-
+ get_City(String country) {
+    if (country == 'Egypt')
+      setState(() {
+        city=Egypt;
+      });
+    else if (country == 'Saudi Arabia')
+      setState(() {
+        city=SaudiArabia;
+      });
+  }
 }

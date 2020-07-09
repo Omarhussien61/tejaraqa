@@ -230,7 +230,12 @@ class HomeWidgetState extends State<ShoppingCartPage>
                 );
                 scaffoldKey.currentState.showSnackBar(snackbar);
               } else {
-                Nav.route(context, OrderPage(CartList));
+
+                Provider.of<ThemeNotifier>(context).isLogin?
+                Nav.route(context, OrderPage(CartList)):
+                Scaffold.of(context).showSnackBar(SnackBar(
+                    backgroundColor: themeColor.getColor(),
+                    content: Text('Please login !')));
               }
             },
             type: GFButtonType.solid,

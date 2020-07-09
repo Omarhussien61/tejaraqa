@@ -1,17 +1,14 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:shoppingapp/modal/ExeansionTile.dart';
 import 'package:shoppingapp/modal/category.dart';
 import 'package:shoppingapp/modal/productmodel.dart';
 import 'package:shoppingapp/pages/product_detail.dart';
 import 'package:shoppingapp/service/categoryservice.dart';
 import 'package:shoppingapp/service/productdervice.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
-import 'package:shoppingapp/utils/dummy_data/category.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
 import 'package:shoppingapp/utils/vertical_tab/vertical_tab.dart';
@@ -63,7 +60,7 @@ class _CategoryPageState extends State<CategoryPage> {
     )
       :Center(child:
       CircularProgressIndicator(
-          valueColor:  AlwaysStoppedAnimation<Color>(themeColor.getColor()))):
+          valueColor:AlwaysStoppedAnimation<Color>(themeColor.getColor()))):
       Center(child:
       CircularProgressIndicator(
           valueColor:  AlwaysStoppedAnimation<Color>(themeColor.getColor()))),

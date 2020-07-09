@@ -125,8 +125,8 @@ class HiddenDrawerMenu extends StatelessWidget {
       screenSelectedBuilder: (position, bloc) {
         List<Widget> actions = List();
         if (typeOpen == TypeOpen.FROM_RIGHT) {
-        }
 
+        }
         if (actionsAppBar != null) {
           actions.addAll(actionsAppBar);
         }
@@ -182,27 +182,10 @@ class HiddenDrawerMenu extends StatelessWidget {
   }
 
   Widget _buildLeading(SimpleHiddenDrawerBloc bloc,BuildContext context) {
-    if(Provider.of<ThemeNotifier>(context)=='ar'){
-      if (typeOpen == TypeOpen.FROM_RIGHT) {
-        return IconButton(
-            icon: iconMenuAppBar,
-            onPressed: () {
-              bloc.toggle();
-            });
-      } else {
-        return null;
-      }
-    }else{
-      if (typeOpen == TypeOpen.FROM_LEFT) {
-        return IconButton(
-            icon: iconMenuAppBar,
-            onPressed: () {
-              bloc.toggle();
-            });
-      } else {
-        return null;
-      }
-
-    }
+   return IconButton(
+        icon: iconMenuAppBar,
+        onPressed: () {
+          bloc.toggle();
+        });
   }
 }

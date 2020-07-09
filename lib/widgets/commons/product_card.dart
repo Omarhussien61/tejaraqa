@@ -209,7 +209,6 @@ class ProductCard extends StatelessWidget {
             onTap: () {
               save(product);
               countCart(context);
-
               Scaffold.of(context).showSnackBar(SnackBar(
                   backgroundColor: mainColor,
                   content: Text('Product added to cart')));

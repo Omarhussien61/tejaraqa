@@ -23,6 +23,7 @@ class SQL_Address {
 
   String tableName = "address_table";
   String _id = "id";
+  String __title = "title";
   String __country = "country";
   String __city = "city";
   String __street = "street";
@@ -49,7 +50,7 @@ class SQL_Address {
 
   void createDatabase(Database db, int version) async {
     await db.execute(
-        "CREATE TABLE $tableName($_id INTEGER PRIMARY KEY, $__country TEXT, $__city INTEGER," +
+        "CREATE TABLE $tableName($_id INTEGER PRIMARY KEY, $__title TEXT, $__country TEXT, $__city INTEGER," +
             " $__street DOUBLE, $__bilidingNo TEXT , $__ApratNo TEXT, $__lat DOUBLE , $__lang DOUBLE )");
   }
 

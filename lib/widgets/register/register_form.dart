@@ -184,6 +184,8 @@ class _RegisterFormState extends State<RegisterForm> {
                           {
                             setState(() => _isLoading = false);
                             Nav.routeReplacement(context, InitPage());
+                            Provider.of<ThemeNotifier>(context).setLogin(true);
+
                           }
 
                         }

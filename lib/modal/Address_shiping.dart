@@ -2,6 +2,7 @@
 class Address_shiping {
 
   int _id;
+  String _title;
   String _Country;
   String _city;
   double _lat;
@@ -12,13 +13,14 @@ class Address_shiping {
 
 
   Address_shiping(this._Country, this._city,
-      this._street, this._buildingNo, this._addres1,[this._lat, this._lang,this._id]);
+      this._title, this._street, this._buildingNo, this._addres1,[this._lat, this._lang,this._id]);
 
 
 
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
     map["id"] = this._id;
+    map["title"] = this._title;
     map["country"] = this._Country;
     map["city"] = this._city;
     map["street"] = this._street;
@@ -29,8 +31,15 @@ class Address_shiping {
     return map;
   }
 
+  String get title => _title;
+
+  set title(String value) {
+    _title = value;
+  }
+
   Address_shiping.getMap(Map<String, dynamic> map){
     this._id = map["id"];
+    this._title = map["title"];
     this._Country = map["country"];
     this._city = map["city"];
     this._street = map["street"];

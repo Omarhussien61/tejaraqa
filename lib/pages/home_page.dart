@@ -33,8 +33,8 @@ class _HomePageState extends State<HomePage> {
   SQL_Helper helper = new SQL_Helper();
   SQL_Rercent sql_rercent = new SQL_Rercent();
   String contVeiw;
-
   Future<List<ProductModel>>productDiscount,productNew,moreSale,productview,product_low_priced;
+
   @override
   void initState() {
     updateListView();
@@ -49,7 +49,6 @@ class _HomePageState extends State<HomePage> {
     productNew=ProductService.getNewProducts();
     moreSale=ProductService.getMoreSaleProducts();
     super.initState();
-
   }
   updateListView(){
     final Future<Database> db = helper.initializedDatabase();
@@ -68,8 +67,6 @@ class _HomePageState extends State<HomePage> {
     });
 
   }
-
-
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ThemeNotifier>(context);
@@ -174,7 +171,5 @@ class _HomePageState extends State<HomePage> {
     helper.getCount().then((value) {
       Provider.of<ThemeNotifier>(context).intcountCart(value);
     });
-
   }
-
 }

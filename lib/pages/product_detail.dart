@@ -978,7 +978,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
      // showAlertDialog(getTransrlate(context, 'sorry'), getTransrlate(context, 'notSavedcart'));
     } else {
      // showAlertDialog(getTransrlate(context, 'Alert'),getTransrlate(context, 'Savedcart'));
-      print('doneeeeeeeeeeeeeeeeeeeeeeeee');
       countCart();
     }
   }

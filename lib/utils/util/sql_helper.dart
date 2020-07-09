@@ -37,6 +37,7 @@ class SQL_Helper {
 
   String _tableNameAddress = "address_table";
   String _idAddress = "id";
+  String __title = "title";
   String __country = "country";
   String __city = "city";
   String __street = "street";
@@ -66,7 +67,7 @@ class SQL_Helper {
         "CREATE TABLE $tableName($_id INTEGER PRIMARY KEY,$_idVariation INTEGER , $__name TEXT, $__quantity INTEGER," +
             " $__pass DOUBLE, $__date TEXT , $__image TEXT )");
     await db.execute(
-        "CREATE TABLE $_tableNameAddress($_idAddress INTEGER PRIMARY KEY, $__country TEXT, $__city TEXT," +
+        "CREATE TABLE $_tableNameAddress($_idAddress INTEGER PRIMARY KEY, $__title TEXT, $__country TEXT, $__city TEXT," +
             " $__street TEXT, $__bilidingNo TEXT , $__ApratNo TEXT, $__lat DOUBLE , $__lang DOUBLE )");
 
     await db.execute(

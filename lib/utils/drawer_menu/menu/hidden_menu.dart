@@ -7,6 +7,7 @@ import 'package:shoppingapp/main.dart';
 import 'package:shoppingapp/pages/about_page.dart';
 import 'package:shoppingapp/pages/change_password_page.dart';
 import 'package:shoppingapp/pages/contact_page.dart';
+import 'package:shoppingapp/pages/home_page.dart';
 import 'package:shoppingapp/pages/login_page.dart';
 import 'package:shoppingapp/pages/profile_settings_page.dart';
 import 'package:shoppingapp/utils/util/shared_preferences_helper.dart';
@@ -313,13 +314,16 @@ class _HiddenMenuState extends State<HiddenMenu> {
                       ),
                       InkWell(
                         onTap: () {
-                          if (Provider.of<ThemeNotifier>(context).local==false){
+                          if (Provider.of<ThemeNotifier>(context).isLogin==false){
                             Nav.route(context, LoginPage());
                           }
                           else {
                           SharedPreferencesHelper.cleanlocal();
                           Provider.of<ThemeNotifier>(context).setLogin(false);
-                          Nav.route(context, LoginPage());
+                          Navigator.pushAndRemoveUntil(context,
+                              MaterialPageRoute(builder: (context) =>
+                                  InitPage()),
+                              ModalRoute.withName("/main"));
                           }
                         },
                         child: ItemHiddenMenu(
