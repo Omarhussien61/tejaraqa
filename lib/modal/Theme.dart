@@ -1,6 +1,5 @@
 class ThemeModel {
   String imageSplash;
-  int themeNo;
   String primaryCoustom;
   String background1;
   String background2;
@@ -34,10 +33,6 @@ class ThemeModel {
   List<String> cartCheakout;
   List<String> cartTotal;
   List<String> cartTotalProduct;
-  List<String> cost;
-  List<String> discount;
-  List<String> discountCode;
-  List<String> discountApplay;
   List<String> sortBy;
   List<String> searchContent;
   List<String> placeholderCategory;
@@ -55,7 +50,6 @@ class ThemeModel {
 
   ThemeModel(
       {this.imageSplash,
-        this.themeNo,
         this.primaryCoustom,
         this.background1,
         this.background2,
@@ -89,10 +83,6 @@ class ThemeModel {
         this.cartCheakout,
         this.cartTotal,
         this.cartTotalProduct,
-        this.cost,
-        this.discount,
-        this.discountCode,
-        this.discountApplay,
         this.sortBy,
         this.searchContent,
         this.placeholderCategory,
@@ -110,7 +100,6 @@ class ThemeModel {
 
   ThemeModel.fromJson(Map<String, dynamic> json) {
     imageSplash = json['image_splash'];
-    themeNo = json['themeNo'];
     primaryCoustom = json['primary_Coustom'];
     background1 = json['background_1'];
     background2 = json['background_2'];
@@ -144,10 +133,6 @@ class ThemeModel {
     cartCheakout = json['CartCheakout'].cast<String>();
     cartTotal = json['cart_total'].cast<String>();
     cartTotalProduct = json['cart_total_product'].cast<String>();
-    cost = json['Cost'].cast<String>();
-    discount = json['discount'].cast<String>();
-    discountCode = json['discount_code'].cast<String>();
-    discountApplay = json['discount_applay'].cast<String>();
     sortBy = json['SortBy'].cast<String>();
     searchContent = json['SearchContent'].cast<String>();
     placeholderCategory = json['PlaceholderCategory'].cast<String>();
@@ -167,7 +152,6 @@ class ThemeModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['image_splash'] = this.imageSplash;
-    data['themeNo'] = this.themeNo;
     data['primary_Coustom'] = this.primaryCoustom;
     data['background_1'] = this.background1;
     data['background_2'] = this.background2;
@@ -201,10 +185,6 @@ class ThemeModel {
     data['CartCheakout'] = this.cartCheakout;
     data['cart_total'] = this.cartTotal;
     data['cart_total_product'] = this.cartTotalProduct;
-    data['Cost'] = this.cost;
-    data['discount'] = this.discount;
-    data['discount_code'] = this.discountCode;
-    data['discount_applay'] = this.discountApplay;
     data['SortBy'] = this.sortBy;
     data['SearchContent'] = this.searchContent;
     data['PlaceholderCategory'] = this.placeholderCategory;

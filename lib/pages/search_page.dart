@@ -529,30 +529,22 @@ class _SearchPageState extends State<SearchPage> {
                           ],
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                SizedBox(
-                                  height: 4,
-                                ),
-                                Text(
-                                  filteredProduct[index].oldPrice,
-                                  style: GoogleFonts.poppins(
-                                      decoration: TextDecoration.lineThrough,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w300),
-                                ),
-                                Text(
-                                  filteredProduct[index].price,
-                                  style: GoogleFonts.poppins(
-                                      color: themeColor.getColor(),
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w400),
-                                )
-                              ],
+                            Text(
+                              filteredProduct[index].oldPrice,
+                              style: GoogleFonts.poppins(
+                                  decoration: TextDecoration.lineThrough,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w300),
                             ),
+                            Text(
+                              filteredProduct[index].price,
+                              style: GoogleFonts.poppins(
+                                  color: themeColor.getColor(),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400),
+                            )
                           ],
                         )
                       ],

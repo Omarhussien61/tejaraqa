@@ -68,7 +68,7 @@ class _MyAppState extends State<MyApp> {
     theame_service.getNewTheme().then((onValue){
       Provider.of<ThemeNotifier>(context).setTheme(onValue);
       Provider.of<ThemeNotifier>(context).setColor(Color(int.parse(onValue.primaryCoustom)));
-      Provider.of<ThemeNotifier>(context).intcnt(onValue.themeNo);
+      //Provider.of<ThemeNotifier>(context).intcnt(onValue.themeNo);
       SharedPreferences.getInstance().then((prefs){
         prefs.setInt('color', int.parse(onValue.primaryCoustom));
       });
@@ -80,7 +80,7 @@ class _MyAppState extends State<MyApp> {
 //        APICONFIQ.consumer_key=onValue.consumerKey;
 //        APICONFIQ.consumer_secret=onValue.consumerSecret;
 //        APICONFIQ.kGoogleApiKey=onValue.kGoogleApiKey;
-       Provider.of<ThemeNotifier>(context).setLocal('en');
+       //Provider.of<ThemeNotifier>(context).setLocal('en');
       });
     });
     super.initState();

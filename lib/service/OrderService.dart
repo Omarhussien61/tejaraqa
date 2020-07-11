@@ -157,8 +157,7 @@ class OrderService {
       coupon_line: coupon_line
     );
     var dio = Dio();
-
-ConfirmOrder confirmOrder;
+    ConfirmOrder confirmOrder;
     try {
       print(order.toJson());
       Response response = await dio.post(

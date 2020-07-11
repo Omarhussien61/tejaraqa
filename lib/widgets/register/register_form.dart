@@ -169,25 +169,25 @@ class _RegisterFormState extends State<RegisterForm> {
                         borderRadius: new BorderRadius.circular(8.0),
                       ),
                       color: themeColor.getColor(),
-                      onPressed: () async {
+                      onPressed: () async
+                      {
                         if (_formKey.currentState.validate()) {
                           _formKey.currentState.save();
+                          setState(() => _isLoading = true);
+
                           var result =  await LoginService().Register(
                              model );
                         if(result.runtimeType==String)
                           {
                             setState(() => _isLoading = false);
                             showAlertDialog(result.toString(),'Alart');
-
                           }
                         else
                           {
                             setState(() => _isLoading = false);
                             Nav.routeReplacement(context, InitPage());
                             Provider.of<ThemeNotifier>(context).setLogin(true);
-
                           }
-
                         }
                       },
                       child: Text(
@@ -206,7 +206,7 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
         ),
         _isLoading ? Container(
-            height: 400,
+            height: ScreenUtil.getHeight(context),
             width: double.infinity,
             color: Colors.black45,
             child: Center(child:  CircularProgressIndicator(

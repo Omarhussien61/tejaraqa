@@ -3,25 +3,22 @@ import 'dart:convert';
 
 
 import 'package:dio/dio.dart';
-import 'package:shoppingapp/modal/User.dart';
-import 'package:shoppingapp/modal/productmodel.dart';
+import 'package:shoppingapp/modal/Create_user.dart';
+
 import 'package:shoppingapp/modal/usermodal.dart';
 import 'package:shoppingapp/service/API_CONFIQ.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shoppingapp/utils/util/Constant.dart';
 import 'package:shoppingapp/widgets/register/register_form_model.dart';
-
 class LoginService {
   UserModal userInfo;
-
   Future<UserModal> loginUser(String user, String password) async {
     var client = new http.Client();
     int code;
     Map<String, dynamic> body = {
       'username': user,
       'password': password,
-
     };
     try {
       var response = await client.post(
@@ -62,8 +59,6 @@ class LoginService {
     return userInfo;
   }
   Future<dynamic>  Register(Model model) async {
-    print(model.email);
-
     Map<String, String> header = new Map();
     String username = APICONFIQ.consumer_key;
     String password = APICONFIQ.consumer_secret;
@@ -71,48 +66,35 @@ class LoginService {
     header.putIfAbsent("Authorization", () {
       return valore;
     });
+    List<MetaData_user> metaData=new List<MetaData_user>();
+    metaData.add(MetaData_user(
+        key: 'phonenumber',
+        value: model.Phone));
 
-    var dio = Dio();
-    var response = await dio.post(
-        APICONFIQ.Register+APICONFIQ.Key,
-        data: {
-          'email': model.email,
-          'first_name': model.firstName,
-          'last_name': model.lastName,
-          'username': model.userName,
-          'password': model.password,
-          "billing": {
-            "first_name": model.firstName,
-            "last_name": model.lastName,
-            "company": "",
-            "address_1": "",
-            "address_2": "",
-            "city": "",
-            "state": "",
-            "postcode":"",
-            "country": "",
-            "email": model.email,
-            "phone": model.Phone
-          },
-          'meta_data': [
-            {
-              "key": "phonenumber",
-              "value": model.Phone
-            }
-          ],
-        }
-        );
-    print(response.data);
+    var body = json.encode({
+      'email': model.email,
+      'first_name': model.firstName,
+      'last_name': model.lastName,
+      'username': model.userName,
+      'password': model.password,
+      "meta_data": metaData
+    });
+    print(body.toString());
+
+    http.Response response = await http.post(
+        APICONFIQ.Register,
+        body: body,
+        headers: {'Content-type': 'application/json'});
+
+    print(response.body);
     if (response.statusCode == 201) {
      return loginUser(model.email,model.password);
     }
     else{
-      var data=jsonDecode(response.data);
+      var data=jsonDecode(response.body);
       return data['message'];
     }
   }
-
-
   void ubdateProfile(int _id,String email, String f_Name, String Username,String passwords) async {
     Map<String, dynamic> body = {
       'email': email,

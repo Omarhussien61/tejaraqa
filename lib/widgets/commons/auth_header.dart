@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -63,28 +64,13 @@ class AuthHeader extends StatelessWidget {
           Align(
             alignment: Alignment.bottomLeft,
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 8, left: 8),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    headerBigTitle,
-                    style: GoogleFonts.poppins(
-                      fontSize: 40,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  Text(
-                    "Account",
-                    style: GoogleFonts.poppins(
-                      fontSize: 23,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w300,
-                    ),
-                  ),
-                ],
+              padding: const EdgeInsets.only(bottom: 8, left: 8,
+              top: 100),
+              child: CachedNetworkImage(
+                height: 200,
+                width: 200,
+                imageUrl:  Provider.of<ThemeNotifier>(context).themeModel==null?
+                '':Provider.of<ThemeNotifier>(context).themeModel.imageSplash,
               ),
             ),
           )
