@@ -18,6 +18,7 @@ import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/utils/util/shared_preferences_helper.dart';
 import 'package:shoppingapp/utils/util/sql_address.dart';
 import 'package:sqflite/sqflite.dart';
@@ -27,45 +28,49 @@ import 'new_adress_page.dart';
 
 class OrderPage extends StatefulWidget {
   List<Cart> items;
+  double total;
 
-
-  OrderPage(this.items);
+  OrderPage(this.items, this.total);
 
   @override
   _OrderPageState createState() => _OrderPageState();
 }
 
 class _OrderPageState extends State<OrderPage> {
-
+  bool state = false;
+  double copon = 0;
+  String code;
+  bool coponState = true;
+  TextEditingController _CoponController;
   List<Address_shiping> addressList;
   Address_shiping address;
   SQL_Address helper = new SQL_Address();
   int count = 0;
-  int checkboxValueA,checkboxValueB;
+  int checkboxValueA, checkboxValueB;
   List<PaymentModel> PaymentList;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   bool _isLoading = false;
   String phone;
-  String username,name,email;
+  String username, name, email;
   int id;
+
   @override
   void initState() {
-
     fetchUserId();
-  OrderService.getAllPayment().then((onValue){
-    setState(() {
-      PaymentList=onValue;
+    OrderService.getAllPayment().then((onValue) {
+      setState(() {
+        PaymentList = onValue;
+      });
     });
-  });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     if (addressList == null) {
       addressList = new List<Address_shiping>();
       updateListView();
     }
-
 
     final themeColor = Provider.of<ThemeNotifier>(context);
 
@@ -142,90 +147,117 @@ class _OrderPageState extends State<OrderPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                PaymentList!=null? Container(
-                                  height: PaymentList == null ? 50 :PaymentList.length*50.toDouble(),
-                                  child:ListView.builder(
-                                      itemCount:PaymentList == null ? 0 :PaymentList.length,
-                                      itemBuilder: (BuildContext context, int pos) {
-                                        return  buildPayMethodItem(context, PaymentList[pos].title, themeColor,pos);
-                                      }),
-                                ):Center(child: CircularProgressIndicator()),
-
+                                PaymentList != null
+                                    ? Container(
+                                        height: PaymentList == null
+                                            ? 50
+                                            : PaymentList.length *
+                                                50.toDouble(),
+                                        child: ListView.builder(
+                                            itemCount: PaymentList == null
+                                                ? 0
+                                                : PaymentList.length,
+                                            itemBuilder: (BuildContext context,
+                                                int pos) {
+                                              return buildPayMethodItem(
+                                                  context,
+                                                  PaymentList[pos].title,
+                                                  themeColor,
+                                                  pos);
+                                            }),
+                                      )
+                                    : Center(
+                                        child: CircularProgressIndicator()),
                               ],
                             ),
                           ),
                         ],
                       ),
                     ),
-
-                    phone==null?Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0, top: 16, bottom: 8),
-                          child: Text(
-                            "Phone Number",
-                            style: GoogleFonts.poppins(
-                                fontSize: 12, color: Color(0xFF5D6A78)),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 8, right: 8, left: 8),
-                          child: ListView(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
+                    phone == null
+                        ? Column(
                             children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 8.0, top: 16, bottom: 8),
+                                child: Text(
+                                  "Phone Number",
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 12, color: Color(0xFF5D6A78)),
+                                ),
+                              ),
                               Container(
-                                padding: EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(8),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(.2),
-                                        blurRadius: 6.0, // soften the shadow
-                                        spreadRadius: 0.0, //extend the shadow
-                                        offset: Offset(
-                                          0.0, // Move to right 10  horizontally
-                                          1.0, // Move to bottom 10 Vertically
-                                        ),
-                                      )
-                                    ]),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                margin: EdgeInsets.only(
+                                    bottom: 8, right: 8, left: 8),
+                                child: ListView(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
                                   children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-
-                                        decoration: InputDecoration(
-
-                                            enabledBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: themeColor.getColor()),
+                                    Container(
+                                      padding: EdgeInsets.all(8),
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.grey.withOpacity(.2),
+                                              blurRadius:
+                                                  6.0, // soften the shadow
+                                              spreadRadius:
+                                                  0.0, //extend the shadow
+                                              offset: Offset(
+                                                0.0, // Move to right 10  horizontally
+                                                1.0, // Move to bottom 10 Vertically
+                                              ),
+                                            )
+                                          ]),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: TextFormField(
+                                              decoration: InputDecoration(
+                                                  enabledBorder:
+                                                      UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: themeColor
+                                                            .getColor()),
+                                                  ),
+                                                  focusedBorder:
+                                                      UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: textColor),
+                                                  ),
+                                                  labelStyle: new TextStyle(
+                                                      color: const Color(
+                                                          0xFF424242)),
+                                                  hintText:
+                                                      "Enter the Phone Number",
+                                                  hintStyle:
+                                                      GoogleFonts.poppins(
+                                                          fontSize: 12,
+                                                          color: textColor)),
+                                              onChanged: (String value) {
+                                                phone = value;
+                                              },
                                             ),
-                                            focusedBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(color: textColor),
-                                            ),
-                                            labelStyle: new TextStyle(
-                                                color: const Color(0xFF424242)),
-                                            hintText: "Enter the Phone Number",
-                                            hintStyle: GoogleFonts.poppins(
-                                                fontSize: 12, color: textColor)),
-                                        onChanged: (String value){
-                                          phone=value;
-                                        },
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                             ],
-                          ),
-                        ),
-                      ],
-                    ):Container(),
+                          )
+                        : Container(),
                     Padding(
-                      padding: const EdgeInsets.only(left: 8.0, top: 16, bottom: 8),
+                      padding:
+                          const EdgeInsets.only(left: 8.0, top: 16, bottom: 8),
                       child: Text(
                         "Order Note",
                         style: GoogleFonts.poppins(
@@ -266,7 +298,8 @@ class _OrderPageState extends State<OrderPage> {
                                               color: themeColor.getColor()),
                                         ),
                                         focusedBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(color: textColor),
+                                          borderSide:
+                                              BorderSide(color: textColor),
                                         ),
                                         labelStyle: new TextStyle(
                                             color: const Color(0xFF424242)),
@@ -281,9 +314,163 @@ class _OrderPageState extends State<OrderPage> {
                         ],
                       ),
                     ),
+                    Card(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[
+                          Expanded(
+                            flex: 2,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: TextFormField(
+                                onChanged: (value) {
+                                  code = value;
+                                },
+                                controller: _CoponController,
+                                decoration: InputDecoration(
+                                    hintText: ' Copun Code ',
+                                    hintStyle: TextStyle(
+                                        fontFamily: 'Raleway',
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .subhead
+                                            .color),
+                                    focusedBorder: InputBorder.none,
+                                    disabledBorder: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    focusedErrorBorder: InputBorder.none),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: FlatButton.icon(
+                                onPressed: () async {
+                                  _isLoading = true;
+                                  copon = await OrderService.getCoupons(code);
+                                  if (copon == 0) {
+                                    final snackbar = SnackBar(
+                                      content: Text(getTransrlate(
+                                          context, 'codeInveild')),
+                                    );
+                                    scaffoldKey.currentState
+                                        .showSnackBar(snackbar);
+                                    _isLoading = false;
+                                    _CoponController.clear();
+                                  } else {
+                                    final snackbar = SnackBar(
+                                      content: Text(
+                                          getTransrlate(context, 'codeUsage')),
+                                    );
+                                    final snackbarconfirmed = SnackBar(
+                                      content: Text(
+                                          getTransrlate(context, 'codeDone')),
+                                    );
+                                    coponState
+                                        ? setState(() {
+                                            copon = copon + 0;
+                                            widget.total =
+                                                (widget.total - copon < 0)
+                                                    ? 0
+                                                    : widget.total - copon;
+                                            coponState = false;
+                                            _isLoading = false;
+                                            scaffoldKey.currentState
+                                                .showSnackBar(
+                                                    snackbarconfirmed);
+                                          })
+                                        : scaffoldKey.currentState
+                                            .showSnackBar(snackbar);
+                                  }
+                                },
+                                icon: Icon(
+                                  Icons.local_offer,
+                                  size: 15,
+                                ),
+                                label: Text(
+                                  'Applay',
+                                  style: TextStyle(fontSize: 15),
+                                )),
+                          ),
+                        ],
+                      ),
+                    ),
                     SizedBox(
                       height: 16,
                     ),
+                    Container(
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(.2),
+                              blurRadius: 6.0, // soften the shadow
+                              spreadRadius: 0.0, //extend the shadow
+                              offset: Offset(
+                                0.0, // Move to right 10  horizontally
+                                1.0, // Move to bottom 10 Vertically
+                              ),
+                            )
+                          ]),
+                      width: ScreenUtil.divideWidth(context),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: <Widget>[
+                              Text(
+                                'Total : ',
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: 15,
+                                  letterSpacing: 0.7,
+                                ),
+                              ),
+                              Text(
+                                (widget.total - copon).toString(),
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: 15,
+                                  letterSpacing: 0.7,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Text(
+                                'discount : ',
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: 15,
+                                  letterSpacing: 0.7,
+                                ),
+                              ),
+                              Text(
+                                copon == null ? '0.0' : copon.toString(),
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: 15,
+                                  letterSpacing: 0.7,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0, right: 8),
                       child: GFButton(
@@ -296,23 +483,19 @@ class _OrderPageState extends State<OrderPage> {
                         color: themeColor.getColor(),
                         onPressed: () {
                           //Nav.route(context, CreditCartPage());
-                          if(phone!=null)
-                          {
-                            if(checkboxValueA==null){
+                          if (phone != null) {
+                            if (checkboxValueA == null) {
                               final snackbar = SnackBar(
                                 content: Text('Address not Selected'),
                               );
                               scaffoldKey.currentState.showSnackBar(snackbar);
-                            }else{
+                            } else {
                               create_New_order(phone);
                               setState(() {
-                                _isLoading=true;
+                                _isLoading = true;
                               });
                             }
-
-                          }
-                          else
-                          {
+                          } else {
                             final snackbar = SnackBar(
                               content: Text('Not phone'),
                             );
@@ -327,12 +510,16 @@ class _OrderPageState extends State<OrderPage> {
                 ),
               ),
             ),
-            _isLoading ? Container(
-                height: double.infinity,
-                width: double.infinity,
-                color: Colors.black45,
-                child: Center(child: CircularProgressIndicator(valueColor:  AlwaysStoppedAnimation<Color>(themeColor.getColor()),
-                )))
+            _isLoading
+                ? Container(
+                    height: double.infinity,
+                    width: double.infinity,
+                    color: Colors.black45,
+                    child: Center(
+                        child: CircularProgressIndicator(
+                      valueColor:
+                          AlwaysStoppedAnimation<Color>(themeColor.getColor()),
+                    )))
                 : Container()
           ],
         ),
@@ -340,7 +527,8 @@ class _OrderPageState extends State<OrderPage> {
     );
   }
 
-  buildPayMethodItem(BuildContext context, String title, themeColor,int index) {
+  buildPayMethodItem(
+      BuildContext context, String title, themeColor, int index) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -354,7 +542,7 @@ class _OrderPageState extends State<OrderPage> {
               hoverColor: themeColor.getColor(),
               onChanged: (int value) {
                 setState(() {
-                  checkboxValueB=value;
+                  checkboxValueB = value;
                 });
               },
             ),
@@ -370,6 +558,7 @@ class _OrderPageState extends State<OrderPage> {
       ],
     );
   }
+
   buildAddressItem(BuildContext context, themeColor) {
     return Container(
       decoration: BoxDecoration(
@@ -390,11 +579,13 @@ class _OrderPageState extends State<OrderPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            height: addressList == null ? 50 :addressList.length*60.toDouble(),
+            height:
+                addressList == null ? 50 : addressList.length * 60.toDouble(),
             child: ListView.builder(
                 itemCount: count,
                 itemBuilder: (BuildContext context, int position) {
-                  return buildItemRadio(context, themeColor,addressList[position], position);
+                  return buildItemRadio(
+                      context, themeColor, addressList[position], position);
                 }),
           ),
           Padding(
@@ -422,6 +613,7 @@ class _OrderPageState extends State<OrderPage> {
       ),
     );
   }
+
   void updateListView() {
     final Future<Database> db = helper.initializedDatabase();
     db.then((database) {
@@ -434,8 +626,9 @@ class _OrderPageState extends State<OrderPage> {
       });
     });
   }
-  buildItemRadio(BuildContext context, themeColor,Address_shiping address_shiping,int position) {
 
+  buildItemRadio(BuildContext context, themeColor,
+      Address_shiping address_shiping, int position) {
     return Container(
       padding: EdgeInsets.only(left: 12, right: 12, top: 12),
       width: ScreenUtil.getWidth(context),
@@ -455,108 +648,103 @@ class _OrderPageState extends State<OrderPage> {
           ),
           Expanded(
               child: Text(
-                address_shiping.addres1,
+            address_shiping.addres1,
             style: GoogleFonts.poppins(
                 fontSize: 12,
                 fontWeight: FontWeight.w300,
                 color: Color(0xFF5D6A78)),
           )),
           IconButton(
-            onPressed: (){
+            onPressed: () {
               _delete(context, addressList[position]);
             },
-            icon: Icon(Icons.delete,color:Colors.red),
+            icon: Icon(Icons.delete, color: Colors.red),
           )
         ],
       ),
     );
   }
 
-
-
   void _delete(BuildContext context, Address_shiping student) async {
-
     int ressult = await helper.deleteStudent(student.id);
     if (ressult != 0) {
       updateListView();
     }
   }
-  create_New_order(String phone) async{
+
+  create_New_order(String phone) async {
     fetchUserId();
-    if(checkboxValueA==null){
+    if (checkboxValueA == null) {
       final snackbar = SnackBar(
         content: Text('برجاء حدد عنوان'),
       );
       scaffoldKey.currentState.showSnackBar(snackbar);
       setState(() {
-        _isLoading=false;
+        _isLoading = false;
       });
-
-    }else{
-
+    } else {
       //Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentScreen(total,addressList[checkboxValueA],setItemlins(items))));
-      ConfirmOrder confirmOrder= await OrderService.createorder(
-          setItemlins(widget.items), id.toString(), addressList[checkboxValueA].city,
-          addressList[checkboxValueA].addres1, phone, name, addressList[checkboxValueA].Country,
-          email,PaymentList[checkboxValueB].id,PaymentList[checkboxValueB].title,null);
-      if(confirmOrder==null)
-      {
+      ConfirmOrder confirmOrder = await OrderService.createorder(
+          setItemlins(widget.items),
+          id.toString(),
+          addressList[checkboxValueA].city,
+          addressList[checkboxValueA].addres1,
+          phone,
+          name,
+          addressList[checkboxValueA].Country,
+          email,
+          PaymentList[checkboxValueB].id,
+          PaymentList[checkboxValueB].title,
+          null);
+      if (confirmOrder == null) {
         final snackbar = SnackBar(
           content: Text('خطأء فى الطلب'),
         );
         setState(() {
-          _isLoading=false;
+          _isLoading = false;
         });
         scaffoldKey.currentState.showSnackBar(snackbar);
-
-      }
-      else{
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => DetailScreen(confirmOrder)),
+      } else {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => DetailScreen(confirmOrder)),
             ModalRoute.withName("/home"));
       }
     }
-
   }
-  Future fetchUserId() async{
+
+  Future fetchUserId() async {
     email = await SharedPreferencesHelper.getEmail();
     name = await SharedPreferencesHelper.getname();
     username = await SharedPreferencesHelper.getUserimage();
     name = await SharedPreferencesHelper.getname();
     id = await SharedPreferencesHelper.getUserId();
-    phone=await SharedPreferencesHelper.getphone();
+    phone = await SharedPreferencesHelper.getphone();
   }
-  List<LineItems> setItemlins(List<Cart> items){
+
+  List<LineItems> setItemlins(List<Cart> items) {
     List<LineItems> item = new List<LineItems>();
-    for (int i = 0; i <= items.length-1 ; i++){
-      if (items[i].idVariation!=null)
-      { item.add(new LineItems(
-        productId: items[i].id,
-        quantity: items[i].quantity,
-        variationId: items[i].idVariation,
-      ));
-
-      }else
-      {
+    for (int i = 0; i <= items.length - 1; i++) {
+      if (items[i].idVariation != null) {
         item.add(new LineItems(
-            productId: items[i].id,
-            quantity: items[i].quantity));
-
-
+          productId: items[i].id,
+          quantity: items[i].quantity,
+          variationId: items[i].idVariation,
+        ));
+      } else {
+        item.add(
+            new LineItems(productId: items[i].id, quantity: items[i].quantity));
       }
       print(items[i].idVariation);
-
     }
     return item;
   }
 
   _navigateAndDisplaySelection(BuildContext context) async {
-
     checkboxValueA = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => NewAddressPage()),
     );
     updateListView();
   }
-
-
 }

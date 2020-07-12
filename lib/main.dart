@@ -79,7 +79,7 @@ class _MyAppState extends State<MyApp> {
 //        APICONFIQ.Base_url=onValue.baseUrl;
 //        APICONFIQ.consumer_key=onValue.consumerKey;
 //        APICONFIQ.consumer_secret=onValue.consumerSecret;
-//        APICONFIQ.kGoogleApiKey=onValue.kGoogleApiKey;
+        APICONFIQ.kGoogleApiKey=onValue.kGoogleApiKey;
        //Provider.of<ThemeNotifier>(context).setLocal('en');
       });
     });

@@ -52,7 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
   void _auth() async {
-    MyApp.setlocal(context, Locale(Provider.of<ThemeNotifier>(context).local,''));
+    //MyApp.setlocal(context, Locale(Provider.of<ThemeNotifier>(context).local,''));
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     if (null != prefs.getString("token")) {

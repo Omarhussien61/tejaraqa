@@ -14,6 +14,8 @@ import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
 import 'package:shoppingapp/widgets/new_adress_input.dart';
 
+import 'MapSample.dart';
+
 class NewAddressPage extends StatefulWidget {
   @override
   _NewAddressPageState createState() => _NewAddressPageState();
@@ -115,10 +117,24 @@ class _NewAddressPageState extends State<NewAddressPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  "My address",
-                  style: GoogleFonts.poppins(
-                      fontSize: 18, color: Color(0xFF5D6A78)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "My address",
+                      style: GoogleFonts.poppins(
+                          fontSize: 18, color: Color(0xFF5D6A78)),
+                    ),
+                    InkWell(
+                      focusColor:  Provider.of<ThemeNotifier>(context).getColor(),
+                      splashColor: Provider.of<ThemeNotifier>(context).getColor(),
+                      onTap: () {
+                        _navigateAndDisplaySelection(context);
+                      },
+                      child: Icon(Icons.location_on),
+                    ),
+
+                  ],
                 ),
                 Container(
                     width: 28,
@@ -295,4 +311,14 @@ class _NewAddressPageState extends State<NewAddressPage> {
         city=SaudiArabia;
       });
   }
+  _navigateAndDisplaySelection(BuildContext context) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MapSample()),
+    );
+
+  }
+
 }

@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:getflutter/components/button/gf_button.dart';
 import 'package:getflutter/types/gf_button_type.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shoppingapp/modal/Profilefacebook.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert' as JSON;
+import 'package:shoppingapp/modal/usermodal.dart';
 import 'package:shoppingapp/utils/keyboard.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_change.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
-
 class SocialRegisterButtons extends StatelessWidget {
   final ThemeNotifier themeColor;
-
   const SocialRegisterButtons({Key key, this.themeColor}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     ThemeChanger _themeChanger = ThemeChanger(context);
@@ -36,7 +39,7 @@ class SocialRegisterButtons extends StatelessWidget {
               ),
               color: themeColor.getColor(),
               onPressed: () {
-                _themeChanger.openFullMaterialColorPicker(themeColor);
+                _login();
               },
               text: "     Google     "),
           GFButton(
@@ -50,10 +53,59 @@ class SocialRegisterButtons extends StatelessWidget {
                 offset: Offset(0, 0),
               ),
               color: themeColor.getColor(),
-              onPressed: () {},
+              onPressed: () {
+                _loginWithFB(context);
+              },
               text: "     Facebook     "),
         ],
       ),
     );
+  }
+  _login() async{
+    GoogleSignIn _googleSignIn = GoogleSignIn(
+      scopes: [
+        'email',
+        'https://www.googleapis.com/auth/contacts.readonly',
+      ],
+    );
+    try{
+      await _googleSignIn.signIn();
+      print(_googleSignIn.currentUser);
+      UserM user=new UserM(email: _googleSignIn.currentUser.email,
+          displayname: _googleSignIn.currentUser.displayName,
+          avatar: _googleSignIn.currentUser.photoUrl
+      );
+        //Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen(null,user)));
+    } catch (err){
+      print(err);
+    }
+  }
+
+  _loginWithFB(BuildContext context) async {
+    final facebookLogin = FacebookLogin();
+
+    Profile profile;
+    final result = await facebookLogin.logInWithReadPermissions(['email']);
+    switch (result.status) {
+      case FacebookLoginStatus.loggedIn:
+        final token = result.accessToken.token;
+        final graphResponse = await http.get('https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=${token}');
+        final profil = JSON.jsonDecode(graphResponse.body);
+        print(graphResponse.body);
+        profile = new Profile.fromJson(profil);
+        UserM user=new UserM(email:profile.email,
+            displayname: profile.name,
+            avatar: profile.picture.data.url
+        );
+
+
+        break;
+
+      case FacebookLoginStatus.cancelledByUser:
+        break;
+      case FacebookLoginStatus.error:
+        break;
+    }
+
   }
 }

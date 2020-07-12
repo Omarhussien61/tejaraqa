@@ -1,33 +1,34 @@
 
 class Address_shiping {
 
-  int _id;
+  int id;
   String _title;
   String _Country;
   String _city;
-  double _lat;
-  double _lang;
+  double lat;
+  double lang;
   String _street;
   String _buildingNo;
   String _addres1;
 
 
   Address_shiping(this._Country, this._city,
-      this._title, this._street, this._buildingNo, this._addres1,[this._lat, this._lang,this._id]);
+      this._title, this._street, this._buildingNo, this._addres1,
+  {this.lat, this.lang,this.id});
 
 
 
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
-    map["id"] = this._id;
+    map["id"] = this.id;
     map["title"] = this._title;
     map["country"] = this._Country;
     map["city"] = this._city;
     map["street"] = this._street;
     map["bilidingNo"] = this._buildingNo;
     map["addres1"] = this._addres1;
-    map["lat"] = this._lat;
-    map["lang"] = this._lang;
+    map["lat"] = this.lat;
+    map["lang"] = this.lang;
     return map;
   }
 
@@ -38,15 +39,15 @@ class Address_shiping {
   }
 
   Address_shiping.getMap(Map<String, dynamic> map){
-    this._id = map["id"];
+    this.id = map["id"];
     this._title = map["title"];
     this._Country = map["country"];
     this._city = map["city"];
     this._street = map["street"];
     this._buildingNo = map["bilidingNo"];
     this._addres1 = map["addres1"];
-    this._lat = map["lat"];
-    this._lang = map["lang"];
+    this.lat = map["lat"];
+    this.lang = map["lang"];
   }
 
   String get addres1 => _addres1;
@@ -67,17 +68,7 @@ class Address_shiping {
     _street = value;
   }
 
-  double get lang => _lang;
 
-  set lang(double value) {
-    _lang = value;
-  }
-
-  double get lat => _lat;
-
-  set lat(double value) {
-    _lat = value;
-  }
 
   String get city => _city;
 
@@ -91,11 +82,7 @@ class Address_shiping {
     _Country = value;
   }
 
-  int get id => _id;
 
-  set id(int value) {
-    _id = value;
-  }
 
 
 }

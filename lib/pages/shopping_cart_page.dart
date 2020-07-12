@@ -232,7 +232,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
               } else {
 
                 Provider.of<ThemeNotifier>(context).isLogin?
-                Nav.route(context, OrderPage(CartList)):
+                Nav.route(context, OrderPage(CartList,total)):
                 Scaffold.of(context).showSnackBar(SnackBar(
                     backgroundColor: themeColor.getColor(),
                     content: Text('Please login !')));
