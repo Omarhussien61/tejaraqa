@@ -6,8 +6,10 @@ import 'package:getflutter/types/gf_button_type.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shoppingapp/modal/Profilefacebook.dart';
 import 'package:http/http.dart' as http;
+import 'package:shoppingapp/modal/User.dart';
 import 'dart:convert' as JSON;
 import 'package:shoppingapp/modal/usermodal.dart';
+import 'package:shoppingapp/pages/next_register_page.dart';
 import 'package:shoppingapp/utils/keyboard.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_change.dart';
@@ -39,7 +41,7 @@ class SocialRegisterButtons extends StatelessWidget {
               ),
               color: themeColor.getColor(),
               onPressed: () {
-                _login();
+                _login(context);
               },
               text: "     Google     "),
           GFButton(
@@ -61,7 +63,7 @@ class SocialRegisterButtons extends StatelessWidget {
       ),
     );
   }
-  _login() async{
+  _login(BuildContext context) async{
     GoogleSignIn _googleSignIn = GoogleSignIn(
       scopes: [
         'email',
@@ -71,19 +73,19 @@ class SocialRegisterButtons extends StatelessWidget {
     try{
       await _googleSignIn.signIn();
       print(_googleSignIn.currentUser);
-      UserM user=new UserM(email: _googleSignIn.currentUser.email,
-          displayname: _googleSignIn.currentUser.displayName,
-          avatar: _googleSignIn.currentUser.photoUrl
+      User user=new User(email: _googleSignIn.currentUser.email,
+          firstName: _googleSignIn.currentUser.displayName,
+          username: _googleSignIn.clientId,
+          avatarUrl: _googleSignIn.currentUser.photoUrl
       );
-        //Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen(null,user)));
+
+        Navigator.push(context, MaterialPageRoute(builder: (context) => NextRegisterPage(user)));
     } catch (err){
       print(err);
     }
   }
-
   _loginWithFB(BuildContext context) async {
     final facebookLogin = FacebookLogin();
-
     Profile profile;
     final result = await facebookLogin.logInWithReadPermissions(['email']);
     switch (result.status) {
@@ -93,11 +95,13 @@ class SocialRegisterButtons extends StatelessWidget {
         final profil = JSON.jsonDecode(graphResponse.body);
         print(graphResponse.body);
         profile = new Profile.fromJson(profil);
-        UserM user=new UserM(email:profile.email,
-            displayname: profile.name,
-            avatar: profile.picture.data.url
+        User user=new User(email:profile.email,
+            username: profile.id,
+            firstName: profile.name,
+            avatarUrl:  profile.picture.data.url
         );
-
+        print(user.username);
+        Navigator.push(context, MaterialPageRoute(builder: (context) => NextRegisterPage(user)));
 
         break;
 
@@ -108,4 +112,5 @@ class SocialRegisterButtons extends StatelessWidget {
     }
 
   }
+
 }

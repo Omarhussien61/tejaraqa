@@ -19,9 +19,6 @@ class ThemeNotifier with ChangeNotifier {
     notifyListeners();
   }
 
-
-
-
   setLogin( bool isLog) {
     isLogin = isLog;
     notifyListeners();

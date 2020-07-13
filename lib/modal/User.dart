@@ -6,13 +6,14 @@ class User {
   String dateModifiedGmt;
   String email;
   String firstName;
-  String lastName;
+  String lastName,phone;
   String role;
   String username;
   Billing billing;
   Shipping shipping;
   bool isPayingCustomer;
-  String avatarUrl;
+  String avatarUrl,password;
+
 
   User(
       {this.id,
@@ -28,7 +29,9 @@ class User {
         this.billing,
         this.shipping,
         this.isPayingCustomer,
-        this.avatarUrl,});
+        this.avatarUrl,
+      this.phone,
+      this.password});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];

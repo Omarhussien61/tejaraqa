@@ -50,13 +50,14 @@ class _LoginPageState extends State<LoginPage> {
                 height: 8,
               ),
               routeRegisterWidget(themeColor, context),
+              SocialLoginButtons(themeColor: themeColor,),
+
             ],
           ),
         ),
       ),
     );
   }
-
   routeRegisterWidget(ThemeNotifier themeColor, BuildContext context) {
     return Container(
       padding: EdgeInsets.only(right: 42, left: 42, bottom: 12),
@@ -87,4 +88,5 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
 }

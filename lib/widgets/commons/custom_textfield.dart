@@ -9,6 +9,7 @@ class MyTextFormField extends StatelessWidget {
   final bool isPassword;
   final bool isEmail;
   final bool isPhone;
+  final Widget prefix;
 
   final String intialLabel;
 
@@ -22,6 +23,7 @@ class MyTextFormField extends StatelessWidget {
     this.isPhone = false,
     this.labelText,
     this.suffixIcon,
+    this.prefix,
     this.intialLabel
   });
 
@@ -30,8 +32,10 @@ class MyTextFormField extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 16),
       child: TextFormField(
+
         initialValue: intialLabel==null?'':intialLabel,
         decoration: InputDecoration(
+          prefixIcon:prefix,
           hintText: hintText,
           contentPadding: EdgeInsets.all(15.0),
           border: OutlineInputBorder(

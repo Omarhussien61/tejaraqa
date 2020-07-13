@@ -1,6 +1,8 @@
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shoppingapp/modal/User.dart';
 import 'package:shoppingapp/service/loginservice.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';
@@ -23,18 +25,14 @@ class _RegisterFormState extends State<RegisterForm> {
   Model model = Model();
   bool passwordVisible = false;
   bool _isLoading = false;
-
-
-
+  String CountryNo='+20';
   @override
   void initState() {
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ThemeNotifier>(context);
-
     return Stack(
       children: <Widget>[
         Container(
@@ -99,6 +97,30 @@ class _RegisterFormState extends State<RegisterForm> {
                     labelText: "Phone number",
                     hintText: 'Phone number',
                     isPhone: true,
+                    prefix:Container(
+                      width: ScreenUtil.getWidth(context)/4,
+                      child: CountryCodePicker(
+
+                        textStyle: TextStyle(
+                            color: Provider.of<ThemeNotifier>(context).color),
+                        onChanged: (v){
+                          setState(() {
+                            this.CountryNo=v.toString();
+                            print(this.CountryNo);
+
+                          });
+                        },
+                        // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
+                        initialSelection: 'EG',
+                        favorite: ['SA','EG'],
+                        // optional. Shows only country name and flag
+                        showCountryOnly: true,
+                        // optional. Shows only country name and flag when popup is closed.
+                        showOnlyCountryWhenClosed: false,
+                        // optional. aligns the flag and the Text left
+                        alignLeft: true,
+                      ),
+                    ) ,
                     validator: (String value) {
                       if (value.isEmpty) {
                         return 'Enter your Phone number';
@@ -108,11 +130,11 @@ class _RegisterFormState extends State<RegisterForm> {
                       return null;
                     },
                     onSaved: (String value) {
-                      model.Phone = value;
+                      model.Phone =this.CountryNo+value;
+
                     },
                   ),
                 ),
-
                 MyTextFormField(
                   labelText: "Email",
                   hintText: 'Email',
@@ -176,7 +198,14 @@ class _RegisterFormState extends State<RegisterForm> {
                           setState(() => _isLoading = true);
 
                           var result =  await LoginService().Register(
-                             model );
+                             new User(
+                               phone:model.Phone,
+                               firstName: model.firstName,
+                               lastName: model.lastName,
+                               email: model.email,
+                               username: model.userName,
+                               password: model.password
+                             ) );
                         if(result.runtimeType==String)
                           {
                             setState(() => _isLoading = false);
@@ -184,6 +213,7 @@ class _RegisterFormState extends State<RegisterForm> {
                           }
                         else
                           {
+
                             setState(() => _isLoading = false);
                             Nav.routeReplacement(context, InitPage());
                             Provider.of<ThemeNotifier>(context).setLogin(true);
@@ -215,6 +245,7 @@ class _RegisterFormState extends State<RegisterForm> {
       ],
     );
   }
+
   void showAlertDialog(String title, String msg){
     showDialog(
       context: context,

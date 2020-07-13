@@ -3,12 +3,19 @@ import 'dart:convert';
 
 
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shoppingapp/main.dart';
 import 'package:shoppingapp/modal/Create_user.dart';
+import 'package:shoppingapp/modal/User.dart';
 
 import 'package:shoppingapp/modal/usermodal.dart';
 import 'package:shoppingapp/service/API_CONFIQ.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shoppingapp/utils/navigator.dart';
+import 'package:shoppingapp/utils/theme_notifier.dart';
 import 'package:shoppingapp/utils/util/Constant.dart';
 import 'package:shoppingapp/widgets/register/register_form_model.dart';
 class LoginService {
@@ -58,7 +65,7 @@ class LoginService {
     } finally {}
     return userInfo;
   }
-  Future<dynamic>  Register(Model model) async {
+  Future<dynamic>  Register(User model) async {
     Map<String, String> header = new Map();
     String username = APICONFIQ.consumer_key;
     String password = APICONFIQ.consumer_secret;
@@ -69,26 +76,76 @@ class LoginService {
     List<MetaData_user> metaData=new List<MetaData_user>();
     metaData.add(MetaData_user(
         key: 'phonenumber',
-        value: model.Phone));
+        value: model.phone));
 
     var body = json.encode({
       'email': model.email,
       'first_name': model.firstName,
       'last_name': model.lastName,
-      'username': model.userName,
+      'username': model.username,
       'password': model.password,
+      "meta_data": metaData
+    });
+    var bodyWithoutPassword = json.encode({
+      'email': model.email,
+      'first_name': model.firstName,
+      'last_name': model.lastName,
+      'username': model.username,
       "meta_data": metaData
     });
     print(body.toString());
 
     http.Response response = await http.post(
         APICONFIQ.Register,
-        body: body,
+        body: model.password==null?bodyWithoutPassword:body,
         headers: {'Content-type': 'application/json'});
 
     print(response.body);
     if (response.statusCode == 201) {
      return loginUser(model.email,model.password);
+    }
+    else{
+      var data=jsonDecode(response.body);
+      return data['message'];
+    }
+  }
+  Future<dynamic>  Login_Social(UserM model,BuildContext context) async {
+
+    String email=model.email;
+    http.Response response = await http.get(
+        APICONFIQ.Register+'&email=$email',
+       );
+    print(response.body);
+    if (response.statusCode == 200) {
+      var list = json.decode(response.body) as List;
+      if(list.isEmpty){
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            // return object of type Dialog
+            return AlertDialog(
+              title: new Text('Alart'),
+              content: new Text('No email registered please register'),
+              actions: <Widget>[
+                // usually buttons at the bottom of the dialog
+              ],
+            );
+          },
+        );
+      }else {
+        User user = new User.fromJson(list[0]);
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString("user_email", user.email);
+        prefs.setString("user_displayname", user.username);
+        prefs.setString("token", user.id.toString());
+        prefs.setInt("user_id", user.id);
+        prefs.setString("user_nicename", user.firstName);
+        prefs.setString("image_url", model.avatar);
+        Nav.routeReplacement(context, InitPage());
+        Provider.of<ThemeNotifier>(context).setLogin(true);
+
+
+      }
     }
     else{
       var data=jsonDecode(response.body);

@@ -59,7 +59,6 @@ class _MyAppState extends State<MyApp> {
   void setlocal(Locale locale){
     setState(() {
       _locale=locale;
-
     });
   }
 
@@ -80,7 +79,7 @@ class _MyAppState extends State<MyApp> {
 //        APICONFIQ.consumer_key=onValue.consumerKey;
 //        APICONFIQ.consumer_secret=onValue.consumerSecret;
         APICONFIQ.kGoogleApiKey=onValue.kGoogleApiKey;
-       //Provider.of<ThemeNotifier>(context).setLocal('en');
+       Provider.of<ThemeNotifier>(context).setLocal('en');
       });
     });
     super.initState();
@@ -133,6 +132,7 @@ class _InitPageState extends State<InitPage> {
   SQL_Helper helper = new SQL_Helper();
   @override
   void initState() {
+
     items.add(new ScreenHiddenDrawer(
         new ItemHiddenMenu(
           icon: Icon(
@@ -224,28 +224,7 @@ class _InitPageState extends State<InitPage> {
         imageUrl: 'https://d2.woo2.app/wp-content/uploads/2020/04/log-new-1.png',
       ),
       actionsAppBar: <Widget>[
-//        Padding(
-//          padding: EdgeInsets.only(right: 16, top: 8),
-//          child: InkWell(
-//            onTap: () {
-//              Nav.route(context, ShoppingCartPage());
-//            },
-//            child: Badge(
-//              badgeColor: Color(0xFF5D6A78),
-//              alignment: Alignment(-0.5, -1.0),
-//              padding: EdgeInsets.all(4),
-//              badgeContent: Text(
-//                Provider.of<counter>(context).countCart.toString(),
-//                style: TextStyle(color: Colors.white, fontSize: 10),
-//              ),
-//              child: SvgPicture.asset(
-//                "assets/icons/ic_shopping_cart.svg",
-//                color: themeColor.getColor(),
-//                height: 26,
-//              ),
-//            ),
-//          ),
-//        )
+
       ],
       backgroundColorMenu: Colors.blueGrey,
       screens: items,
@@ -257,19 +236,7 @@ class _InitPageState extends State<InitPage> {
       verticalScalePercent: 90.0,
       contentCornerRadius: 16.0,
       typeOpen:themeColor.local=='ar'?TypeOpen.FROM_RIGHT: TypeOpen.FROM_LEFT,
-      //    iconMenuAppBar: Icon(Icons.menu),
-      //    backgroundContent: DecorationImage((image: ExactAssetImage('assets/bg_news.jpg'),fit: BoxFit.cover),
-      //    whithAutoTittleName: true,
-      //    styleAutoTittleName: TextStyle(color: Colors.red),
-      //    actionsAppBar: <Widget>[],
-      //    backgroundColorContent: Colors.blue,
-      //    elevationAppBar: 4.0,
-      //    tittleAppBar: Center(child: Icon(Icons.ac_unit),),
-      //    enableShadowItensMenu: true,
-//      backgroundMenu: DecorationImage(
-//          image: NetworkImage(
-//              'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQUQ0rrFB0d5E69Qpk55mtLAc0Wd8gsk46mbZLYSqWy0TgoZxhG&usqp=CAU'),
-//          fit: BoxFit.cover),
+
     );
   }
 }
