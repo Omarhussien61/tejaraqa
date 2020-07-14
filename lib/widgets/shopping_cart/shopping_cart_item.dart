@@ -17,11 +17,9 @@ class ShoppingCartItem extends StatelessWidget {
     Key key,
     @required this.themeColor,
     @required this.productModel,
-    this.imageUrl,
   }) : super(key: key);
   final Cart productModel;
   final ThemeNotifier themeColor;
-  final String imageUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -90,82 +88,6 @@ class ShoppingCartItem extends StatelessWidget {
             ],
           ),
         ),
-        Positioned(
-          bottom: 24,
-          right: 32,
-          child: Container(
-            width: 100,
-            margin: EdgeInsets.only(top: 26),
-            child: Align(
-              alignment: Alignment.centerRight,
-              child:  Container(
-                padding: EdgeInsets.only(
-                    left: 8, right: 8, top: 4, bottom: 4),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(18),
-                  color: themeColor.getColor(),
-                ),
-                child: Row(
-
-                  mainAxisAlignment:
-                  MainAxisAlignment.center,
-                  crossAxisAlignment:
-                  CrossAxisAlignment.center,
-                  children: <Widget>[
-                    InkWell(
-                        onTap: () {
-
-                            if (productModel.quantity != 0) {
-                              productModel.quantity--;
-                            }
-
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              right: 16.0),
-                          child: Text(
-                            "-",
-                            style: TextStyle(
-                                fontSize: 24,
-                                color: Colors.white),
-                          ),
-                        )),
-                    Container(
-                        decoration: BoxDecoration(
-                          borderRadius:
-                          BorderRadius.circular(18),
-                          color: Color(0xFF707070),
-                        ),
-                        child: Container(
-                          alignment: Alignment.center,
-                          width: 24,
-                          padding:
-                          const EdgeInsets.all(8.0),
-                          child: Text(productModel.quantity.toString(),
-                              style: GoogleFonts.poppins(
-                                  color: Colors.white,
-                                  fontSize: 16)),
-                        )),
-                    InkWell(
-                        onTap: () {
-
-                            if (productModel.quantity != 9) {
-                              productModel.quantity++;
-                            }
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 16.0),
-                          child: Text("+",
-                              style: TextStyle(
-                                  color: Colors.white)),
-                        )),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        )
       ],
     );
   }

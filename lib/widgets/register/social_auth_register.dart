@@ -85,7 +85,10 @@ class SocialRegisterButtons extends StatelessWidget {
     }
   }
   _loginWithFB(BuildContext context) async {
+
     final facebookLogin = FacebookLogin();
+    facebookLogin.logOut();
+
     Profile profile;
     final result = await facebookLogin.logInWithReadPermissions(['email']);
     switch (result.status) {

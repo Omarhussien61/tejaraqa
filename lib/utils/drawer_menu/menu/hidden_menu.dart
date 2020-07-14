@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:shoppingapp/main.dart';
 import 'package:shoppingapp/pages/about_page.dart';
@@ -65,7 +67,13 @@ class _HiddenMenuState extends State<HiddenMenu> {
   bool isconfiguredListern = false;
   int id;
   String username,name,photo;
-
+  final facebookLogin = FacebookLogin();
+  GoogleSignIn _googleSignIn = GoogleSignIn(
+    scopes: [
+      'email',
+      'https://www.googleapis.com/auth/contacts.readonly',
+    ],
+  );
   Future fetchUserId() async{
     id = await SharedPreferencesHelper.getUserId();
     username = await SharedPreferencesHelper.getEmail();
@@ -197,87 +205,6 @@ class _HiddenMenuState extends State<HiddenMenu> {
                     padding: EdgeInsets.all(0.0),
                     children: <Widget>[
                       InkWell(
-                        onTap:(){
-                        },
-                        child: ItemHiddenMenu(
-                          icon: Icon(
-                            Feather.type,
-                            size: 19,
-                            color: Colors.white,
-                          ),
-                          name: 'Language',
-                          baseStyle: GoogleFonts.poppins(
-                              color: Colors.white.withOpacity(0.6),
-                              fontSize: 19.0),
-                          colorLineSelected: Colors.orange,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Nav.route(context, ChangePasswordPage());
-                        },
-                        child: ItemHiddenMenu(
-                          icon: Icon(
-                            Feather.lock,
-                            size: 19,
-                            color: Colors.white,
-                          ),
-                          name: 'Reset Password',
-                          baseStyle: GoogleFonts.poppins(
-                              color: Colors.white.withOpacity(0.6),
-                              fontSize: 19.0),
-                          colorLineSelected: Colors.orange,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Nav.route(context, MyProfileSettings());
-                        },
-                        child: ItemHiddenMenu(
-                          icon: Icon(
-                            Feather.mail,
-                            size: 19,
-                            color: Colors.white,
-                          ),
-                          name: 'Email Settings',
-                          baseStyle: GoogleFonts.poppins(
-                              color: Colors.white.withOpacity(0.6),
-                              fontSize: 19.0),
-                          colorLineSelected: Colors.orange,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                  height: 28,
-                  margin: EdgeInsets.only(left: 24, right: 48),
-                  child: Divider(
-                    color: Colors.white.withOpacity(0.5),
-                  )),
-              Container(
-                decoration: BoxDecoration(
-                    boxShadow: widget.enableShadowItensMenu
-                        ? [
-                            new BoxShadow(
-                              color: const Color(0x44000000),
-                              offset: const Offset(0.0, 5.0),
-                              blurRadius: 50.0,
-                              spreadRadius: 30.0,
-                            ),
-                          ]
-                        : []),
-                child: NotificationListener<OverscrollIndicatorNotification>(
-                  onNotification: (scroll) {
-                    scroll.disallowGlow();
-                    return false;
-                  },
-                  child: ListView(
-                    shrinkWrap: true,
-                    padding: EdgeInsets.all(0.0),
-                    children: <Widget>[
-                      InkWell(
                         child: ItemHiddenMenu(
                           icon: Icon(
                             Feather.list,
@@ -318,6 +245,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                             Nav.route(context, LoginPage());
                           }
                           else {
+                            _logout();
                           SharedPreferencesHelper.cleanlocal();
                           Provider.of<ThemeNotifier>(context).setLogin(false);
                           Navigator.pushAndRemoveUntil(context,
@@ -351,7 +279,10 @@ class _HiddenMenuState extends State<HiddenMenu> {
       ),
     );
   }
-
+  _logout(){
+    _googleSignIn.signOut();
+    facebookLogin.logOut();
+  }
   void confListern() {
     SimpleHiddenDrawerProvider.of(context)
         .getPositionSelectedListener()

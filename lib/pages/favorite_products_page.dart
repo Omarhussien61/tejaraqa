@@ -35,7 +35,7 @@ class HomeWidgetState extends State<FavoriteProductsPage>
     return SafeArea(
       child: Scaffold(
         backgroundColor: whiteColor,
-        body: SingleChildScrollView(
+        body:themeColor.isLogin? SingleChildScrollView(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -51,17 +51,14 @@ class HomeWidgetState extends State<FavoriteProductsPage>
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               children: <Widget>[
-                WishListItem(themeColor: themeColor, imageUrl: "prodcut9.png"),
-                WishListItem(themeColor: themeColor, imageUrl: "prodcut8.png"),
-                WishListItem(themeColor: themeColor, imageUrl: "prodcut7.png"),
-                WishListItem(themeColor: themeColor, imageUrl: "prodcut1.png"),
-                WishListItem(themeColor: themeColor, imageUrl: "prodcut5.png"),
-                WishListItem(themeColor: themeColor, imageUrl: "prodcut4.png"),
-                WishListItem(themeColor: themeColor, imageUrl: "prodcut3.png"),
+
+               // WishListItem(themeColor: themeColor, imageUrl: "prodcut3.png"),
               ],
             )
           ],
-        )),
+        )):Container(
+          child: Center(child: Text('No regestration Please Login !')),
+        ),
       ),
     );
   }

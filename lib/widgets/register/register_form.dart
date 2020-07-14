@@ -1,12 +1,16 @@
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shoppingapp/modal/User.dart';
 import 'package:shoppingapp/service/loginservice.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/widgets/commons/shadow_button.dart';
 import 'package:shoppingapp/widgets/register/register_form_model.dart';
 import 'package:validators/validators.dart' as validator;
@@ -26,6 +30,13 @@ class _RegisterFormState extends State<RegisterForm> {
   bool passwordVisible = false;
   bool _isLoading = false;
   String CountryNo='+20';
+  String verificationId;
+  String errorMessage = '';
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  String smsOTP;
+
+  final formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
@@ -197,27 +208,7 @@ class _RegisterFormState extends State<RegisterForm> {
                           _formKey.currentState.save();
                           setState(() => _isLoading = true);
 
-                          var result =  await LoginService().Register(
-                             new User(
-                               phone:model.Phone,
-                               firstName: model.firstName,
-                               lastName: model.lastName,
-                               email: model.email,
-                               username: model.userName,
-                               password: model.password
-                             ) );
-                        if(result.runtimeType==String)
-                          {
-                            setState(() => _isLoading = false);
-                            showAlertDialog(result.toString(),'Alart');
-                          }
-                        else
-                          {
-
-                            setState(() => _isLoading = false);
-                            Nav.routeReplacement(context, InitPage());
-                            Provider.of<ThemeNotifier>(context).setLogin(true);
-                          }
+                     verifyPhone();
                         }
                       },
                       child: Text(
@@ -260,6 +251,159 @@ class _RegisterFormState extends State<RegisterForm> {
         );
       },
     );
+  }
+  signIn() async {
+    try {
+      final AuthCredential credential = PhoneAuthProvider.getCredential(
+        verificationId: verificationId,
+        smsCode: smsOTP,
+      );
+      final FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
+      final FirebaseUser currentUser = await _auth.currentUser();
+      assert(user.uid == currentUser.uid);
+      Navigator.of(context).pop();
+      var result =  await LoginService().Register(
+          new User(password: model.password,
+          username: model.userName,
+          email: model.email,
+          lastName: model.lastName,
+          firstName: model.lastName,
+          phone: model.Phone,) );
+      if(result.runtimeType==String)
+      {
+        setState(() => _isLoading = false);
+        showAlertDialog(result.toString(),'Alart');
+      }
+      else
+      {
+        setState(() => _isLoading = false);
+        Nav.routeReplacement(context, InitPage());
+        Provider.of<ThemeNotifier>(context).setLogin(true);
+      }
+    } catch (e) {
+      handleError(e);
+    }
+  }
+  handleError(PlatformException error) {
+    setState(() => _isLoading = false);
+    print(error);
+    switch (error.code) {
+      case 'خطأ فى الكود':
+        FocusScope.of(context).requestFocus(new FocusNode());
+        setState(() {
+          errorMessage = 'كود غير صحيح';
+        });
+        Navigator.of(context).pop();
+        smsOTPDialog(context).then((value) {
+        });
+        break;
+      default:
+        setState(() {
+          errorMessage = error.message;
+        });
+
+        break;
+    }
+  }
+  Future<void> verifyPhone() async {
+
+    final PhoneCodeAutoRetrievalTimeout autoRetrieve = (String verId) {
+      this.verificationId = verId;
+    };
+    final PhoneCodeSent smsCodeSent = (String verId, [int forceCodeResend]) {
+      this.verificationId = verId;
+      setState(() => _isLoading = false);
+
+      smsOTPDialog(context).then((value) {
+        print('Signed in');
+      });
+    };
+    final PhoneVerificationFailed veriFailed = (AuthException exception) {
+      setState(() => _isLoading = false);
+
+      filedDialog(context,exception.message);
+      print('${exception.message}');
+    };
+
+
+    try {
+      await FirebaseAuth.instance.verifyPhoneNumber(
+          phoneNumber: model.Phone,
+          codeAutoRetrievalTimeout: autoRetrieve,
+          codeSent: smsCodeSent,
+          timeout: const Duration(seconds: 5),
+          verificationCompleted:  (AuthCredential phoneAuthCredential) {
+            print(phoneAuthCredential);
+          },
+          verificationFailed: veriFailed);
+      final PhoneCodeSent smsOTPSent = (String verId, [int forceCodeResend]) {
+        this.verificationId = verId;
+        smsOTPDialog(context).then((value) {
+          print('sign in');
+        });
+      };
+    } catch (e) {
+      handleError(e);
+    }
+  }
+
+  Future<bool> filedDialog(BuildContext context,String error) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return new AlertDialog(
+            title: Center(child: Text('خطأ')),
+            content: Container(
+                child: Text(error)
+            ),
+
+
+          );
+        });
+  }
+
+  Future<bool> smsOTPDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return new AlertDialog(
+            title: Text(getTransrlate(context, 'CodeConfirm')),
+            content: Container(
+              height: 85,
+              child: Column(children: [
+                TextField(
+                  onChanged: (value) {
+                    this.smsOTP = value;
+                  },
+
+                ),
+                (errorMessage != ''
+                    ? Text(
+                  errorMessage,
+                  style: TextStyle(color: Colors.red),
+                )
+                    : Container())
+              ]),
+            ),
+            contentPadding: EdgeInsets.all(10),
+            actions: <Widget>[
+
+              FlatButton(
+                child: Text(getTransrlate(context, 'Confirm'),
+                  style:  TextStyle(
+                    color: Colors.black,
+                    fontSize:15,
+                  ),
+                ),
+                onPressed: () {
+                  signIn();
+                },
+              )
+
+            ],
+          );
+        });
   }
 
 }

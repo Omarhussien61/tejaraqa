@@ -11,6 +11,7 @@ import 'package:shoppingapp/modal/cart.dart';
 import 'package:shoppingapp/modal/createOrder.dart';
 import 'package:shoppingapp/pages/order_page.dart';
 import 'package:shoppingapp/utils/commons/AddToCart.dart';
+import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/util/sql_helper.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/navigator.dart';
@@ -75,7 +76,6 @@ class HomeWidgetState extends State<ShoppingCartPage>
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                SearchBox(),
                 SizedBox(
                   height: 26,
                 ),
@@ -83,7 +83,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
                 SizedBox(
                   height: 12,
                 ),
-                Container(height: 600, child: getCartList())
+                Container(height: ScreenUtil.getHeight(context)/1.6, child: getCartList())
               ],
             )),
           ],
@@ -103,7 +103,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
               ShoppingCartItem(
                   productModel: CartList[position],
                   themeColor: Provider.of<ThemeNotifier>(context),
-                  imageUrl: "prodcut1.png"),
+                  ),
               Positioned(
                 top: 0,
                 right: 12,
@@ -118,12 +118,87 @@ class HomeWidgetState extends State<ShoppingCartPage>
                   },
                 ),
               ),
+              Positioned(
+                bottom: 24,
+                right: 32,
+                child: Container(
+                  width: 100,
+                  height: 50,
+                  margin: EdgeInsets.only(top: 26),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child:  Container(
+                      padding: EdgeInsets.only(
+                          left: 8, right: 8, top: 4, bottom: 4),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(18),
+                        color: Provider.of<ThemeNotifier>(context).getColor(),
+                      ),
+                      child: Row(
+
+                        mainAxisAlignment:
+                        MainAxisAlignment.center,
+                        crossAxisAlignment:
+                        CrossAxisAlignment.center,
+                        children: <Widget>[
+                          InkWell(
+                              onTap: () {
+                                setState(() {
+                                  if (this.CartList[position].quantity != 1) {
+                                    this.CartList[position].quantity--;
+                                  }
+                                });
+
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    right: 16.0),
+                                child: Text(
+                                  "-",
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      color: Colors.white),
+                                ),
+                              )),
+                          Container(
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                BorderRadius.circular(18),
+                                color: Color(0xFF707070),
+                              ),
+                              child: Container(
+                                alignment: Alignment.center,
+                                padding:
+                                const EdgeInsets.all(8.0),
+                                child: Text(this.CartList[position].quantity.toString(),
+                                    style: GoogleFonts.poppins(
+                                        color: Colors.white,
+                                        fontSize: 16)),
+                              )),
+                          InkWell(
+                              onTap: () {
+                                setState(() {
+                                  this.CartList[position].quantity++;
+                                });
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 16.0),
+                                child: Text("+",
+                                    style: TextStyle(
+                                        color: Colors.white)),
+                              )),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              )
 
             ],
           );
         });
   }
-
   void updateListView() {
     final Future<Database> db = helper.initializedDatabase();
     db.then((database) {
@@ -210,7 +285,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
                     fontWeight: FontWeight.bold, color: themeColor.getColor()),
               ),
               Text(
-                total.toString(),
+                calculateTotal().toString(),
                 style: GoogleFonts.poppins(color: themeColor.getColor()),
               ),
             ],
@@ -253,6 +328,15 @@ class HomeWidgetState extends State<ShoppingCartPage>
       countCart(context);
 
     }
+  }
+  double calculateTotal() {
+    setState(() {
+      total = 0;
+      CartList.forEach((f) {
+        total += f.quantity * f.pass;
+      });
+    });
+    return num.parse(total.toStringAsFixed(10));
   }
 
 

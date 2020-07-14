@@ -98,7 +98,7 @@ class MapSampleState extends State<MapSample> {
       heroTag: 'location',
       onPressed: function,
       materialTapTargetSize: MaterialTapTargetSize.padded,
-      backgroundColor: Provider.of<ThemeNotifier>(context).color,
+      backgroundColor: Provider.of<ThemeNotifier>(context).getColor(),
       child: Icon(
         icon,
         size: 36.0,
@@ -145,13 +145,15 @@ class MapSampleState extends State<MapSample> {
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
+
         onPressed: () async {
+          _save();
          // Constatnt.address=address_shiping;
         },
         tooltip: '  حفظ  ',
         label:  Text(getTransrlate(context, 'SaveNaw')),
         icon: Icon(Icons.save),
-        backgroundColor: Provider.of<ThemeNotifier>(context).color,
+        backgroundColor: Provider.of<ThemeNotifier>(context).getColor(),
       ),
     );
   }
@@ -180,7 +182,6 @@ class MapSampleState extends State<MapSample> {
     }
 
   }
-
   getUserLocation() async {
     //call this async method from whereever you need
     String error;
@@ -213,8 +214,6 @@ class MapSampleState extends State<MapSample> {
     _buildingController = TextEditingController();
     _streeetController = TextEditingController();
   }
-
-
   Future<void> _save()  async {
     address_shiping=new Address_shiping(address_shiping.Country,address_shiping.Country,address_shiping.city,address_shiping.street, _buildingController.text,address_shiping.addres1,
     lat: address_shiping.lat,lang: address_shiping.lang);
@@ -224,10 +223,58 @@ class MapSampleState extends State<MapSample> {
 
 
     if (result == 0) {
-      //showAlertDialog(getTransrlate(context, 'sorry'), getTransrlate(context, 'notSavedAddress'));
+      showAlertDialog(getTransrlate(context, 'sorry'), getTransrlate(context, 'notSavedAddress'));
     } else {
-      //showAlertDialog(getTransrlate(context, 'Alert'), getTransrlate(context, 'SavedAddress'));
+      showAlertDialog(getTransrlate(context, 'Alert'), getTransrlate(context, 'SavedAddress'));
     }
   }
+  void showAlertDialog(String title, String msg){
+    showDialog(
+        context: context,builder: (BuildContext context) {
+      return AlertDialog(
+        title:  Text(title,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 18 ,
+                fontStyle: FontStyle.normal)),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Center(
+                child: Text(msg
+                    ,style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18 ,
+                        fontStyle: FontStyle.normal)
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          FlatButton(
+            color: Provider.of<ThemeNotifier>(context).getColor(),
+            child: Text(getTransrlate(context, 'CheckOut'),
+      style:TextStyle(
+      color: Colors.white,
+      fontWeight: FontWeight.bold,
+      fontSize: 20 ,
+      fontStyle: FontStyle.normal)),
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pop(context);
+              Navigator.pop(context);
+              },
+          ),
+        ],
+      );
+    });
+
+
+  }
+
 
 }

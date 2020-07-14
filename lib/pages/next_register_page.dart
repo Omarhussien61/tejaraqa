@@ -6,28 +6,21 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shoppingapp/modal/User.dart';
-import 'package:shoppingapp/modal/usermodal.dart';
 import 'package:shoppingapp/pages/login_page.dart';
 import 'package:shoppingapp/service/loginservice.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/widgets/commons/auth_header.dart';
-import 'package:shoppingapp/widgets/register/register_form_model.dart';
 import 'package:shoppingapp/widgets/commons/custom_textfield.dart';
 import 'package:validators/validators.dart' as validator;
 import 'package:shoppingapp/widgets/commons/shadow_button.dart';
 import 'package:shoppingapp/utils/screen.dart';
 
 import '../main.dart';
-
-
 class NextRegisterPage extends StatefulWidget {
   User userM;
-
-
   NextRegisterPage(this.userM);
-
   @override
   _NextRegisterPageState createState() => _NextRegisterPageState();
 }
@@ -158,23 +151,8 @@ class _NextRegisterPageState extends State<NextRegisterPage> {
                                       if (_formKey.currentState.validate()) {
                                         _formKey.currentState.save();
                                         setState(() => _isLoading = true);
+                                        verifyPhone();
 
-                                        var result =  await LoginService().Register(
-                                            widget.userM );
-                                        if(result.runtimeType==String)
-                                        {
-                                          setState(() => _isLoading = false);
-                                          showAlertDialog(result.toString(),'Alart');
-                                        }
-                                        else
-                                        {
-                                          SharedPreferences.getInstance().then((prefs){
-                                            prefs.setString('image_url', widget.userM.avatarUrl);
-                                          });
-                                          setState(() => _isLoading = false);
-                                          Nav.routeReplacement(context, InitPage());
-                                          Provider.of<ThemeNotifier>(context).setLogin(true);
-                                        }
                                       }
                                     },
                                     child: Text(
@@ -219,12 +197,28 @@ class _NextRegisterPageState extends State<NextRegisterPage> {
       final FirebaseUser currentUser = await _auth.currentUser();
       assert(user.uid == currentUser.uid);
       Navigator.of(context).pop();
-     // Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen(phoneNo,new UserM())));
+      var result =  await LoginService().Register(
+          widget.userM );
+      if(result.runtimeType==String)
+      {
+        setState(() => _isLoading = false);
+        showAlertDialog(result.toString(),'Alart');
+      }
+      else
+      {
+        SharedPreferences.getInstance().then((prefs){
+          prefs.setString('image_url', widget.userM.avatarUrl);
+        });
+        setState(() => _isLoading = false);
+        Nav.routeReplacement(context, InitPage());
+        Provider.of<ThemeNotifier>(context).setLogin(true);
+      }
     } catch (e) {
       handleError(e);
     }
   }
   handleError(PlatformException error) {
+    setState(() => _isLoading = false);
     print(error);
     switch (error.code) {
       case 'خطأ فى الكود':
@@ -251,23 +245,24 @@ class _NextRegisterPageState extends State<NextRegisterPage> {
     };
     final PhoneCodeSent smsCodeSent = (String verId, [int forceCodeResend]) {
       this.verificationId = verId;
+      setState(() => _isLoading = false);
+
       smsOTPDialog(context).then((value) {
         print('Signed in');
       });
     };
-
-
-
     final PhoneVerificationFailed veriFailed = (AuthException exception) {
+      setState(() => _isLoading = false);
+
       filedDialog(context,exception.message);
       print('${exception.message}');
     };
 
-    print(this.CountryNo+widget.userM.phone);
+    print(widget.userM.phone);
 
     try {
       await FirebaseAuth.instance.verifyPhoneNumber(
-          phoneNumber: this.CountryNo+widget.userM.phone,
+          phoneNumber: widget.userM.phone,
           codeAutoRetrievalTimeout: autoRetrieve,
           codeSent: smsCodeSent,
           timeout: const Duration(seconds: 5),

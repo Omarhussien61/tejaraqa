@@ -79,7 +79,7 @@ class _HomeNavigatorState extends State<HomeNavigator> {
                 badgeColor: themeColor.getColor(),
                 padding: EdgeInsets.all(4),
                 badgeContent: Text(
-                  Provider.of<ThemeNotifier>(context).countCart.toString(),
+                  themeColor.countCart.toString(),
                   style: TextStyle(color: Colors.white, fontSize: 10),
                 ),
                 child: SvgPicture.asset(

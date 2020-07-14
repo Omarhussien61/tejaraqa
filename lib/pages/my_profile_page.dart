@@ -33,7 +33,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xFFFCFCFC),
-        body: Container(
+        body:themeColor.isLogin? Container(
           padding: EdgeInsets.only(right: 24, left: 24, top: 8, bottom: 16),
           child: SingleChildScrollView(
             child: Column(
@@ -135,6 +135,8 @@ class _MyProfilePageState extends State<MyProfilePage> {
               ],
             ),
           ),
+        ):Container(
+          child: Center(child: Text('No regestration Please Login !')),
         ),
       ),
     );

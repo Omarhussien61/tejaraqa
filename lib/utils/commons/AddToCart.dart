@@ -30,7 +30,6 @@ void save(ProductModel productModel) async {
 
 void countCart(BuildContext context) async {
   SQL_Helper helper = new SQL_Helper();
-
   helper.getCount().then((value) {
     Provider.of<ThemeNotifier>(context).intcountCart(value);
   });

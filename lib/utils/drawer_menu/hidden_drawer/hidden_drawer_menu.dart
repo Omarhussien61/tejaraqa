@@ -3,16 +3,16 @@ library hidden_drawer_menu;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 import 'package:shoppingapp/utils/drawer_menu/hidden_drawer/screen_hidden_drawer.dart';
 import 'package:shoppingapp/utils/drawer_menu/menu/hidden_menu.dart';
 import 'package:shoppingapp/utils/drawer_menu/menu/item_hidden_menu.dart';
 import 'package:shoppingapp/utils/drawer_menu/simple_hidden_drawer/animated_drawer_content.dart';
 import 'package:shoppingapp/utils/drawer_menu/simple_hidden_drawer/bloc/simple_hidden_drawer_bloc.dart';
 import 'package:shoppingapp/utils/drawer_menu/simple_hidden_drawer/simple_hidden_drawer.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 
 import '../../theme_notifier.dart';
-
 class HiddenDrawerMenu extends StatelessWidget {
   /// List item menu and respective screens
   final List<ScreenHiddenDrawer> screens;
@@ -131,21 +131,52 @@ class HiddenDrawerMenu extends StatelessWidget {
           actions.addAll(actionsAppBar);
         }
 
-        return Scaffold(
-          backgroundColor: Color.fromARGB(255, 252, 252, 252),
-          appBar: PreferredSize(
-            preferredSize: Size.fromHeight(50.0),
-            child: AppBar(
-              brightness: Brightness.light,
-              backgroundColor: backgroundColorAppBar,
-              elevation: elevationAppBar,
-              title: getTittleAppBar(position),
-              centerTitle: isTitleCentered,
-              leading: _buildLeading(bloc,context),
-              actions: actions,
+        return WillPopScope(
+          onWillPop:() async {
+            return  Alert(
+                context: context,
+                title: getTransrlate(context, 'close'),
+                desc: getTransrlate(context, 'closeMessage'),
+                content: Form(
+                  child: Column(
+                    children: <Widget>[
+                    ],
+                  ),
+                ),
+                buttons: [
+                  DialogButton(
+                    color:Colors.red,
+                    onPressed: () {
+                      Navigator.of(context).pop(false);
+                    },
+                    child:Text(getTransrlate(context, 'cancel')),
+                  ),
+                  DialogButton(
+                    color:Colors.green,
+                    onPressed: () {
+                      SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                    },
+                    child:Text(getTransrlate(context, 'ok')),
+                  )
+                ]).show()??
+                false;
+          },
+          child: Scaffold(
+            backgroundColor: Color.fromARGB(255, 252, 252, 252),
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(50.0),
+              child: AppBar(
+                brightness: Brightness.light,
+                backgroundColor: backgroundColorAppBar,
+                elevation: elevationAppBar,
+                title: getTittleAppBar(position),
+                centerTitle: isTitleCentered,
+                leading: _buildLeading(bloc,context),
+                actions: actions,
+              ),
             ),
+            body: screens[position].screen,
           ),
-          body: screens[position].screen,
         );
       },
     );
@@ -180,6 +211,7 @@ class HiddenDrawerMenu extends StatelessWidget {
       typeOpen: typeOpen,
     );
   }
+
 
   Widget _buildLeading(SimpleHiddenDrawerBloc bloc,BuildContext context) {
    return IconButton(

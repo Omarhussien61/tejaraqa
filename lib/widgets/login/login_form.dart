@@ -50,7 +50,6 @@ class _LoginFormState extends State<LoginForm> {
                 MyTextFormField(
                   labelText: "Email",
                   hintText: 'Email',
-                  intialLabel: 'omarhussien61@gmail.com',
                   isEmail: true,
                   validator: (String value) {
                     if (!validator.isEmail(value)) {
@@ -65,7 +64,6 @@ class _LoginFormState extends State<LoginForm> {
                 MyTextFormField(
                   labelText: "Password",
                   hintText: 'Password',
-                  intialLabel: '123456',
                   suffixIcon: IconButton(
                     icon: Icon(
                       // Based on passwordVisible state choose the icon
@@ -116,7 +114,6 @@ class _LoginFormState extends State<LoginForm> {
                               setState(() => _isLoading = false);
                               Nav.routeReplacement(context, InitPage());
                               Provider.of<ThemeNotifier>(context).setLogin(true);
-
                             }
                             else{
                               setState(() => _isLoading = false);

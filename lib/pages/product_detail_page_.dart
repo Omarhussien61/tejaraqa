@@ -1,12 +1,9 @@
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:expandable/expandable.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:getflutter/components/button/gf_button.dart';
-import 'package:getflutter/shape/gf_button_shape.dart';
-import 'package:getflutter/types/gf_button_type.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:html/parser.dart';
 import 'package:provider/provider.dart';
@@ -71,7 +68,8 @@ class _ProductDetailPageAlternativeState
             GoogleFonts.poppins(color: Color(0xFF5D6A78), fontSize: 15),
           ),
           leading: InkWell(
-            onTap:() {Navigator.pop(context);},
+            onTap:() {
+              Navigator.pop(context);},
             child: Icon(
               Icons.chevron_left,
               color: textColor,
