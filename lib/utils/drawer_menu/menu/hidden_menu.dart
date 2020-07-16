@@ -205,6 +205,23 @@ class _HiddenMenuState extends State<HiddenMenu> {
                     padding: EdgeInsets.all(0.0),
                     children: <Widget>[
                       InkWell(
+                        onTap: () {
+                          Nav.route(context, MyProfileSettings());
+                        },
+                        child: ItemHiddenMenu(
+                          icon: Icon(
+                            Feather.mail,
+                            size: 19,
+                            color: Colors.white,
+                          ),
+                          name: 'Email Settings',
+                          baseStyle: GoogleFonts.poppins(
+                              color: Colors.white.withOpacity(0.6),
+                              fontSize: 19.0),
+                          colorLineSelected: Colors.orange,
+                        ),
+                      ),
+                      InkWell(
                         child: ItemHiddenMenu(
                           icon: Icon(
                             Feather.list,

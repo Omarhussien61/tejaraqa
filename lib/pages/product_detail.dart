@@ -54,13 +54,12 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   bool isloading = false;
   int id;
   String name, email, photo;
-  double rateing;
+  double rateing=5;
   String comment;
   SQL_Rercent helperRecent = new SQL_Rercent();
   Recentview recentview;
   Cart cart;
   int checkboxValueA, checkboxValueB;
-
   List<Product_variations> product_variations;
   Animation<double> animation;
   Future<List<ProductModel>> productRelated;
@@ -86,6 +85,11 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     ProductService.getReviewer(widget.product.id).then((usersFromServer) {
       setState(() {
         product_review = usersFromServer;
+      });
+    });
+    ProductService.getVriationProducts(widget.product.id).then((usersFromServer) {
+      setState(() {
+        product_variations = usersFromServer;
       });
     });
     super.initState();
@@ -341,7 +345,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                 mainAxisSize: MainAxisSize.max,
                                 children: <Widget>[
                                   SliderDotProductDetail(
-                                      current: _carouselCurrentPage),
+                                      current: _carouselCurrentPage,list: widget.product.images,),
                                   Container(
                                     margin: EdgeInsets.only(top: 14),
                                     child: Row(
@@ -451,7 +455,25 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                             fontSize: 12),
                                       ),
                                       expanded: Text(
-                                        widget.product.description,
+                                        (parse(widget.product.sortDescription
+                                            .toString()
+                                            .trim())
+                                            .body
+                                            .text
+                                            .trim()
+                                            .length >
+                                            0 ||
+                                            widget.product.sortDescription
+                                                .toString()
+                                                .trim() ==
+                                                '')
+                                            ? parse(widget.product.sortDescription
+                                            .toString()
+                                            .trim())
+                                            .body
+                                            .text
+                                            .trim()
+                                            : "Best",
                                         softWrap: true,
                                         style: GoogleFonts.poppins(
                                           fontWeight: FontWeight.w300,
@@ -586,6 +608,71 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                       )
                                     ],
                                   ),
+                                  product_variations!=null? product_variations.isNotEmpty?Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      ProductListTitleBar(
+                                        themeColor: themeColor,
+                                        title: "Products Veriations",
+                                        isCountShow: false,
+                                      ),
+                                      Container(
+                                        height: ScreenUtil.getHeight(context)/15,
+                                        width: ScreenUtil.getWidth(context),
+                                        child: ListView.builder(
+                                            scrollDirection: Axis.horizontal,
+                                            itemCount:  product_variations == null ? 0 : product_variations.length,
+                                            itemBuilder: (BuildContext context, int position) {
+                                              return Container(
+                                                height: ScreenUtil.getHeight(context)/20,
+                                                width: ScreenUtil.getWidth(context)/4,
+                                                child: ListView.builder(
+                                                    scrollDirection: Axis.horizontal,
+                                                    itemCount:product_variations[position].attributes == null ? 0 : product_variations[position].attributes.length,
+                                                    itemBuilder: (BuildContext context, int pos) {
+                                                      bool isSelected = checkboxValueA == position;
+
+                                                      return  GestureDetector(
+                                                        onTap: (){
+                                                          setState(() {
+                                                            checkboxValueA = position;
+                                                            checkboxValueB=product_variations[position].id;
+                                                            widget.product.priceHtml=product_variations[position].price;
+                                                            widget.product.price=product_variations[position].price;
+                                                          });
+                                                        },
+                                                        child: Card(
+                                                          shape: isSelected
+                                                              ? new RoundedRectangleBorder(
+                                                              side: new BorderSide(color: themeColor.getColor(), width: 2.0),
+                                                              borderRadius: BorderRadius.circular(4.0))
+                                                              : new RoundedRectangleBorder(
+                                                              side: new BorderSide(color: Colors.white, width: 2.0),
+                                                              borderRadius: BorderRadius.circular(4.0)),
+                                                          elevation: 2.0,
+                                                          child: Padding(
+                                                            padding: const EdgeInsets.only(left: 8,right: 8),
+                                                            child: Center(
+                                                              child: Text(
+                                                                product_variations[position].attributes[pos].option,
+                                                                style:TextStyle(
+                                                                  fontFamily: 'El_Messiri',
+                                                                  color: Colors.black,
+                                                                  fontSize: ScreenUtil.getHeight(context)/35,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+
+                                                        ),
+                                                      );
+                                                    }),
+                                              );
+                                            }),
+                                      ),
+                                    ],
+                                  )
+                                      :Container():Container(),
                                   Container(
                                     margin: EdgeInsets.only(top: 24),
                                     child: Row(
@@ -987,6 +1074,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
         builder: (context) {
           return AlertDialog(
             title: RatingBar(
+              initialRating: 5,
               itemSize: 14.0,
               minRating: 1,
               direction: Axis.horizontal,
@@ -1050,8 +1138,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                       isloading = true;
                     });
                     form.save();
-
-                    await ProductService.Createrating(name, email, id, rateing,
+                    await ProductService.Createrating(name, email, widget.product.id, rateing,
                         comment.isEmpty ? ' ' : comment);
                     Navigator.pop(context);
                     setState(() {
@@ -1097,7 +1184,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
       Provider.of<ThemeNotifier>(context).intcountCart(value);
     });
   }
-
   Future fetchUserId() async {
     id = await SharedPreferencesHelper.getUserId();
     name = await SharedPreferencesHelper.getname();

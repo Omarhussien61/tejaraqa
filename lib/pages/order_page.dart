@@ -349,7 +349,8 @@ class _OrderPageState extends State<OrderPage> {
                             child: FlatButton.icon(
                                 onPressed: () async {
                                   _isLoading = true;
-                                  copon = await OrderService.getCoupons(code);
+                                  copon = await OrderService.getCoupons(code,id);
+                                  print('copoun = '+copon.toString());
                                   if (copon == 0) {
                                     final snackbar = SnackBar(
                                       content: Text(getTransrlate(
@@ -357,9 +358,16 @@ class _OrderPageState extends State<OrderPage> {
                                     );
                                     scaffoldKey.currentState
                                         .showSnackBar(snackbar);
-                                    _isLoading = false;
-                                    _CoponController.clear();
+                                    setState(() {
+                                      _isLoading = false;
+
+                                    });
+                                   // _CoponController.clear();
                                   } else {
+                                    setState(() {
+                                      _isLoading = false;
+
+                                    });
                                     final snackbar = SnackBar(
                                       content: Text(
                                           getTransrlate(context, 'codeUsage')),
@@ -418,7 +426,6 @@ class _OrderPageState extends State<OrderPage> {
                           ]),
                       width: ScreenUtil.divideWidth(context),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             children: <Widget>[
@@ -432,7 +439,7 @@ class _OrderPageState extends State<OrderPage> {
                                 ),
                               ),
                               Text(
-                                (widget.total - copon).toString(),
+                                widget.total.toString(),
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
                                   color: Colors.black87,
@@ -683,7 +690,6 @@ class _OrderPageState extends State<OrderPage> {
         _isLoading = false;
       });
     } else {
-      //Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentScreen(total,addressList[checkboxValueA],setItemlins(items))));
       ConfirmOrder confirmOrder = await OrderService.createorder(
           setItemlins(widget.items),
           id.toString(),
@@ -695,7 +701,7 @@ class _OrderPageState extends State<OrderPage> {
           email,
           PaymentList[checkboxValueB].id,
           PaymentList[checkboxValueB].title,
-          null);
+          copon==0?null:code);
       if (confirmOrder == null) {
         final snackbar = SnackBar(
           content: Text('خطأء فى الطلب'),
@@ -712,7 +718,6 @@ class _OrderPageState extends State<OrderPage> {
       }
     }
   }
-
   Future fetchUserId() async {
     email = await SharedPreferencesHelper.getEmail();
     name = await SharedPreferencesHelper.getname();

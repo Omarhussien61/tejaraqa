@@ -101,6 +101,7 @@ class SQL_Helper {
     var result = await db.insert(tableName, student.toMap());
     return result;
   }
+
   Future<int> updateCart(Cart student) async{
     Database db = await this.database;
     var result = await db.update(tableName, student.toMap(), where: "$_id = ?", whereArgs: [student.id]);

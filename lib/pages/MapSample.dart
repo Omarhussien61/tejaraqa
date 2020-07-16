@@ -110,12 +110,10 @@ class MapSampleState extends State<MapSample> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-
       appBar: AppBar(
         title: Center(child: Text(getTransrlate(context, 'LocationSelected'))),
         backgroundColor: Provider.of<ThemeNotifier>(context).color,
         actions: <Widget>[
-
         ],
       ),
       body: Stack(
@@ -157,7 +155,6 @@ class MapSampleState extends State<MapSample> {
       ),
     );
   }
-
   getUserLocationAddress(LatLng latLng) async {
     //call this async method from whereever you need
     try {

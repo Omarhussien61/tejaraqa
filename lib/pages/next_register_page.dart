@@ -35,8 +35,8 @@ class _NextRegisterPageState extends State<NextRegisterPage> {
   String errorMessage = '';
   FirebaseAuth _auth = FirebaseAuth.instance;
   String smsOTP;
-
   final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ThemeNotifier>(context);

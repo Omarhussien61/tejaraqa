@@ -19,6 +19,7 @@ import 'package:shoppingapp/utils/drawer_menu/hidden_drawer/hidden_drawer_menu.d
 import 'package:shoppingapp/utils/drawer_menu/hidden_drawer/screen_hidden_drawer.dart';
 import 'package:shoppingapp/utils/drawer_menu/menu/item_hidden_menu.dart';
 import 'package:shoppingapp/utils/drawer_menu/simple_hidden_drawer/animated_drawer_content.dart';
+import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
 import 'package:shoppingapp/utils/util/AppLocalizations.dart';
 import 'package:shoppingapp/utils/util/sql_helper.dart';
@@ -46,6 +47,7 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
+
   static void setlocal(BuildContext context,Locale locale)
   {
     _MyAppState state =context.findAncestorStateOfType<_MyAppState>();
@@ -61,7 +63,6 @@ class _MyAppState extends State<MyApp> {
       _locale=locale;
     });
   }
-
   @override
   void initState() {
     theame_service.getNewTheme().then((onValue){
@@ -71,7 +72,6 @@ class _MyAppState extends State<MyApp> {
       SharedPreferences.getInstance().then((prefs){
         prefs.setInt('color', int.parse(onValue.primaryCoustom));
       });
-      
     });
     APICONFIQ.getNewConfiq().then((onValue){
       setState(() {
@@ -91,7 +91,6 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Shopping App',
-
       localizationsDelegates: [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -132,7 +131,9 @@ class _InitPageState extends State<InitPage> {
   SQL_Helper helper = new SQL_Helper();
   @override
   void initState() {
-
+    WidgetsBinding.instance.addPostFrameCallback((_) =>
+        MyApp.setlocal(context,
+            Locale(Provider.of<ThemeNotifier>(context).getlocal(),'')));
     items.add(new ScreenHiddenDrawer(
         new ItemHiddenMenu(
           icon: Icon(
@@ -146,58 +147,7 @@ class _InitPageState extends State<InitPage> {
           colorLineSelected: Colors.transparent,
         ),
         HomeNavigator()));
-    items.add(new ScreenHiddenDrawer(
-        new ItemHiddenMenu(
-          icon: Icon(
-            Feather.search,
-            color: Colors.white,
-            size: 19,
-          ),
-          name: 'Categories',
-          baseStyle: GoogleFonts.poppins(
-              color: Colors.white.withOpacity(0.6), fontSize: 19.0),
-          colorLineSelected: Colors.orange,
-        ),
-        CategoryPage()));
-    items.add(new ScreenHiddenDrawer(
-        new ItemHiddenMenu(
-          icon: Icon(
-            Feather.shopping_bag,
-            size: 19,
-            color: Colors.white,
-          ),
-          name: 'Shopping Cart',
-          baseStyle: GoogleFonts.poppins(
-              color: Colors.white.withOpacity(0.6), fontSize: 19.0),
-          colorLineSelected: Colors.orange,
-        ),
-        ShoppingCartPage()));
-    items.add(new ScreenHiddenDrawer(
-        new ItemHiddenMenu(
-          icon: Icon(
-            Feather.heart,
-            size: 19,
-            color: Colors.white,
-          ),
-          name: 'Favorites',
-          baseStyle: GoogleFonts.poppins(
-              color: Colors.white.withOpacity(0.6), fontSize: 19.0),
-          colorLineSelected: Colors.orange,
-        ),
-        FavoriteProductsPage()));
-    items.add(new ScreenHiddenDrawer(
-        new ItemHiddenMenu(
-          icon: Icon(
-            Feather.user,
-            size: 19,
-            color: Colors.white,
-          ),
-          name: 'My Profile',
-          baseStyle: GoogleFonts.poppins(
-              color: Colors.white.withOpacity(0.6), fontSize: 19.0),
-          colorLineSelected: Colors.orange,
-        ),
-        MyProfilePage()));
+
     helper.getCount().then((value) {
       Provider.of<ThemeNotifier>(context).intcountCart(value);
     });

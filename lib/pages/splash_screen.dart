@@ -21,6 +21,9 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) =>
+        MyApp.setlocal(context, Locale(Provider.of<ThemeNotifier>(context).local,'')));
+
     super.initState();
     Timer(
         Duration(seconds: 3),
@@ -52,13 +55,19 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
   void _auth() async {
-    MyApp.setlocal(context, Locale(Provider.of<ThemeNotifier>(context).local,''));
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     if (null != prefs.getString("token")) {
       Provider.of<ThemeNotifier>(context).setLogin(true);
+    } else {
+
+      Provider.of<ThemeNotifier>(context).setLogin(false);
+
+    }
+    if (null != prefs.getString("instance")) {
       Nav.routeReplacement(context, InitPage());
     } else {
+
       Provider.of<ThemeNotifier>(context).setLogin(false);
       Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (BuildContext context) => OnboardingPage()));

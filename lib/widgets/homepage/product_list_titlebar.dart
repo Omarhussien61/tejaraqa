@@ -22,15 +22,12 @@ class ProductListTitleBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 16.0),
-            child: Text(
-              title,
-              style: GoogleFonts.poppins(
-                fontSize: 15,
-                color: Color(0xFF5D6A78),
-                fontWeight: FontWeight.w400,
-              ),
+          Text(
+            title,
+            style: GoogleFonts.poppins(
+              fontSize: 15,
+              color: Color(0xFF5D6A78),
+              fontWeight: FontWeight.w400,
             ),
           ),
           !this.isCountShow

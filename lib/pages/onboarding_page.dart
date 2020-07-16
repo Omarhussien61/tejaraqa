@@ -39,10 +39,12 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) =>MyApp.setlocal(context, Locale(Provider.of<ThemeNotifier>(context).local,'')));
+    WidgetsBinding.instance.addPostFrameCallback((_) =>
+        MyApp.setlocal(context, Locale(Provider.of<ThemeNotifier>(context).local,'')));
 
     saveOnboardPageShared();
     super.initState();
+    setInstance();
 
   }
 
@@ -203,5 +205,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
         ],
       ),
     );
+  }
+
+  Future<void> setInstance() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("instance",'done');
   }
 }

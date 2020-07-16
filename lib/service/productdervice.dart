@@ -348,6 +348,8 @@ class ProductService {
     try {
       var response = await client.post(
           APICONFIQ.setReview,body: body,headers: header);
+      print(response.body);
+
       if (response.statusCode==201){
         print(response.body);
         rat_model = new Rat_model.fromJson(jsonDecode(response.body));

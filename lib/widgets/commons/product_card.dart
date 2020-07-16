@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -168,30 +169,77 @@ class ProductCard extends StatelessWidget {
                           ],
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                SizedBox(
-                                  height: 4,
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    SizedBox(
+                                      height: 4,
+                                    ),
+                                    Text(
+                                      product.oldPrice,
+                                      style: GoogleFonts.poppins(
+                                          decoration: TextDecoration.lineThrough,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w300),
+                                    ),
+                                    Text(
+                                      product.price,
+                                      style: GoogleFonts.poppins(
+                                          color: themeColor.getColor(),
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w400),
+                                    )
+                                  ],
                                 ),
-                                Text(
-                                  product.oldPrice,
-                                  style: GoogleFonts.poppins(
-                                      decoration: TextDecoration.lineThrough,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w300),
-                                ),
-                                Text(
-                                  product.price,
-                                  style: GoogleFonts.poppins(
-                                      color: themeColor.getColor(),
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w400),
-                                )
                               ],
                             ),
+                            InkWell(
+                              onTap: () {
+                                save(product);
+                                countCart(context);
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                    backgroundColor: mainColor,
+                                    content: Text('Product added to cart')));
+
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(top: 8, left: 8, bottom: 8, right: 8),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.grey[200],
+                                          blurRadius: 5.0,
+                                          spreadRadius: 1,
+                                          offset: Offset(0.0, 1)),
+                                    ]),
+                                child: Row(
+                                  children: <Widget>[
+                                    SvgPicture.asset(
+                                      "assets/icons/ic_product_shopping_cart.svg",
+                                      height: 12,
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(
+                                      "Add to Cart",
+                                      style: GoogleFonts.poppins(
+                                          color: Color(0xFF5D6A78),
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+
                           ],
                         )
                       ],
@@ -202,51 +250,6 @@ class ProductCard extends StatelessWidget {
             ),
           ),
         ),
-        Positioned(
-          bottom: 22,
-          right: 22,
-          child: InkWell(
-            onTap: () {
-              save(product);
-              countCart(context);
-              Scaffold.of(context).showSnackBar(SnackBar(
-                  backgroundColor: mainColor,
-                  content: Text('Product added to cart')));
-
-            },
-            child: Container(
-              padding: EdgeInsets.only(top: 8, left: 8, bottom: 8, right: 8),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.grey[200],
-                        blurRadius: 5.0,
-                        spreadRadius: 1,
-                        offset: Offset(0.0, 1)),
-                  ]),
-              child: Row(
-                children: <Widget>[
-                  SvgPicture.asset(
-                    "assets/icons/ic_product_shopping_cart.svg",
-                    height: 12,
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    "Add to Cart",
-                    style: GoogleFonts.poppins(
-                        color: Color(0xFF5D6A78),
-                        fontSize: 10,
-                        fontWeight: FontWeight.w400),
-                  )
-                ],
-              ),
-            ),
-          ),
-        )
       ],
     );
   }

@@ -52,6 +52,7 @@ dependencies:
   flutter_facebook_login: ^2.0.1
   country_code_picker: ^1.2.4
   rflutter_alert: ^1.0.3
+  flutter_offline: ^0.3.0
 
 
 dev_dependencies:

@@ -3,7 +3,7 @@ import 'package:shoppingapp/modal/Theme.dart';
 
 class ThemeNotifier with ChangeNotifier {
   Color _themeData;
-  String local = 'ar';
+  String local ;
   Color color;
   ThemeModel themeModel;
   int theme_index = 1;
@@ -13,6 +13,7 @@ class ThemeNotifier with ChangeNotifier {
   ThemeNotifier(this._themeData);
 
   getColor() => _themeData;
+  getlocal() => local;
 
   setColor(Color themeData) async {
     _themeData = themeData;

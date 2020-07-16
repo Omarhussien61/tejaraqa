@@ -12,10 +12,13 @@ class Coupons {
   String dateExpiresGmt;
   int usageCount;
   bool individualUse;
+  int usageLimit;
+  int usageLimitPerUser;
   bool freeShipping;
   bool excludeSaleItems;
   String minimumAmount;
   String maximumAmount;
+  List<String> usedBy;
 
   Coupons(
       {this.id,
@@ -31,10 +34,13 @@ class Coupons {
         this.dateExpiresGmt,
         this.usageCount,
         this.individualUse,
+        this.usageLimit,
+        this.usageLimitPerUser,
         this.freeShipping,
         this.excludeSaleItems,
         this.minimumAmount,
-        this.maximumAmount});
+        this.maximumAmount,
+        this.usedBy});
 
   Coupons.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -50,10 +56,13 @@ class Coupons {
     dateExpiresGmt = json['date_expires_gmt'];
     usageCount = json['usage_count'];
     individualUse = json['individual_use'];
+    usageLimit = json['usage_limit'];
+    usageLimitPerUser = json['usage_limit_per_user'];
     freeShipping = json['free_shipping'];
     excludeSaleItems = json['exclude_sale_items'];
     minimumAmount = json['minimum_amount'];
     maximumAmount = json['maximum_amount'];
+    usedBy = json['used_by'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {
@@ -71,10 +80,13 @@ class Coupons {
     data['date_expires_gmt'] = this.dateExpiresGmt;
     data['usage_count'] = this.usageCount;
     data['individual_use'] = this.individualUse;
+    data['usage_limit'] = this.usageLimit;
+    data['usage_limit_per_user'] = this.usageLimitPerUser;
     data['free_shipping'] = this.freeShipping;
     data['exclude_sale_items'] = this.excludeSaleItems;
     data['minimum_amount'] = this.minimumAmount;
     data['maximum_amount'] = this.maximumAmount;
+    data['used_by'] = this.usedBy;
     return data;
   }
 }

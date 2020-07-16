@@ -77,7 +77,7 @@ class OrderService {
   }
 
   List<Coupons> coupons;
-  static Future<double> getCoupons(String code) async {
+  static Future<double> getCoupons(String code,int id) async {
     List<Coupons> coupons;
     var dio = Dio();
     String URL=APICONFIQ.getCopons+APICONFIQ.Key+'&code=$code';
@@ -91,7 +91,17 @@ class OrderService {
         var list = response.data as List;
          coupon = new Coupons.fromJson(list[0]);
          print(list[0]);
-        var moonLanding = DateTime.parse(coupon.dateExpires);
+
+          var childr = coupon.usedBy.where((o) => o==id.toString()).toList();
+        if(childr.length==coupon.usageLimitPerUser){
+          print('usageLimitPerUser');
+          return 0;
+          }
+        if(coupon.usageLimit==coupon.usageCount){
+          print('usageCount');
+          return 0;
+        }
+          var moonLanding = DateTime.parse(coupon.dateExpires);
         if(moonLanding.difference(DateTime.now()).inHours>=1)
           return double.parse(coupon.amount);else return 0;
 
@@ -145,7 +155,6 @@ class OrderService {
         address2: '');
     shippingLines.add(new ShippingLines(methodId: 'flat_rate',methodTitle: "سعر ثابت",total:'100'));
     coupon_line.add(new coupon_lines(code: coponCode));
-
     order=new createOrder(
       paymentMethod: paymentMethod,
       paymentMethodTitle:  paymentMethodTitle,
