@@ -216,7 +216,8 @@ class DiscountItem extends StatelessWidget {
 
                   Scaffold.of(context).showSnackBar(SnackBar(
                       backgroundColor: mainColor,
-                      content: Text('Product added to cart')));
+                      content: Text('Product added to cart'),
+                  ));
                 },
                 icon: SvgPicture.asset(
                   "assets/icons/ic_product_shopping_cart.svg",

@@ -160,7 +160,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                           height: ScreenUtil.getHeight(context) / 1.3,
                           color: themeColor.getColor(),
                           child: CachedNetworkImage(
-                            imageUrl: (widget.product.images == null)
+                            imageUrl: (widget.product.images == null&&widget.product.images.isEmpty)
                                 ? 'http://arabimagefoundation.com/images/defaultImage.png'
                                 : item.src,
                             fit: BoxFit.fill,
@@ -639,6 +639,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                                             checkboxValueB=product_variations[position].id;
                                                             widget.product.priceHtml=product_variations[position].price;
                                                             widget.product.price=product_variations[position].price;
+                                                            widget.product.id=product_variations[position].id;
+
                                                           });
                                                         },
                                                         child: Card(
@@ -1153,6 +1155,9 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   }
 
   void _save() async {
+    print(widget.product.id);
+    print(widget.product.price);
+
     double myInt = await double.parse(widget.product.price);
     myInt = num.parse(myInt.toStringAsFixed(2));
     cart = new Cart(

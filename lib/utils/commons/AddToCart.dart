@@ -19,9 +19,12 @@ void save(ProductModel productModel) async {
   if (await helper.checkItem(cart.id) == true) {
     result =  await helper.insertCart(cart);
   } else {
+    cart=await helper.updateCartCount(cart.id);
+    cart.quantity++;
     result = await helper.updateCart(cart);
   }
-  if (result == 0) {
+  if (result == 0)
+  {
 
   } else {
 

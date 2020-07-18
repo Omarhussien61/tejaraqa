@@ -195,9 +195,9 @@ class HomeWidgetState extends State<ShoppingCartPage>
                                     setState(() {
                                       if (this.CartList[position].quantity != 1) {
                                         this.CartList[position].quantity--;
+                                        helper.updateCart(this.CartList[position]);
                                       }
                                     });
-                                    helper.updateCart(this.CartList[position]);
 
                                   },
                                   child: Padding(
@@ -265,7 +265,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
   void updateListView() {
     final Future<Database> db = helper.initializedDatabase();
     db.then((database) {
-      Future<List<Cart>> students = helper.getStudentList();
+      Future<List<Cart>> students = helper.getDataList();
       students.then((theList) {
         setState(() {
           this.CartList = theList;
@@ -435,5 +435,4 @@ class HomeWidgetState extends State<ShoppingCartPage>
           )
         ]).show();
   }
-
 }

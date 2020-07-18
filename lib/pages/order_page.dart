@@ -46,7 +46,7 @@ class _OrderPageState extends State<OrderPage> {
   Address_shiping address;
   SQL_Address helper = new SQL_Address();
   int count = 0;
-  int checkboxValueA, checkboxValueB;
+  int checkboxValueA =0, checkboxValueB=0;
   List<PaymentModel> PaymentList;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   bool _isLoading = false;

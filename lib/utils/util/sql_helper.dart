@@ -107,6 +107,13 @@ class SQL_Helper {
     var result = await db.update(tableName, student.toMap(), where: "$_id = ?", whereArgs: [student.id]);
     return result;
   }
+  Future<Cart> updateCartCount(int id) async{
+    Database db = await this.database;
+    var result = await db.query(tableName,
+        where: "$_id = ?", whereArgs: [id]);
+    return Cart.getMap(result[0]);
+  }
+
   Future<int> deleteCart(int id) async {
     var db = await this.database;
     int result = await db.rawDelete("DELETE FROM $tableName WHERE $_id = $id");
@@ -120,7 +127,7 @@ class SQL_Helper {
   }
 
 
-  Future<List<Cart>> getStudentList() async{
+  Future<List<Cart>> getDataList() async{
     
     var studentMapList = await getStudentMapList();
     int count = studentMapList.length;
