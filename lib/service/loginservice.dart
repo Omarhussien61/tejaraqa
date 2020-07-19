@@ -17,19 +17,22 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
 import 'package:shoppingapp/utils/util/Constant.dart';
+import 'package:shoppingapp/utils/util/shared_preferences_helper.dart';
 import 'package:shoppingapp/widgets/register/register_form_model.dart';
 class LoginService {
   UserModal userInfo;
-  Future<UserModal> loginUser(String user, String password) async {
+  Future<UserModal> loginUser(String user, String pass) async {
     var client = new http.Client();
     int code;
     Map<String, dynamic> body = {
       'username': user,
-      'password': password,
+      'password': pass,
     };
     try {
       var response = await client.post(
           APICONFIQ.Login,body: body);
+      print(response.body);
+
       code = response.statusCode;
       Map<String, String> header = new Map();
       String username = APICONFIQ.consumer_key;
@@ -48,7 +51,7 @@ class LoginService {
         prefs.setString("user_displayname", userInfo.user.firstname);
         prefs.setString("token", userInfo.cookie);
         prefs.setInt("user_id", userInfo.user.id);
-        prefs.setString("password", password);
+        prefs.setString("password", pass);
         prefs.setString("user_nicename", userInfo.user.nicename);
         prefs.setString("image_url", userInfo.user.avatar);
         var resp =await client.get(APICONFIQ.Register+userInfo.user.id.toString(),
@@ -66,6 +69,7 @@ class LoginService {
     return userInfo;
   }
   Future<dynamic>  Register(User model) async {
+    var client = new http.Client();
     Map<String, String> header = new Map();
     String username = APICONFIQ.consumer_key;
     String password = APICONFIQ.consumer_secret;
@@ -102,6 +106,14 @@ class LoginService {
 
     print(response.body);
     if (response.statusCode == 201) {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString("user_email", model.email);
+      prefs.setString("user_displayname", model.firstName);
+      prefs.setString("token", model.id.toString());
+      prefs.setInt("user_id",  model.id);
+      prefs.setString("password", model.password);
+      prefs.setString("user_nicename", model.username);
+      prefs.setString("phone", model.phone);
      return loginUser(model.email,model.password);
     }
     else{
@@ -137,14 +149,13 @@ class LoginService {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString("user_email", user.email);
         prefs.setString("user_displayname", user.username);
+        prefs.setString("phone", user.phone);
         prefs.setString("token", user.id.toString());
         prefs.setInt("user_id", user.id);
         prefs.setString("user_nicename", user.firstName);
         prefs.setString("image_url", model.avatar);
         Nav.routeReplacement(context, InitPage());
         Provider.of<ThemeNotifier>(context).setLogin(true);
-
-
       }
     }
     else{
@@ -166,9 +177,9 @@ class LoginService {
     header.putIfAbsent("Authorization", () {
       return valore;
     });
-    print( APICONFIQ.Register+'/$_id');
+    print( APICONFIQ.Ubdateplofile+'/$_id');
     var response = await http.post(
-        APICONFIQ.Register+'/$_id',headers: header, body: body);
+        APICONFIQ.Ubdateplofile+'/$_id',headers: header, body: body);
     print(response.body);
     if (response.statusCode == 200) {
       loginUser(email,passwords);
@@ -176,4 +187,32 @@ class LoginService {
     else{
     }
   }
+
+  void ubdatePassword(int _id,String pass) async {
+    Map<String, dynamic> body = {
+      'password': pass,
+    };
+    Map<String, String> header = new Map();
+    String username = APICONFIQ.consumer_key;
+    String password = APICONFIQ.consumer_secret;
+
+    var valore = "Basic " + base64Encode(utf8.encode('$username:$password'));
+    header.putIfAbsent("Authorization", () {
+      return valore;
+    });
+    print( APICONFIQ.Ubdateplofile+'/$_id');
+    var client = new http.Client();
+
+    var response = await client.post(
+        APICONFIQ.Ubdateplofile+'/$_id',headers: header, body: body);
+    print(response.body);
+    if (response.statusCode == 200) {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString("password", pass);
+
+    }
+    else{
+    }
+  }
+
 }

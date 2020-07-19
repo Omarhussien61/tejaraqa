@@ -25,6 +25,7 @@ class APICONFIQ{
   //getOrders
   static String getOrder=url+'/orders?'+Key;
   static String Register=url+'/customers?'+Key;
+  static String Ubdateplofile=url+'/customers';
 
   static String setReview=url+'/products/reviews';
 

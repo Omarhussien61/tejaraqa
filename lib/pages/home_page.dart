@@ -172,6 +172,4 @@ class _HomePageState extends State<HomePage> {
       Provider.of<ThemeNotifier>(context).intcountCart(value);
     });
   }
-
-
 }

@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shoppingapp/service/loginservice.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
+import 'package:shoppingapp/utils/util/shared_preferences_helper.dart';
 import 'package:shoppingapp/widgets/commons/textfield_bottomline.dart';
 import 'package:validators/validators.dart' as validator;
 
@@ -16,11 +19,30 @@ class ChangePasswordPage extends StatefulWidget {
 }
 
 class _ChangePasswordPageState extends State<ChangePasswordPage> {
+  String email, password, oldPassword,confirmPassword, Newpassword;
+  int id;
+  bool passwordVisible = true;
+  final _formKey = GlobalKey<FormState>();
+TextEditingController emailController;
+  @override
+  void initState() {
+    emailController=TextEditingController();
+    SharedPreferences.getInstance().then((prefs) {
+      setState(() {
+        email = prefs.getString('user_email');
+        emailController.text=email;
+        password = prefs.getString('password');
+        print(password);
+        id = prefs.getInt('user_id');
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ThemeNotifier>(context);
-    final _formKey = GlobalKey<FormState>();
-    bool passwordVisible = false;
+
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
           statusBarColor: Color(0xFFFCFCFC),
@@ -30,25 +52,32 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     );
     return SafeArea(
       child: Scaffold(
-        bottomNavigationBar: InkWell(
-          onTap: () {
-            Nav.routeReplacement(context, InitPage());
-          },
-          child: Container(
-            margin: EdgeInsets.only(left: 14, right: 14),
-            child: Align(
-              alignment: Alignment.center,
-              child: Text(
-                "Save",
-                style: GoogleFonts.poppins(color: Colors.white),
+        bottomNavigationBar: Builder(
+          builder: (context) => InkWell(
+            onTap: () {
+              if (_formKey.currentState.validate()) {
+                _formKey.currentState.save();
+                oldPassword == password ?
+                ubdate(Newpassword,context): Scaffold.of(context).showSnackBar(
+                        SnackBar(content: Text('password invalid')));
+              }
+            },
+            child: Container(
+              margin: EdgeInsets.only(left: 14, right: 14),
+              child: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  "Save",
+                  style: GoogleFonts.poppins(color: Colors.white),
+                ),
               ),
+              height: 42,
+              decoration: BoxDecoration(
+                  color: themeColor.getColor(),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(32),
+                      topRight: Radius.circular(32))),
             ),
-            height: 42,
-            decoration: BoxDecoration(
-                color: themeColor.getColor(),
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(32),
-                    topRight: Radius.circular(32))),
           ),
         ),
         backgroundColor: Color(0xFFFCFCFC),
@@ -78,18 +107,19 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                     child: Column(
                       children: <Widget>[
                         MyTextFormFieldLine(
+                          controller: emailController,
                           labelText: "Email",
+                          enabled: false,
                           hintText: 'Email',
                           isEmail: true,
                           validator: (String value) {
                             if (!validator.isEmail(value)) {
                               return 'Please enter a valid email';
                             }
+                            _formKey.currentState.save();
                             return null;
                           },
-                          onSaved: (String value) {
-//                        model.email = value;
-                          },
+                          onSaved: (String value) {},
                         ),
                         SizedBox(
                           height: 16,
@@ -97,6 +127,42 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                         MyTextFormFieldLine(
                           labelText: "Password",
                           hintText: 'Password',
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              // Based on passwordVisible state choose the icon
+                              passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: themeColor.getColor(),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                passwordVisible = !passwordVisible;
+                              });
+                            },
+                          ),
+                          isPassword: passwordVisible,
+                          validator: (String value) {
+                            if (value==password) {
+                              return 'invaild Password';
+                            }
+
+                            _formKey.currentState.save();
+
+                            return null;
+                          },
+                          onSaved: (String value) {
+                            setState(() {
+                              oldPassword = value;
+                            });
+                          },
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        MyTextFormFieldLine(
+                          labelText: "New Password",
+                          hintText: 'New Password',
                           suffixIcon: IconButton(
                             icon: Icon(
                               // Based on passwordVisible state choose the icon
@@ -123,7 +189,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                             return null;
                           },
                           onSaved: (String value) {
-//                        model.password = value;
+                            Newpassword = value;
                           },
                         ),
                         SizedBox(
@@ -149,16 +215,15 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                           ),
                           isPassword: passwordVisible,
                           validator: (String value) {
-                            if (value.length < 7) {
-                              return 'Password should be minimum 7 characters';
+                            if (value==Newpassword) {
+                              return 'Password should be match';
                             }
-
                             _formKey.currentState.save();
 
                             return null;
                           },
                           onSaved: (String value) {
-//                        model.password = value;
+                            confirmPassword = value;
                           },
                         ),
                       ],
@@ -172,4 +237,21 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
       ),
     );
   }
+
+  ubdate(String newpassword,BuildContext context) async {
+    var result = await LoginService().ubdatePassword(id, newpassword);
+    SharedPreferences.getInstance().then((prefs) {
+      setState(() {
+        if (newpassword == prefs.getString('password')) {
+          Nav.routeReplacement(context, InitPage());
+          Scaffold.of(context)
+              .showSnackBar(SnackBar(content: Text('password Changed')));
+        } else {
+          Scaffold.of(context)
+              .showSnackBar(SnackBar(content: Text('password Not Changed')));
+        }
+      });
+    });
+  }
+
 }

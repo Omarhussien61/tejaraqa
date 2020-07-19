@@ -168,7 +168,7 @@ class _SearchPageState extends State<SearchPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                      width: ScreenUtil.getWidth(context) - 20,
+                      width: ScreenUtil.getWidth(context) /2,
                       margin: EdgeInsets.only(top: 24, left: 8),
                       padding: EdgeInsets.only(left: 18, right: 22),
                       height: 44,
@@ -213,33 +213,6 @@ class _SearchPageState extends State<SearchPage> {
                               ),
                             ),
                           ),
-                          Material(
-                            color: Colors.white,
-                            child: InkWell(
-                              onTap: () {
-                                Nav.route(context, FilterPage());
-
-                              },
-                              child: Container(
-                                margin: EdgeInsets.all(12),
-                                child: Row(children: <Widget>[
-                                  SvgPicture.asset(
-                                    "assets/icons/funnel.svg",
-                                    height: 14,
-                                    color: Color(0xFF5D6A78),
-                                  ),
-                                  SizedBox(
-                                    width: 3,
-                                  ),
-                                  Text(
-                                    "Filter",
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 13, color: Color(0xFF5D6A78)),
-                                  )
-                                ]),
-                              ),
-                            ),
-                          )
                         ],
                       ),
                     ),

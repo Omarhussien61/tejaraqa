@@ -5,9 +5,11 @@ class MyTextFormField extends StatelessWidget {
   final String labelText;
   final Function validator;
   final Function onSaved;
+
   final IconButton suffixIcon;
   final bool isPassword;
   final bool isEmail;
+  final bool enabled;
   final bool isPhone;
   final Widget prefix;
 
@@ -17,6 +19,7 @@ class MyTextFormField extends StatelessWidget {
   MyTextFormField({
     this.hintText,
     this.validator,
+    this.enabled,
     this.onSaved,
     this.isPassword = false,
     this.isEmail = false,
@@ -37,6 +40,7 @@ class MyTextFormField extends StatelessWidget {
         decoration: InputDecoration(
           prefixIcon:prefix,
           hintText: hintText,
+
           contentPadding: EdgeInsets.all(15.0),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
@@ -53,6 +57,7 @@ class MyTextFormField extends StatelessWidget {
         obscureText: isPassword ? true : false,
         validator: validator,
         onSaved: onSaved,
+        enabled: enabled,
         keyboardType: isEmail ?isPhone?TextInputType.number :TextInputType.emailAddress : TextInputType.text,
       ),
     );

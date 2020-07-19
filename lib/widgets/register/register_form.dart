@@ -27,6 +27,7 @@ class RegisterForm extends StatefulWidget {
 class _RegisterFormState extends State<RegisterForm> {
   final _formKey = GlobalKey<FormState>();
   Model model = Model();
+  bool PhoneStatue=false;
   bool passwordVisible = false;
   bool _isLoading = false;
   String CountryNo='+20';
@@ -140,9 +141,9 @@ class _RegisterFormState extends State<RegisterForm> {
                       }
                       return null;
                     },
+                    enabled: PhoneStatue?false:true,
                     onSaved: (String value) {
                       model.Phone =this.CountryNo+value;
-
                     },
                   ),
                 ),
@@ -207,8 +208,9 @@ class _RegisterFormState extends State<RegisterForm> {
                         if (_formKey.currentState.validate()) {
                           _formKey.currentState.save();
                           setState(() => _isLoading = true);
-
-                     verifyPhone();
+                          PhoneStatue?
+                          register():
+                          verifyPhone();
                         }
                       },
                       child: Text(
@@ -262,6 +264,9 @@ class _RegisterFormState extends State<RegisterForm> {
       final FirebaseUser currentUser = await _auth.currentUser();
       assert(user.uid == currentUser.uid);
       Navigator.of(context).pop();
+      setState(() {
+        PhoneStatue=true;
+      });
       var result =  await LoginService().Register(
           new User(password: model.password,
           username: model.userName,
@@ -284,6 +289,31 @@ class _RegisterFormState extends State<RegisterForm> {
       handleError(e);
     }
   }
+  register() async {
+    try {
+      var result =  await LoginService().Register(
+          new User(password: model.password,
+            username: model.userName,
+            email: model.email,
+            lastName: model.lastName,
+            firstName: model.lastName,
+            phone: model.Phone,) );
+      if(result.runtimeType==String)
+      {
+        setState(() => _isLoading = false);
+        showAlertDialog(result.toString(),'Alart');
+      }
+      else
+      {
+        setState(() => _isLoading = false);
+        Nav.routeReplacement(context, InitPage());
+        Provider.of<ThemeNotifier>(context).setLogin(true);
+      }
+    } catch (e) {
+      handleError(e);
+    }
+  }
+
   handleError(PlatformException error) {
     setState(() => _isLoading = false);
     print(error);

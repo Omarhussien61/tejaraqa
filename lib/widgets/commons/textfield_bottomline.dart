@@ -6,14 +6,18 @@ import 'package:shoppingapp/utils/screen.dart';
 class MyTextFormFieldLine extends StatelessWidget {
   final String hintText;
   final String labelText;
+  final TextEditingController controller;
   final Function validator;
   final Function onSaved;
   final IconButton suffixIcon;
   final bool isPassword;
   final bool isEmail;
+  final bool enabled;
 
   MyTextFormFieldLine({
     this.hintText,
+    this.enabled,
+    this.controller,
     this.validator,
     this.onSaved,
     this.isPassword = false,
@@ -40,7 +44,9 @@ class MyTextFormFieldLine extends StatelessWidget {
         ),
         obscureText: isPassword ? true : false,
         validator: validator,
+        controller:controller,
         onSaved: onSaved,
+        enabled: enabled,
         keyboardType: isEmail ? TextInputType.emailAddress : TextInputType.text,
       ),
     );

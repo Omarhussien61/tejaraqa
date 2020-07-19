@@ -208,6 +208,10 @@ class _NextRegisterPageState extends State<NextRegisterPage> {
       {
         SharedPreferences.getInstance().then((prefs){
           prefs.setString('image_url', widget.userM.avatarUrl);
+          prefs.setString('user_email', widget.userM.email);
+          prefs.setString('user_displayname', widget.userM.firstName);
+          prefs.setString('token', widget.userM.avatarUrl);
+
         });
         setState(() => _isLoading = false);
         Nav.routeReplacement(context, InitPage());
