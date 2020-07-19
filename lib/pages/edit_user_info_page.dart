@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shoppingapp/modal/usermodal.dart';
+import 'package:shoppingapp/service/loginservice.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/drop_down_menu/find_dropdown.dart';
 import 'package:shoppingapp/utils/screen.dart';
@@ -22,9 +23,10 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
   String preselectedValue = "dolor sit";
   List<int> selectedItems = [];
   final List<DropdownMenuItem> items = [];
-  String email,name,phone;
+  String email,name,phone,id;
   TextEditingController _nameController,_EmailController,_PhoneController;
   UserModal userModal;
+  final _formKey = GlobalKey<FormState>();
 
 
   @override
@@ -54,52 +56,54 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
         body: Container(
           padding: EdgeInsets.all(24),
           child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  "User information",
-                  style: GoogleFonts.poppins(
-                      fontSize: 18, color: Color(0xFF5D6A78)),
-                ),
-                Container(
-                    width: 28,
-                    child: Divider(
-                      color: themeColor.getColor(),
-                      height: 3,
-                      thickness: 2,
-                    )),
-                SizedBox(
-                  height: 16,
-                ),
-                Column(
-                  children: <Widget>[
-                    NewAddressInput(
-                      controller:_nameController ,
-                      labelText: "Name surname",
-                      hintText: 'Name surname',
-                      isEmail: true,
-                      validator: (String value) {},
-                      onSaved: (String value) {
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "User information",
+                    style: GoogleFonts.poppins(
+                        fontSize: 18, color: Color(0xFF5D6A78)),
+                  ),
+                  Container(
+                      width: 28,
+                      child: Divider(
+                        color: themeColor.getColor(),
+                        height: 3,
+                        thickness: 2,
+                      )),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Column(
+                    children: <Widget>[
+                      NewAddressInput(
+                        controller:_nameController ,
+                        labelText: "Name surname",
+                        hintText: 'Name surname',
+                        isEmail: true,
+                        validator: (String value) {},
+                        onSaved: (String value) {
 //                        model.email = value;
-                      },
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    NewAddressInput(
-                      controller:_EmailController ,
-                      labelText: "E-mail address",
-                      hintText: 'example@example.com',
-                      isEmail: true,
-                      validator: (String value) {},
-                      onSaved: (String value) {
+                        },
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      NewAddressInput(
+                        controller:_EmailController ,
+                        labelText: "E-mail address",
+                        hintText: 'example@example.com',
+                        isEmail: true,
+                        validator: (String value) {},
+                        onSaved: (String value) {
 //                        model.email = value;
-                      },
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
+                        },
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
 //                    NewAddressInput(
 //                      labelText: "E Posta Adresi",
 //                      hintText: 'example@example.com',
@@ -111,33 +115,61 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
 ////                        model.email = value;
 //                      },
 //                    ),
-                    NewAddressInput(
-                      controller: _PhoneController,
-                      labelText: "Mobile phone",
-                      hintText: 'xxxx xxx xxx xx',
-                      isEmail: true,
-                      validator: (String value) {},
-                      onSaved: (String value) {
+                      NewAddressInput(
+                        controller: _PhoneController,
+                        labelText: "Mobile phone",
+                        hintText: 'xxxx xxx xxx xx',
+                        isEmail: true,
+                        validator: (String value) {},
+                        onSaved: (String value) {
 //                        model.email = value;
-                      },
-                    ),
-                    SizedBox(
-                      height: 32,
-                    ),
-                    FindDropdown(
-                        items: ["Male", "Woman", "I do not want to specify"],
-                        onChanged: (String item) => print(item),
-                        selectedItem: "Gender",
-                        isUnderLine: true),
-                    SizedBox(
-                      height: 32,
-                    ),
-                  ],
-                )
-              ],
+                        },
+                      ),
+                      SizedBox(
+                        height: 32,
+                      ),
+                      FindDropdown(
+                          items: ["Male", "Woman", "I do not want to specify"],
+                          onChanged: (String item) => print(item),
+                          selectedItem: "Gender",
+                          isUnderLine: true),
+                      SizedBox(
+                        height: 32,
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
+        bottomNavigationBar: Builder(
+          builder: (context) => InkWell(
+            onTap: () {
+              if (_formKey.currentState.validate()) {
+                _formKey.currentState.save();
+                ubdate(_EmailController.text,_nameController.text,context);
+              }
+            },
+            child: Container(
+              margin: EdgeInsets.only(left: 14, right: 14),
+              child: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  "Save",
+                  style: GoogleFonts.poppins(color: Colors.white),
+                ),
+              ),
+              height: 42,
+              decoration: BoxDecoration(
+                  color: themeColor.getColor(),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(32),
+                      topRight: Radius.circular(32))),
+            ),
+          ),
+        ),
+
       ),
     );
   }
@@ -229,14 +261,18 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
     email = await SharedPreferencesHelper.getEmail();
     name = await SharedPreferencesHelper.getname();
     phone = await SharedPreferencesHelper.getphone();
+    id = await SharedPreferencesHelper.getUserId();
 
     setState(() {
       _nameController.text=name;
       _EmailController.text=email;
       _PhoneController.text=phone;
-
     });
   }
 
+  ubdate(String email,String name,BuildContext context) async {
+    var result = await LoginService().ubdateProfile(int.parse(id),email,name);
+
+  }
 
 }

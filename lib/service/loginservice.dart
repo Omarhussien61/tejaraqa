@@ -163,11 +163,10 @@ class LoginService {
       return data['message'];
     }
   }
-  void ubdateProfile(int _id,String email, String f_Name, String Username,String passwords) async {
+  void ubdateProfile(int _id,String email, String f_Name) async {
     Map<String, dynamic> body = {
       'email': email,
       'first_name': f_Name,
-      'nickname': Username,
     };
     Map<String, String> header = new Map();
     String username = APICONFIQ.consumer_key;
@@ -182,7 +181,7 @@ class LoginService {
         APICONFIQ.Ubdateplofile+'/$_id',headers: header, body: body);
     print(response.body);
     if (response.statusCode == 200) {
-      loginUser(email,passwords);
+     // loginUser(email,passwords);
     }
     else{
     }
