@@ -3,12 +3,15 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shoppingapp/service/API_CONFIQ.dart';
 import 'package:shoppingapp/service/loginservice.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/navigator.dart';
+import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
 import 'package:shoppingapp/utils/util/shared_preferences_helper.dart';
 import 'package:shoppingapp/widgets/commons/textfield_bottomline.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:validators/validators.dart' as validator;
 
 import '../main.dart';
@@ -143,12 +146,10 @@ TextEditingController emailController;
                           ),
                           isPassword: passwordVisible,
                           validator: (String value) {
-                            if (value==password) {
+                            if (value!=password) {
                               return 'invaild Password';
                             }
-
                             _formKey.currentState.save();
-
                             return null;
                           },
                           onSaved: (String value) {
@@ -215,7 +216,7 @@ TextEditingController emailController;
                           ),
                           isPassword: passwordVisible,
                           validator: (String value) {
-                            if (value==Newpassword) {
+                            if (value!=Newpassword) {
                               return 'Password should be match';
                             }
                             _formKey.currentState.save();
@@ -226,6 +227,17 @@ TextEditingController emailController;
                             confirmPassword = value;
                           },
                         ),
+                    Padding(
+                      padding:  EdgeInsets.only(top: 10),
+                      child: InkWell(
+                        onTap: _launchInBrowser,
+                        child: Text('Lost Password',
+                        style: TextStyle(decoration: TextDecoration.underline,
+                        color: themeColor.getColor(),
+                        fontSize: 16),),
+                      ),
+                    ),
+
                       ],
                     ),
                   ),
@@ -237,7 +249,19 @@ TextEditingController emailController;
       ),
     );
   }
-
+  Future<void> _launchInBrowser() async {
+   String  url = APICONFIQ.Base_url+'my-account-2/lost-password/';
+    if (await canLaunch(url)) {
+      await launch(
+        url,
+        forceSafariVC: false,
+        forceWebView: false,
+        headers: <String, String>{'my_header_key': 'my_header_value'},
+      );
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
   ubdate(String newpassword,BuildContext context) async {
     var result = await LoginService().ubdatePassword(id, newpassword);
     SharedPreferences.getInstance().then((prefs) {
