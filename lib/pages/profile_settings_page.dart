@@ -55,13 +55,13 @@ class _MyProfileSettingsState extends State<MyProfileSettings> {
                 ),
                 ListTile(
                   onTap: () {
-                    Nav.route(context, AddressPage());
+                    Nav.route(context, EditUserInfoPage());
                   },
                   leading: Image.asset(
-                    "assets/icons/ic_location.png",
+                    "assets/icons/ic_user.png",
                     width: 22,
                   ),
-                  title: Text("Address ",
+                  title: Text("My Profile Info",
                       style: GoogleFonts.poppins(
                           fontSize: 15, color: Color(0xFF5D6A78))),
                 ),
@@ -70,8 +70,8 @@ class _MyProfileSettingsState extends State<MyProfileSettings> {
                 ),
                 ListTile(
                   onTap: () {
-                   themeColor.isLogin? Nav.route(context, ChangePasswordPage()):
-                   showLogintDialog('Login', 'not Login');
+                    themeColor.isLogin? Nav.route(context, ChangePasswordPage()):
+                    showLogintDialog('Login', 'not Login');
                   },
                   leading: Image.asset(
                     "assets/icons/ic_lock.png",
@@ -86,13 +86,13 @@ class _MyProfileSettingsState extends State<MyProfileSettings> {
                 ),
                 ListTile(
                   onTap: () {
-                    Nav.route(context, EditUserInfoPage());
+                    Nav.route(context, AddressPage());
                   },
                   leading: Image.asset(
-                    "assets/icons/ic_user.png",
+                    "assets/icons/ic_location.png",
                     width: 22,
                   ),
-                  title: Text("My User Info",
+                  title: Text("My Address ",
                       style: GoogleFonts.poppins(
                           fontSize: 15, color: Color(0xFF5D6A78))),
                 ),

@@ -82,16 +82,6 @@ class _MyProfilePageState extends State<MyProfilePage> {
                 SizedBox(
                   height: 12,
                 ),
-                ListTile(
-                  onTap: () {
-                    Nav.route(context, ContactPage());
-                  },
-                  leading: Image.asset("assets/icons/ic_user.png",
-                      width: 22, color: Color(0xFF5D6A78)),
-                  title: Text("Support",
-                      style: GoogleFonts.poppins(
-                          fontSize: 15, color: Color(0xFF5D6A78))),
-                ),
                 SizedBox(
                   height: 12,
                 ),

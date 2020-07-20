@@ -11,6 +11,7 @@ import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
 import 'package:shoppingapp/utils/util/shared_preferences_helper.dart';
 import 'package:shoppingapp/widgets/new_adress_input.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EditUserInfoPage extends StatefulWidget {
   @override
@@ -23,7 +24,8 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
   String preselectedValue = "dolor sit";
   List<int> selectedItems = [];
   final List<DropdownMenuItem> items = [];
-  String email,name,phone,id;
+  String email,name,phone;
+      int id;
   TextEditingController _nameController,_EmailController,_PhoneController;
   UserModal userModal;
   final _formKey = GlobalKey<FormState>();
@@ -104,25 +106,16 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
                       SizedBox(
                         height: 16,
                       ),
-//                    NewAddressInput(
-//                      labelText: "E Posta Adresi",
-//                      hintText: 'example@example.com',
-//                      isEmail: true,
-//                      validator: (String value) {
-//
-//                      },
-//                      onSaved: (String value) {
-////                        model.email = value;
-//                      },
-//                    ),
                       NewAddressInput(
                         controller: _PhoneController,
                         labelText: "Mobile phone",
                         hintText: 'xxxx xxx xxx xx',
-                        isEmail: true,
-                        validator: (String value) {},
+                        validator: (String value) {
+                          if (value.length < 10) {
+                            return 'Password should be minimum 10 ';
+                          }
+                        },
                         onSaved: (String value) {
-//                        model.email = value;
                         },
                       ),
                       SizedBox(
@@ -148,7 +141,7 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
             onTap: () {
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
-                ubdate(_EmailController.text,_nameController.text,context);
+                ubdate(context);
               }
             },
             child: Container(
@@ -262,7 +255,6 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
     name = await SharedPreferencesHelper.getname();
     phone = await SharedPreferencesHelper.getphone();
     id = await SharedPreferencesHelper.getUserId();
-
     setState(() {
       _nameController.text=name;
       _EmailController.text=email;
@@ -270,9 +262,20 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
     });
   }
 
-  ubdate(String email,String name,BuildContext context) async {
-    var result = await LoginService().ubdateProfile(int.parse(id),email,name);
-
+  ubdate(BuildContext context) async {
+    var result = await LoginService().ubdateProfile(
+        id,_EmailController.text,_nameController.text,_PhoneController.text);
+    SharedPreferences.getInstance().then((prefs) {
+      setState(() {
+        if (name == prefs.getString('user_displayname')) {
+          Scaffold.of(context)
+              .showSnackBar(SnackBar(content: Text('profile Changed')));
+        } else {
+          Scaffold.of(context)
+              .showSnackBar(SnackBar(content: Text('profile Not Changed')));
+        }
+      });
+    });
   }
 
 }

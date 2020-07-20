@@ -17,6 +17,8 @@ import 'package:shoppingapp/widgets/new_adress_input.dart';
 import 'MapSample.dart';
 
 class NewAddressPage extends StatefulWidget {
+
+
   @override
   _NewAddressPageState createState() => _NewAddressPageState();
 }
@@ -31,6 +33,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
   List<String> city = new List<String>();
   final _formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  Address_shiping address_shiping;
 
   final List<DropdownMenuItem> items = [];
   Address_shiping address;
@@ -133,7 +136,6 @@ class _NewAddressPageState extends State<NewAddressPage> {
                       },
                       child: Icon(Icons.location_on),
                     ),
-
                   ],
                 ),
                 Container(
@@ -180,7 +182,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
                               return 'Country';
                             }
                           },
-                          selectedItem: "Country",
+                          selectedItem: _CountryController.text,
                           isUnderLine: true),
                       SizedBox(
                         height: 32,
@@ -197,7 +199,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
                               return 'City';
                             }
                           },
-                          selectedItem: "City",
+                          selectedItem: _cityController.text,
                           isUnderLine: true),
                       SizedBox(
                         height: 32,
@@ -314,11 +316,20 @@ class _NewAddressPageState extends State<NewAddressPage> {
   _navigateAndDisplaySelection(BuildContext context) async {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
-    await Navigator.push(
+   address_shiping= await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => MapSample()),
+      MaterialPageRoute(builder: (context) => MapSample())
     );
+   setState(() {
+     print(address_shiping.addres1);
+     _AddressController.text=address_shiping.addres1.toString();
+     _nameController.text=address_shiping.Country.toString();
+     _streeetController.text=address_shiping.street.toString();
+     _cityController.text=address_shiping.city.toString();
+     _CountryController.text=address_shiping.Country.toString();
 
+   });
+    //Navigator.pop(context);
   }
 
 }

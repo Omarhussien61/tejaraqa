@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -118,7 +119,11 @@ class _HiddenMenuState extends State<HiddenMenu> {
                   name==null?'user':name,
                   style: GoogleFonts.poppins(color: Colors.white),
                 ),
-                leading: CircleAvatar(child: CachedNetworkImage(imageUrl: photo==null?'user':photo)),
+                leading: CircleAvatar(
+                    radius: 20,child: CachedNetworkImage(
+                  imageUrl: photo==null?'https://p.kindpng.com/picc/s/207-2074624_white-gray-circle-avatar-png-transparent-png.png':photo,
+                  errorWidget: (context, url, error) => Image.asset('assets/images/user.png'),
+                )),
               ),
               Container(
                 padding: EdgeInsets.only(
@@ -213,14 +218,32 @@ class _HiddenMenuState extends State<HiddenMenu> {
                         },
                         child: ItemHiddenMenu(
                           icon: Icon(
-                            Feather.mail,
+                            Feather.user,
                             size: 19,
                             color: Colors.white,
                           ),
-                          name: 'Email Settings',
+                          name: 'Profile Settings',
                           baseStyle: GoogleFonts.poppins(
                               color: Colors.white.withOpacity(0.6),
                               fontSize: 19.0),
+                          colorLineSelected: Colors.orange,
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Nav.route(context, ContactPage());
+                        },
+                        child: ItemHiddenMenu(
+                          icon: Icon(
+                            Icons.question_answer,
+                            size: 19,
+                            color: Colors.white,
+                          ),
+                          name: 'F A Q',
+                          baseStyle: GoogleFonts.poppins(
+                              color: Colors.white.withOpacity(0.6),
+                              fontSize: 19.0,
+                              fontWeight: FontWeight.w200),
                           colorLineSelected: Colors.orange,
                         ),
                       ),
@@ -231,14 +254,31 @@ class _HiddenMenuState extends State<HiddenMenu> {
                             size: 19,
                             color: Colors.white,
                           ),
-                          name: 'F.A.Q',
+                          name: 'About',
                           baseStyle: GoogleFonts.poppins(
                               color: Colors.white.withOpacity(0.6),
                               fontSize: 19.0),
                           colorLineSelected: Colors.orange,
                         ),
                         onTap: () {
-                          Nav.route(context, AboutPage());
+                          Nav.route(context, ContactPage());
+                        },
+                      ),
+                      InkWell(
+                        child: ItemHiddenMenu(
+                          icon: Icon(
+                            Feather.clock,
+                            size: 19,
+                            color: Colors.white,
+                          ),
+                          name: 'Support',
+                          baseStyle: GoogleFonts.poppins(
+                              color: Colors.white.withOpacity(0.6),
+                              fontSize: 19.0),
+                          colorLineSelected: Colors.orange,
+                        ),
+                        onTap: () {
+                          Nav.route(context, ContactPage());
                         },
                       ),
                       InkWell(
@@ -288,7 +328,6 @@ class _HiddenMenuState extends State<HiddenMenu> {
                           colorLineSelected: Colors.orange,
                         ),
                       ),
-
                     ],
                   ),
                 ),

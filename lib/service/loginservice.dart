@@ -149,11 +149,14 @@ class LoginService {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString("user_email", user.email);
         prefs.setString("user_displayname", user.username);
-        prefs.setString("phone", user.phone);
         prefs.setString("token", user.id.toString());
         prefs.setInt("user_id", user.id);
         prefs.setString("user_nicename", user.firstName);
         prefs.setString("image_url", model.avatar);
+        var resp =await http.get(APICONFIQ.Ubdateplofile+'/'+user.id.toString()+'?'+ APICONFIQ.Key);
+        var da = json.decode(resp.body)['meta_data'];
+        prefs.setString("phone", da[0]['value']);
+
         Nav.routeReplacement(context, InitPage());
         Provider.of<ThemeNotifier>(context).setLogin(true);
       }
@@ -163,25 +166,32 @@ class LoginService {
       return data['message'];
     }
   }
-  void ubdateProfile(int _id,String email, String f_Name) async {
-    Map<String, dynamic> body = {
+  void ubdateProfile(int _id,String email, String f_Name,String phone) async {
+    print(phone);
+    List<MetaData_user> metaData=new List<MetaData_user>();
+    metaData.add(MetaData_user(
+        key: 'phonenumber',
+        value: phone));
+    var body =json.encode( {
       'email': email,
       'first_name': f_Name,
-    };
-    Map<String, String> header = new Map();
-    String username = APICONFIQ.consumer_key;
-    String password = APICONFIQ.consumer_secret;
-
-    var valore = "Basic " + base64Encode(utf8.encode('$username:$password'));
-    header.putIfAbsent("Authorization", () {
-      return valore;
+      "meta_data": [{"key":"phonenumber","value":"$phone"}]
     });
-    print( APICONFIQ.Ubdateplofile+'/$_id');
-    var response = await http.post(
-        APICONFIQ.Ubdateplofile+'/$_id',headers: header, body: body);
-    print(response.body);
+    print( body);
+    var client = new http.Client();
+    print( APICONFIQ.Ubdateplofile+'/$_id?'+ APICONFIQ.Key);
+    Dio dio=new Dio();
+    var response = await dio.post(
+        APICONFIQ.Ubdateplofile+'/$_id?'+ APICONFIQ.Key, data: body);
+    print(response.data);
     if (response.statusCode == 200) {
-     // loginUser(email,passwords);
+      var user = new User.fromJson(response.data);
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString("user_email", user.email);
+      prefs.setString("user_displayname", user.firstName);
+      prefs.setString("phone", user.metaData[0].value);
+
+      // loginUser(email,passwords);
     }
     else{
     }

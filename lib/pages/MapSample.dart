@@ -20,7 +20,6 @@ class MapSample extends StatefulWidget {
   @override
   MapSampleState createState() => MapSampleState();
 }
-
 class MapSampleState extends State<MapSample> {
   SQL_Address helper = new SQL_Address();
   Completer<GoogleMapController> _controller = Completer();
@@ -204,7 +203,6 @@ class MapSampleState extends State<MapSample> {
     _goToPosition1(myLocation.latitude, myLocation.longitude);
     getUserLocationAddress(latLng);
   }
-
   @override
   void initState() {
     getUserLocation();
@@ -214,16 +212,7 @@ class MapSampleState extends State<MapSample> {
   Future<void> _save()  async {
     address_shiping=new Address_shiping(address_shiping.Country,address_shiping.Country,address_shiping.city,address_shiping.street, _buildingController.text,address_shiping.addres1,
     lat: address_shiping.lat,lang: address_shiping.lang);
-
-    int result;
-    result =  await helper.insertStudent(address_shiping);
-
-
-    if (result == 0) {
-      showAlertDialog(getTransrlate(context, 'sorry'), getTransrlate(context, 'notSavedAddress'));
-    } else {
-      showAlertDialog(getTransrlate(context, 'Alert'), getTransrlate(context, 'SavedAddress'));
-    }
+    Navigator.pop(context,address_shiping);
   }
   void showAlertDialog(String title, String msg){
     showDialog(
@@ -261,9 +250,8 @@ class MapSampleState extends State<MapSample> {
       fontSize: 20 ,
       fontStyle: FontStyle.normal)),
             onPressed: () {
-              Navigator.pop(context);
-              Navigator.pop(context);
-              Navigator.pop(context);
+
+              Navigator.pop(context,address_shiping);
               },
           ),
         ],
@@ -272,6 +260,4 @@ class MapSampleState extends State<MapSample> {
 
 
   }
-
-
 }

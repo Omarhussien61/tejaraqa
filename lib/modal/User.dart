@@ -6,14 +6,16 @@ class User {
   String dateModifiedGmt;
   String email;
   String firstName;
-  String lastName,phone;
+  String lastName;
   String role;
   String username;
+  String password;
+  String phone;
   Billing billing;
   Shipping shipping;
   bool isPayingCustomer;
-  String avatarUrl,password;
-
+  String avatarUrl;
+  List<MetaData> metaData;
 
   User(
       {this.id,
@@ -28,10 +30,11 @@ class User {
         this.username,
         this.billing,
         this.shipping,
+        this.phone,
+        this.password,
         this.isPayingCustomer,
         this.avatarUrl,
-      this.phone,
-      this.password});
+        this.metaData});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -51,6 +54,12 @@ class User {
         : null;
     isPayingCustomer = json['is_paying_customer'];
     avatarUrl = json['avatar_url'];
+    if (json['meta_data'] != null) {
+      metaData = new List<MetaData>();
+      json['meta_data'].forEach((v) {
+        metaData.add(new MetaData.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -73,6 +82,9 @@ class User {
     }
     data['is_paying_customer'] = this.isPayingCustomer;
     data['avatar_url'] = this.avatarUrl;
+    if (this.metaData != null) {
+      data['meta_data'] = this.metaData.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }
@@ -183,4 +195,24 @@ class Shipping {
   }
 }
 
+class MetaData {
+  int id;
+  String key;
+  String value;
 
+  MetaData({this.id, this.key, this.value});
+
+  MetaData.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    key = json['key'];
+    value = json['value'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['key'] = this.key;
+    data['value'] = this.value;
+    return data;
+  }
+}

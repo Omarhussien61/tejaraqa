@@ -22,6 +22,7 @@ import 'package:shoppingapp/modal/productmodel.dart';
 import 'package:shoppingapp/pages/order_page.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
 import 'package:shoppingapp/service/productdervice.dart';
+import 'package:shoppingapp/utils/dialogComment.dart';
 import 'package:shoppingapp/utils/util/recentId.dart';
 import 'package:shoppingapp/utils/util/shared_preferences_helper.dart';
 import 'package:shoppingapp/utils/util/sql_helper.dart';
@@ -54,6 +55,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   bool isloading = false;
   int id;
   String name, email, photo;
+  String vriationName='';
   double rateing=5;
   String comment;
   SQL_Rercent helperRecent = new SQL_Rercent();
@@ -640,7 +642,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                                             widget.product.priceHtml=product_variations[position].price;
                                                             widget.product.price=product_variations[position].price;
                                                             widget.product.id=product_variations[position].id;
-
+                                                            vriationName=product_variations[position].attributes[pos].option;
                                                           });
                                                         },
                                                         child: Card(
@@ -704,6 +706,9 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                               //Nav.route(context, OrderPage());
                                               setState(() {
                                                 // isLiked = !isLiked;
+                                                product_variations == null||product_variations.isEmpty?_save():checkboxValueA==null?
+                                                Scaffold.of(context)
+                                                    .showSnackBar(SnackBar(content: Text('Please Select Variations'))):
                                                 _save();
                                               });
                                             },
@@ -835,7 +840,10 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                       CachedNetworkImage(
                                           width: 50,
                                           height: 50,
-                                          imageUrl: photo),
+                                          imageUrl: photo,
+                                        errorWidget: (context, url, error) => Image.asset(
+                                            'assets/images/user.png',height: 50,width: 50,),
+                                      ),
                                       SizedBox(
                                         width: 12,
                                       ),
@@ -888,8 +896,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                   Container(
                                     height: product_review == null
                                         ? 100
-                                        : product_review.length *
-                                            110.toDouble(),
+                                        : product_review.length * 110.toDouble()>=ScreenUtil.getHeight(context)/2?ScreenUtil.getHeight(context)/2:product_review.length * 110.toDouble(),
                                     child: ListView.builder(
                                         physics:
                                             new NeverScrollableScrollPhysics(),
@@ -1002,12 +1009,17 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                   Container(
                                     margin: EdgeInsets.symmetric(vertical: 10),
                                     alignment: Alignment.center,
-                                    child: Text(
-                                      "See All Comments",
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w300,
-                                          color: themeColor.getColor()),
+                                    child: InkWell(
+                                      child: Text(
+                                        "See All Comments",
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w300,
+                                            color: themeColor.getColor()),
+                                      ),
+                                      onTap: (){
+                                        _navigateAndDisplaySelection(context);
+                                      },
                                     ),
                                   ),
                                 ],
@@ -1155,6 +1167,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   }
 
   void _save() async {
+
+
     print(widget.product.id);
     print(widget.product.price);
 
@@ -1162,7 +1176,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     myInt = num.parse(myInt.toStringAsFixed(2));
     cart = new Cart(
         await widget.product.id,
-        await widget.product.name,
+        product_variations != null?await widget.product.name+' - $vriationName':await widget.product.name,
         piece,
         myInt,
         DateFormat.yMMMd().format(DateTime.now()),
@@ -1195,4 +1209,23 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     photo = await SharedPreferencesHelper.getUserimage();
     email = await SharedPreferencesHelper.getEmail();
   }
+
+
+  _navigateAndDisplaySelection(BuildContext context) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    await showDialog(
+        context: context,
+        builder: (_) {
+          return MyDialog(widget.product.id,name,email,rateing,product_review);
+        });
+
+    ProductService.getReviewer(widget.product.id).then((usersFromServer) {
+      setState(() {
+        product_review = usersFromServer;
+        print('good');
+      });
+    });
+  }
+
 }

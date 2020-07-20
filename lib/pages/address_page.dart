@@ -22,6 +22,7 @@ class _AddressPageState extends State<AddressPage> {
 
   List<Address_shiping> addressList;
   SQL_Address helper = new SQL_Address();
+  int count = 0;
 
   @override
   void initState() {
@@ -31,7 +32,7 @@ class _AddressPageState extends State<AddressPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (addressList == null) {
+    if (addressList == null||addressList.isEmpty) {
       addressList = new List<Address_shiping>();
       setState(() {
         updateListView();
@@ -53,7 +54,7 @@ class _AddressPageState extends State<AddressPage> {
 
         bottomNavigationBar: InkWell(
           onTap: () {
-            Nav.routeReplacement(context, NewAddressPage());
+            _navigateAndDisplaySelection(context);
           },
           child: Container(
             margin: EdgeInsets.only(left: 14, right: 14),
@@ -99,7 +100,7 @@ class _AddressPageState extends State<AddressPage> {
                   child: Container(
                     height: ScreenUtil.getHeight(context),
                     child: ListView.builder(
-                      itemCount: addressList.length,
+                      itemCount: count,
                       itemBuilder: (BuildContext context, int index) {
                        return buildAddressItem(context,addressList[index]);
                       },
@@ -147,7 +148,7 @@ class _AddressPageState extends State<AddressPage> {
                     color: Color(0xFF5D6A78)),
               ),
               InkWell(onTap: () => _delete(context,address),
-                  child: Icon(Icons.delete_forever, color:Provider.of<ThemeNotifier>(context).getColor() ,))
+                  child: Icon(Icons.delete_forever, color:Provider.of<ThemeNotifier>(context).getColor() ))
             ],
           ),
           Text(
@@ -230,6 +231,7 @@ class _AddressPageState extends State<AddressPage> {
       students.then((theList) {
         setState(() {
           this.addressList = theList;
+          this.count = theList.length;
         });
       });
     });
@@ -240,5 +242,13 @@ class _AddressPageState extends State<AddressPage> {
     if (ressult != 0) {
       updateListView();
     }
+  }
+  _navigateAndDisplaySelection(BuildContext context) async {
+    this.count = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => NewAddressPage()),
+    );
+    updateListView();
+
   }
 }
