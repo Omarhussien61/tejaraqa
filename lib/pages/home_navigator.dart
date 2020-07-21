@@ -10,6 +10,8 @@ import 'package:shoppingapp/pages/favorite_products_page.dart';
 import 'package:shoppingapp/pages/home_page.dart';
 import 'package:shoppingapp/pages/my_profile_page.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
+import 'package:shoppingapp/service/productdervice.dart';
+import 'package:shoppingapp/utils/HomeControl.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
 
 class HomeNavigator extends StatefulWidget {

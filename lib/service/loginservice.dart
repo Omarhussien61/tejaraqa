@@ -32,7 +32,6 @@ class LoginService {
       var response = await client.post(
           APICONFIQ.Login,body: body);
       print(response.body);
-
       code = response.statusCode;
       Map<String, String> header = new Map();
       String username = APICONFIQ.consumer_key;
@@ -48,11 +47,11 @@ class LoginService {
          userInfo = new UserModal.fromJson(data);
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString("user_email", userInfo.user.email);
-        prefs.setString("user_displayname", userInfo.user.firstname);
+        prefs.setString("user_displayname", userInfo.user.firstname+' '+userInfo.user.lastname);
         prefs.setString("token", userInfo.cookie);
         prefs.setInt("user_id", userInfo.user.id);
         prefs.setString("password", pass);
-        prefs.setString("user_nicename", userInfo.user.nicename);
+        prefs.setString("user_nicename", userInfo.user.firstname+' '+userInfo.user.lastname);
         prefs.setString("image_url", userInfo.user.avatar);
         var resp =await client.get(APICONFIQ.Register+userInfo.user.id.toString(),
             headers:header);
@@ -108,11 +107,11 @@ class LoginService {
     if (response.statusCode == 201) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString("user_email", model.email);
-      prefs.setString("user_displayname", model.firstName);
+      prefs.setString("user_displayname", model.firstName+' '+model.lastName);
       prefs.setString("token", model.id.toString());
       prefs.setInt("user_id",  model.id);
       prefs.setString("password", model.password);
-      prefs.setString("user_nicename", model.username);
+      prefs.setString("user_nicename",  model.firstName+' '+model.lastName);
       prefs.setString("phone", model.phone);
      return loginUser(model.email,model.password);
     }
@@ -148,10 +147,10 @@ class LoginService {
         User user = new User.fromJson(list[0]);
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString("user_email", user.email);
-        prefs.setString("user_displayname", user.username);
+        prefs.setString("user_displayname", user.firstName+' '+user.lastName);
         prefs.setString("token", user.id.toString());
         prefs.setInt("user_id", user.id);
-        prefs.setString("user_nicename", user.firstName);
+        prefs.setString("user_nicename", user.firstName+' '+user.lastName);
         prefs.setString("image_url", model.avatar);
         var resp =await http.get(APICONFIQ.Ubdateplofile+'/'+user.id.toString()+'?'+ APICONFIQ.Key);
         var da = json.decode(resp.body)['meta_data'];
@@ -188,7 +187,7 @@ class LoginService {
       var user = new User.fromJson(response.data);
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString("user_email", user.email);
-      prefs.setString("user_displayname", user.firstName);
+      prefs.setString("user_displayname", user.firstName+' '+user.lastName);
       prefs.setString("phone", user.metaData[0].value);
 
       // loginUser(email,passwords);
@@ -196,7 +195,6 @@ class LoginService {
     else{
     }
   }
-
   void ubdatePassword(int _id,String pass) async {
     Map<String, dynamic> body = {
       'password': pass,

@@ -111,6 +111,33 @@ class ProductService {
     }
     return completer.future;
   }
+  static Future<ProductModel> getProduct(int id) async {
+    var dio = Dio();
+    dio.interceptors.add(DioCacheManager(CacheConfig(baseUrl:
+    APICONFIQ.getproduct+'/$id?'+APICONFIQ.Key)).interceptor);
+
+    var response;
+    try {
+       response = await dio.get(
+        APICONFIQ.getproduct+'/$id?'+APICONFIQ.Key,
+        options: buildCacheOptions(Duration(days: 7), forceRefresh: true),
+      );
+      if (response.statusCode == 200) {
+        var data = response.data;
+        var list = data as List;
+        print(list.length);
+        return ProductModel.fromJson(response.data);
+      } else {
+        print('Somthing went wrong');
+      }
+    } catch (e) {
+      print(e);
+    } finally {
+      dio.close();
+    }
+    return ProductModel.fromJson(response.data);
+  }
+
   static Future<List<ProductModel>> getMoreSaleProducts() async {
     List<ProductModel> products;
     var dio = Dio();
@@ -263,6 +290,38 @@ class ProductService {
             .map<Product_variations>((i) => Product_variations.fromJson(i))
             .toList());
 
+      } else {
+        print('Somthing went wrong');
+      }
+    } catch (e) {
+      print(e);
+    } finally {
+      dio.close();
+    }
+    return completer.future;
+  }
+  static Future<List<Product_review>> getReviewerEmail(String email) async {
+    List<Product_review> products;
+    var dio = Dio();
+
+    String link=APICONFIQ.url+'/products/reviews?reviewer_email=$email&'+APICONFIQ.Key;
+
+    dio.interceptors.add(DioCacheManager(CacheConfig(baseUrl: link)).interceptor);
+
+    var completer = new Completer<List<Product_review>>();
+
+    try {
+      print(link);
+      var response = await dio.get(link,
+        options: buildCacheOptions(Duration(days: 7), forceRefresh: true),
+      );
+      if (response.statusCode == 200) {
+        var data = response.data;
+        var list = data as List;
+        print(response.data);
+        completer.complete(products = list
+            .map<Product_review>((i) => Product_review.fromJson(i))
+            .toList());
       } else {
         print('Somthing went wrong');
       }

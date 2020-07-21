@@ -14,6 +14,7 @@ import 'package:shoppingapp/pages/my_profile_page.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
 import 'package:shoppingapp/pages/splash_screen.dart';
 import 'package:shoppingapp/service/API_CONFIQ.dart';
+import 'package:shoppingapp/service/productdervice.dart';
 import 'package:shoppingapp/service/theameservice.dart';
 import 'package:shoppingapp/utils/drawer_menu/hidden_drawer/hidden_drawer_menu.dart';
 import 'package:shoppingapp/utils/drawer_menu/hidden_drawer/screen_hidden_drawer.dart';
@@ -38,6 +39,7 @@ void main() async {
     runApp(
       ChangeNotifierProvider<ThemeNotifier>(
         create: (_) => ThemeNotifier(color),
+
         child: Phoenix(
           child: MyApp(),
         ),
@@ -131,6 +133,12 @@ class _InitPageState extends State<InitPage> {
   SQL_Helper helper = new SQL_Helper();
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) =>
+        ProductService.getAllProductsSale().then((value) {
+          Provider.of<ThemeNotifier>(context).setproductDiscount(value);
+        }));
+
+
     WidgetsBinding.instance.addPostFrameCallback((_) =>
         MyApp.setlocal(context,
             Locale(Provider.of<ThemeNotifier>(context).getlocal(),'')));

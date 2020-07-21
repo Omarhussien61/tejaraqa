@@ -36,18 +36,18 @@ import 'package:shoppingapp/widgets/homepage/product_list.dart';
 import 'package:shoppingapp/widgets/homepage/product_list_titlebar.dart';
 import 'package:shoppingapp/widgets/product_detail/slider_dot.dart';
 
-class ProductDetailPage extends StatefulWidget {
-  ProductDetailPage({
+class ProductDetailPage_id extends StatefulWidget {
+  ProductDetailPage_id({
     Key key,
     @required this.product,
   }) : super(key: key);
-  final ProductModel product;
+  final int product;
 
   @override
-  _ProductDetailPageState createState() => _ProductDetailPageState();
+  _ProductDetailPage_idState createState() => _ProductDetailPage_idState();
 }
 
-class _ProductDetailPageState extends State<ProductDetailPage>
+class _ProductDetailPage_idState extends State<ProductDetailPage_id>
     with TickerProviderStateMixin {
   AnimationController controller;
   SQL_Helper helper = new SQL_Helper();
@@ -71,9 +71,14 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   int piece = 1;
   static int count = 0;
   List<Product_review> product_review = new List<Product_review>();
-
+  ProductModel productModel;
   @override
   void initState() {
+    ProductService.getProduct(widget.product).then((value) => {
+    setState(() {
+    productModel = value;
+    })
+    });
     fetchUserId();
     countCart();
     tempScroll = ScrollController()
@@ -83,13 +88,13 @@ class _ProductDetailPageState extends State<ProductDetailPage>
         });
       });
     productRelated = ProductService.getRelatedProducts(
-        widget.product.related_ids.toString());
-    ProductService.getReviewer(widget.product.id).then((usersFromServer) {
+        productModel.toString());
+    ProductService.getReviewer(widget.product).then((usersFromServer) {
       setState(() {
         product_review = usersFromServer;
       });
     });
-    ProductService.getVriationProducts(widget.product.id).then((usersFromServer) {
+    ProductService.getVriationProducts(widget.product).then((usersFromServer) {
       setState(() {
         product_variations = usersFromServer;
       });
@@ -104,7 +109,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   }
 
   void _addtoRecentview() async {
-    recentview = new Recentview(widget.product.id, count++);
+    recentview = new Recentview(widget.product, count++);
     int result;
     if (await helperRecent.checkItem(recentview.id) == true) {
       result = await helperRecent.insertRecentView(recentview);
@@ -112,6 +117,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
       result = await helperRecent.updateRecentView(recentview);
     }
   }
+
   @override
   void dispose() {
     controller.dispose();
@@ -148,7 +154,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
           statusBarBrightness: Brightness.dark,
           statusBarIconBrightness: Brightness.dark),
     );
-    List<Widget> imageSliders = widget.product.images
+    List<Widget> imageSliders =productModel==null?[ ]: productModel.images
         .map((item) => Container(
               padding: EdgeInsets.only(bottom: 12),
               height: ScreenUtil.getHeight(context) / 1.3,
@@ -161,7 +167,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                           height: ScreenUtil.getHeight(context) / 1.3,
                           color: themeColor.getColor(),
                           child: CachedNetworkImage(
-                            imageUrl: (widget.product.images == null&&widget.product.images.isEmpty)
+                            imageUrl: (productModel.images == null&&productModel.images.isEmpty)
                                 ? 'http://arabimagefoundation.com/images/defaultImage.png'
                                 : item.src,
                             fit: BoxFit.fill,
@@ -170,8 +176,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                           ))),
                 ],
               ),
-            ))
-        .toList();
+            )).toList();
+
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -321,7 +327,14 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                     : 26),
                               ),
                               color: Colors.white),
-                      child: SingleChildScrollView(
+                      child:productModel==null?Container(
+                          height: double.infinity,
+                          width: double.infinity,
+                          color: Colors.black45,
+                          child: Center(
+                              child: CircularProgressIndicator(
+                                  valueColor:
+                                  AlwaysStoppedAnimation<Color>(themeColor.color)))): SingleChildScrollView(
                         controller: scrollController,
                         child: Column(
                           children: <Widget>[
@@ -346,7 +359,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                 mainAxisSize: MainAxisSize.max,
                                 children: <Widget>[
                                   SliderDotProductDetail(
-                                      current: _carouselCurrentPage,list: widget.product.images,),
+                                      current: _carouselCurrentPage,list: productModel==null?[]:productModel.images,),
                                   Container(
                                     margin: EdgeInsets.only(top: 14),
                                     child: Row(
@@ -359,7 +372,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: <Widget>[
-                                            Text(widget.product.name,
+                                            Text(productModel.name,
                                                 style: GoogleFonts.poppins(
                                                     fontSize: 19,
                                                     fontWeight: FontWeight.w400,
@@ -368,7 +381,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                               children: <Widget>[
                                                 RatingBar(
                                                   initialRating: double.parse(
-                                                      widget.product
+                                                      productModel
                                                           .averageRating),
                                                   itemSize: 18.0,
                                                   minRating: 1,
@@ -393,7 +406,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                                   width: 8,
                                                 ),
                                                 Text(
-                                                  widget.product.averageRating,
+                                                  productModel.averageRating,
                                                   style: GoogleFonts.poppins(
                                                       fontSize: 11,
                                                       fontWeight:
@@ -433,11 +446,10 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                     child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
                                       itemCount:
-                                          widget.product.categories.length,
+                                          productModel.categories.length,
                                       itemBuilder: (_, i) => _buildBox(
                                           color: Colors.orange,
-                                          name: widget
-                                              .product.categories[i].name),
+                                          name: productModel.categories[i].name),
                                     ),
                                   ),
                                   Container(
@@ -456,7 +468,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                             fontSize: 12),
                                       ),
                                       expanded: Text(
-                                        (parse(widget.product.sortDescription
+                                        (parse(productModel.sortDescription
                                             .toString()
                                             .trim())
                                             .body
@@ -464,11 +476,11 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                             .trim()
                                             .length >
                                             0 ||
-                                            widget.product.sortDescription
+                                            productModel.sortDescription
                                                 .toString()
                                                 .trim() ==
                                                 '')
-                                            ? parse(widget.product.sortDescription
+                                            ? parse(productModel.sortDescription
                                             .toString()
                                             .trim())
                                             .body
@@ -504,7 +516,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                                     fontSize: 18),
                                               ),
                                               Text(
-                                                widget.product.price,
+                                                productModel.price,
                                                 style: GoogleFonts.poppins(
                                                     color:
                                                         themeColor.getColor(),
@@ -516,7 +528,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                             height: 6,
                                           ),
                                           Text(
-                                            widget.product.stockStatus,
+                                            productModel.stockStatus,
                                             style: GoogleFonts.poppins(
                                                 color: themeColor.getColor(),
                                                 fontSize: 12,
@@ -526,7 +538,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                             height: 6,
                                           ),
                                           Text(
-                                            widget.product.categories[0].name,
+                                            productModel.categories[0].name,
                                             style: GoogleFonts.poppins(
                                                 color: Color(0xFF5D6A78),
                                                 fontSize: 12,
@@ -638,9 +650,9 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                                           setState(() {
                                                             checkboxValueA = position;
                                                             checkboxValueB=product_variations[position].id;
-                                                            widget.product.priceHtml=product_variations[position].price;
-                                                            widget.product.price=product_variations[position].price;
-                                                            widget.product.id=product_variations[position].id;
+                                                            productModel.priceHtml=product_variations[position].price;
+                                                            productModel.price=product_variations[position].price;
+                                                            productModel.id=product_variations[position].id;
                                                             vriationName=product_variations[position].attributes[pos].option;
                                                           });
                                                         },
@@ -756,7 +768,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                     children: <Widget>[
                                       RatingBar(
                                         initialRating: double.parse(
-                                            widget.product.averageRating),
+                                            productModel.averageRating),
                                         itemSize: 16.0,
                                         minRating: 1,
                                         direction: Axis.horizontal,
@@ -778,7 +790,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                         width: 12,
                                       ),
                                       Text(
-                                        widget.product.averageRating,
+                                        productModel.averageRating,
                                         style: GoogleFonts.poppins(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w400),
@@ -799,7 +811,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                         ),
                                         RatingBar(
                                           initialRating: double.parse(
-                                              widget.product.averageRating),
+                                              productModel.averageRating),
                                           itemSize: 20.0,
                                           minRating: 1,
                                           direction: Axis.horizontal,
@@ -822,7 +834,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                           height: 4,
                                         ),
                                         Text(
-                                            widget.product.averageRating +
+                                            productModel.averageRating +
                                                 " star",
                                             style: GoogleFonts.poppins(
                                                 fontSize: 13,
@@ -895,12 +907,13 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                   Container(
                                     height: product_review == null
                                         ? 100
-                                        : product_review.length * 110.toDouble()>=400?400:product_review.length * 110.toDouble(),
+                                        : product_review.length * 110.toDouble()>=ScreenUtil.getHeight(context)/2?ScreenUtil.getHeight(context)/2:product_review.length * 110.toDouble(),
                                     child: ListView.builder(
-                                        physics: new NeverScrollableScrollPhysics(),
+                                        physics:
+                                            new NeverScrollableScrollPhysics(),
                                         itemCount: product_review == null
                                             ? 0
-                                            : product_review.length>=5?4:product_review.length,
+                                            : product_review.length,
                                         itemBuilder: (BuildContext context,
                                             int position) {
                                           return Container(
@@ -916,9 +929,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                               children: <Widget>[
                                                 CircleAvatar(
                                                   backgroundImage: NetworkImage(
-                                                      product_review[position]
-                                                          .photoReview==null?' ':product_review[position]
-                                                          .photoReview),
+                                                      product_review[0]
+                                                          .reviewer),
                                                 ),
                                                 SizedBox(
                                                   width: 12,
@@ -958,7 +970,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                                       height: 8,
                                                     ),
                                                     Text(
-                                                        product_review[position]
+                                                        product_review[0]
                                                             .reviewer,
                                                         style:
                                                             GoogleFonts.poppins(
@@ -1080,9 +1092,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
       ),
     );
   }
-
   _displayDialog(BuildContext context, themeColor) async {
-   await showDialog(
+    return showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
@@ -1151,7 +1162,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                       isloading = true;
                     });
                     form.save();
-                    await ProductService.Createrating(name, email, widget.product.id, rateing,
+                    await ProductService.Createrating(name, email, productModel.id, rateing,
                         comment.isEmpty ? ' ' : comment);
                     Navigator.pop(context);
                     setState(() {
@@ -1163,29 +1174,19 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             ],
           );
         });
-   ProductService.getReviewer(widget.product.id).then((usersFromServer) {
-     setState(() {
-       product_review = usersFromServer;
-       print('good');
-     });
-   });
   }
-
   void _save() async {
-
-
-    print(widget.product.id);
-    print(widget.product.price);
-
-    double myInt = await double.parse(widget.product.price);
+    print(productModel.id);
+    print(productModel.price);
+    double myInt = await double.parse(productModel.price);
     myInt = num.parse(myInt.toStringAsFixed(2));
     cart = new Cart(
-        await widget.product.id,
-        product_variations != null?await widget.product.name+' - $vriationName':await widget.product.name,
+        await productModel.id,
+        product_variations != null?await productModel.name+' - $vriationName':await productModel.name,
         piece,
         myInt,
         DateFormat.yMMMd().format(DateTime.now()),
-        await widget.product.images[0].src);
+        await productModel.images[0].src);
     if (product_variations != null) {
       cart.idVariation = checkboxValueB;
     }
@@ -1202,7 +1203,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
       countCart();
     }
   }
-
   void countCart() async {
     helper.getCount().then((value) {
       Provider.of<ThemeNotifier>(context).intcountCart(value);
@@ -1214,23 +1214,20 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     photo = await SharedPreferencesHelper.getUserimage();
     email = await SharedPreferencesHelper.getEmail();
   }
-
-
   _navigateAndDisplaySelection(BuildContext context) async {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
     await showDialog(
         context: context,
         builder: (_) {
-          return MyDialog(widget.product.id,name,email,rateing,product_review);
+          return MyDialog(productModel.id,name,email,rateing,product_review);
         });
 
-    ProductService.getReviewer(widget.product.id).then((usersFromServer) {
+    ProductService.getReviewer(productModel.id).then((usersFromServer) {
       setState(() {
         product_review = usersFromServer;
         print('good');
       });
     });
   }
-
 }

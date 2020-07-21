@@ -100,20 +100,6 @@ class _MyProfilePageState extends State<MyProfilePage> {
                 ),
                 ListTile(
                   onTap: () {
-                    Nav.route(context, AboutPage());
-                  },
-                  leading: Image.asset("assets/icons/ic_question.png",
-                      width: 20, color: Color(0xFF5D6A78)),
-                  title: Text("Frequently Asked Questions",
-                      style: GoogleFonts.poppins(
-                          fontSize: 15, color: Color(0xFF5D6A78))),
-                ),
-
-                SizedBox(
-                  height: 12,
-                ),
-                ListTile(
-                  onTap: () {
                     Nav.route(context, MyProfileSettings());
                   },
                   leading: Image.asset("assets/icons/ic_search.png",

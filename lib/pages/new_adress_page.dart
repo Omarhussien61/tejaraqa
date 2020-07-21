@@ -182,7 +182,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
                               return 'Country';
                             }
                           },
-                          selectedItem: _CountryController.text,
+                          label: _CountryController.text ,
                           isUnderLine: true),
                       SizedBox(
                         height: 32,
@@ -199,12 +199,11 @@ class _NewAddressPageState extends State<NewAddressPage> {
                               return 'City';
                             }
                           },
-                          selectedItem: _cityController.text,
+                          label: _cityController.text ,
                           isUnderLine: true),
                       SizedBox(
                         height: 32,
                       ),
-
                       NewAddressInput(
                         controller: _AddressController,
 
@@ -266,7 +265,6 @@ class _NewAddressPageState extends State<NewAddressPage> {
                           ),
                         ],
                       ),
-
                     ],
                   ),
                 )
@@ -293,6 +291,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
             _streeetController.text,
             _buildingController.text,
             _AddressController.text);
+
         int result;
         result = await helper.insertStudent(address);
         if (result == 0) {
@@ -327,7 +326,6 @@ class _NewAddressPageState extends State<NewAddressPage> {
      _streeetController.text=address_shiping.street.toString();
      _cityController.text=address_shiping.city.toString();
      _CountryController.text=address_shiping.Country.toString();
-
    });
     //Navigator.pop(context);
   }

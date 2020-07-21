@@ -19,6 +19,8 @@ class APICONFIQ{
 
   //getproducts
   static String getproducts=url+'/products?per_page=100&';
+  static String getproduct=url+'/products';
+
   //getproductsHomepadge
   static String getproductsHome=url+'/products?per_page=6&'+Key;
 

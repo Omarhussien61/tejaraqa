@@ -9,6 +9,7 @@ class Product_review {
   String review;
   int rating;
   bool verified;
+  String photoReview;
 
 
   Product_review(
@@ -22,7 +23,7 @@ class Product_review {
         this.review,
         this.rating,
         this.verified,
-
+        this.photoReview
       });
 
   Product_review.fromJson(Map<String, dynamic> json) {
@@ -36,7 +37,7 @@ class Product_review {
     review = json['review'];
     rating = json['rating'];
     verified = json['verified'];
-
+    photoReview=json['reviewer_avatar_urls']['96'];
   }
 
   Map<String, dynamic> toJson() {

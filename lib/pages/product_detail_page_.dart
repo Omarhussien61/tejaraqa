@@ -7,8 +7,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:html/parser.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shoppingapp/modal/Product_review.dart';
 import 'package:shoppingapp/modal/productmodel.dart';
+import 'package:shoppingapp/pages/product_detail_By_id.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
 import 'package:shoppingapp/service/productdervice.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
@@ -34,14 +36,20 @@ class _ProductDetailPageAlternativeState
   bool isLiked = false;
   List<Product_review> product_review;
   int piece = 1;
+  String Photo='  ';
 @override
   void initState() {
-  ProductService.getReviewer(178).then((value) {
+  SharedPreferences.getInstance().then((prefs){
     setState(() {
-      product_review=value;
-
+      Photo= prefs.getString('image_url');
+    });
+    ProductService.getReviewerEmail(prefs.getString('user_email')).then((value){
+      setState(() {
+        product_review=value;
+      });
     });
   });
+
     super.initState();
   }
   @override
@@ -134,7 +142,7 @@ class _ProductDetailPageAlternativeState
                   SizedBox(
                     height: 4,
                   ),
-                  Text("You gave 4 points",
+                  Text("You gave  review",
                       style: GoogleFonts.poppins(
                           fontSize: 13,
                           fontWeight: FontWeight.w300,
@@ -148,7 +156,7 @@ class _ProductDetailPageAlternativeState
             product_review!=null?Container(
               height: ScreenUtil.getHeight(context)-188,
               child: ListView.builder(
-                  itemCount:  product_review.length,
+                  itemCount:  product_review==null?0:product_review.length,
                   itemBuilder: (BuildContext context, int position) {
                     return Container(
                       margin: EdgeInsets.symmetric(vertical: 5),
@@ -158,71 +166,90 @@ class _ProductDetailPageAlternativeState
                           color: Color(0xFFEEEEF3),
                           borderRadius:
                           BorderRadius.circular(12)),
-                      child: Row(
-                        children: <Widget>[
-                          CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                product_review[0].reviewer),
-                          ),
-                          SizedBox(
-                            width: 12,
-                          ),
-                          Column(
-                            crossAxisAlignment:
-                            CrossAxisAlignment.start,
-                            children: <Widget>[
-                              RatingBar(
-                                initialRating: product_review[position].rating.toDouble(),
-                                itemSize: 14.0,
-                                minRating: 1,
-                                direction: Axis.horizontal,
-                                allowHalfRating: true,
-                                itemCount: 5,
-                                itemBuilder: (context, _) =>
-                                    Container(
-                                      height: 12,
-                                      child: SvgPicture.asset(
-                                        "assets/icons/ic_star.svg",
-                                        color: themeColor
-                                            .getColor(),
-                                        width: 9,
-                                      ),
+                      child: InkWell(
+                        onTap: (){
+                          Nav.route(context, ProductDetailPage_id(product: product_review[position].productId));
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                      Photo),
+                                ),
+                                SizedBox(
+                                  width: 12,
+                                ),
+                                Column(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    RatingBar(
+                                      initialRating: product_review[position].rating.toDouble(),
+                                      itemSize: 14.0,
+                                      minRating: 1,
+                                      direction: Axis.horizontal,
+                                      allowHalfRating: true,
+                                      itemCount: 5,
+                                      itemBuilder: (context, _) =>
+                                          Container(
+                                            height: 12,
+                                            child: SvgPicture.asset(
+                                              "assets/icons/ic_star.svg",
+                                              color: themeColor
+                                                  .getColor(),
+                                              width: 9,
+                                            ),
+                                          ),
+                                      onRatingUpdate: (rating) {
+                                        print(rating);
+                                      },
                                     ),
-                                onRatingUpdate: (rating) {
-                                  print(rating);
-                                },
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text(product_review[0].reviewer,
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w300,
-                                      color: Color(0xFF5D6A78))),
-                              Text(
-                                  ( product_review[position].review
-                                      .toString()
-                                      .trim()
-                                      .length >
-                                      0 ||
-                                      product_review[position].review
-                                          .toString()
-                                          .trim() ==
-                                          '') ? parse( product_review[position].review
-                                      .toString()
-                                      .trim())
-                                      .body
-                                      .text
-                                      .trim()
-                                      : "Best",
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w300,
-                                      color: Color(0xFF5D6A78)))
-                            ],
-                          )
-                        ],
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text(product_review[0].reviewer,
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w300,
+                                            color: Color(0xFF5D6A78))),
+                                    Text(
+                                        ( product_review[position].review
+                                            .toString()
+                                            .trim()
+                                            .length >
+                                            0 ||
+                                            product_review[position].review
+                                                .toString()
+                                                .trim() ==
+                                                '') ? parse( product_review[position].review
+                                            .toString()
+                                            .trim())
+                                            .body
+                                            .text
+                                            .trim()
+                                            : "Best",
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w300,
+                                            color: Color(0xFF5D6A78)))
+                                  ],
+                                ),
+                              ],
+                            ),
+
+                            SizedBox(
+                              width: 30,
+                            ),
+                            Text(product_review[position].productId.toString(),
+                                style: GoogleFonts.poppins(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w300,
+                                    color: Color(0xFF5D6A78)))
+                          ],
+                        ),
                       ),
                     );
                   }),

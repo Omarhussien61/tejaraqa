@@ -248,7 +248,7 @@ TextEditingController emailController;
     );
   }
   Future<void> _launchInBrowser() async {
-   String  url = APICONFIQ.Base_url+'my-account-2/lost-password/';
+   String  url = APICONFIQ.Base_url+'my-account/lost-password/';
     if (await canLaunch(url)) {
       await launch(
         url,

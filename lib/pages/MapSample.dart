@@ -1,6 +1,7 @@
 import 'package:geocoder/geocoder.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shoppingapp/modal/Address_shiping.dart';
 
 
@@ -9,6 +10,9 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shoppingapp/modal/place.dart';
+import 'package:shoppingapp/service/places_service.dart';
+import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/utils/util/sql_address.dart';
@@ -26,6 +30,7 @@ class MapSampleState extends State<MapSample> {
   static const LatLng _center = const LatLng(45.521563, -122.677433);
   final Set<Marker> _markers = {};
   LatLng _lastMapPosition = _center;
+  List<Place> places;
   MapType _currentMapType = MapType.normal;
   static const kGoogleApiKey = "AIzaSyBb0GpBvrtNExsQHDb55DcVVnmUgL85w4U";
   BitmapDescriptor customIcon;
@@ -109,48 +114,65 @@ class MapSampleState extends State<MapSample> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      appBar: AppBar(
-        title: Center(child: Text(getTransrlate(context, 'LocationSelected'))),
-        backgroundColor: Provider.of<ThemeNotifier>(context).color,
-        actions: <Widget>[
-        ],
-      ),
       body: Stack(
         children: <Widget>[
-          GoogleMap(
-            onTap: (pos) {
-              print(pos);
-              m = Marker(markerId: MarkerId('1'), icon: customIcon, position: pos);
-              setState(() {
-                _markers.add(m);
-                getUserLocationAddress(pos);
-              });
-            },
-            onMapCreated: _onMapCreated,
-            initialCameraPosition: CameraPosition(
-              target: _center,
-              zoom: 15.0,
-            ),
-            mapType: _currentMapType,
-            markers: _markers,
-            onCameraMove: _onCameraMove,
-          ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: button(getUserLocation, Icons.location_searching),
+            padding: const EdgeInsets.only(top:8.0),
+            child: GoogleMap(
+              onTap: (pos) {
+                print(pos);
+                m = Marker(markerId: MarkerId('1'), icon: customIcon, position: pos);
+                setState(() {
+                  _markers.add(m);
+                  getUserLocationAddress(pos);
+//                  PlacesService().getPlaces(pos.latitude, pos.longitude).then((value) => {
+//                  setState(() {
+//                  places=value;
+//                  })
+//                  });
+                });
+              },
+              onMapCreated: _onMapCreated,
+              initialCameraPosition: CameraPosition(
+                target: _center,
+                zoom: 15.0,
+              ),
+              mapType: _currentMapType,
+              markers: _markers,
+              onCameraMove: _onCameraMove,
+            ),
           ),
+          Positioned(
+              right: 10,
+              top: 50,
+              child: button(getUserLocation, Icons.location_searching)),
+          Positioned(
+            top: 10,
+            height: ScreenUtil.getHeight(context)/8,
+            width: ScreenUtil.getWidth(context),
+            child: ListView.builder(
+                itemCount: places==null?0:places.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: ListTile(
+                      title: Text(places[index].name),
+                    ),
+                  );
+                }),
+          )
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-
-        onPressed: () async {
-          _save();
-         // Constatnt.address=address_shiping;
-        },
-        tooltip: '  حفظ  ',
-        label:  Text(getTransrlate(context, 'SaveNaw')),
-        icon: Icon(Icons.save),
-        backgroundColor: Provider.of<ThemeNotifier>(context).getColor(),
+      floatingActionButton: Align(
+        alignment: Alignment.bottomCenter,
+        child: DialogButton(
+          width: ScreenUtil.getWidth(context)/1.3,
+          onPressed: () async {
+            _save();
+           // Constatnt.address=address_shiping;
+          },
+          child: Text(getTransrlate(context, 'SaveNaw'),style: TextStyle(color: Colors.white,fontSize: 16)),
+         color:  Provider.of<ThemeNotifier>(context).getColor(),
+        ),
       ),
     );
   }
@@ -167,7 +189,7 @@ class MapSampleState extends State<MapSample> {
           .thoroughfare}, ${first.subThoroughfare}');
       setState(() {
         address_shiping=new Address_shiping(
-            first.countryName,first.countryName, first.adminArea,
+            first.countryName,first.adminArea,first.countryName,
             first.featureName, '', first.addressLine,lang:latLng.longitude,
             lat: latLng.latitude);
       });
@@ -210,54 +232,7 @@ class MapSampleState extends State<MapSample> {
     _streeetController = TextEditingController();
   }
   Future<void> _save()  async {
-    address_shiping=new Address_shiping(address_shiping.Country,address_shiping.Country,address_shiping.city,address_shiping.street, _buildingController.text,address_shiping.addres1,
-    lat: address_shiping.lat,lang: address_shiping.lang);
+
     Navigator.pop(context,address_shiping);
-  }
-  void showAlertDialog(String title, String msg){
-    showDialog(
-        context: context,builder: (BuildContext context) {
-      return AlertDialog(
-        title:  Text(title,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 18 ,
-                fontStyle: FontStyle.normal)),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              Center(
-                child: Text(msg
-                    ,style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18 ,
-                        fontStyle: FontStyle.normal)
-                ),
-              ),
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          FlatButton(
-            color: Provider.of<ThemeNotifier>(context).getColor(),
-            child: Text(getTransrlate(context, 'CheckOut'),
-      style:TextStyle(
-      color: Colors.white,
-      fontWeight: FontWeight.bold,
-      fontSize: 20 ,
-      fontStyle: FontStyle.normal)),
-            onPressed: () {
-
-              Navigator.pop(context,address_shiping);
-              },
-          ),
-        ],
-      );
-    });
-
-
   }
 }
