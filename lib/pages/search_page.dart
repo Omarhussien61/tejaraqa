@@ -533,10 +533,14 @@ class _SearchPageState extends State<SearchPage> {
           right: 22,
           child: InkWell(
             onTap: () {
-              Scaffold.of(context).showSnackBar(SnackBar(
-                  backgroundColor: themeColor.getColor(),
-                  content: Text('Product added to cart')));
+             if(filteredProduct[index].variations.isEmpty) {
               save(filteredProduct[index]);
+              Scaffold.of(context).showSnackBar(SnackBar(
+              backgroundColor: themeColor.getColor(),
+              content: Text('Product added to cart')));}
+             else{
+              Scaffold.of(context).showSnackBar(SnackBar(
+                  content: Text('Please Select Variations')));}
             },
             child: Container(
               padding: EdgeInsets.only(top: 8, left: 8, bottom: 8, right: 8),

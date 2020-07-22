@@ -64,13 +64,11 @@ class Cart extends Model{
   Cart.getMap(Map<String, dynamic> map){
     this._id = map["id"];
     this._idVariation = map["idvar"];
-
     this._name = map["name"];
     this._quantity = map["quantity"];
     this._pass = map["prise"];
     this._date = map["date"];
     this._image = map["image"];
-
   }
 
   set quantity(int value) {

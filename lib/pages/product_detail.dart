@@ -136,11 +136,9 @@ class _ProductDetailPageState extends State<ProductDetailPage>
       width: 75,
     );
   }
-
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ThemeNotifier>(context);
-
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
           statusBarColor: Colors.white,
@@ -554,7 +552,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                             InkWell(
                                                 onTap: () {
                                                   setState(() {
-                                                    if (piece != 0) {
+                                                    if (piece != 1) {
                                                       piece--;
                                                     }
                                                   });
@@ -591,7 +589,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                             InkWell(
                                                 onTap: () {
                                                   setState(() {
-                                                    if (piece != 9) {
+                                                    if (piece != 99) {
                                                       piece++;
                                                     }
                                                   });
@@ -1080,7 +1078,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
       ),
     );
   }
-
   _displayDialog(BuildContext context, themeColor) async {
    await showDialog(
         context: context,
@@ -1170,7 +1167,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
      });
    });
   }
-
   void _save() async {
 
 
@@ -1179,7 +1175,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
 
     double myInt = await double.parse(widget.product.price);
     myInt = num.parse(myInt.toStringAsFixed(2));
-    cart = new Cart(
+    cart = Cart(
         await widget.product.id,
         product_variations != null?await widget.product.name+' - $vriationName':await widget.product.name,
         piece,
@@ -1191,8 +1187,16 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     }
     int result;
     if (await helper.checkItem(cart.id) == true) {
+      print(11111111111);
+
       result = await helper.insertCart(cart);
     } else {
+      Cart c=await helper.updateCartCount(cart.id);
+      cart.quantity=piece+c.quantity;
+      print(cart.quantity);
+setState(() {
+  piece==1;
+});
       result = await helper.updateCart(cart);
     }
     if (result == 0) {
@@ -1202,7 +1206,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
       countCart();
     }
   }
-
   void countCart() async {
     helper.getCount().then((value) {
       Provider.of<ThemeNotifier>(context).intcountCart(value);

@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,14 +17,15 @@ import 'package:shoppingapp/widgets/new_adress_input.dart';
 
 import 'MapSample.dart';
 
-class NewAddressPage extends StatefulWidget {
-
+class EditAddressPage extends StatefulWidget {
+Address_shiping address_shiping;
+EditAddressPage(this.address_shiping);
 
   @override
-  _NewAddressPageState createState() => _NewAddressPageState();
+  _EditAddressPageState createState() => _EditAddressPageState();
 }
 
-class _NewAddressPageState extends State<NewAddressPage> {
+class _EditAddressPageState extends State<EditAddressPage> {
   bool asTabs = false;
   String selectedValue;
   String preselectedValue = "dolor sit";
@@ -34,7 +36,6 @@ class _NewAddressPageState extends State<NewAddressPage> {
   final _formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   Address_shiping address_shiping;
-
   final List<DropdownMenuItem> items = [];
   Address_shiping address;
   SQL_Address helper = new SQL_Address();
@@ -74,6 +75,17 @@ class _NewAddressPageState extends State<NewAddressPage> {
     _AddressController = TextEditingController();
     _buildingController = TextEditingController();
     _streeetController = TextEditingController();
+if(widget.address_shiping!=null){
+  setState(() {
+    _nameController.text=widget.address_shiping.title;
+    _cityController.text=widget.address_shiping.city;
+    _CountryController.text=widget.address_shiping.Country;
+    _streeetController.text=widget.address_shiping.street;
+    _AddressController.text=widget.address_shiping.addres1;
+    _buildingController.text=widget.address_shiping.buildingNo;
+  });
+}
+
     super.initState();
 
     super.initState();
@@ -120,24 +132,10 @@ class _NewAddressPageState extends State<NewAddressPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      "My address",
-                      style: GoogleFonts.poppins(
-                          fontSize: 18, color: Color(0xFF5D6A78)),
-                    ),
-                    InkWell(
-                      focusColor:  Provider.of<ThemeNotifier>(context).getColor(),
-                      splashColor: Provider.of<ThemeNotifier>(context).getColor(),
-                      onTap: () {
-                        //Nav.routeReplacement(context, MapSample());
-                        _navigateAndDisplaySelection(context);
-                      },
-                      child: Icon(Icons.location_on),
-                    ),
-                  ],
+                Text(
+                  "My address",
+                  style: GoogleFonts.poppins(
+                      fontSize: 18, color: Color(0xFF5D6A78)),
                 ),
                 Container(
                     width: 28,
@@ -170,38 +168,35 @@ class _NewAddressPageState extends State<NewAddressPage> {
                       SizedBox(
                         height: 32,
                       ),
-                      FindDropdown(
-                          items: ['Egypt','Saudi Arabia'],
-                          onChanged: (String item) {
-                            setState(() {
-                              _CountryController.text=item;
-                            });
-                            get_City(item);
-                          },
-                          validate: (String value) {
-                            if (value.isEmpty){
-                              return 'Country';
-                            }
-                          },
-                          selectedItem: 'Country',
-                          isUnderLine: true),
+                      NewAddressInput(
+                        controller: _CountryController,
+                        labelText: "Country",
+                        hintText: '',
+                        isEmail: true,
+                        validator: (String value) {
+                          if (value.isEmpty){
+                            return 'Country';
+                          }
+                        },
+                        onSaved: (String value) {
+                        },
+                      ),
                       SizedBox(
                         height: 32,
                       ),
-                      FindDropdown(
-                          items: city,
-                          onChanged: (String item) {
-                            setState(() {
-                              _cityController.text=item;
-                            });
-                          },
-                          validate: (String value) {
-                            if (value.isEmpty){
-                              return 'City';
-                            }
-                          },
-                          selectedItem: 'City',
-                          isUnderLine: true),
+                      NewAddressInput(
+                        controller: _cityController,
+                        labelText: "City",
+                        hintText: '',
+                        isEmail: true,
+                        validator: (String value) {
+                          if (value.isEmpty){
+                            return 'City';
+                          }
+                        },
+                        onSaved: (String value) {
+                        },
+                      ),
                       SizedBox(
                         height: 32,
                       ),
@@ -237,7 +232,8 @@ class _NewAddressPageState extends State<NewAddressPage> {
                               }
                             },
                           decoration: InputDecoration(
-                              hintText: 'Street',
+                            labelText: 'Street',
+                            hintText: 'Street',
                               labelStyle: GoogleFonts.poppins(fontSize: 12),
                               helperStyle: GoogleFonts.poppins(fontSize: 12),
                               hintStyle: GoogleFonts.poppins(fontSize: 12),
@@ -260,6 +256,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
                                 labelStyle: GoogleFonts.poppins(fontSize: 12),
                                 helperStyle: GoogleFonts.poppins(fontSize: 12),
                                 hintStyle: GoogleFonts.poppins(fontSize: 12),
+                                labelText: 'Building'
                               ),
 
                             ),
@@ -291,14 +288,26 @@ class _NewAddressPageState extends State<NewAddressPage> {
             _nameController.text,
             _streeetController.text,
             _buildingController.text,
-            _AddressController.text);
-
+            _AddressController.text,lang: widget.address_shiping.lang,lat:widget.address_shiping.lat,id: widget.address_shiping.id );
         int result;
-        result = await helper.insertAddress(address);
-        if (result == 0) {
+        print(widget.address_shiping.id);
 
-        } else {
+        if (widget.address_shiping.id==null) {
+          print('mesh mogod');
+          result = await helper.insertAddress(address);
           Navigator.pop(context);
+        } else {
+          print(' mogod');
+
+          result = await helper.updateAddress(address);
+          Navigator.pop(context);
+
+        }
+        if (result == 0) {
+          print('error');
+        } else {
+
+
         }
       }
     }
@@ -313,16 +322,6 @@ class _NewAddressPageState extends State<NewAddressPage> {
         city=SaudiArabia;
       });
   }
-  _navigateAndDisplaySelection(BuildContext context) async {
-    // Navigator.push returns a Future that completes after calling
-    // Navigator.pop on the Selection Screen.
-   address_shiping= await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => MapSample())
-    );
 
-    Navigator.pop(context);
-
-  }
 
 }

@@ -20,53 +20,36 @@ import 'package:shoppingapp/widgets/homepage/product_list.dart';
 import 'package:shoppingapp/widgets/homepage/product_list_titlebar.dart';
 import 'package:shoppingapp/widgets/homepage/search_box.dart';
 import 'package:shoppingapp/widgets/homepage/slider_dot.dart';
-import 'package:sqflite/sqflite.dart';
+
 
 class HomePage extends StatefulWidget {
+
+  List<Category> maincat;
+  Future<List<ProductModel>>productDiscount,productNew,moreSale,productview,product_low_priced;
+
+  HomePage(this.maincat, this.productDiscount, this.productNew, this.moreSale,
+      this.productview, this.product_low_priced);
+
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   int _carouselCurrentPage = 0;
-   List<Category> maincat;
   SQL_Helper helper = new SQL_Helper();
   SQL_Rercent sql_rercent = new SQL_Rercent();
   String contVeiw;
-  Future<List<ProductModel>>productDiscount,productNew,moreSale,productview,product_low_priced;
 
   @override
   void initState() {
-    updateListView();
+    //updateListView();
     countCart();
-    CategoryService().getMainCategory().then((value) {
-      setState(() {
-        maincat=value;
-      });
-    });
-    productDiscount=ProductService.getAllProductsSale();
-    product_low_priced=ProductService.getLow_Priced_Products();
-    productNew=ProductService.getNewProducts();
-    moreSale=ProductService.getMoreSaleProducts();
+
+
     super.initState();
   }
-  updateListView(){
-    final Future<Database> db = helper.initializedDatabase();
-    db.then((database) {
-      Future<List<Recentview>> ProductView = sql_rercent.getRecentViewList();
-      ProductView.then((theList) {
-        setState(() {
-          contVeiw=theList[0].id.toString();
-          for (int i = 1; i <= theList.length-1 ; i++){
-            //items.add(this.recents[i].id.toString());
-            contVeiw=contVeiw+','+theList[i].id.toString();
-          }
-          productview=ProductService.getRecentviewProducts(contVeiw);
-        });
-      });
-    });
 
-  }
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ThemeNotifier>(context);
@@ -75,7 +58,7 @@ class _HomePageState extends State<HomePage> {
       body: ListView(
         children: <Widget>[
           SearchBox(),
-          CategoryListView(maincat),
+          CategoryListView(widget.maincat),
           CarouselSlider(
             items: imageSliders,
             options: CarouselOptions(
@@ -91,7 +74,7 @@ class _HomePageState extends State<HomePage> {
           ),
           SliderDot(current: _carouselCurrentPage),
           DiscountList(
-            product: productDiscount,
+            product: widget.productDiscount,
             themeColor: themeColor,
             productListTitleBar: ProductListTitleBar(
               themeColor: themeColor,
@@ -104,7 +87,7 @@ class _HomePageState extends State<HomePage> {
           ),
           ProductList(
             themeColor: themeColor,
-            product: productNew,
+            product: widget.productNew,
             productListTitleBar: ProductListTitleBar(
               themeColor: themeColor,
               title: "Products You May Like",
@@ -132,7 +115,7 @@ class _HomePageState extends State<HomePage> {
           ),
           ProductList(
             themeColor: themeColor,
-            product: moreSale,
+            product: widget.moreSale,
             productListTitleBar: ProductListTitleBar(
               themeColor: themeColor,
               title: "Most Top Rated",
@@ -141,7 +124,7 @@ class _HomePageState extends State<HomePage> {
           ),
           DiscountList(
             themeColor: themeColor,
-            product: product_low_priced,
+            product: widget.product_low_priced,
             productListTitleBar: ProductListTitleBar(
               themeColor: themeColor,
               title: "Low-Priced Products",
@@ -153,7 +136,7 @@ class _HomePageState extends State<HomePage> {
           ),
           ProductList(
             themeColor: themeColor,
-            product: productview,
+            product: widget.productview,
             productListTitleBar: ProductListTitleBar(
               themeColor: themeColor,
               title: "Most recently looked",

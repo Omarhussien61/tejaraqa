@@ -200,11 +200,16 @@ class ProductCard extends StatelessWidget {
                             ),
                             InkWell(
                               onTap: () {
-                                save(product);
-                                countCart(context);
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                    backgroundColor: mainColor,
-                                    content: Text('Product added to cart')));
+                                if(product.variations.isEmpty) {
+                                  save(product);
+                                  countCart(context);
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                      backgroundColor: mainColor,
+                                      content: Text('Product added to cart')));
+                                }
+                                else{
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text('Please Select Variations')));}
 
                               },
                               child: Container(

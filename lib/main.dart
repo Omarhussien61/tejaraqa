@@ -133,10 +133,7 @@ class _InitPageState extends State<InitPage> {
   SQL_Helper helper = new SQL_Helper();
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) =>
-        ProductService.getAllProductsSale().then((value) {
-          Provider.of<ThemeNotifier>(context).setproductDiscount(value);
-        }));
+
 
 
     WidgetsBinding.instance.addPostFrameCallback((_) =>

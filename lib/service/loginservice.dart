@@ -47,10 +47,14 @@ class LoginService {
          userInfo = new UserModal.fromJson(data);
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString("user_email", userInfo.user.email);
-        prefs.setString("user_displayname", userInfo.user.firstname+' '+userInfo.user.lastname);
+
+        prefs.setString("user_Fristname", userInfo.user.firstname);
+        prefs.setString("user_lastname", userInfo.user.lastname);
+
         prefs.setString("token", userInfo.cookie);
         prefs.setInt("user_id", userInfo.user.id);
         prefs.setString("password", pass);
+
         prefs.setString("user_nicename", userInfo.user.firstname+' '+userInfo.user.lastname);
         prefs.setString("image_url", userInfo.user.avatar);
         var resp =await client.get(APICONFIQ.Register+userInfo.user.id.toString(),
@@ -105,9 +109,11 @@ class LoginService {
 
     print(response.body);
     if (response.statusCode == 201) {
+      var user = new User.fromJson(jsonDecode(response.body));
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString("user_email", model.email);
-      prefs.setString("user_displayname", model.firstName+' '+model.lastName);
+      prefs.setString("user_Fristname", user.firstName);
+      prefs.setString("user_lastname", user.lastName);
       prefs.setString("token", model.id.toString());
       prefs.setInt("user_id",  model.id);
       prefs.setString("password", model.password);
@@ -147,7 +153,8 @@ class LoginService {
         User user = new User.fromJson(list[0]);
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString("user_email", user.email);
-        prefs.setString("user_displayname", user.firstName+' '+user.lastName);
+        prefs.setString("user_Fristname", user.firstName);
+        prefs.setString("user_lastname", user.lastName);
         prefs.setString("token", user.id.toString());
         prefs.setInt("user_id", user.id);
         prefs.setString("user_nicename", user.firstName+' '+user.lastName);
@@ -165,7 +172,7 @@ class LoginService {
       return data['message'];
     }
   }
-  void ubdateProfile(int _id,String email, String f_Name,String phone) async {
+  void ubdateProfile(int _id,String email, String f_Name, String l_Name,String phone) async {
     print(phone);
     List<MetaData_user> metaData=new List<MetaData_user>();
     metaData.add(MetaData_user(
@@ -174,6 +181,7 @@ class LoginService {
     var body =json.encode( {
       'email': email,
       'first_name': f_Name,
+      'last_name': l_Name,
       "meta_data": [{"key":"phonenumber","value":"$phone"}]
     });
     print( body);
@@ -187,7 +195,8 @@ class LoginService {
       var user = new User.fromJson(response.data);
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString("user_email", user.email);
-      prefs.setString("user_displayname", user.firstName+' '+user.lastName);
+      prefs.setString("user_Fristname", user.firstName);
+      prefs.setString("user_lastname", user.lastName);
       prefs.setString("phone", user.metaData[0].value);
 
       // loginUser(email,passwords);

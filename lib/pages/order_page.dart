@@ -286,29 +286,24 @@ class _OrderPageState extends State<OrderPage> {
                                     ),
                                   )
                                 ]),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: TextFormField(
-                                    decoration: InputDecoration(
-                                        enabledBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: themeColor.getColor()),
-                                        ),
-                                        focusedBorder: UnderlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: textColor),
-                                        ),
-                                        labelStyle: new TextStyle(
-                                            color: const Color(0xFF424242)),
-                                        hintText: "Enter the order Notes",
-                                        hintStyle: GoogleFonts.poppins(
-                                            fontSize: 12, color: textColor)),
-                                  ),
-                                ),
-                              ],
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: themeColor.getColor()),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: textColor),
+                                    ),
+                                    labelStyle: new TextStyle(
+                                        color: const Color(0xFF424242)),
+                                    hintText: "Enter the order Notes",
+                                    hintStyle: GoogleFonts.poppins(
+                                        fontSize: 12, color: textColor)),
+                              ),
                             ),
                           ),
                         ],
@@ -323,25 +318,26 @@ class _OrderPageState extends State<OrderPage> {
                           Expanded(
                             flex: 2,
                             child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding:  EdgeInsets.only(right: 16,left: 16,top: 8,bottom: 8),
                               child: TextFormField(
                                 onChanged: (value) {
                                   code = value;
                                 },
                                 controller: _CoponController,
                                 decoration: InputDecoration(
-                                    hintText: ' Copun Code ',
-                                    hintStyle: TextStyle(
-                                        fontFamily: 'Raleway',
-                                        color: Theme.of(context)
-                                            .textTheme
-                                            .subhead
-                                            .color),
-                                    focusedBorder: InputBorder.none,
-                                    disabledBorder: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    errorBorder: InputBorder.none,
-                                    focusedErrorBorder: InputBorder.none),
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: themeColor.getColor()),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide:
+                                      BorderSide(color: textColor),
+                                    ),
+                                    labelStyle: new TextStyle(
+                                        color: const Color(0xFF424242)),
+                                    hintText: "Enter the coupon code",
+                                    hintStyle: GoogleFonts.poppins(
+                                        fontSize: 12, color: textColor)),
                               ),
                             ),
                           ),
@@ -673,7 +669,7 @@ class _OrderPageState extends State<OrderPage> {
   }
 
   void _delete(BuildContext context, Address_shiping student) async {
-    int ressult = await helper.deleteStudent(student.id);
+    int ressult = await helper.deleteAddress(student.id);
     if (ressult != 0) {
       updateListView();
     }

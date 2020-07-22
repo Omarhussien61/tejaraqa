@@ -11,9 +11,15 @@ import 'package:shoppingapp/pages/home_page.dart';
 import 'package:shoppingapp/pages/my_profile_page.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
 import 'package:shoppingapp/service/productdervice.dart';
-import 'package:shoppingapp/utils/HomeControl.dart';
+import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
-
+import 'package:shoppingapp/modal/category.dart';
+import 'package:shoppingapp/service/categoryservice.dart';
+import 'package:shoppingapp/modal/productmodel.dart';
+import 'package:shoppingapp/utils/util/recentId.dart';
+import 'package:shoppingapp/utils/util/sql_helper.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:shoppingapp/modal/Recentview.dart';
 class HomeNavigator extends StatefulWidget {
   @override
   _HomeNavigatorState createState() => _HomeNavigatorState();
@@ -22,17 +28,55 @@ class HomeNavigator extends StatefulWidget {
 class _HomeNavigatorState extends State<HomeNavigator> {
   int _currentPage = 0;
 
-  List<Widget> _pages = [
-    HomePage(),
-    CategoryPage(),
-    ShoppingCartPage(),
-    FavoriteProductsPage(),
-    MyProfilePage()
-  ];
+  List<Category> maincat;
+  Future<List<ProductModel>>productDiscount,productNew,moreSale,productview,product_low_priced;
+  SQL_Helper helper = new SQL_Helper();
+  SQL_Rercent sql_rercent = new SQL_Rercent();
+  String contVeiw;
+
+
+
+  @override
+  void initState() {
+    CategoryService().getMainCategory().then((value) {
+      setState(() {
+        maincat=value;
+      });
+      productDiscount=ProductService.getAllProductsSale();
+      product_low_priced=ProductService.getLow_Priced_Products();
+      productNew=ProductService.getNewProducts();
+      moreSale=ProductService.getMoreSaleProducts();
+    });
+    updateListView();
+
+  }
+  updateListView(){
+    final Future<Database> db = helper.initializedDatabase();
+    db.then((database) {
+      Future<List<Recentview>> ProductView = sql_rercent.getRecentViewList();
+      ProductView.then((theList) {
+        setState(() {
+          contVeiw=theList[0].id.toString();
+          for (int i = 1; i <= theList.length-1 ; i++){
+            //items.add(this.recents[i].id.toString());
+            contVeiw=contVeiw+','+theList[i].id.toString();
+          }
+          productview=ProductService.getRecentviewProducts(contVeiw);
+        });
+      });
+    });
+
+  }
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ThemeNotifier>(context);
-
+    List<Widget> _pages = [
+      HomePage(maincat,productDiscount,productNew,moreSale,productview,product_low_priced),
+      CategoryPage(),
+      ShoppingCartPage(),
+      FavoriteProductsPage(),
+      MyProfilePage()
+    ];
     return Scaffold(
       bottomNavigationBar: Padding(
         padding: EdgeInsets.only(bottom: 12),
@@ -94,4 +138,6 @@ class _HomeNavigatorState extends State<HomeNavigator> {
       ),
     );
   }
+
+
 }

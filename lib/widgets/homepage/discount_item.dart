@@ -211,13 +211,17 @@ class DiscountItem extends StatelessWidget {
             child: Container(
               child: GFButton(
                 onPressed: () {
-                  save(product);
-                  countCart(context);
+                  if(product.variations.isEmpty) {
+                    save(product);
+                    countCart(context);
+                    Scaffold.of(context).showSnackBar(SnackBar(
+                        backgroundColor: mainColor,
+                        content: Text('Product added to cart')));
+                  }
+                  else{
+                    Scaffold.of(context).showSnackBar(SnackBar(
+                        content: Text('Please Select Variations')));}
 
-                  Scaffold.of(context).showSnackBar(SnackBar(
-                      backgroundColor: mainColor,
-                      content: Text('Product added to cart'),
-                  ));
                 },
                 icon: SvgPicture.asset(
                   "assets/icons/ic_product_shopping_cart.svg",

@@ -11,7 +11,9 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shoppingapp/modal/place.dart';
+import 'package:shoppingapp/pages/Edit_adress_page.dart';
 import 'package:shoppingapp/service/places_service.dart';
+import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
@@ -70,7 +72,7 @@ class MapSampleState extends State<MapSample> {
   createMarker(context) {
     if (customIcon == null) {
       ImageConfiguration configuration = createLocalImageConfiguration(context);
-      BitmapDescriptor.fromAssetImage(configuration, 'assets/fd.png')
+      BitmapDescriptor.fromAssetImage(configuration, 'assets/images/.png')
           .then((icon) {
         setState(() {
           customIcon = icon;
@@ -117,8 +119,10 @@ class MapSampleState extends State<MapSample> {
       body: Stack(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(top:8.0),
+            padding: const EdgeInsets.only(top:15.0),
             child: GoogleMap(
+              myLocationEnabled: true,
+
               onTap: (pos) {
                 print(pos);
                 m = Marker(markerId: MarkerId('1'), icon: customIcon, position: pos);
@@ -143,23 +147,10 @@ class MapSampleState extends State<MapSample> {
             ),
           ),
           Positioned(
-              right: 10,
-              top: 50,
+              right: 5,
+              top: 80,
               child: button(getUserLocation, Icons.location_searching)),
-          Positioned(
-            top: 10,
-            height: ScreenUtil.getHeight(context)/8,
-            width: ScreenUtil.getWidth(context),
-            child: ListView.builder(
-                itemCount: places==null?0:places.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    child: ListTile(
-                      title: Text(places[index].name),
-                    ),
-                  );
-                }),
-          )
+
         ],
       ),
       floatingActionButton: Align(
@@ -232,7 +223,17 @@ class MapSampleState extends State<MapSample> {
     _streeetController = TextEditingController();
   }
   Future<void> _save()  async {
-
-    Navigator.pop(context,address_shiping);
+   // Nav.routeReplacement(context, EditAddressPage(address_shiping));
+    _navigateAndDisplaySelection(context);
   }
+  _navigateAndDisplaySelection(BuildContext context) async {
+
+    address_shiping= await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => EditAddressPage(address_shiping))
+    );
+
+
+  }
+
 }

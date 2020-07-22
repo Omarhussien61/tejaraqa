@@ -43,7 +43,6 @@ class SQL_Address {
   Future<Database> initializedDatabase() async {
     Directory directory = await getApplicationDocumentsDirectory();
     String path = directory.path + "database.db";
-
     var studentDB = await openDatabase(path, version: 1, onCreate: createDatabase);
     return studentDB;
   }
@@ -76,17 +75,18 @@ class SQL_Address {
     return (result.isEmpty)?true:false;
   }
 
-  Future<int> insertStudent(Address_shiping student) async {
+  Future<int> insertAddress(Address_shiping student) async {
     Database db = await this.database;
     var result = await db.insert(tableName, student.toMap());
     return result;
   }
-  Future<int> updateStudent(Address_shiping student) async{
+  Future<int> updateAddress(Address_shiping student) async{
     Database db = await this.database;
     var result = await db.update(tableName, student.toMap(), where: "$_id = ?", whereArgs: [student.id]);
+    print(result);
     return result;
   }
-  Future<int> deleteStudent(int id) async {
+  Future<int> deleteAddress(int id) async {
     var db = await this.database;
     int result = await db.rawDelete("DELETE FROM $tableName WHERE $_id = $id");
     return result;

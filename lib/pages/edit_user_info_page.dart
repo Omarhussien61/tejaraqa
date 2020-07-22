@@ -24,9 +24,9 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
   String preselectedValue = "dolor sit";
   List<int> selectedItems = [];
   final List<DropdownMenuItem> items = [];
-  String email,name,phone;
+  String email,name,last_name,phone;
       int id;
-  TextEditingController _nameController,_EmailController,_PhoneController;
+  TextEditingController _frist_nameController,_Last_nameController,_EmailController,_PhoneController;
   UserModal userModal;
   final _formKey = GlobalKey<FormState>();
 
@@ -34,7 +34,9 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
   @override
   void initState() {
     getInfo();
-    _nameController=TextEditingController();
+    _frist_nameController=TextEditingController();
+    _Last_nameController=TextEditingController();
+
     _EmailController=TextEditingController();
     _PhoneController=TextEditingController();
 
@@ -81,13 +83,25 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
                   Column(
                     children: <Widget>[
                       NewAddressInput(
-                        controller:_nameController ,
-                        labelText: "Name surname",
-                        hintText: 'Name surname',
+                        controller:_frist_nameController ,
+                        labelText: "Frist name",
+                        hintText: 'Frist name',
                         isEmail: true,
                         validator: (String value) {},
                         onSaved: (String value) {
 //                        model.email = value;
+                        },
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      NewAddressInput(
+                        controller:_Last_nameController ,
+                        labelText: "Last Name",
+                        hintText: 'Last Name',
+                        isEmail: true,
+                        validator: (String value) {},
+                        onSaved: (String value) {
                         },
                       ),
                       SizedBox(
@@ -118,14 +132,6 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
                         onSaved: (String value) {
                         },
                       ),
-                      SizedBox(
-                        height: 32,
-                      ),
-                      FindDropdown(
-                          items: ["Male", "Woman", "I do not want to specify"],
-                          onChanged: (String item) => print(item),
-                          selectedItem: "Gender",
-                          isUnderLine: true),
                       SizedBox(
                         height: 32,
                       ),
@@ -253,10 +259,12 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
   getInfo() async {
     email = await SharedPreferencesHelper.getEmail();
     name = await SharedPreferencesHelper.getname();
+    last_name = await SharedPreferencesHelper.getLast_name();
     phone = await SharedPreferencesHelper.getphone();
     id = await SharedPreferencesHelper.getUserId();
     setState(() {
-      _nameController.text=name;
+      _frist_nameController.text=name;
+      _Last_nameController.text=last_name;
       _EmailController.text=email;
       _PhoneController.text=phone;
     });
@@ -264,7 +272,7 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
 
   ubdate(BuildContext context) async {
     var result = await LoginService().ubdateProfile(
-        id,_EmailController.text,_nameController.text,_PhoneController.text);
+        id,_EmailController.text,_frist_nameController.text,_Last_nameController.text,_PhoneController.text);
     SharedPreferences.getInstance().then((prefs) {
       setState(() {
         if (name == prefs.getString('user_displayname')) {
