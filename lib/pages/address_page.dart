@@ -11,6 +11,8 @@ import 'package:shoppingapp/utils/theme_notifier.dart';
 import 'package:shoppingapp/utils/util/sql_address.dart';
 import 'package:sqflite/sqflite.dart';
 
+import 'Edit_adress_page.dart';
+
 class AddressPage extends StatefulWidget {
 
 
@@ -75,7 +77,7 @@ class _AddressPageState extends State<AddressPage> {
         ),
         backgroundColor: Color(0xFFFCFCFC),
         body: Container(
-          padding: EdgeInsets.all(24),
+          padding: EdgeInsets.only(left: 24,right: 24,top: 24),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,13 +98,16 @@ class _AddressPageState extends State<AddressPage> {
                   height: 16,
                 ),
                 Container(
-                  margin: EdgeInsets.all(8),
                   child: Container(
-                    height: ScreenUtil.getHeight(context),
+                    height: ScreenUtil.getHeight(context)-110,
                     child: ListView.builder(
                       itemCount: count,
                       itemBuilder: (BuildContext context, int index) {
-                       return buildAddressItem(context,addressList[index]);
+                       return InkWell(
+                         onTap: (){
+                           _navigateSelection(context,addressList[index]);
+                         },
+                           child: buildAddressItem(context,addressList[index]));
                       },
                     ),
                   ),
@@ -115,7 +120,7 @@ class _AddressPageState extends State<AddressPage> {
     );
   }
 
-  Container buildAddressItem(BuildContext context, Address_shiping address) {
+  Widget buildAddressItem(BuildContext context, Address_shiping address) {
     return Container(
       decoration: BoxDecoration(
           color: Colors.white,
@@ -223,7 +228,6 @@ class _AddressPageState extends State<AddressPage> {
       padding: EdgeInsets.only(top: 24, left: 24, right: 24, bottom: 24),
     );
   }
-
   void updateListView() {
     final Future<Database> db = helper.initializedDatabase();
     db.then((database) {
@@ -236,9 +240,8 @@ class _AddressPageState extends State<AddressPage> {
       });
     });
   }
-
   void _delete(BuildContext context, Address_shiping student) async {
-    int ressult = await helper.deleteStudent(student.id);
+    int ressult = await helper.deleteAddress(student.id);
     if (ressult != 0) {
       updateListView();
     }
@@ -248,7 +251,18 @@ class _AddressPageState extends State<AddressPage> {
       context,
       MaterialPageRoute(builder: (context) => NewAddressPage()),
     );
+    print('do22');
     updateListView();
 
   }
+
+  _navigateSelection(BuildContext context,Address_shiping address_shiping) async {
+    this.count = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => EditAddressPage(address_shiping)),
+    );
+    print('do');
+    updateListView();
+  }
+
 }

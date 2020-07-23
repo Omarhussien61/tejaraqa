@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 
 class ItemHiddenMenuRight extends StatelessWidget {
   /// name of the menu item
@@ -40,7 +41,7 @@ class ItemHiddenMenuRight extends StatelessWidget {
               child: Container(
                   margin: EdgeInsets.only(right: 20.0),
                   child: Text(
-                    name,
+                    getTransrlate(context, 'HomePage'),
                     style: (this.baseStyle ??
                             TextStyle(color: Colors.grey, fontSize: 25.0))
                         .merge(this.selected

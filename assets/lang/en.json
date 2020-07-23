@@ -1,4 +1,32 @@
 {
+  "search": "Product, category search..",
+  "SelectVariations": "Please Select Variations",
+  "ADDtoCart": "Add to Cart",
+  "ShoppingCart": "My Shopping Cart",
+  "CartEmpty": "Cart Empty !",
+
+  "ProfileSettings": "Profile Settings",
+  "FAQ": "F A Q",
+  "About": "About",
+  "Support": "Support",
+  "Contact": "Contact",
+  "HomePage": "Home Page",
+  "Logout": "Log out",
+  "OrderDetails": "Order Details",
+
+  "Myorders": "My Orders",
+  "MyProfile": "My Profile",
+  "productRateing": "Product ratings",
+  "MyFav": "My Favorites",
+
+
+
+  "MyProfileInfo": "My Profile Info",
+  "changePassword": "Change Password",
+  "MyAddress": "My Address",
+  "Notification": "Notification Settings",
+
+
   "Sort": "Sort By",
 
   "SortByPricemore": "Price to high",
@@ -36,6 +64,8 @@
   "login": "Login",
   "RegisterNew":"Register",
   "phone": "Phone Number",
+  "hintphone": "Enter the Phone Number",
+
   "Register":"Register New",
   "AreadyAccount":"Already Registered !",
   "invildpassword":"Email Or Password Invalid ?",
@@ -84,7 +114,7 @@
   "notlogin":"No have Account",
   "PleaseLogin":"Please Login Now !",
 
-  "product":"Product",
+  "product":"Products",
 
   "LocationSelected":"Location",
   "SaveNaw":"Shipping this",

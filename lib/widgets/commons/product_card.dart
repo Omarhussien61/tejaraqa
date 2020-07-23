@@ -13,6 +13,7 @@ import 'package:shoppingapp/utils/commons/AddToCart.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 
 import '../../config.dart';
 
@@ -205,11 +206,11 @@ class ProductCard extends StatelessWidget {
                                   countCart(context);
                                   Scaffold.of(context).showSnackBar(SnackBar(
                                       backgroundColor: mainColor,
-                                      content: Text('Product added to cart')));
+                                      content: Text(getTransrlate(context, 'Savedcart'))));
                                 }
                                 else{
                                   Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text('Please Select Variations')));}
+                                      content: Text(getTransrlate(context, 'SelectVariations'))));}
 
                               },
                               child: Container(
@@ -234,7 +235,7 @@ class ProductCard extends StatelessWidget {
                                       width: 8,
                                     ),
                                     Text(
-                                      "Add to Cart",
+                                      getTransrlate(context, 'ADDtoCart'),
                                       style: GoogleFonts.poppins(
                                           color: Color(0xFF5D6A78),
                                           fontSize: 10,

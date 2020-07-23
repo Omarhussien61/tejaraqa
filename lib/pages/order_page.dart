@@ -96,7 +96,7 @@ class _OrderPageState extends State<OrderPage> {
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
                       child: Text(
-                        "Addresses",
+                        getTransrlate(context, 'addressShipping'),
                         style: GoogleFonts.poppins(
                             fontSize: 12, color: Color(0xFF5D6A78)),
                       ),
@@ -117,7 +117,7 @@ class _OrderPageState extends State<OrderPage> {
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
                       child: Text(
-                        "Select a payment method",
+                        getTransrlate(context, 'paymentMethod'),
                         style: GoogleFonts.poppins(
                             fontSize: 12, color: Color(0xFF5D6A78)),
                       ),
@@ -181,7 +181,7 @@ class _OrderPageState extends State<OrderPage> {
                                 padding: const EdgeInsets.only(
                                     left: 8.0, top: 16, bottom: 8),
                                 child: Text(
-                                  "Phone Number",
+                                  getTransrlate(context, 'phone'),
                                   style: GoogleFonts.poppins(
                                       fontSize: 12, color: Color(0xFF5D6A78)),
                                 ),
@@ -335,7 +335,7 @@ class _OrderPageState extends State<OrderPage> {
                                     ),
                                     labelStyle: new TextStyle(
                                         color: const Color(0xFF424242)),
-                                    hintText: "Enter the coupon code",
+                                    hintText: "Enter  coupon code",
                                     hintStyle: GoogleFonts.poppins(
                                         fontSize: 12, color: textColor)),
                               ),

@@ -93,7 +93,6 @@ if(widget.address_shiping!=null){
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ThemeNotifier>(context);
-
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
           statusBarColor: Color(0xFFFCFCFC),
@@ -323,5 +322,5 @@ if(widget.address_shiping!=null){
       });
   }
 
-
+//0862570594
 }

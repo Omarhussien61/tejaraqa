@@ -39,7 +39,7 @@ class _MyProfileSettingsState extends State<MyProfileSettings> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "Profile Settings",
+                  getTransrlate(context, 'ProfileSettings'),
                   style: GoogleFonts.poppins(
                       fontSize: 18, color: Color(0xFF5D6A78)),
                 ),
@@ -61,7 +61,7 @@ class _MyProfileSettingsState extends State<MyProfileSettings> {
                     "assets/icons/ic_user.png",
                     width: 22,
                   ),
-                  title: Text("My Profile Info",
+                  title: Text(getTransrlate(context, 'MyProfileInfo'),
                       style: GoogleFonts.poppins(
                           fontSize: 15, color: Color(0xFF5D6A78))),
                 ),
@@ -71,13 +71,13 @@ class _MyProfileSettingsState extends State<MyProfileSettings> {
                 ListTile(
                   onTap: () {
                     themeColor.isLogin? Nav.route(context, ChangePasswordPage()):
-                    showLogintDialog('Login', 'not Login');
+                    showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'));
                   },
                   leading: Image.asset(
                     "assets/icons/ic_lock.png",
                     width: 22,
                   ),
-                  title: Text("Change Password ",
+                  title: Text(getTransrlate(context, 'changePassword'),
                       style: GoogleFonts.poppins(
                           fontSize: 15, color: Color(0xFF5D6A78))),
                 ),
@@ -92,7 +92,7 @@ class _MyProfileSettingsState extends State<MyProfileSettings> {
                     "assets/icons/ic_location.png",
                     width: 22,
                   ),
-                  title: Text("My Address ",
+                  title: Text(getTransrlate(context,'MyAddress'),
                       style: GoogleFonts.poppins(
                           fontSize: 15, color: Color(0xFF5D6A78))),
                 ),
@@ -107,7 +107,7 @@ class _MyProfileSettingsState extends State<MyProfileSettings> {
                     "assets/icons/ic_notification.png",
                     width: 22,
                   ),
-                  title: Text("Notification Settings",
+                  title: Text(getTransrlate(context, 'Notification'),
                       style: GoogleFonts.poppins(
                           fontSize: 15, color: Color(0xFF5D6A78))),
                 ),

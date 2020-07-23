@@ -8,6 +8,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shoppingapp/main.dart';
+import 'package:shoppingapp/pages/FAQ.dart';
 import 'package:shoppingapp/pages/about_page.dart';
 import 'package:shoppingapp/pages/change_password_page.dart';
 import 'package:shoppingapp/pages/contact_page.dart';
@@ -214,7 +215,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                       InkWell(
                         onTap: () {
                           themeColor.isLogin?Nav.route(context, MyProfileSettings()):
-                          showLogintDialog('Login', 'not Login');
+                          showLogintDialog(getTransrlate(context, 'login'),getTransrlate(context, 'PleaseLogin'));
                         },
                         child: ItemHiddenMenu(
                           icon: Icon(
@@ -222,7 +223,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                             size: 19,
                             color: Colors.white,
                           ),
-                          name: 'Profile Settings',
+                          name: getTransrlate(context, 'ProfileSettings'),
                           baseStyle: GoogleFonts.poppins(
                               color: Colors.white.withOpacity(0.6),
                               fontSize: 19.0),
@@ -231,7 +232,28 @@ class _HiddenMenuState extends State<HiddenMenu> {
                       ),
                       InkWell(
                         onTap: () {
-                          Nav.route(context, ContactPage());
+                          Provider.of<ThemeNotifier>(context).local=='ar'?
+                          Provider.of<ThemeNotifier>(context).setLocal('en'):
+                          Provider.of<ThemeNotifier>(context).setLocal('ar');
+                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => InitPage()),
+                              ModalRoute.withName("/home"));
+                        },
+                        child: ItemHiddenMenu(
+                          icon: Icon(
+                            Feather.edit,
+                            size: 19,
+                            color: Colors.white,
+                          ),
+                          name: Provider.of<ThemeNotifier>(context).local=='ar'?'English':'عربى',
+                          baseStyle: GoogleFonts.poppins(
+                              color: Colors.white.withOpacity(0.6),
+                              fontSize: 19.0),
+                          colorLineSelected: Colors.orange,
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Nav.route(context, FaqPage());
                         },
                         child: ItemHiddenMenu(
                           icon: Icon(
@@ -239,7 +261,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                             size: 19,
                             color: Colors.white,
                           ),
-                          name: 'F A Q',
+                          name: getTransrlate(context, 'FAQ'),
                           baseStyle: GoogleFonts.poppins(
                               color: Colors.white.withOpacity(0.6),
                               fontSize: 19.0,
@@ -254,14 +276,14 @@ class _HiddenMenuState extends State<HiddenMenu> {
                             size: 19,
                             color: Colors.white,
                           ),
-                          name: 'About',
+                          name: getTransrlate(context, 'About'),
                           baseStyle: GoogleFonts.poppins(
                               color: Colors.white.withOpacity(0.6),
                               fontSize: 19.0),
                           colorLineSelected: Colors.orange,
                         ),
                         onTap: () {
-                          Nav.route(context, ContactPage());
+                          Nav.route(context, AboutPage());
                         },
                       ),
                       InkWell(
@@ -271,7 +293,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                             size: 19,
                             color: Colors.white,
                           ),
-                          name: 'Support',
+                          name: getTransrlate(context, 'Support'),
                           baseStyle: GoogleFonts.poppins(
                               color: Colors.white.withOpacity(0.6),
                               fontSize: 19.0),
@@ -291,7 +313,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                             size: 19,
                             color: Colors.white,
                           ),
-                          name: 'Contact',
+                          name: getTransrlate(context, 'Contact'),
                           baseStyle: GoogleFonts.poppins(
                               color: Colors.white.withOpacity(0.6),
                               fontSize: 19.0,
@@ -320,7 +342,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                             size: 19,
                             color: Colors.white,
                           ),
-                          name:Provider.of<ThemeNotifier>(context).isLogin==false?'Log in':'Log out',
+                          name:Provider.of<ThemeNotifier>(context).isLogin==false?getTransrlate(context, 'login'):getTransrlate(context, 'Logout'),
                           baseStyle: GoogleFonts.poppins(
                               color: Colors.white.withOpacity(0.6),
                               fontSize: 19.0,

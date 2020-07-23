@@ -12,6 +12,7 @@ import 'package:shoppingapp/pages/product_detail_page_.dart';
 import 'package:shoppingapp/pages/profile_settings_page.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 
 class MyProfilePage extends StatefulWidget {
   @override
@@ -40,7 +41,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "My Profile",
+                 getTransrlate(context, 'MyProfile'),
                   style: GoogleFonts.poppins(
                       fontSize: 18, color: Color(0xFF5D6A78)),
                 ),
@@ -62,7 +63,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                     Feather.box,
                     color: Color(0xFF5D6A78),
                   ),
-                  title: Text("My Orders",
+                  title: Text(getTransrlate(context, 'Myorders'),
                       style: GoogleFonts.poppins(
                           fontSize: 15, color: Color(0xFF5D6A78))),
                 ),
@@ -75,7 +76,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                   },
                   leading: Image.asset("assets/icons/ic_comment.png",
                       width: 22, color: Color(0xFF5D6A78)),
-                  title: Text("Product ratings",
+                  title: Text(getTransrlate(context, 'productRateing'),
                       style: GoogleFonts.poppins(
                           fontSize: 15, color: Color(0xFF5D6A78))),
                 ),
@@ -91,7 +92,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                   },
                   leading: Image.asset("assets/icons/ic_heart_profile.png",
                       width: 22, color: Color(0xFF5D6A78)),
-                  title: Text("My Favorites",
+                  title: Text(getTransrlate(context, 'MyFav'),
                       style: GoogleFonts.poppins(
                           fontSize: 15, color: Color(0xFF5D6A78))),
                 ),
@@ -104,7 +105,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                   },
                   leading: Image.asset("assets/icons/ic_search.png",
                       width: 22, color: Color(0xFF5D6A78)),
-                  title: Text("Profile Settings",
+                  title: Text(getTransrlate(context, 'ProfileSettings'),
                       style: GoogleFonts.poppins(
                           fontSize: 15, color: Color(0xFF5D6A78))),
                 )
@@ -112,7 +113,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
             ),
           ),
         ):Container(
-          child: Center(child: Text('No regestration Please Login !')),
+          child: Center(child: Text(getTransrlate(context, 'PleaseLogin'))),
         ),
       ),
     );

@@ -19,6 +19,7 @@ import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/widgets/homepage/product_list.dart';
 import 'package:shoppingapp/widgets/homepage/product_list_titlebar.dart';
 import 'package:shoppingapp/widgets/product_detail/slider_dot.dart';
@@ -71,7 +72,7 @@ class _ProductDetailPageAlternativeState
           elevation: 0,
           centerTitle: true,
           title: Text(
-            "Product ratings",
+            getTransrlate(context, 'productRateing'),
             style:
             GoogleFonts.poppins(color: Color(0xFF5D6A78), fontSize: 15),
           ),
@@ -112,7 +113,7 @@ class _ProductDetailPageAlternativeState
               alignment: Alignment.center,
               child: Column(
                 children: <Widget>[
-                  Text("Rate",
+                  Text(getTransrlate(context, 'Reviews'),
                       style: GoogleFonts.poppins(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
@@ -151,7 +152,7 @@ class _ProductDetailPageAlternativeState
               ),
             ),
             SizedBox(
-              height: 16,
+              height: 5,
             ),
             product_review!=null?Container(
               height: ScreenUtil.getHeight(context)-188,

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactPage extends StatefulWidget {
   @override
@@ -16,19 +18,225 @@ class _ContactPageState extends State<ContactPage> {
         systemNavigationBarIconBrightness: Brightness.dark,
         statusBarIconBrightness: Brightness.dark,
         statusBarBrightness: Brightness.dark));
+    final ThemeData themeData = Theme.of(context);
+
     return Scaffold(
 //      appBar: buildAppBar(),
       backgroundColor: greyBackground,
       body: Container(
-        padding: EdgeInsets.only(left: 16, right: 16, top: 4),
-        child: ListView(
+        child: Column(
           children: <Widget>[
-            contactItem("E Mail", "rosen@gmail.com", "rosen@gmail.com"),
-            contactItem("E Mail", "rosen@gmail.com", "rosen@gmail.com"),
-            contactItem("E Mail", "rosen@gmail.com", "rosen@gmail.com"),
-            contactItem("E Mail", "rosen@gmail.com", "rosen@gmail.com"),
-            contactItem("E Mail", "rosen@gmail.com", "rosen@gmail.com"),
-            contactItem("E Mail", "rosen@gmail.com", "rosen@gmail.com"),
+            Container(
+              color:themeData.primaryColor,
+              child: Padding(
+                padding: const EdgeInsets.all(50.0),
+                child: Image.network('https://d2.woo2.app/wp-content/uploads/2020/07/rosen.png'),
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: IntrinsicHeight(
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: themeData.dividerColor,
+                      ),
+                    ),
+                  ),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        flex: 4,
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text('00966126505049'),
+                                      Text(
+                                        getTransrlate(context, 'phone'),
+                                        style: TextStyle(
+                                          fontSize: 11,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: (){
+                                    _launchURL('sms:00966126573988');
+                                  },
+                                  child: SizedBox(
+                                    child: Icon(
+                                      Icons.message,
+                                      color: themeData.primaryColor,
+                                    ),
+                                    height: 60,
+                                    width: 60,
+                                  ),
+                                ),
+                                Column(
+                                  children: <Widget>[
+                                    InkWell(
+                                      child: SizedBox(
+                                        child: Icon(
+                                          Icons.call,
+                                          color: themeData.primaryColor,
+                                        ),
+                                        height: 60,
+                                      ),
+                                      onTap: (){
+                                        _launchURL('tel:00966126505049');
+                                      },
+                                    )
+                                  ],
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                ),
+
+                              ],
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text('00966126573988'),
+                                      Text(
+                                        getTransrlate(context, 'phone'),
+                                        style: TextStyle(
+                                          fontSize: 11,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  child: InkWell(
+                                    onTap: (){
+                                      _launchURL('sms:00966126573988');
+
+                                    },
+                                    child: Icon(
+                                      Icons.message,
+                                      color: themeData.primaryColor,
+                                    ),
+                                  ),
+                                  height: 60,
+                                  width: 60,
+                                ),
+                                Column(
+                                  children: <Widget>[
+                                    InkWell(
+                                      onTap: (){
+                                        _launchURL('tel:00966126573988');
+                                      },
+                                      child: SizedBox(
+                                        child: Icon(
+                                          Icons.call,
+                                          color: themeData.primaryColor,
+                                        ),
+                                        height: 60,
+                                      ),
+                                    )
+                                  ],
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                ),
+
+                              ],
+                            ),
+
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: IntrinsicHeight(
+                child: Expanded(
+                  flex: 4,
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Expanded(child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+
+                            children: <Widget>[
+                              Text('info@7lsoft.com'),
+                              Text(
+                                getTransrlate(context, 'Email'),
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  color: Colors.grey,
+                                ),
+                              ),
+
+                            ],
+                          )),
+                          InkWell(
+                            onTap: (){
+                              _launchURL('mailto:info@7lsoft.com');
+                            },
+                            child: SizedBox(
+                              child: Icon(
+                                Icons.email,
+                                color: themeData.primaryColor,
+                              ),
+                              height: 60,
+                              width: 60,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Expanded(child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+
+                            children: <Widget>[
+                              Text('info@7lsoft.com'),
+                              Text(
+                                getTransrlate(context, 'Email'),
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  color: Colors.grey,
+                                ),
+                              ),
+
+                            ],
+                          )),
+                          InkWell(
+                            onTap: (){
+                              _launchURL('mailto:info@7lsoft.com');
+                            },
+                            child: SizedBox(
+                              child: Icon(
+                                Icons.email,
+                                color: themeData.primaryColor,
+                              ),
+                              height: 60,
+                              width: 60,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -100,4 +308,13 @@ class _ContactPageState extends State<ContactPage> {
       ),
     );
   }
+
+  _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
 }

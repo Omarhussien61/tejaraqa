@@ -292,11 +292,11 @@ class HomeWidgetState extends State<ShoppingCartPage>
   }
   Widget shoppingCartInfo() {
     return Container(
-      margin: EdgeInsets.only(left: 24),
+      margin: EdgeInsets.only(left: 24,right: 24),
       child: Row(
         children: <Widget>[
           Text(
-            "My Shopping Cart",
+            getTransrlate(context, 'ShoppingCart'),
             style: GoogleFonts.poppins(
                 fontWeight: FontWeight.w600,
                 fontSize: 12,
@@ -305,7 +305,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
           SizedBox(
             width: 16,
           ),
-          Text(Provider.of<ThemeNotifier>(context).countCart.toString() + " products",
+          Text(Provider.of<ThemeNotifier>(context).countCart.toString()+' '+ getTransrlate(context, 'product'),
               style: GoogleFonts.poppins(
                   fontWeight: FontWeight.w400,
                   fontSize: 12,
@@ -331,17 +331,17 @@ class HomeWidgetState extends State<ShoppingCartPage>
               ),
             )
           ]),
-      height: 80,
+      height: 90,
       padding: EdgeInsets.all(16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "Total",
+                getTransrlate(context, 'total'),
                 style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold, color: themeColor.getColor()),
               ),
@@ -354,7 +354,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
           GFButton(
             color: themeColor.getColor(),
             child: Text(
-              "Confirm",
+              getTransrlate(context, 'Confirm'),
               style: GoogleFonts.poppins(color: whiteColor, fontSize: 10),
             ),
             onPressed: () {
@@ -363,7 +363,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
                     CartList.isEmpty ||
                     CartList == null) {
                   final snackbar = SnackBar(
-                    content: Text('Cart Empty !'),
+                    content: Text(getTransrlate(context, 'CartEmpty')),
                   );
                   scaffoldKey.currentState.showSnackBar(snackbar);
                 } else {
@@ -371,13 +371,13 @@ class HomeWidgetState extends State<ShoppingCartPage>
                       .of<ThemeNotifier>(context)
                       .isLogin ?
                   Nav.route(context, OrderPage(CartList, total)) :
-                  showLogintDialog('Login', 'not Login');
+                  showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'));
                 }
               }
               else{
                 Scaffold.of(context).showSnackBar(SnackBar(
                     backgroundColor: themeColor.getColor(),
-                    content: Text(getTransrlate(context, 'NotConnection'))));              }
+                    content: Text(getTransrlate(context, 'NotConnection'))));}
             },
             type: GFButtonType.solid,
             shape: GFButtonShape.pills,

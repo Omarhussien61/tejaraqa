@@ -20,33 +20,25 @@ import 'package:shoppingapp/widgets/homepage/product_list.dart';
 import 'package:shoppingapp/widgets/homepage/product_list_titlebar.dart';
 import 'package:shoppingapp/widgets/homepage/search_box.dart';
 import 'package:shoppingapp/widgets/homepage/slider_dot.dart';
-
-
 class HomePage extends StatefulWidget {
 
   List<Category> maincat;
   Future<List<ProductModel>>productDiscount,productNew,moreSale,productview,product_low_priced;
-
   HomePage(this.maincat, this.productDiscount, this.productNew, this.moreSale,
       this.productview, this.product_low_priced);
-
 
   @override
   _HomePageState createState() => _HomePageState();
 }
-
 class _HomePageState extends State<HomePage> {
   int _carouselCurrentPage = 0;
   SQL_Helper helper = new SQL_Helper();
   SQL_Rercent sql_rercent = new SQL_Rercent();
   String contVeiw;
-
   @override
   void initState() {
     //updateListView();
     countCart();
-
-
     super.initState();
   }
 

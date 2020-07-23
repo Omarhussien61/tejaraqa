@@ -1,4 +1,35 @@
 {
+  "search": "بحث منتج و الفئات ",
+
+  "SelectVariations": "برجاء حدد خصائص المنتج",
+  "ADDtoCart": "أضف الى العربة",
+  "ShoppingCart": "عربة التسوق",
+  "CartEmpty": "العربة الفارغة",
+
+  "ProfileSettings": "أعدادات الملف الشخصى",
+  "FAQ": "الأسئلة الشائعة",
+  "About": "معلومات عنا",
+  "Support": "دعم فنى",
+  "Contact": "اتصل بنا ",
+  "HomePage": "الصفحة الرئيسية",
+  "Logout": "تسجيل الدخول",
+  "OrderDetails": "تفاصيل المنتج",
+
+
+
+  "MyProfileInfo": "البيانات الشخصية",
+  "changePassword": "تغير كلمة المرور",
+  "MyAddress": "العناوين ",
+  "Notification": "اعدادت الاشعارات",
+
+
+
+  "Myorders": "الطلبات السابقة",
+  "MyProfile": "حسابى",
+  "productRateing": "تقيماتك",
+  "MyFav": "المفضلة",
+
+
   "SortByPricemore": "الأعلى سعراً",
   "SortByPriceLess": "الأقل سعراً",
   "SortByNew": "الاجدد",
@@ -30,6 +61,8 @@
   "login": "تسجيل دخول",
   "RegisterNew":"تسجيل جديد",
   "phone": "رقم الهاتف",
+  "hintphone": "أدخل رقم الهاتف",
+
   "Register":"تسجيل",
   "AreadyAccount":"لديك حساب بالفعل ؟",
 

@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shoppingapp/pages/search_page.dart';
 import 'package:shoppingapp/utils/navigator.dart';
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 
 class SearchBox extends StatelessWidget {
   const SearchBox({
@@ -40,7 +41,7 @@ class SearchBox extends StatelessWidget {
               width: 8,
             ),
             Text(
-              "Product, category search..",
+              getTransrlate(context, 'search'),
               style: GoogleFonts.poppins(
                 fontSize: 13,
                 color: Color(0xFFA1B1C2),
