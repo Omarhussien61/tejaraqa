@@ -16,6 +16,7 @@ import 'package:shoppingapp/pages/product_detail.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
 import 'package:shoppingapp/service/productdervice.dart';
 import 'package:shoppingapp/utils/commons/AddToCart.dart';
+import 'package:shoppingapp/utils/dialogVeriation.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
@@ -534,13 +535,18 @@ class _SearchPageState extends State<SearchPage> {
           child: InkWell(
             onTap: () {
              if(filteredProduct[index].variations.isEmpty) {
-              save(filteredProduct[index]);
+              save(filteredProduct[index],filteredProduct[index].id,filteredProduct[index].name);
               Scaffold.of(context).showSnackBar(SnackBar(
               backgroundColor: themeColor.getColor(),
               content: Text('Product added to cart')));}
              else{
-              Scaffold.of(context).showSnackBar(SnackBar(
-                  content: Text('Please Select Variations')));}
+               showDialog(
+                   context: context,
+                   builder: (_) {
+                     print(filteredProduct[index].id);
+                     return DialogVreations(product:filteredProduct[index]);
+                   });
+             }
             },
             child: Container(
               padding: EdgeInsets.only(top: 8, left: 8, bottom: 8, right: 8),

@@ -8,12 +8,11 @@ import 'package:shoppingapp/utils/util/sql_helper.dart';
 
 import '../theme_notifier.dart';
 
-void save(ProductModel productModel) async {
+void save(ProductModel productModel,int id,String name) async {
   SQL_Helper helper = new SQL_Helper();
-
   double myInt = await double.parse(productModel.price);
   myInt=num.parse(myInt.toStringAsFixed(2));
-  Cart cart= new Cart(await productModel.id, productModel.name, 1, myInt,
+  Cart cart= new Cart(await  id, name, 1, myInt,
       DateFormat.yMMMd().format(DateTime.now()),productModel.images[0].src);
   int result;
   if (await helper.checkItem(cart.id) == true) {

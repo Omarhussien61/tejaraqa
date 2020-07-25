@@ -612,7 +612,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                     children: <Widget>[
                                       ProductListTitleBar(
                                         themeColor: themeColor,
-                                        title: "Products Veriations",
+                                        title: "Products Variations",
                                         isCountShow: false,
                                       ),
                                       Container(

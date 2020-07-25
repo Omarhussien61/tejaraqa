@@ -14,6 +14,7 @@ import 'package:shoppingapp/pages/product_detail.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
 import 'package:shoppingapp/utils/commons/AddToCart.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
+import 'package:shoppingapp/utils/dialogVeriation.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
@@ -213,15 +214,20 @@ class DiscountItem extends StatelessWidget {
               child: GFButton(
                 onPressed: () {
                   if(product.variations.isEmpty) {
-                    save(product);
+                    save(product,product.id,product.name);
                     countCart(context);
                     Scaffold.of(context).showSnackBar(SnackBar(
                         backgroundColor: mainColor,
                         content: Text(getTransrlate(context, 'Savedcart'))));
                   }
                   else{
-                    Scaffold.of(context).showSnackBar(SnackBar(
-                        content: Text(getTransrlate(context, 'SelectVariations'))));}
+                    showDialog(
+                        context: context,
+                        builder: (_) {
+                          print(product.id);
+                          return DialogVreations(product:product);
+                        });
+                  }
 
                 },
                 icon: SvgPicture.asset(

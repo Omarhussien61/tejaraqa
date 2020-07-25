@@ -33,10 +33,8 @@ class _MyDialogState extends State<MyDialog> {
   @override
   Widget build(BuildContext context) {
     final bloc=Provider.of<ThemeNotifier>(context);
-
     deviceHeight=MediaQuery.of(context).size.height;
     deviceWidth=MediaQuery.of(context).size.width;
-
     return  Stack(
       children: <Widget>[
         AlertDialog(
@@ -185,6 +183,5 @@ class _MyDialogState extends State<MyDialog> {
                 valueColor:  AlwaysStoppedAnimation<Color>(bloc.color)))):Container()
       ],
     );
-
   }
 }

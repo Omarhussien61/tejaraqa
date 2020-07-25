@@ -272,11 +272,8 @@ class ProductService {
     List<Product_variations> products;
     var dio = Dio();
     String link=APICONFIQ.url+'/products/$id/variations?'+APICONFIQ.Key;
-
     dio.interceptors.add(DioCacheManager(CacheConfig(baseUrl: link)).interceptor);
-
     var completer = new Completer<List<Product_variations>>();
-
     try {
       var response = await dio.get(link,
         options: buildCacheOptions(Duration(days: 7), forceRefresh: true),
