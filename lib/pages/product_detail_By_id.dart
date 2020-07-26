@@ -23,6 +23,7 @@ import 'package:shoppingapp/pages/order_page.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
 import 'package:shoppingapp/service/productdervice.dart';
 import 'package:shoppingapp/utils/dialogComment.dart';
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/utils/util/recentId.dart';
 import 'package:shoppingapp/utils/util/shared_preferences_helper.dart';
 import 'package:shoppingapp/utils/util/sql_helper.dart';
@@ -462,7 +463,7 @@ class _ProductDetailPage_idState extends State<ProductDetailPage_id>
 //                                  iconPlacement:
 //                                  ExpandablePanelIconPlacement.left,
                                       header: Text(
-                                        "Show All",
+                                        getTransrlate(context, 'showAll'),
                                         style: GoogleFonts.poppins(
                                             color: themeColor.getColor(),
                                             fontSize: 12),
@@ -509,7 +510,7 @@ class _ProductDetailPage_idState extends State<ProductDetailPage_id>
                                           Row(
                                             children: <Widget>[
                                               Text(
-                                                "Price: ",
+                                                getTransrlate(context, 'price')+": ",
                                                 style: GoogleFonts.poppins(
                                                     color:
                                                         themeColor.getColor(),
@@ -626,7 +627,7 @@ class _ProductDetailPage_idState extends State<ProductDetailPage_id>
                                     children: <Widget>[
                                       ProductListTitleBar(
                                         themeColor: themeColor,
-                                        title: "Products Veriations",
+                                        title: getTransrlate(context, 'productVariation'),
                                         isCountShow: false,
                                       ),
                                       Container(
@@ -701,7 +702,7 @@ class _ProductDetailPage_idState extends State<ProductDetailPage_id>
                                               Nav.route(
                                                   context, ShoppingCartPage());
                                             },
-                                            child: Text("Buy",
+                                            child: Text(getTransrlate(context, 'Buy'),
                                                 style: GoogleFonts.poppins(
                                                     fontWeight:
                                                         FontWeight.w400)),
@@ -719,7 +720,7 @@ class _ProductDetailPage_idState extends State<ProductDetailPage_id>
                                                 // isLiked = !isLiked;
                                                 product_variations == null||product_variations.isEmpty?_save():checkboxValueA==null?
                                                 Scaffold.of(context)
-                                                    .showSnackBar(SnackBar(content: Text('Please Select Variations'))):
+                                                    .showSnackBar(SnackBar(content: Text(getTransrlate(context, 'SelectVariations')))):
                                                 _save();
                                               });
                                             },
@@ -728,7 +729,7 @@ class _ProductDetailPage_idState extends State<ProductDetailPage_id>
                                               color: themeColor.getColor(),
                                               size: 16,
                                             ),
-                                            child: Text("Add to Cart",
+                                            child: Text(getTransrlate(context, 'ADDtoCart'),
                                                 style: GoogleFonts.poppins(
                                                     fontWeight:
                                                         FontWeight.w400)),
@@ -801,7 +802,7 @@ class _ProductDetailPage_idState extends State<ProductDetailPage_id>
                                     alignment: Alignment.center,
                                     child: Column(
                                       children: <Widget>[
-                                        Text("Rate",
+                                        Text(getTransrlate(context, 'Reviews'),
                                             style: GoogleFonts.poppins(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w400,
@@ -835,7 +836,7 @@ class _ProductDetailPage_idState extends State<ProductDetailPage_id>
                                         ),
                                         Text(
                                             productModel.averageRating +
-                                                " star",
+                                                getTransrlate(context, 'Reviews'),
                                             style: GoogleFonts.poppins(
                                                 fontSize: 13,
                                                 fontWeight: FontWeight.w300,
@@ -878,7 +879,7 @@ class _ProductDetailPage_idState extends State<ProductDetailPage_id>
                                             child: Container(
                                               child: Column(
                                                 children: <Widget>[
-                                                  Text("Add Comment",
+                                                  Text(getTransrlate(context, 'AddComment'),
                                                       style:
                                                           GoogleFonts.poppins(
                                                               fontSize: 12,
@@ -1022,7 +1023,7 @@ class _ProductDetailPage_idState extends State<ProductDetailPage_id>
                                     alignment: Alignment.center,
                                     child: InkWell(
                                       child: Text(
-                                        "See All Comments",
+                                        getTransrlate(context, 'SeeAllComments'),
                                         style: GoogleFonts.poppins(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w300,
@@ -1062,7 +1063,7 @@ class _ProductDetailPage_idState extends State<ProductDetailPage_id>
                                     product: productRelated,
                                     productListTitleBar: ProductListTitleBar(
                                       themeColor: themeColor,
-                                      title: "Similar Products",
+                                      title: getTransrlate(context, 'ProductRelated'),
                                       isCountShow: false,
                                     ),
                                   ),
@@ -1122,7 +1123,7 @@ class _ProductDetailPage_idState extends State<ProductDetailPage_id>
               child: TextFormField(
                 initialValue: comment,
                 decoration: InputDecoration(
-                    hintText: "Your Comment",
+                    hintText: getTransrlate(context, 'yourComment'),
                     hintStyle: GoogleFonts.poppins(),
                     focusColor: themeColor.getColor()),
                 onChanged: (value) {
@@ -1132,7 +1133,7 @@ class _ProductDetailPage_idState extends State<ProductDetailPage_id>
                 },
                 validator: (String value) {
                   if (value.isEmpty) {
-                    return 'Please enter a valid Comment';
+                    return getTransrlate(context, 'avalidComment');
                   }
                   formKey.currentState.save();
 
@@ -1143,7 +1144,7 @@ class _ProductDetailPage_idState extends State<ProductDetailPage_id>
             actions: <Widget>[
               new FlatButton(
                 child: new Text(
-                  'CANCEL',
+                  getTransrlate(context, 'cancel'),
                   style: GoogleFonts.poppins(color: textColor),
                 ),
                 onPressed: () {
@@ -1152,7 +1153,7 @@ class _ProductDetailPage_idState extends State<ProductDetailPage_id>
               ),
               new FlatButton(
                 child: new Text(
-                  'COMMENT',
+                  getTransrlate(context, 'Comment'),
                   style: GoogleFonts.poppins(color: themeColor.getColor()),
                 ),
                 onPressed: () async {

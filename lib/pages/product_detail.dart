@@ -23,6 +23,7 @@ import 'package:shoppingapp/pages/order_page.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
 import 'package:shoppingapp/service/productdervice.dart';
 import 'package:shoppingapp/utils/dialogComment.dart';
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/utils/util/recentId.dart';
 import 'package:shoppingapp/utils/util/shared_preferences_helper.dart';
 import 'package:shoppingapp/utils/util/sql_helper.dart';
@@ -448,7 +449,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
 //                                  iconPlacement:
 //                                  ExpandablePanelIconPlacement.left,
                                       header: Text(
-                                        "Show All",
+                                        getTransrlate(context, 'showAll'),
                                         style: GoogleFonts.poppins(
                                             color: themeColor.getColor(),
                                             fontSize: 12),
@@ -495,7 +496,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                           Row(
                                             children: <Widget>[
                                               Text(
-                                                "Price: ",
+                                                getTransrlate(context, 'price')+": ",
                                                 style: GoogleFonts.poppins(
                                                     color:
                                                         themeColor.getColor(),
@@ -576,7 +577,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                                 ),
                                                 child: Container(
                                                   alignment: Alignment.center,
-                                                  width: 24,
                                                   padding:
                                                       const EdgeInsets.all(8.0),
                                                   child: Text('$piece',
@@ -612,7 +612,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                     children: <Widget>[
                                       ProductListTitleBar(
                                         themeColor: themeColor,
-                                        title: "Products Variations",
+                                        title: getTransrlate(context, 'productVariation'),
                                         isCountShow: false,
                                       ),
                                       Container(
@@ -687,7 +687,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                               Nav.route(
                                                   context, ShoppingCartPage());
                                             },
-                                            child: Text("Buy",
+                                            child: Text(getTransrlate(context, 'Buy'),
                                                 style: GoogleFonts.poppins(
                                                     fontWeight:
                                                         FontWeight.w400)),
@@ -705,7 +705,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                                 // isLiked = !isLiked;
                                                 product_variations == null||product_variations.isEmpty?_save():checkboxValueA==null?
                                                 Scaffold.of(context)
-                                                    .showSnackBar(SnackBar(content: Text('Please Select Variations'))):
+                                                    .showSnackBar(SnackBar(content: Text(getTransrlate(context, 'SelectVariations')))):
                                                 _save();
                                               });
                                             },
@@ -714,7 +714,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                               color: themeColor.getColor(),
                                               size: 16,
                                             ),
-                                            child: Text("Add to Cart",
+                                            child: Text(getTransrlate(context, 'ADDtoCart'),
                                                 style: GoogleFonts.poppins(
                                                     fontWeight:
                                                         FontWeight.w400)),
@@ -750,44 +750,11 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisSize: MainAxisSize.max,
                                 children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      RatingBar(
-                                        initialRating: double.parse(
-                                            widget.product.averageRating),
-                                        itemSize: 16.0,
-                                        minRating: 1,
-                                        direction: Axis.horizontal,
-                                        allowHalfRating: true,
-                                        itemCount: 5,
-                                        itemBuilder: (context, _) => Container(
-                                          height: 12,
-                                          child: SvgPicture.asset(
-                                            "assets/icons/ic_star.svg",
-                                            color: themeColor.getColor(),
-                                            width: 9,
-                                          ),
-                                        ),
-                                        onRatingUpdate: (rating) {
-                                          print(rating);
-                                        },
-                                      ),
-                                      SizedBox(
-                                        width: 12,
-                                      ),
-                                      Text(
-                                        widget.product.averageRating,
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400),
-                                      )
-                                    ],
-                                  ),
                                   Container(
                                     alignment: Alignment.center,
                                     child: Column(
                                       children: <Widget>[
-                                        Text("Rate",
+                                        Text(getTransrlate(context, 'Reviews'),
                                             style: GoogleFonts.poppins(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w400,
@@ -803,6 +770,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                           direction: Axis.horizontal,
                                           allowHalfRating: true,
                                           itemCount: 5,
+                                          tapOnlyMode: false,
                                           itemBuilder: (context, _) =>
                                               Container(
                                             height: 12,
@@ -812,16 +780,13 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                               width: 9,
                                             ),
                                           ),
-                                          onRatingUpdate: (rating) {
-                                            print(rating);
-                                          },
                                         ),
                                         SizedBox(
                                           height: 4,
                                         ),
                                         Text(
                                             widget.product.averageRating +
-                                                " star",
+                                               ' '+ getTransrlate(context, 'Reviews'),
                                             style: GoogleFonts.poppins(
                                                 fontSize: 13,
                                                 fontWeight: FontWeight.w300,
@@ -834,12 +799,10 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                   ),
                                   Row(
                                     children: <Widget>[
-                                      CachedNetworkImage(
-                                          width: 50,
-                                          height: 50,
-                                          imageUrl: photo,
-                                        errorWidget: (context, url, error) => Image.asset(
-                                            'assets/images/user.png',height: 50,width: 50,),
+                                      CircleAvatar(
+                                        radius: 20,backgroundImage: CachedNetworkImageProvider(
+                                            photo==null?'https://p.kindpng.com/picc/s/207-2074624_white-gray-circle-avatar-png-transparent-png.png':photo,
+                                        ),
                                       ),
                                       SizedBox(
                                         width: 12,
@@ -848,7 +811,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: <Widget>[
-                                          Text(name,
+                                          Text( name==null?' ':name,
                                               style: GoogleFonts.poppins(
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w400,
@@ -864,7 +827,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                             child: Container(
                                               child: Column(
                                                 children: <Widget>[
-                                                  Text("Add Comment",
+                                                  Text(getTransrlate(context, 'AddComment'),
                                                       style:
                                                           GoogleFonts.poppins(
                                                               fontSize: 12,
@@ -1008,7 +971,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                     alignment: Alignment.center,
                                     child: InkWell(
                                       child: Text(
-                                        "See All Comments",
+                                        getTransrlate(context, 'SeeAllComments'),
                                         style: GoogleFonts.poppins(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w300,
@@ -1048,7 +1011,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                     product: productRelated,
                                     productListTitleBar: ProductListTitleBar(
                                       themeColor: themeColor,
-                                      title: "Similar Products",
+                                      title: getTransrlate(context, 'ProductRelated'),
                                       isCountShow: false,
                                     ),
                                   ),
@@ -1108,7 +1071,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
               child: TextFormField(
                 initialValue: comment,
                 decoration: InputDecoration(
-                    hintText: "Your Comment",
+                    hintText: getTransrlate(context, 'yourComment'),
                     hintStyle: GoogleFonts.poppins(),
                     focusColor: themeColor.getColor()),
                 onChanged: (value) {
@@ -1118,7 +1081,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                 },
                 validator: (String value) {
                   if (value.isEmpty) {
-                    return 'Please enter a valid Comment';
+                    return getTransrlate(context, 'avalidComment');
                   }
                   formKey.currentState.save();
 
@@ -1129,7 +1092,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             actions: <Widget>[
               new FlatButton(
                 child: new Text(
-                  'CANCEL',
+                  getTransrlate(context, 'cancel'),
                   style: GoogleFonts.poppins(color: textColor),
                 ),
                 onPressed: () {
@@ -1138,7 +1101,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
               ),
               new FlatButton(
                 child: new Text(
-                  'COMMENT',
+                  getTransrlate(context, 'Comment'),
                   style: GoogleFonts.poppins(color: themeColor.getColor()),
                 ),
                 onPressed: () async {
@@ -1163,7 +1126,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
    ProductService.getReviewer(widget.product.id).then((usersFromServer) {
      setState(() {
        product_review = usersFromServer;
-       print('good');
      });
    });
   }
@@ -1231,7 +1193,6 @@ setState(() {
     ProductService.getReviewer(widget.product.id).then((usersFromServer) {
       setState(() {
         product_review = usersFromServer;
-        print('good');
       });
     });
   }

@@ -128,6 +128,7 @@ class _ProductDetailPageAlternativeState
                     direction: Axis.horizontal,
                     allowHalfRating: true,
                     itemCount: 5,
+                    tapOnlyMode: false,
                     itemBuilder: (context, _) => Container(
                       height: 12,
                       child: SvgPicture.asset(
@@ -136,18 +137,11 @@ class _ProductDetailPageAlternativeState
                         width: 9,
                       ),
                     ),
-                    onRatingUpdate: (rating) {
-                      print(rating);
-                    },
+
                   ),
                   SizedBox(
                     height: 4,
                   ),
-                  Text("You gave  review",
-                      style: GoogleFonts.poppins(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w300,
-                          color: Color(0xFF5D6A78))),
                 ],
               ),
             ),

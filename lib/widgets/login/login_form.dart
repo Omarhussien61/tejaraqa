@@ -7,6 +7,7 @@ import 'package:shoppingapp/service/loginservice.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/widgets/Show_dialg.dart';
 import 'package:shoppingapp/widgets/commons/shadow_button.dart';
 import 'package:shoppingapp/widgets/login/login_form_model.dart';
@@ -48,12 +49,12 @@ class _LoginFormState extends State<LoginForm> {
             child: Column(
               children: <Widget>[
                 MyTextFormField(
-                  labelText: "Email",
-                  hintText: 'Email',
+                  labelText: getTransrlate(context, 'Email'),
+                  hintText: getTransrlate(context, 'Email'),
                   isEmail: true,
                   validator: (String value) {
                     if (!validator.isEmail(value)) {
-                      return 'Please enter a valid email';
+                      return getTransrlate(context, 'invalidemail');
                     }
                     return null;
                   },
@@ -62,8 +63,8 @@ class _LoginFormState extends State<LoginForm> {
                   },
                 ),
                 MyTextFormField(
-                  labelText: "Password",
-                  hintText: 'Password',
+                  labelText: getTransrlate(context, 'password'),
+                  hintText: getTransrlate(context, 'password'),
                   suffixIcon: IconButton(
                     icon: Icon(
                       // Based on passwordVisible state choose the icon
@@ -80,7 +81,7 @@ class _LoginFormState extends State<LoginForm> {
                   isPassword: passwordVisible,
                   validator: (String value) {
                     if (value.length < 6) {
-                      return 'Password should be minimum 7 characters';
+                      return getTransrlate(context, 'PasswordShorter');
                     }
 
                     _formKey.currentState.save();
@@ -117,17 +118,16 @@ class _LoginFormState extends State<LoginForm> {
                             }
                             else{
                               setState(() => _isLoading = false);
-                              showAlertDialog('invild username or password','Alart');
+                              showAlertDialog(getTransrlate(context, 'invildpassword'),getTransrlate(context, 'Alert'));
                             }
                           }
                           catch (e) {
                             print(e);
                           }
-
                         }
                       },
                       child: Text(
-                        'Sign In',
+                        getTransrlate(context, 'login'),
                         style: GoogleFonts.poppins(
                           fontSize: 16,
                           color: Colors.white,

@@ -41,7 +41,7 @@ class SharedPreferencesHelper {
   static getLast_name() async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    return await prefs.getString('user_lastname') ?? 'Guest';
+    return await prefs.getString('user_lastname') ?? ' ';
   }
   static setUserimage(String image) async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();

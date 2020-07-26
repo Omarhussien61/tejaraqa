@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:shoppingapp/pages/login_page.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/widgets/commons/auth_header.dart';
 import 'package:shoppingapp/widgets/register/register_form.dart';
 import 'package:shoppingapp/widgets/register/social_auth_register.dart';
@@ -36,8 +37,8 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Column(
                 children: <Widget>[
                   AuthHeader(
-                    headerTitle: "Register",
-                    headerBigTitle: "New",
+                    headerTitle: getTransrlate(context, 'RegisterNew'),
+                    headerBigTitle: getTransrlate(context, 'New'),
                     isLoginHeader: false,
                   ),
                   RegisterForm(),
@@ -60,7 +61,7 @@ class _RegisterPageState extends State<RegisterPage> {
           Padding(
             padding: const EdgeInsets.only(top: 4.0),
             child: Text(
-              "Do you have an account?",
+              getTransrlate(context, 'haveanaccount'),
               style: GoogleFonts.poppins(
                 fontSize: 14,
                 color: Colors.black,
@@ -70,7 +71,7 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
           FlatButton(
             child: Text(
-              "Login",
+              getTransrlate(context, 'login'),
               style: GoogleFonts.poppins(
                 fontSize: 14,
                 color: themeColor.getColor(),

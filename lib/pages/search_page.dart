@@ -20,6 +20,7 @@ import 'package:shoppingapp/utils/dialogVeriation.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 
 class SearchPage extends StatefulWidget {
   String searchEditor ;
@@ -115,7 +116,7 @@ class _SearchPageState extends State<SearchPage> {
                             style: TextStyle(color: Colors.black, fontSize: 16.0),
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: "Brand Search",
+                              hintText: getTransrlate(context, 'search'),
                               hintStyle: GoogleFonts.poppins(
                                 fontSize: 13,
                                 color: Color(0xFF5D6A78),
@@ -206,7 +207,7 @@ class _SearchPageState extends State<SearchPage> {
                                     width: 3,
                                   ),
                                   Text(
-                                    "Sort",
+                                    getTransrlate(context, 'Sort'),
                                     style: GoogleFonts.poppins(
                                         fontSize: 13, color: Color(0xFF5D6A78)),
                                   ),
@@ -271,7 +272,7 @@ class _SearchPageState extends State<SearchPage> {
                           SizedBox(
                             width: 8,
                           ),
-                          Text("Smart Sort",
+                          Text(getTransrlate(context, 'SortByold'),
                               style: GoogleFonts.poppins(
                                   color: Color(0xFFA1B1C2))),
                         ],
@@ -294,7 +295,7 @@ class _SearchPageState extends State<SearchPage> {
                           SizedBox(
                             width: 8,
                           ),
-                          Text("Newest",
+                          Text(getTransrlate(context, 'SortByNew'),
                               style: GoogleFonts.poppins(
                                   color: Color(0xFFA1B1C2))),
                         ],
@@ -317,7 +318,7 @@ class _SearchPageState extends State<SearchPage> {
                           SizedBox(
                             width: 8,
                           ),
-                          Text("Min Price",
+                          Text(getTransrlate(context, 'SortByPriceLess'),
                               style: GoogleFonts.poppins(
                                   color: Color(0xFFA1B1C2))),
                         ],
@@ -339,7 +340,7 @@ class _SearchPageState extends State<SearchPage> {
                           SizedBox(
                             width: 8,
                           ),
-                          Text("Max Price",
+                          Text(getTransrlate(context, 'SortByPricemore'),
                               style: GoogleFonts.poppins(
                                   color: Color(0xFFA1B1C2))),
                         ],
@@ -535,7 +536,7 @@ class _SearchPageState extends State<SearchPage> {
           child: InkWell(
             onTap: () {
              if(filteredProduct[index].variations.isEmpty) {
-              save(filteredProduct[index],filteredProduct[index].id,filteredProduct[index].name);
+              save(filteredProduct[index],filteredProduct[index].id,filteredProduct[index].name,filteredProduct[index].price);
               Scaffold.of(context).showSnackBar(SnackBar(
               backgroundColor: themeColor.getColor(),
               content: Text('Product added to cart')));}

@@ -14,6 +14,7 @@ import 'package:shoppingapp/utils/keyboard.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_change.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 class SocialRegisterButtons extends StatelessWidget {
   final ThemeNotifier themeColor;
   const SocialRegisterButtons({Key key, this.themeColor}) : super(key: key);
@@ -43,7 +44,7 @@ class SocialRegisterButtons extends StatelessWidget {
               onPressed: () {
                 _login(context);
               },
-              text: "     Google     "),
+              text: "     "+getTransrlate(context, 'google')+"     "),
           GFButton(
               icon: SvgPicture.asset("assets/icons/facebook_icon.svg",
                   semanticsLabel: 'Acme Logo'),
@@ -58,7 +59,7 @@ class SocialRegisterButtons extends StatelessWidget {
               onPressed: () {
                 _loginWithFB(context);
               },
-              text: "     Facebook     "),
+              text: "     "+getTransrlate(context, 'facebook')+"     "),
         ],
       ),
     );

@@ -9,6 +9,7 @@ import 'package:shoppingapp/pages/login_page.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 
 import '../config.dart';
 import '../main.dart';
@@ -116,7 +117,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     },
                     splashColor: Colors.blue[50],
                     child: Text(
-                      'SKIP',
+                      getTransrlate(context, 'Skip'),
                       style: GoogleFonts.poppins(color: Colors.blueGrey),
                     ),
                   ),
@@ -137,7 +138,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     },
                     splashColor: Colors.blue[50],
                     child: Text(
-                      'NEXT',
+                      getTransrlate(context, 'Next'),
                       style: GoogleFonts.poppins(color: mainColor),
                     ),
                   )
@@ -160,7 +161,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       Nav.routeReplacement(context, InitPage());
                     },
                     child: Text(
-                      "GET STARTED",
+                      getTransrlate(context, 'getStart'),
                       style: GoogleFonts.poppins(
                           color: mainColor, fontWeight: FontWeight.w400),
                     ),

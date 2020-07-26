@@ -8,6 +8,7 @@ import 'package:shoppingapp/pages/new_adress_page.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/utils/util/sql_address.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -63,7 +64,7 @@ class _AddressPageState extends State<AddressPage> {
             child: Align(
               alignment: Alignment.center,
               child: Text(
-                "Add new address",
+                getTransrlate(context, 'AddNewAddress'),
                 style: GoogleFonts.poppins(color: Colors.white),
               ),
             ),
@@ -83,7 +84,7 @@ class _AddressPageState extends State<AddressPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "My address",
+                  getTransrlate(context, 'MyAddress'),
                   style: GoogleFonts.poppins(
                       fontSize: 18, color: Color(0xFF5D6A78)),
                 ),
@@ -103,11 +104,7 @@ class _AddressPageState extends State<AddressPage> {
                     child: ListView.builder(
                       itemCount: count,
                       itemBuilder: (BuildContext context, int index) {
-                       return InkWell(
-                         onTap: (){
-                           _navigateSelection(context,addressList[index]);
-                         },
-                           child: buildAddressItem(context,addressList[index]));
+                       return buildAddressItem(context,addressList[index]);
                       },
                     ),
                   ),
@@ -152,8 +149,17 @@ class _AddressPageState extends State<AddressPage> {
                     fontWeight: FontWeight.w300,
                     color: Color(0xFF5D6A78)),
               ),
-              InkWell(onTap: () => _delete(context,address),
-                  child: Icon(Icons.delete_forever, color:Provider.of<ThemeNotifier>(context).getColor() ))
+              Row(
+                children: <Widget>[
+                  InkWell(onTap: () => _navigateSelection(context,address),
+                      child: Icon(Icons.edit , color:Colors.grey)),
+                  SizedBox(
+                    width: 20,
+                  ),
+                   InkWell(onTap: () => _delete(context,address),
+                      child: Icon(Icons.delete_forever, color:Provider.of<ThemeNotifier>(context).getColor() )),
+                ],
+              )
             ],
           ),
           Text(
@@ -187,7 +193,7 @@ class _AddressPageState extends State<AddressPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "Street",
+                    getTransrlate(context, 'Street'),
                     style: GoogleFonts.poppins(
                         fontSize: 14,
                         fontWeight: FontWeight.w300,
@@ -206,7 +212,7 @@ class _AddressPageState extends State<AddressPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "Building NO",
+                    getTransrlate(context, 'Building'),
                     style: GoogleFonts.poppins(
                         fontSize: 14,
                         fontWeight: FontWeight.w300,
@@ -251,7 +257,6 @@ class _AddressPageState extends State<AddressPage> {
       context,
       MaterialPageRoute(builder: (context) => NewAddressPage()),
     );
-    print('do22');
     updateListView();
 
   }
@@ -261,7 +266,6 @@ class _AddressPageState extends State<AddressPage> {
       context,
       MaterialPageRoute(builder: (context) => EditAddressPage(address_shiping)),
     );
-    print('do');
     updateListView();
   }
 

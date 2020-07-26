@@ -11,6 +11,8 @@ import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as JSON;
+
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 class SocialLoginButtons extends StatelessWidget {
   const SocialLoginButtons({
     Key key,
@@ -48,7 +50,7 @@ class SocialLoginButtons extends StatelessWidget {
               color: themeColor.getColor(),
 //              type: GFButtonType.outline,
               onPressed: () {_login(context);},
-              text: "     Google     "),
+              text: "     "+getTransrlate(context, 'google')+"     "),
           GFButton(
               icon: SvgPicture.asset(
                 "assets/icons/facebook_icon.svg",
@@ -67,7 +69,7 @@ class SocialLoginButtons extends StatelessWidget {
               onPressed: () {
                 _loginWithFB(context);
               },
-              text: "     Facebook     "),
+              text: "     "+getTransrlate(context, 'facebook')+"     "),
         ],
       ),
     );

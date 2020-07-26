@@ -2,24 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
-import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
-import 'package:shoppingapp/widgets/commons/shadow_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
 import 'package:provider/provider.dart';
 
-class ContactPage extends StatefulWidget {
+class SupportPage extends StatefulWidget {
   @override
-  _ContactPageState createState() => _ContactPageState();
+  _SupportPageState createState() => _SupportPageState();
 }
 
-class _ContactPageState extends State<ContactPage> {
-
-
-  final _formKey = GlobalKey<FormState>();
-
-
+class _SupportPageState extends State<SupportPage> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -33,7 +26,7 @@ class _ContactPageState extends State<ContactPage> {
     return Scaffold(
       appBar: buildAppBar(themeColor),
       backgroundColor: greyBackground,
-      body: SingleChildScrollView(
+      body: Container(
         child: Column(
           children: <Widget>[
             Container(
@@ -43,8 +36,9 @@ class _ContactPageState extends State<ContactPage> {
                 child: Image.network('https://d2.woo2.app/wp-content/uploads/2020/07/rosen.png'),
               ),
             ),
+
             Padding(
-              padding: const EdgeInsets.only(right: 24,left: 24),
+              padding: const EdgeInsets.all(24.0),
               child: IntrinsicHeight(
                 child: Container(
                   decoration: BoxDecoration(
@@ -171,7 +165,7 @@ class _ContactPageState extends State<ContactPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 24,left: 24),
+              padding: const EdgeInsets.all(24.0),
               child: IntrinsicHeight(
                 child: Expanded(
                   flex: 4,
@@ -181,6 +175,7 @@ class _ContactPageState extends State<ContactPage> {
                         children: <Widget>[
                           Expanded(child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+
                             children: <Widget>[
                               Text('info@7lsoft.com'),
                               Text(
@@ -206,7 +201,38 @@ class _ContactPageState extends State<ContactPage> {
                               width: 60,
                             ),
                           ),
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Expanded(child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
 
+                            children: <Widget>[
+                              Text('info@7lsoft.com'),
+                              Text(
+                                getTransrlate(context, 'Email'),
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  color: Colors.grey,
+                                ),
+                              ),
+
+                            ],
+                          )),
+                          InkWell(
+                            onTap: (){
+                              _launchURL('mailto:info@7lsoft.com');
+                            },
+                            child: SizedBox(
+                              child: Icon(
+                                Icons.email,
+                                color: themeData.primaryColor,
+                              ),
+                              height: 60,
+                              width: 60,
+                            ),
+                          ),
                         ],
                       ),
                     ],
@@ -214,122 +240,6 @@ class _ContactPageState extends State<ContactPage> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                color: themeColor.getColor(),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    child: Column(
-                      children: <Widget>[
-                        Align(
-                          alignment: Alignment.center,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              getTransrlate(context, 'Contact'),
-                              style: GoogleFonts.poppins(
-                                fontSize: 17,
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w300,
-                              ),
-                            ),
-                          ),
-                        ),
-
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: <Widget>[
-                              ListTile(
-                                leading: const Icon(Icons.person),
-                                title: new TextField(
-                                  decoration: new InputDecoration(
-                                    hintText: getTransrlate(context, 'name'),
-                                  ),
-                                ),
-                              ),
-                              ListTile(
-                                leading: const Icon(Icons.phone),
-                                title: new TextField(
-                                  decoration: new InputDecoration(
-                                    hintText: getTransrlate(context, 'phone'),
-                                  ),
-                                ),
-                              ),
-                              ListTile(
-                                leading: const Icon(Icons.email),
-                                title: new TextField(
-                                  decoration: new InputDecoration(
-                                    hintText: getTransrlate(context, 'Email'),
-                                  ),
-                                ),
-                              ),
-                              ListTile(
-                                leading: const Icon(Icons.edit),
-                                title: new TextField(
-                                  decoration: new InputDecoration(
-                                    hintText: getTransrlate(context, 'Content'),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        Container(
-                          height: 42,
-                          width: ScreenUtil.getWidth(context)/2,
-                          margin: EdgeInsets.only(top: 20, bottom: 12),
-                          child: ShadowButton(
-                            borderRadius: 12,
-                            height: 40,
-                            child: FlatButton(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(8.0),
-                              ),
-                              color: themeColor.getColor(),
-                              onPressed: () async {
-                                if (_formKey.currentState.validate()) {
-                                  _formKey.currentState.save();
-                                  FocusScope.of(context).requestFocus(new FocusNode());
-                                //  setState(() => _isLoading = true);
-                                }
-                              },
-                              child: Text(
-                                getTransrlate(context, 'Submit'),
-                                style: GoogleFonts.poppins(
-                                  fontSize: 16,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(24),
-              child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  getTransrlate(context, 'ThankYou'),
-                  style: GoogleFonts.poppins(
-                    fontSize: 17,
-                    color: Colors.grey,
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
-              ),
-            ),
-
           ],
         ),
       ),
@@ -342,7 +252,7 @@ class _ContactPageState extends State<ContactPage> {
       elevation: 0,
       centerTitle: true,
       title: Text(
-          getTransrlate(context, 'Contact'),
+        getTransrlate(context, 'Support'),
         style: GoogleFonts.poppins(
             color: themeColor.getColor(), fontWeight: FontWeight.bold),
       ),

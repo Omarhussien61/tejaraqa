@@ -9,6 +9,7 @@ import 'package:shoppingapp/modal/Address_shiping.dart';
 import 'package:shoppingapp/pages/credit_cart_page.dart';
 import 'package:shoppingapp/utils/commons/country.dart';
 import 'package:shoppingapp/utils/screen.dart';
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/utils/util/sql_address.dart';
 import 'package:shoppingapp/utils/drop_down_menu/find_dropdown.dart';
 import 'package:shoppingapp/utils/navigator.dart';
@@ -112,7 +113,7 @@ if(widget.address_shiping!=null){
             child: Align(
               alignment: Alignment.center,
               child: Text(
-                "Save",
+                getTransrlate(context, 'save'),
                 style: GoogleFonts.poppins(color: Colors.white),
               ),
             ),
@@ -132,7 +133,7 @@ if(widget.address_shiping!=null){
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "My address",
+                  getTransrlate(context, 'MyAddress'),
                   style: GoogleFonts.poppins(
                       fontSize: 18, color: Color(0xFF5D6A78)),
                 ),
@@ -152,12 +153,12 @@ if(widget.address_shiping!=null){
                     children: <Widget>[
                       NewAddressInput(
                         controller: _nameController,
-                        labelText: "Address Title",
+                        labelText: getTransrlate(context, 'AddressTitle'),
                         hintText: '',
                         isEmail: true,
                         validator: (String value) {
                           if (value.isEmpty){
-                            return 'Title';
+                            return getTransrlate(context, 'AddressTitle');
                           }
                         },
                         onSaved: (String value) {
@@ -169,12 +170,12 @@ if(widget.address_shiping!=null){
                       ),
                       NewAddressInput(
                         controller: _CountryController,
-                        labelText: "Country",
+                        labelText: getTransrlate(context, 'Countroy'),
                         hintText: '',
                         isEmail: true,
                         validator: (String value) {
                           if (value.isEmpty){
-                            return 'Country';
+                            return  getTransrlate(context, 'Countroy');
                           }
                         },
                         onSaved: (String value) {
@@ -185,12 +186,12 @@ if(widget.address_shiping!=null){
                       ),
                       NewAddressInput(
                         controller: _cityController,
-                        labelText: "City",
+                        labelText: getTransrlate(context, 'City'),
                         hintText: '',
                         isEmail: true,
                         validator: (String value) {
                           if (value.isEmpty){
-                            return 'City';
+                            return getTransrlate(context, 'City');
                           }
                         },
                         onSaved: (String value) {
@@ -202,12 +203,12 @@ if(widget.address_shiping!=null){
                       NewAddressInput(
                         controller: _AddressController,
 
-                        labelText: "Address",
+                        labelText: getTransrlate(context, 'Address'),
                         hintText: '',
                         isEmail: true,
                         validator: (String value) {
                           if (value.isEmpty){
-                            return 'Address';
+                            return getTransrlate(context, 'Address');
                           }
                         },
                         onSaved: (String value) {
@@ -227,12 +228,12 @@ if(widget.address_shiping!=null){
                             controller: _streeetController,
                             validator: (String value) {
                               if (value.isEmpty){
-                                return 'Street';
+                                return getTransrlate(context, 'Street');
                               }
                             },
                           decoration: InputDecoration(
-                            labelText: 'Street',
-                            hintText: 'Street',
+                            labelText: getTransrlate(context, 'Street'),
+                            hintText: getTransrlate(context, 'Street'),
                               labelStyle: GoogleFonts.poppins(fontSize: 12),
                               helperStyle: GoogleFonts.poppins(fontSize: 12),
                               hintStyle: GoogleFonts.poppins(fontSize: 12),
@@ -247,15 +248,15 @@ if(widget.address_shiping!=null){
                               controller: _buildingController,
                               validator: (String value) {
                                 if (value.isEmpty){
-                                  return 'Building';
+                                  return getTransrlate(context, 'Building');
                                 }
                               },
                               decoration: InputDecoration(
-                                hintText: 'Building',
+                                hintText: getTransrlate(context, 'Building'),
                                 labelStyle: GoogleFonts.poppins(fontSize: 12),
                                 helperStyle: GoogleFonts.poppins(fontSize: 12),
                                 hintStyle: GoogleFonts.poppins(fontSize: 12),
-                                labelText: 'Building'
+                                labelText: getTransrlate(context, 'Building')
                               ),
 
                             ),
@@ -279,7 +280,7 @@ if(widget.address_shiping!=null){
       {
         scaffoldKey.currentState.showSnackBar(SnackBar(
             backgroundColor: Provider.of<ThemeNotifier>(context).getColor(),
-            content: Text('City  Or  country not Selected')));
+            content: Text(getTransrlate(context, 'countrySelected'))));
       }else{
         address = new Address_shiping(
             _CountryController.text,
@@ -292,12 +293,9 @@ if(widget.address_shiping!=null){
         print(widget.address_shiping.id);
 
         if (widget.address_shiping.id==null) {
-          print('mesh mogod');
           result = await helper.insertAddress(address);
           Navigator.pop(context);
         } else {
-          print(' mogod');
-
           result = await helper.updateAddress(address);
           Navigator.pop(context);
 
@@ -305,7 +303,6 @@ if(widget.address_shiping!=null){
         if (result == 0) {
           print('error');
         } else {
-
 
         }
       }
@@ -322,5 +319,4 @@ if(widget.address_shiping!=null){
       });
   }
 
-//0862570594
 }

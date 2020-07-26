@@ -57,8 +57,8 @@ class _NextRegisterPageState extends State<NextRegisterPage> {
               child: Column(
                 children: <Widget>[
                   AuthHeader(
-                    headerTitle: "Register",
-                    headerBigTitle: "New",
+                    headerTitle: getTransrlate(context,'Register'),
+                    headerBigTitle: getTransrlate(context, 'New'),
                     isLoginHeader: false,
                   ),
                   Stack(
@@ -72,15 +72,15 @@ class _NextRegisterPageState extends State<NextRegisterPage> {
                               Container(
                                 alignment: Alignment.topCenter,
                                 child: MyTextFormField(
-                                  labelText: "User Name",
-                                  hintText: 'User Name',
+                                  labelText: getTransrlate(context, 'Username'),
+                                  hintText: getTransrlate(context, 'Username'),
                                   isPhone: true,
 
                                   validator: (String value) {
                                     if (value.isEmpty) {
-                                      return 'Enter your USER NAME';
+                                      return getTransrlate(context, 'Username');
                                     } else if (value.length < 6) {
-                                      return 'Enter your USER NAME';
+                                      return  getTransrlate(context, 'UsernameError');
                                     }
                                     return null;
                                   },
@@ -93,8 +93,8 @@ class _NextRegisterPageState extends State<NextRegisterPage> {
                           Container(
                           alignment: Alignment.topCenter,
                             child: MyTextFormField(
-                              labelText: "Phone number",
-                              hintText: 'Phone number',
+                              labelText: getTransrlate(context, 'phone'),
+                              hintText: getTransrlate(context, 'phone'),
                               isPhone: true,
                               prefix:Container(
                                 width: ScreenUtil.getWidth(context)/4,
@@ -122,9 +122,9 @@ class _NextRegisterPageState extends State<NextRegisterPage> {
                               ) ,
                               validator: (String value) {
                                 if (value.isEmpty) {
-                                  return 'Enter your Phone number';
+                                  return getTransrlate(context, 'phone');
                                 } else if (value.length < 10) {
-                                  return 'Enter your Phone number';
+                                  return getTransrlate(context, 'shorterphone');
                                 }
                                 return null;
                               },
@@ -156,7 +156,7 @@ class _NextRegisterPageState extends State<NextRegisterPage> {
                                       }
                                     },
                                     child: Text(
-                                      'Sign up',
+                                      getTransrlate(context, 'RegisterNew'),
                                       style: GoogleFonts.poppins(
                                         fontSize: 16,
                                         color: Colors.white,

@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 
 class NotificationSettingsPage extends StatefulWidget {
   @override
@@ -24,7 +25,6 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ThemeNotifier>(context);
-
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
           statusBarColor: Color(0xFFFCFCFC),
@@ -44,7 +44,7 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
                 Container(
                   margin: EdgeInsets.only(left: 16, top: 24),
                   child: Text(
-                    "My address",
+                   getTransrlate(context, 'Notification'),
                     style: GoogleFonts.poppins(
                         fontSize: 18, color: Color(0xFF5D6A78)),
                   ),
@@ -72,7 +72,7 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
                         },
                         value: isAllNotifications,
                         title: Text(
-                          "Allow Notifications",
+                          getTransrlate(context, 'AllowNotification'),
                           style: GoogleFonts.poppins(
                             color: Color(0xFF5D6A78),
                           ),
@@ -87,13 +87,13 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
                         },
                         value: isOrderNotifications,
                         title: Text(
-                          "Order",
+                          getTransrlate(context, 'Order'),
                           style: GoogleFonts.poppins(
                             color: Color(0xFF5D6A78),
                           ),
                         ),
                         subtitle: Text(
-                          "Keep Track of Your Time Order",
+                          getTransrlate(context, 'discOrder'),
                           style: GoogleFonts.poppins(
                               color: Color(0xFF5D6A78),
                               fontSize: 12,
@@ -109,13 +109,13 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
                         },
                         value: isFaqNotifications,
                         title: Text(
-                          "Store Q & A",
+                          getTransrlate(context, 'StoreQ&A'),
                           style: GoogleFonts.poppins(
                             color: Color(0xFF5D6A78),
                           ),
                         ),
                         subtitle: Text(
-                          "Easy Communication With Dry Store",
+                          getTransrlate(context, 'descStore'),
                           style: GoogleFonts.poppins(
                               color: Color(0xFF5D6A78),
                               fontSize: 12,
@@ -131,13 +131,13 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
                         },
                         value: isReminderNotifications,
                         title: Text(
-                          "Reminder Cart",
+                          getTransrlate(context, 'reminderCart'),
                           style: GoogleFonts.poppins(
                             color: Color(0xFF5D6A78),
                           ),
                         ),
                         subtitle: Text(
-                          "Shopping Cart Reminder",
+                          getTransrlate(context, 'DescCart'),
                           style: GoogleFonts.poppins(
                               color: Color(0xFF5D6A78),
                               fontSize: 12,
@@ -154,13 +154,13 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
                         },
                         value: isShoppingCartReminderNotifications,
                         title: Text(
-                          "Opportunities and Campaigns",
+                          getTransrlate(context, 'Opportunities'),
                           style: GoogleFonts.poppins(
                             color: Color(0xFF5D6A78),
                           ),
                         ),
                         subtitle: Text(
-                          "Benefit from Mobile Special Offer",
+                          getTransrlate(context, 'DescOpportunities'),
                           style: GoogleFonts.poppins(
                               color: Color(0xFF5D6A78),
                               fontSize: 12,
@@ -177,13 +177,13 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
                         },
                         value: isDiscountReminderNotifications,
                         title: Text(
-                          "Special Benefits for Persons",
+                          getTransrlate(context, 'SpecialBenefits'),
                           style: GoogleFonts.poppins(
                             color: Color(0xFF5D6A78),
                           ),
                         ),
                         subtitle: Text(
-                          "You Special Discounts",
+                          getTransrlate(context, 'DescBenefits'),
                           style: GoogleFonts.poppins(
                               color: Color(0xFF5D6A78),
                               fontSize: 12,
@@ -200,13 +200,13 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
                         },
                         value: isCustomizeUserDiscountReminderNotifications,
                         title: Text(
-                          "Updates",
+                          getTransrlate(context, 'updates'),
                           style: GoogleFonts.poppins(
                             color: Color(0xFF5D6A78),
                           ),
                         ),
                         subtitle: Text(
-                          "Notify Me of New Features",
+                          getTransrlate(context, 'descupdates'),
                           style: GoogleFonts.poppins(
                               color: Color(0xFF5D6A78),
                               fontSize: 12,

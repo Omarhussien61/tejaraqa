@@ -236,7 +236,7 @@ class _OrderPageState extends State<OrderPage> {
                                                       color: const Color(
                                                           0xFF424242)),
                                                   hintText:
-                                                      "Enter the Phone Number",
+                                                      getTransrlate(context, 'hintphone'),
                                                   hintStyle:
                                                       GoogleFonts.poppins(
                                                           fontSize: 12,
@@ -259,7 +259,7 @@ class _OrderPageState extends State<OrderPage> {
                       padding:
                           const EdgeInsets.only(left: 8.0, top: 16, bottom: 8),
                       child: Text(
-                        "Order Note",
+                        getTransrlate(context, 'OrderNote'),
                         style: GoogleFonts.poppins(
                             fontSize: 12, color: Color(0xFF5D6A78)),
                       ),
@@ -300,7 +300,7 @@ class _OrderPageState extends State<OrderPage> {
                                     ),
                                     labelStyle: new TextStyle(
                                         color: const Color(0xFF424242)),
-                                    hintText: "Enter the order Notes",
+                                    hintText: getTransrlate(context, 'OrderHint'),
                                     hintStyle: GoogleFonts.poppins(
                                         fontSize: 12, color: textColor)),
                               ),
@@ -335,7 +335,7 @@ class _OrderPageState extends State<OrderPage> {
                                     ),
                                     labelStyle: new TextStyle(
                                         color: const Color(0xFF424242)),
-                                    hintText: "Enter  coupon code",
+                                    hintText: getTransrlate(context, 'couponcode'),
                                     hintStyle: GoogleFonts.poppins(
                                         fontSize: 12, color: textColor)),
                               ),
@@ -394,7 +394,7 @@ class _OrderPageState extends State<OrderPage> {
                                   size: 15,
                                 ),
                                 label: Text(
-                                  'Applay',
+                                  getTransrlate(context, 'couponApplay'),
                                   style: TextStyle(fontSize: 15),
                                 )),
                           ),
@@ -426,7 +426,7 @@ class _OrderPageState extends State<OrderPage> {
                           Row(
                             children: <Widget>[
                               Text(
-                                'Total : ',
+                                getTransrlate(context, 'totalOrder')+' : ',
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
                                   color: Colors.black87,
@@ -448,7 +448,7 @@ class _OrderPageState extends State<OrderPage> {
                           Row(
                             children: <Widget>[
                               Text(
-                                'discount : ',
+                               getTransrlate(context, 'totaldiscount')+ ' : ',
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
                                   color: Colors.black87,
@@ -482,14 +482,14 @@ class _OrderPageState extends State<OrderPage> {
                             6,
                           ),
                         ),
-                        child: Text("ORDER COMPLETE"),
+                        child: Text(getTransrlate(context, 'ORDERCOMPLETE')),
                         color: themeColor.getColor(),
                         onPressed: () {
                           //Nav.route(context, CreditCartPage());
                           if (phone != null) {
                             if (checkboxValueA == null) {
                               final snackbar = SnackBar(
-                                content: Text('Address not Selected'),
+                                content: Text(getTransrlate(context, 'addressSelected')),
                               );
                               scaffoldKey.currentState.showSnackBar(snackbar);
                             } else {
@@ -500,7 +500,7 @@ class _OrderPageState extends State<OrderPage> {
                             }
                           } else {
                             final snackbar = SnackBar(
-                              content: Text('Not phone'),
+                              content: Text(getTransrlate(context, 'SelectPhone')),
                             );
                             scaffoldKey.currentState.showSnackBar(snackbar);
                           }
@@ -608,7 +608,7 @@ class _OrderPageState extends State<OrderPage> {
                 onPressed: () async {
                   _navigateAndDisplaySelection(context);
                 },
-                child: Text("Add address"),
+                child: Text(getTransrlate(context, 'Addnaw')),
               ),
             ),
           )
@@ -679,7 +679,7 @@ class _OrderPageState extends State<OrderPage> {
     fetchUserId();
     if (checkboxValueA == null) {
       final snackbar = SnackBar(
-        content: Text('برجاء حدد عنوان'),
+        content: Text(getTransrlate(context, 'addressSelected')),
       );
       scaffoldKey.currentState.showSnackBar(snackbar);
       setState(() {
@@ -700,7 +700,7 @@ class _OrderPageState extends State<OrderPage> {
           copon==0?null:code);
       if (confirmOrder == null) {
         final snackbar = SnackBar(
-          content: Text('خطأء فى الطلب'),
+          content: Text(getTransrlate(context, 'OrderError')),
         );
         setState(() {
           _isLoading = false;

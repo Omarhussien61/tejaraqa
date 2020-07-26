@@ -8,6 +8,7 @@ import 'package:shoppingapp/service/loginservice.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/widgets/commons/textfield_bottomline.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:validators/validators.dart' as validator;
@@ -68,7 +69,7 @@ TextEditingController emailController;
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  "Save",
+                 getTransrlate(context, 'save'),
                   style: GoogleFonts.poppins(color: Colors.white),
                 ),
               ),
@@ -89,7 +90,7 @@ TextEditingController emailController;
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "Change Password",
+                  getTransrlate(context, 'changePassword'),
                   style: GoogleFonts.poppins(fontSize: 18, color: textColor),
                 ),
                 Container(
@@ -109,13 +110,13 @@ TextEditingController emailController;
                       children: <Widget>[
                         MyTextFormFieldLine(
                           controller: emailController,
-                          labelText: "Email",
+                          labelText: getTransrlate(context, 'Email'),
                           enabled: false,
-                          hintText: 'Email',
+                          hintText: getTransrlate(context, 'Email'),
                           isEmail: true,
                           validator: (String value) {
                             if (!validator.isEmail(value)) {
-                              return 'Please enter a valid email';
+                              return getTransrlate(context, 'invalidemail');
                             }
                             _formKey.currentState.save();
                             return null;
@@ -126,8 +127,8 @@ TextEditingController emailController;
                           height: 16,
                         ),
                         MyTextFormFieldLine(
-                          labelText: "Password",
-                          hintText: 'Password',
+                          labelText: getTransrlate(context, 'password'),
+                          hintText: getTransrlate(context, 'password'),
                           suffixIcon: IconButton(
                             icon: Icon(
                               // Based on passwordVisible state choose the icon
@@ -145,7 +146,7 @@ TextEditingController emailController;
                           isPassword: passwordVisible,
                           validator: (String value) {
                             if (value!=password) {
-                              return 'invaild Password';
+                              return getTransrlate(context, 'passwordinvalid');
                             }
                             _formKey.currentState.save();
                             return null;
@@ -160,8 +161,8 @@ TextEditingController emailController;
                           height: 16,
                         ),
                         MyTextFormFieldLine(
-                          labelText: "New Password",
-                          hintText: 'New Password',
+                          labelText: getTransrlate(context, 'NewPassword'),
+                          hintText: getTransrlate(context, 'NewPassword'),
                           suffixIcon: IconButton(
                             icon: Icon(
                               // Based on passwordVisible state choose the icon
@@ -180,7 +181,7 @@ TextEditingController emailController;
                           isPassword: passwordVisible,
                           validator: (String value) {
                             if (value.length < 7) {
-                              return 'Password should be minimum 7 characters';
+                              return getTransrlate(context, 'PasswordShorter');
                             }
 
                             _formKey.currentState.save();
@@ -195,8 +196,8 @@ TextEditingController emailController;
                           height: 16,
                         ),
                         MyTextFormFieldLine(
-                          labelText: "Confirm Password",
-                          hintText: 'Confirm Password',
+                          labelText: getTransrlate(context, 'ConfirmPassword'),
+                          hintText: getTransrlate(context, 'ConfirmPassword'),
                           suffixIcon: IconButton(
                             icon: Icon(
                               // Based on passwordVisible state choose the icon
@@ -215,7 +216,7 @@ TextEditingController emailController;
                           isPassword: passwordVisible,
                           validator: (String value) {
                             if (value!=Newpassword) {
-                              return 'Password should be match';
+                              return getTransrlate(context, 'Passwordmatch');
                             }
                             _formKey.currentState.save();
 
@@ -229,7 +230,7 @@ TextEditingController emailController;
                       padding:  EdgeInsets.only(top: 10),
                       child: InkWell(
                         onTap: _launchInBrowser,
-                        child: Text('Lost Password',
+                        child: Text(getTransrlate(context, 'LostPassword'),
                         style: TextStyle(decoration: TextDecoration.underline,
                         color: themeColor.getColor(),
                         fontSize: 16),),
@@ -267,10 +268,10 @@ TextEditingController emailController;
         if (newpassword == prefs.getString('password')) {
           Nav.routeReplacement(context, InitPage());
           Scaffold.of(context)
-              .showSnackBar(SnackBar(content: Text('password Changed')));
+              .showSnackBar(SnackBar(content: Text(getTransrlate(context, 'PasswordChanged'))));
         } else {
           Scaffold.of(context)
-              .showSnackBar(SnackBar(content: Text('password Not Changed')));
+              .showSnackBar(SnackBar(content: Text(getTransrlate(context, 'passwordNotChanged'))));
         }
       });
     });

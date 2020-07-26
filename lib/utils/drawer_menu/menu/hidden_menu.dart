@@ -12,7 +12,7 @@ import 'package:shoppingapp/pages/FAQ.dart';
 import 'package:shoppingapp/pages/about_page.dart';
 import 'package:shoppingapp/pages/change_password_page.dart';
 import 'package:shoppingapp/pages/contact_page.dart';
-import 'package:shoppingapp/pages/home_page.dart';
+import 'package:shoppingapp/pages/Support_page.dart';
 import 'package:shoppingapp/pages/login_page.dart';
 import 'package:shoppingapp/pages/profile_settings_page.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
@@ -70,7 +70,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
   int _indexSelected;
   bool isconfiguredListern = false;
   int id;
-  String username,name,photo;
+  String username,name,last,photo;
   final facebookLogin = FacebookLogin();
   GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: [
@@ -82,6 +82,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
     id = await SharedPreferencesHelper.getUserId();
     username = await SharedPreferencesHelper.getEmail();
     name = await SharedPreferencesHelper.getname();
+    last = await SharedPreferencesHelper.getLast_name();
     photo = await SharedPreferencesHelper.getUserimage();
   }
 
@@ -117,13 +118,12 @@ class _HiddenMenuState extends State<HiddenMenu> {
               ),
               ListTile(
                 title: Text(
-                  name==null?'user':name,
+                  name==null?'user':name+' '+last,
                   style: GoogleFonts.poppins(color: Colors.white),
                 ),
                 leading: CircleAvatar(
-                    radius: 20,child: CachedNetworkImage(
-                  imageUrl: photo==null?'https://p.kindpng.com/picc/s/207-2074624_white-gray-circle-avatar-png-transparent-png.png':photo,
-                  errorWidget: (context, url, error) => Image.asset('assets/images/user.png'),
+                    radius: 20,backgroundImage:CachedNetworkImageProvider(
+                   photo==null?'https://p.kindpng.com/picc/s/207-2074624_white-gray-circle-avatar-png-transparent-png.png':photo,
                 )),
               ),
               Container(
@@ -214,7 +214,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                     children: <Widget>[
                       InkWell(
                         onTap: () {
-                          themeColor.isLogin?Nav.route(context, MyProfileSettings()):
+                          themeColor.isLogin?_navigateAndDisplaySelection(context):
                           showLogintDialog(getTransrlate(context, 'login'),getTransrlate(context, 'PleaseLogin'));
                         },
                         child: ItemHiddenMenu(
@@ -300,7 +300,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                           colorLineSelected: Colors.orange,
                         ),
                         onTap: () {
-                          Nav.route(context, ContactPage());
+                          Nav.route(context, SupportPage());
                         },
                       ),
                       InkWell(
@@ -404,6 +404,17 @@ class _HiddenMenuState extends State<HiddenMenu> {
             child:Text(getTransrlate(context, 'login')),
           )
         ]).show();
+  }
+
+
+  _navigateAndDisplaySelection(BuildContext context) async {
+
+    var result= await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MyProfileSettings())
+    );
+    print('object');
+  fetchUserId();
   }
 
 }

@@ -232,6 +232,7 @@ class MapSampleState extends State<MapSample> {
         context,
         MaterialPageRoute(builder: (context) => EditAddressPage(address_shiping))
     );
+    Navigator.pop(context);
 
 
   }

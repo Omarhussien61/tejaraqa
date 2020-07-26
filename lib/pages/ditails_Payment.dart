@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:shoppingapp/modal/ConfirmOrder.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 
 import '../main.dart';
 import 'home_page.dart';
@@ -71,7 +72,7 @@ DetailScreen(this.confirmOrder);
                         Align(
                           alignment: Alignment.topCenter,
                           child: Text(
-                            'Order Done',
+                            getTransrlate(context, 'OrderDone'),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Provider.of<ThemeNotifier>(context).getColor(),
@@ -91,14 +92,14 @@ DetailScreen(this.confirmOrder);
                                   size: deviceHeight/20,
                                 ),
                                 title: Text(
-                                  'total Shipping',
+                                  getTransrlate(context, 'totalShipping'),
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 15.0),
                                 ),
                                 subtitle: Text(
-                                  'Txn ID:'+confirmOrder.id.toString(),
+                                  '# :'+confirmOrder.id.toString(),
                                   style: TextStyle(
                                       color: Colors.grey,
                                       fontWeight: FontWeight.bold,
@@ -127,14 +128,14 @@ DetailScreen(this.confirmOrder);
                                   size: deviceHeight/20,
                                 ),
                                 title: Text(
-                                  'total Order',
+                                  getTransrlate(context, 'totalOrder'),
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 15.0),
                                 ),
                                 subtitle: Text(
-                                  'Txn ID: '+confirmOrder.shippingLines[0].id.toString(),
+                                  '#: '+confirmOrder.shippingLines[0].id.toString(),
                                   style: TextStyle(
                                       color: Colors.grey,
                                       fontWeight: FontWeight.bold,
@@ -163,7 +164,7 @@ DetailScreen(this.confirmOrder);
                                   size: deviceHeight/20,
                                 ),
                                 title: Text(
-                                  'total',
+                                  getTransrlate(context, 'total'),
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,

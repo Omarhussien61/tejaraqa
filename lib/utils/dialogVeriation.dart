@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,10 +31,16 @@ class _DialogVreationsState extends State<DialogVreations> {
   int checkboxValueA, checkboxValueB;
    ProductModel productselect;
 String option;
+  String price= '0';
+
   _DialogVreationsState(this.productselect);
 
   @override
   void initState() {
+    setState(() {
+      price=widget.product.price;
+
+    });
     ProductService.getVriationProducts(widget.product.id).then((usersFromServer) {
       setState(() {
         product_variations = usersFromServer;
@@ -75,7 +80,7 @@ String option;
                                     checkboxValueA = position;
                                     checkboxValueB=product_variations[position].id;
                                     option=product_variations[position].attributes[pos].option;
-
+                                    price=product_variations[position].price;
                                   });
                                 },
                                 child: Card(
@@ -114,6 +119,13 @@ String option;
             ),
           ),
           actions: <Widget>[
+            Center(child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(getTransrlate(context, 'price')+' = $price'),
+            )),
+            SizedBox(
+              width: ScreenUtil.getWidth(context)/3,
+            ),
             checkboxValueA!=null? Center(
               child: DialogButton(
                 width: deviceWidth/4,
@@ -122,12 +134,12 @@ String option;
                   final form = formKey.currentState;
                   if (form.validate()) {
                     form.save();
-                    save(productselect,product_variations[checkboxValueA].id,widget.product.name+' - '+option);
+                    save(productselect,product_variations[checkboxValueA].id,widget.product.name+' - '+option,product_variations[checkboxValueA].price);
                    Navigator.pop(context);
                   }
                 },
                 child: Text(
-                  bloc.themeModel.commentConfirm[0],
+                  getTransrlate(context, 'Confirm'),
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
               ),

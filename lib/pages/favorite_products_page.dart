@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/widgets/homepage/search_box.dart';
 import 'package:shoppingapp/widgets/wish_list/rounded_tab_bar.dart';
 import 'package:shoppingapp/widgets/wish_list/wish_list_item.dart';
@@ -57,7 +58,7 @@ class HomeWidgetState extends State<FavoriteProductsPage>
             )
           ],
         )):Container(
-          child: Center(child: Text('No regestration Please Login !')),
+          child: Center(child: Text(getTransrlate(context, 'registration'))),
         ),
       ),
     );

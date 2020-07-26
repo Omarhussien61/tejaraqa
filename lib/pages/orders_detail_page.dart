@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shoppingapp/modal/Orders_model.dart';
 import 'package:shoppingapp/service/productdervice.dart';
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/utils/util/shared_preferences_helper.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/screen.dart';
@@ -46,7 +47,7 @@ class _OrdersDetailPageState extends State<OrdersDetailPage> {
             elevation: 0,
             centerTitle: true,
             title: Text(
-              "Order Details",
+              getTransrlate(context, 'OrderDetails'),
               style:
                   GoogleFonts.poppins(color: Color(0xFF5D6A78), fontSize: 15),
             ),

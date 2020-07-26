@@ -56,11 +56,11 @@ class _RegisterFormState extends State<RegisterForm> {
                 Container(
                   alignment: Alignment.topCenter,
                   child: MyTextFormField(
-                    labelText: "First Name",
-                    hintText: 'First Name',
+                    labelText: getTransrlate(context, 'Firstname'),
+                    hintText:  getTransrlate(context, 'Firstname'),
                     validator: (String value) {
                       if (value.isEmpty) {
-                        return 'Enter your first name';
+                        return  getTransrlate(context, 'Firstname');
                       }
                       return null;
                     },
@@ -72,11 +72,11 @@ class _RegisterFormState extends State<RegisterForm> {
                 Container(
                   alignment: Alignment.topCenter,
                   child: MyTextFormField(
-                    labelText: "Last Name",
-                    hintText: 'Last Name',
+                    labelText: getTransrlate(context, 'Lastname'),
+                    hintText: getTransrlate(context, 'Lastname'),
                     validator: (String value) {
                       if (value.isEmpty) {
-                        return 'Enter your last name';
+                        return getTransrlate(context, 'Lastname');
                       }
                       return null;
                     },
@@ -88,13 +88,13 @@ class _RegisterFormState extends State<RegisterForm> {
                 Container(
                   alignment: Alignment.topCenter,
                   child: MyTextFormField(
-                    labelText: "User Name",
-                    hintText: 'User Name',
+                    labelText: getTransrlate(context, 'Username'),
+                    hintText: getTransrlate(context, 'Username'),
                     validator: (String value) {
                       if (value.isEmpty) {
-                        return 'Enter your User name';
+                        return getTransrlate(context, 'Username');
                       } else if (value.length < 7) {
-                        return 'Enter your User name';
+                        return getTransrlate(context, 'Username');
                       }
                       return null;
                     },
@@ -106,8 +106,8 @@ class _RegisterFormState extends State<RegisterForm> {
                 Container(
                   alignment: Alignment.topCenter,
                   child: MyTextFormField(
-                    labelText: "Phone number",
-                    hintText: 'Phone number',
+                    labelText: getTransrlate(context, 'phone'),
+                    hintText:  getTransrlate(context, 'phone'),
                     isPhone: true,
                     prefix:Container(
                       width: ScreenUtil.getWidth(context)/4,
@@ -135,9 +135,9 @@ class _RegisterFormState extends State<RegisterForm> {
                     ) ,
                     validator: (String value) {
                       if (value.isEmpty) {
-                        return 'Enter your Phone number';
+                        return  getTransrlate(context, 'phone');
                       } else if (value.length < 10) {
-                        return 'Enter your Phone number';
+                        return getTransrlate(context, 'shorterphone');
                       }
                       return null;
                     },
@@ -148,12 +148,12 @@ class _RegisterFormState extends State<RegisterForm> {
                   ),
                 ),
                 MyTextFormField(
-                  labelText: "Email",
-                  hintText: 'Email',
+                  labelText:getTransrlate(context, 'Email'),
+                  hintText: getTransrlate(context, 'Email'),
                   isEmail: true,
                   validator: (String value) {
                     if (!validator.isEmail(value)) {
-                      return 'Please enter a valid email';
+                      return getTransrlate(context, 'invalidemail');
                     }
                     return null;
                   },
@@ -162,8 +162,8 @@ class _RegisterFormState extends State<RegisterForm> {
                   },
                 ),
                 MyTextFormField(
-                  labelText: "Password",
-                  hintText: 'Password',
+                  labelText: getTransrlate(context, 'password'),
+                  hintText:  getTransrlate(context, 'password'),
                   suffixIcon: IconButton(
                     icon: Icon(
                       // Based on passwordVisible state choose the icon
@@ -180,7 +180,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   isPassword: passwordVisible,
                   validator: (String value) {
                     if (value.length < 7) {
-                      return 'Password should be minimum 7 characters';
+                      return  getTransrlate(context, 'password');
                     }
 
                     _formKey.currentState.save();
@@ -214,7 +214,7 @@ class _RegisterFormState extends State<RegisterForm> {
                         }
                       },
                       child: Text(
-                        'Sign In',
+                        getTransrlate(context, 'RegisterNew'),
                         style: GoogleFonts.poppins(
                           fontSize: 16,
                           color: Colors.white,
@@ -277,7 +277,7 @@ class _RegisterFormState extends State<RegisterForm> {
       if(result.runtimeType==String)
       {
         setState(() => _isLoading = false);
-        showAlertDialog(result.toString(),'Alart');
+        showAlertDialog(result.toString(),getTransrlate(context, 'Alert'));
       }
       else
       {
@@ -301,7 +301,7 @@ class _RegisterFormState extends State<RegisterForm> {
       if(result.runtimeType==String)
       {
         setState(() => _isLoading = false);
-        showAlertDialog(result.toString(),'Alart');
+        showAlertDialog(result.toString(),getTransrlate(context, 'Alert'));
       }
       else
       {

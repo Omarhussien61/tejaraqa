@@ -9,6 +9,7 @@ import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/drop_down_menu/find_dropdown.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/utils/util/shared_preferences_helper.dart';
 import 'package:shoppingapp/widgets/new_adress_input.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -66,7 +67,7 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "User information",
+                    getTransrlate(context, 'MyProfileInfo'),
                     style: GoogleFonts.poppins(
                         fontSize: 18, color: Color(0xFF5D6A78)),
                   ),
@@ -84,8 +85,8 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
                     children: <Widget>[
                       NewAddressInput(
                         controller:_frist_nameController ,
-                        labelText: "Frist name",
-                        hintText: 'Frist name',
+                        labelText: getTransrlate(context, 'Firstname'),
+                        hintText: getTransrlate(context, 'Firstname'),
                         isEmail: true,
                         validator: (String value) {},
                         onSaved: (String value) {
@@ -97,8 +98,8 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
                       ),
                       NewAddressInput(
                         controller:_Last_nameController ,
-                        labelText: "Last Name",
-                        hintText: 'Last Name',
+                        labelText: getTransrlate(context, 'Lastname'),
+                        hintText: getTransrlate(context, 'Lastname'),
                         isEmail: true,
                         validator: (String value) {},
                         onSaved: (String value) {
@@ -109,7 +110,7 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
                       ),
                       NewAddressInput(
                         controller:_EmailController ,
-                        labelText: "E-mail address",
+                        labelText: getTransrlate(context, 'Email'),
                         hintText: 'example@example.com',
                         isEmail: true,
                         validator: (String value) {},
@@ -122,11 +123,11 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
                       ),
                       NewAddressInput(
                         controller: _PhoneController,
-                        labelText: "Mobile phone",
+                        labelText: getTransrlate(context, 'phone'),
                         hintText: 'xxxx xxx xxx xx',
                         validator: (String value) {
                           if (value.length < 10) {
-                            return 'Password should be minimum 10 ';
+                            return getTransrlate(context, 'shorterphone');
                           }
                         },
                         onSaved: (String value) {
@@ -155,7 +156,7 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  "Save",
+                  getTransrlate(context, 'save'),
                   style: GoogleFonts.poppins(color: Colors.white),
                 ),
               ),
@@ -277,10 +278,10 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
       setState(() {
         if (name == prefs.getString('user_displayname')) {
           Scaffold.of(context)
-              .showSnackBar(SnackBar(content: Text('profile Changed')));
+              .showSnackBar(SnackBar(content: Text(getTransrlate(context, 'profileChanged'))));
         } else {
           Scaffold.of(context)
-              .showSnackBar(SnackBar(content: Text('profile Not Changed')));
+              .showSnackBar(SnackBar(content: Text(getTransrlate(context, 'profileChanged'))));
         }
       });
     });

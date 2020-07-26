@@ -214,7 +214,7 @@ class DiscountItem extends StatelessWidget {
               child: GFButton(
                 onPressed: () {
                   if(product.variations.isEmpty) {
-                    save(product,product.id,product.name);
+                    save(product,product.id,product.name,product.price);
                     countCart(context);
                     Scaffold.of(context).showSnackBar(SnackBar(
                         backgroundColor: mainColor,

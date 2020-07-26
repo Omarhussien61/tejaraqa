@@ -7,6 +7,7 @@ import 'package:shoppingapp/utils/commons/text.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/statusbar.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutPage extends StatefulWidget {
@@ -30,9 +31,7 @@ class _AboutPageState extends State<AboutPage> {
             height: ScreenUtil.getHeight(context)/4,
             fit: BoxFit.cover),
             aboutItem('حل سوفت','الخدمات الإلكترونية','حقيقة مثبتة من زمن طويل و هي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل'),
-            aboutItem('حل سوفت','التصنيع و المعدات','حقيقة مثبتة من زمن طويل و هي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل'),
-            aboutItem('حل سوفت','الهندسة المعمارية','حقيقة مثبتة من زمن طويل و هي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل'),
-            aboutItem('حل سوفت','أنظمة نقاط البيع المتطورة','حقيقة مثبتة من زمن طويل و هي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل'),
+
           ],
 
         ),
@@ -46,7 +45,7 @@ class _AboutPageState extends State<AboutPage> {
       elevation: 0,
       centerTitle: true,
       title: CustomText(
-        text: "About us",
+        text: getTransrlate(context, 'About'),
         color: themeColor.getColor(),
         fontWeight: FontWeight.bold,
       ),
