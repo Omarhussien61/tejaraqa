@@ -9,7 +9,9 @@ import 'package:getflutter/types/gf_button_type.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:html/parser.dart';
 import 'package:like_button/like_button.dart';
+import 'package:provider/provider.dart';
 import 'package:shoppingapp/modal/productmodel.dart';
+import 'package:shoppingapp/pages/home_navigator.dart';
 import 'package:shoppingapp/pages/product_detail.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
 import 'package:shoppingapp/utils/commons/AddToCart.dart';
@@ -17,13 +19,16 @@ import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/dialogVeriation.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';
+import 'package:shoppingapp/utils/theme_notifier.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
+import 'package:shoppingapp/utils/util/sql_helper.dart';
 
 import '../../config.dart';
 
 class DiscountItem extends StatelessWidget {
   final themeColor;
   final ProductModel product;
+  SQL_Helper helper = new SQL_Helper();
 
   DiscountItem({Key key, this.themeColor, this.product}) : super(key: key);
 
@@ -74,15 +79,19 @@ class DiscountItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      AutoSizeText(
-                        product.name,
-                        style: GoogleFonts.poppins(
-                          fontSize: 12,
-                          color: Color(0xFF5D6A78),
-                          fontWeight: FontWeight.w300,
+                      Container(
+                        width: 180,
+                        child: AutoSizeText(
+                          product.name,
+                          maxFontSize: 15,
+                          style: GoogleFonts.poppins(
+                            fontSize: 12,
+                            color: Color(0xFF5D6A78),
+                            fontWeight: FontWeight.w300,
+                          ),
+                          maxLines: 2,
+                          minFontSize: 11,
                         ),
-                        maxLines: 2,
-                        minFontSize: 11,
                       ),
                       Row(
                         children: <Widget>[
@@ -214,8 +223,10 @@ class DiscountItem extends StatelessWidget {
               child: GFButton(
                 onPressed: () {
                   if(product.variations.isEmpty) {
-                    save(product,product.id,product.name,product.price);
-                    countCart(context);
+                    save(product,product.id,product.name,product.price,context);
+                      helper.getCount().then((value) {
+                        Provider.of<ThemeNotifier>(context).intcountCart(value);
+                    });
                     Scaffold.of(context).showSnackBar(SnackBar(
                         backgroundColor: mainColor,
                         content: Text(getTransrlate(context, 'Savedcart'))));

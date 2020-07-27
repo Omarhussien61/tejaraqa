@@ -180,7 +180,7 @@ class MapSampleState extends State<MapSample> {
           .thoroughfare}, ${first.subThoroughfare}');
       setState(() {
         address_shiping=new Address_shiping(
-            first.countryName,first.adminArea,first.countryName,
+            first.countryName,first.adminArea,'',
             first.featureName, '', first.addressLine,lang:latLng.longitude,
             lat: latLng.latitude);
       });

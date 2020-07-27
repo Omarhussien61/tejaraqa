@@ -58,8 +58,8 @@ class SQL_Helper {
     Directory directory = await getApplicationDocumentsDirectory();
     String path = directory.path + "database.db";
 
-     var studentDB = await openDatabase(path, version: 1, onCreate: createDatabase);
-     return studentDB;
+     var cartDB = await openDatabase(path, version: 1, onCreate: createDatabase);
+     return cartDB;
   }
 
   void createDatabase(Database db, int version) async {
@@ -74,7 +74,7 @@ class SQL_Helper {
         "CREATE TABLE $_tableNameRecent($_idRecent INTEGER PRIMARY KEY, $_idCount INTEGER)");
   }
 
-   Future<List<Map<String, dynamic>>> getStudentMapList() async {
+   Future<List<Map<String, dynamic>>> getcartMapList() async {
        Database db = await this.database;
        //var result1 =  await db.rawQuery("SELECT * FROM $tableName ORDER BY $_id ASC");
        var result = await db.query(tableName, orderBy: "$_id ASC");
@@ -96,15 +96,15 @@ class SQL_Helper {
     return (result.isEmpty)?true:false;
   }
 
-  Future<int> insertCart(Cart student) async {
+  Future<int> insertCart(Cart cart) async {
     Database db = await this.database;
-    var result = await db.insert(tableName, student.toMap());
+    var result = await db.insert(tableName, cart.toMap());
     return result;
   }
 
-  Future<int> updateCart(Cart student) async{
+  Future<int> updateCart(Cart cart) async{
     Database db = await this.database;
-    var result = await db.update(tableName, student.toMap(), where: "$_id = ?", whereArgs: [student.id]);
+    var result = await db.update(tableName, cart.toMap(), where: "$_id = ?", whereArgs: [cart.id]);
     return result;
   }
   Future<Cart> updateCartCount(int id) async{
@@ -129,16 +129,16 @@ class SQL_Helper {
 
   Future<List<Cart>> getDataList() async{
     
-    var studentMapList = await getStudentMapList();
-    int count = studentMapList.length;
+    var cartMapList = await getcartMapList();
+    int count = cartMapList.length;
     
-    List<Cart> students = new List<Cart>();
+    List<Cart> carts = new List<Cart>();
     
     for (int i = 0; i <= count -1; i++){
-      students.add(Cart.getMap(studentMapList[i]));
+      carts.add(Cart.getMap(cartMapList[i]));
     }
 
-    return students;
+    return carts;
   }
 
 

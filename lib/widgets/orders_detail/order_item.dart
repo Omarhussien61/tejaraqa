@@ -11,6 +11,8 @@ import 'package:shoppingapp/modal/Orders_model.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
+import  'package:persian_number_utility/persian_number_utility.dart';
 
 class OrderItem extends StatelessWidget {
   final Orders_model orders_model;
@@ -45,7 +47,7 @@ class OrderItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 AutoSizeText(
-                  'Order Code : '+orders_model.number,
+                  getTransrlate(context, 'OrderDitails')+' : '+orders_model.number,
                   style: GoogleFonts.poppins(
                     fontSize: 13,
                     color: Color(0xFF5D6A78),
@@ -58,7 +60,7 @@ class OrderItem extends StatelessWidget {
                   height: 2,
                 ),
                 AutoSizeText(
-                  'payment Method : '+orders_model.paymentMethodTitle,
+                  getTransrlate(context, 'paymentMethod')+' : '+ isPymentString(orders_model.paymentMethod,context),
                   style: GoogleFonts.poppins(
                     fontSize: 12,
                     color: Color(0xFF5D6A78),
@@ -71,18 +73,25 @@ class OrderItem extends StatelessWidget {
                   height: 2,
                 ),
                 Text(
-                  'Order total : '+ orders_model.total,
+                  getTransrlate(context, 'totalOrder')+' : '+ orders_model.total,
                   style: GoogleFonts.poppins(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w300),
+                    fontSize: 13,
+                    color: Color(0xFF5D6A78),
+                    fontWeight: FontWeight.w300,
+                  ),
                 ),
                 SizedBox(
                   height: 8,
                 ),
                 Container(
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
+                      Text(getTransrlate(context, 'OrderState')+' : ',
+                        style: GoogleFonts.poppins(
+                          fontSize: 13,
+                          color: Color(0xFF5D6A78),
+                          fontWeight: FontWeight.w300,
+                        ),),
                       Container(
                         padding: EdgeInsets.all(4),
                         decoration: BoxDecoration(
@@ -102,7 +111,7 @@ class OrderItem extends StatelessWidget {
                         child: Row(
                           children: <Widget>[
                             Text(
-                              orders_model.status,
+                              themeColor.local=='ar'? isPassedString(orders_model.status):orders_model.status,
                               style: GoogleFonts.poppins(
                                   color: Color(0xFF5D6A78),
                                   fontSize: 10,
@@ -112,16 +121,14 @@ class OrderItem extends StatelessWidget {
                               width: 4,
                             ),
                             Icon(
-                              FontAwesome5.dot_circle,
+                              isPassedIcon(orders_model.status),
                               size: 12,
-                              color: Colors.blue,
+                              color:  isPassed(orders_model.status),
                             )
                           ],
                         ),
                       ),
-                      SizedBox(
-                        width: 36,
-                      ),
+
                     ],
                   ),
                 ),
@@ -136,7 +143,7 @@ class OrderItem extends StatelessWidget {
 //                  headerAlignment: ExpandablePanelHeaderAlignment.center,
 //                  iconPlacement: ExpandablePanelIconPlacement.right,
                 header: Text(
-                  "View product specifications",
+                  getTransrlate(context, 'OrderContent'),
                   style: GoogleFonts.poppins(
                       color: Color(0xFF5D6A78), fontSize: 12),
                 ),
@@ -154,7 +161,7 @@ class OrderItem extends StatelessWidget {
                             Text(
                               orders_model.lineItems[index].name,
                               style: TextStyle(
-                                  color: Colors.blue[400],
+                                  color: themeColor.getColor(),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15),
                             ),
@@ -174,6 +181,68 @@ class OrderItem extends StatelessWidget {
       ),
     );
   }
+  Color isPassed(String value) {
+    switch (value) {
+      case 'pending':
+        return Colors.amber;
+        break;
+      case 'completed':
+        return Colors.green;
+        break;
+      case 'processing':
+        return Colors.red;
+        break;
+      default:
+        return Colors.blue;
+    }
+  }
+  String isPassedString(String value) {
+    switch (value) {
+      case 'pending':
+        return 'الطلب معلق';
+        break;
+      case 'completed':
+        return 'الطلب مكتمل';
+        break;
+      case 'processing':
+        return 'الطلب تتم معالجتة';
+        break;
+      default:
+        return 'الطلب قيد التنفيذ';
+    }
+  }
+  String isPymentString(String value,BuildContext context) {
+    switch (value) {
+      case 'bacs':
+        return getTransrlate(context, 'bacs');
+        break;
+      case 'cod':
+        return getTransrlate(context, 'cod');
+        break;
+      case 'paypal':
+        return getTransrlate(context, 'paypal');
+        break;
+      default:
+        return 'الطلب قيد التنفيذ';
+    }
+  }
+
+  IconData isPassedIcon(String value) {
+    switch (value) {
+      case 'pending':
+        return Icons.sync_problem;
+        break;
+      case 'completed':
+        return Icons.done;
+        break;
+      case 'processing':
+        return Icons.sync;
+        break;
+      default:
+        return Icons.sync;
+    }
+  }
+
 }
 
 openAlertBox(context, themeColor) {
@@ -246,4 +315,6 @@ openAlertBox(context, themeColor) {
           ),
         );
       });
+
+
 }

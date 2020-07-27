@@ -58,7 +58,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   String name, email, photo;
   String vriationName='';
   double rateing=5;
-  String comment;
+  TextEditingController comment;
   SQL_Rercent helperRecent = new SQL_Rercent();
   Recentview recentview;
   Cart cart;
@@ -75,6 +75,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
 
   @override
   void initState() {
+    comment=TextEditingController();
+
     fetchUserId();
     countCart();
     tempScroll = ScrollController()
@@ -870,7 +872,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                             padding: EdgeInsets.all(12),
                                             alignment: Alignment.center,
                                             decoration: BoxDecoration(
-                                                color: Color(0xFFEEEEF3),
+                                                color: Color(0xFFffffF3),
                                                 borderRadius:
                                                     BorderRadius.circular(12)),
                                             child: Row(
@@ -1069,16 +1071,11 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             content: Form(
               key: formKey,
               child: TextFormField(
-                initialValue: comment,
+                controller: comment,
                 decoration: InputDecoration(
                     hintText: getTransrlate(context, 'yourComment'),
                     hintStyle: GoogleFonts.poppins(),
                     focusColor: themeColor.getColor()),
-                onChanged: (value) {
-                  setState(() {
-                    comment = value;
-                  });
-                },
                 validator: (String value) {
                   if (value.isEmpty) {
                     return getTransrlate(context, 'avalidComment');
@@ -1112,7 +1109,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                     });
                     form.save();
                     await ProductService.Createrating(name, email, widget.product.id, rateing,
-                        comment.isEmpty ? ' ' : comment);
+                        comment.text.isEmpty ? ' ' : comment.text);
+                    comment.clear();
                     Navigator.pop(context);
                     setState(() {
                       isloading = false;

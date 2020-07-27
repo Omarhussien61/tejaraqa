@@ -23,6 +23,8 @@ import 'package:shoppingapp/modal/Recentview.dart';
 class HomeNavigator extends StatefulWidget {
   @override
   _HomeNavigatorState createState() => _HomeNavigatorState();
+
+
 }
 
 class _HomeNavigatorState extends State<HomeNavigator> {
@@ -124,8 +126,9 @@ class _HomeNavigatorState extends State<HomeNavigator> {
               child: Badge(
                 badgeColor: themeColor.getColor(),
                 padding: EdgeInsets.all(4),
+                showBadge: themeColor.countCart!=0,
                 badgeContent: Text(
-                  themeColor.countCart.toString(),
+                 themeColor.countCart.toString(),
                   style: TextStyle(color: Colors.white, fontSize: 10),
                 ),
                 child: SvgPicture.asset(

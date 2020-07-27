@@ -138,7 +138,7 @@
   "SavedAddress": "Saved Address",
   "AddressTitle": "Address Title",
   "notSavedcart": "No Cart Added",
-  "Savedcart": "Saved Cart",
+  "Savedcart": "Product Add to Cart",
   "notlogin": "No have Account",
   "PleaseLogin": "Please Login Now !",
   "product": "Products",
@@ -153,8 +153,8 @@
   "custCode": "Order Status",
   "name": "Order Statusa",
   "shipingclass": "Order Status",
-  "orderTotal": "Order Status",
-  "OrderContent": "Order Status",
+  "orderTotal": "Total",
+  "OrderContent": "View product specifications",
   "CodeConfirm": "Code Confirm",
   "Confirm": "Confirm",
   "close": "Close",
@@ -168,5 +168,11 @@
   "Lastname": "Last name",
   "Username": "User name",
   "UsernameError": "User name Short !",
-  "RegisterError": "Error in Register Check your information"
+  "RegisterError": "Error in Register Check your information",
+
+
+  "bacs": "Direct bank transfer",
+  "cod": "Cash on deliveryً",
+  "paypal": "PayPal"
+
 }

@@ -8,11 +8,11 @@ import 'package:shoppingapp/utils/util/sql_helper.dart';
 
 import '../theme_notifier.dart';
 
-void save(ProductModel productModel,int id,String name,String price) async {
+void save(ProductModel productModel,int id,String name,String price,BuildContext context) async {
   SQL_Helper helper = new SQL_Helper();
   double myInt = await double.parse(price);
   myInt=num.parse(myInt.toStringAsFixed(2));
-  Cart cart= new Cart(await  id, name, 1, myInt,
+  Cart cart= new Cart(  id, name, 1, myInt,
       DateFormat.yMMMd().format(DateTime.now()),productModel.images[0].src);
   int result;
   if (await helper.checkItem(cart.id) == true) {
@@ -21,11 +21,12 @@ void save(ProductModel productModel,int id,String name,String price) async {
     cart=await helper.updateCartCount(cart.id);
     cart.quantity++;
     result = await helper.updateCart(cart);
-  }
+}
   if (result == 0)
   {
 
   } else {
+    countCart(context);
 
   }
 }

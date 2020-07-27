@@ -104,7 +104,12 @@ class ConfirmOrder {
     paymentMethodTitle = json['payment_method_title'];
     transactionId = json['transaction_id'];
     print('test123');
-
+    if (json['line_items'] != null) {
+      lineItems = new List<LineItemsConfirm>();
+      json['line_items'].forEach((v) {
+        lineItems.add(new LineItemsConfirm.fromJson(v));
+      });
+    }
 
     if (json['shipping_lines'] != null) {
       shippingLines = new List<ShippingLinesConfirm>();

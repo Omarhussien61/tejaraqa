@@ -536,7 +536,7 @@ class _SearchPageState extends State<SearchPage> {
           child: InkWell(
             onTap: () {
              if(filteredProduct[index].variations.isEmpty) {
-              save(filteredProduct[index],filteredProduct[index].id,filteredProduct[index].name,filteredProduct[index].price);
+              save(filteredProduct[index],filteredProduct[index].id,filteredProduct[index].name,filteredProduct[index].price,context);
               Scaffold.of(context).showSnackBar(SnackBar(
               backgroundColor: themeColor.getColor(),
               content: Text('Product added to cart')));}
