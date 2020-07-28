@@ -20,8 +20,9 @@ import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/utils/util/sql_address.dart';
 
 class MapSample extends StatefulWidget {
+Address_shiping address_shiping;
 
-  MapSample();
+MapSample({this.address_shiping});
 
   @override
   MapSampleState createState() => MapSampleState();
@@ -179,10 +180,10 @@ class MapSampleState extends State<MapSample> {
           .subAdminArea},${first.addressLine}, ${first.featureName},${first
           .thoroughfare}, ${first.subThoroughfare}');
       setState(() {
-        address_shiping=new Address_shiping(
+       widget.address_shiping==null? address_shiping=new Address_shiping(
             first.countryName,first.adminArea,'',
             first.featureName, '', first.addressLine,lang:latLng.longitude,
-            lat: latLng.latitude);
+            lat: latLng.latitude):address_shiping=widget.address_shiping;
       });
       return first;
 

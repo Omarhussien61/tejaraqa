@@ -73,6 +73,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   static int count = 0;
   List<Product_review> product_review = new List<Product_review>();
 
+  int idProduct;
+
   @override
   void initState() {
     comment=TextEditingController();
@@ -640,7 +642,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                                             checkboxValueB=product_variations[position].id;
                                                             widget.product.priceHtml=product_variations[position].price;
                                                             widget.product.price=product_variations[position].price;
-                                                            widget.product.id=product_variations[position].id;
+                                                            idProduct=product_variations[position].id;
                                                             vriationName=product_variations[position].attributes[pos].option;
                                                           });
                                                         },
@@ -705,10 +707,10 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                               //Nav.route(context, OrderPage());
                                               setState(() {
                                                 // isLiked = !isLiked;
-                                                product_variations == null||product_variations.isEmpty?_save():checkboxValueA==null?
+                                                product_variations == null||product_variations.isEmpty?_save(context):checkboxValueA==null?
                                                 Scaffold.of(context)
                                                     .showSnackBar(SnackBar(content: Text(getTransrlate(context, 'SelectVariations')))):
-                                                _save();
+                                                _save(context);
                                               });
                                             },
                                             icon: Icon(
@@ -1127,7 +1129,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
      });
    });
   }
-  void _save() async {
+  void _save(BuildContext context) async {
 
 
     print(widget.product.id);
@@ -1136,12 +1138,14 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     double myInt = await double.parse(widget.product.price);
     myInt = num.parse(myInt.toStringAsFixed(2));
     cart = Cart(
-        await widget.product.id,
+        product_variations != null?idProduct:await widget.product.id,
         product_variations != null?await widget.product.name+' - $vriationName':await widget.product.name,
         piece,
         myInt,
         DateFormat.yMMMd().format(DateTime.now()),
         await widget.product.images[0].src);
+    print(cart.id);
+
     if (product_variations != null) {
       cart.idVariation = checkboxValueB;
     }
@@ -1162,7 +1166,9 @@ setState(() {
     if (result == 0) {
       // showAlertDialog(getTransrlate(context, 'sorry'), getTransrlate(context, 'notSavedcart'));
     } else {
-      // showAlertDialog(getTransrlate(context, 'Alert'),getTransrlate(context, 'Savedcart'));
+      Scaffold.of(context)
+          .showSnackBar(SnackBar(content: Text(getTransrlate(context, 'Savedcart')),backgroundColor:
+        Provider.of<ThemeNotifier>(context).getColor(),));
       countCart();
     }
   }

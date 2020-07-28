@@ -35,7 +35,7 @@
   "PasswordChanged": "تم تغير كلمة المرور",
   "passwordNotChanged": "لم يتم تغير كلمة المرور",
   "profileChanged": "تم تغير بنجاح",
-  "profileChanged": "لم يتم التغير بنجاح",
+  "profileChanged": "تم التغير بنجاح",
 
   "NewPassword": "كلمة المرور الجديدة",
   "ConfirmPassword": "تأكيد كلمة المرور",

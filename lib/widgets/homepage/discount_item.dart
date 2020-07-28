@@ -14,6 +14,7 @@ import 'package:shoppingapp/modal/productmodel.dart';
 import 'package:shoppingapp/pages/home_navigator.dart';
 import 'package:shoppingapp/pages/product_detail.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
+import 'package:shoppingapp/utils/commons/AddFavorite.dart';
 import 'package:shoppingapp/utils/commons/AddToCart.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/dialogVeriation.dart';
@@ -24,19 +25,34 @@ import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/utils/util/sql_helper.dart';
 
 import '../../config.dart';
-
-class DiscountItem extends StatelessWidget {
-  final themeColor;
+class DiscountItem extends StatefulWidget {
   final ProductModel product;
-  SQL_Helper helper = new SQL_Helper();
+  final themeColor;
 
   DiscountItem({Key key, this.themeColor, this.product}) : super(key: key);
+  @override
+  _DiscountItemState createState() => _DiscountItemState();
+}
+
+class _DiscountItemState extends State<DiscountItem> {
+
+  SQL_Helper helper = new SQL_Helper();
+  bool isliked;
+
+
+  @override
+  void initState() {
+    onLikeButton();
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+
     return InkWell(
       onTap: () {
-        Nav.route(context, ProductDetailPage(product: product,));
+        Nav.route(context, ProductDetailPage(product: widget.product,));
       },
       child: Stack(
         children: <Widget>[
@@ -60,9 +76,9 @@ class DiscountItem extends StatelessWidget {
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: CachedNetworkImage(
-                        imageUrl: (product.images == null)
+                        imageUrl: (widget.product.images == null)
                             ? 'http://arabimagefoundation.com/images/defaultImage.png'
-                            : product.images[0].src,
+                            : widget.product.images[0].src,
                         errorWidget: (context, url, error) => Icon(Icons.error),
                       )),
                   width: ScreenUtil.getWidth(context) * 0.30,
@@ -82,7 +98,7 @@ class DiscountItem extends StatelessWidget {
                       Container(
                         width: 180,
                         child: AutoSizeText(
-                          product.name,
+                          widget.product.name,
                           maxFontSize: 15,
                           style: GoogleFonts.poppins(
                             fontSize: 12,
@@ -97,7 +113,7 @@ class DiscountItem extends StatelessWidget {
                         children: <Widget>[
                           RatingBar(
                             ignoreGestures: true,
-                            initialRating: double.parse(product.averageRating),
+                            initialRating: double.parse(widget.product.averageRating),
                             itemSize: 14.0,
                             minRating: 1,
                             direction: Axis.horizontal,
@@ -105,7 +121,7 @@ class DiscountItem extends StatelessWidget {
                             itemCount: 5,
                             itemBuilder: (context, _) => Icon(
                               Ionicons.ios_star,
-                              color: themeColor.getColor(),
+                              color: widget.themeColor.getColor(),
                             ),
                             onRatingUpdate: (rating) {
                               print(rating);
@@ -115,7 +131,7 @@ class DiscountItem extends StatelessWidget {
                             width: 8,
                           ),
                           Text(
-                            product.averageRating,
+                            widget.product.averageRating,
                             style: GoogleFonts.poppins(
                                 fontSize: 9, fontWeight: FontWeight.w400),
                           )
@@ -124,7 +140,7 @@ class DiscountItem extends StatelessWidget {
                       Row(
                         children: <Widget>[
                           Text(
-                            product.oldPrice,
+                            widget.product.oldPrice,
                             style: GoogleFonts.poppins(
                                 decoration: TextDecoration.lineThrough,
                                 fontSize: 14,
@@ -134,9 +150,9 @@ class DiscountItem extends StatelessWidget {
                             width: 4,
                           ),
                           Text(
-                            product.price,
+                            widget.product.price,
                             style: GoogleFonts.poppins(
-                                color: themeColor.getColor(),
+                                color: widget.themeColor.getColor(),
                                 fontSize: 18,
                                 fontWeight: FontWeight.w300),
                           ),
@@ -145,70 +161,48 @@ class DiscountItem extends StatelessWidget {
                       Container(
                         width: 180,
                         child: Text(
-                          (parse(product.sortDescription.toString().trim())
-                                          .body
-                                          .text
-                                          .trim()
-                                          .length >
-                                      0 ||
-                                  product.sortDescription.toString().trim() ==
-                                      '')
-                              ? parse(product.sortDescription.toString().trim())
-                                  .body
-                                  .text
-                                  .trim()
+                          (parse(widget.product.sortDescription.toString().trim())
+                              .body
+                              .text
+                              .trim()
+                              .length >
+                              0 ||
+                              widget.product.sortDescription.toString().trim() ==
+                                  '')
+                              ? parse(widget.product.sortDescription.toString().trim())
+                              .body
+                              .text
+                              .trim()
                               : "Best",
                           maxLines: 2,
                           style: GoogleFonts.poppins(
-                              color: themeColor.getColor(),
+                              color: widget.themeColor.getColor(),
                               fontSize: 10,
                               fontWeight: FontWeight.w300),
                         ),
                       ),
                       Container(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Container(
-                              height: 32,
-                              width: 32,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(3),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(.2),
-                                      blurRadius: 6.0, // soften the shadow
-                                      spreadRadius: 0.0, //extend the shadow
-                                      offset: Offset(
-                                        0.0, // Move to right 10  horizontally
-                                        1.0, // Move to bottom 10 Vertically
-                                      ),
-                                    )
-                                  ]),
-                              child: LikeButton(
-                                size: 12,
-                                circleColor: CircleColor(
-                                    start: themeColor.getColor(),
-                                    end: themeColor.getColor()),
-                                bubblesColor: BubblesColor(
-                                  dotPrimaryColor: themeColor.getColor(),
-                                  dotSecondaryColor: themeColor.getColor(),
-                                ),
-                                likeBuilder: (bool isLiked) {
-                                  return Icon(
-                                    Icons.favorite,
-                                    color: isLiked
-                                        ? themeColor.getColor()
-                                        : textColor,
-                                    size: 12,
-                                  );
-                                },
-                              ),
-                            )
-                          ],
-                        ),
+                          height: 32,
+                          width: 32,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(3),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(.2),
+                                  blurRadius: 6.0, // soften the shadow
+                                  spreadRadius: 0.0, //extend the shadow
+                                  offset: Offset(
+                                    0.0, // Move to right 10  horizontally
+                                    1.0, // Move to bottom 10 Vertically
+                                  ),
+                                )
+                              ]),
+                          child: InkWell(
+                              onTap: (){
+                                onLikeTapped();
+                              },child: Icon(isliked!=null?!isliked?Icons.favorite:Icons.favorite_border:Icons.favorite_border,
+                          color: widget.themeColor.getColor(),))
                       ),
                     ],
                   ),
@@ -222,10 +216,10 @@ class DiscountItem extends StatelessWidget {
             child: Container(
               child: GFButton(
                 onPressed: () {
-                  if(product.variations.isEmpty) {
-                    save(product,product.id,product.name,product.price,context);
-                      helper.getCount().then((value) {
-                        Provider.of<ThemeNotifier>(context).intcountCart(value);
+                  if(widget.product.variations.isEmpty) {
+                    save(widget.product,widget.product.id,widget.product.name,widget.product.price,context);
+                    helper.getCount().then((value) {
+                      Provider.of<ThemeNotifier>(context).intcountCart(value);
                     });
                     Scaffold.of(context).showSnackBar(SnackBar(
                         backgroundColor: mainColor,
@@ -235,8 +229,8 @@ class DiscountItem extends StatelessWidget {
                     showDialog(
                         context: context,
                         builder: (_) {
-                          print(product.id);
-                          return DialogVreations(product:product);
+                          print(widget.product.id);
+                          return DialogVreations(product:widget.product);
                         });
                   }
 
@@ -276,4 +270,27 @@ class DiscountItem extends StatelessWidget {
       ),
     );
   }
+  bool onLikeButton() {
+    FavoritecheckItem(widget.product).then((value) => {
+        setState(() {
+        isliked=value;
+      }),
+      print(isliked)
+
+    });
+    return isliked;
+
+  }
+
+  bool onLikeTapped() {
+
+    Favorite(widget.product).then((value) => {
+    setState(() {
+    isliked=!value;
+    })
+    });
+
+    return isliked;
+}
+
 }

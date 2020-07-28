@@ -46,6 +46,13 @@ class SQL_Helper {
   String __lat = "lat";
   String __lang = "lang";
 
+
+  String tableFavorite = "favorite_table";
+  String __nameFavorite = "name";
+  String __priseFavorite = "prise";
+  String __Categoryname = "category";
+  String __imageFavorite = "image";
+
   Future<Database> get database async {
       if (_database == null){
           _database = await initializedDatabase();
@@ -72,6 +79,10 @@ class SQL_Helper {
 
     await db.execute(
         "CREATE TABLE $_tableNameRecent($_idRecent INTEGER PRIMARY KEY, $_idCount INTEGER)");
+    await db.execute(
+        "CREATE TABLE $tableFavorite($_id INTEGER PRIMARY KEY, "
+            " $__nameFavorite TEXT, $__priseFavorite TEXT," +
+            " $__Categoryname DOUBLE, $__imageFavorite TEXT  )");
   }
 
    Future<List<Map<String, dynamic>>> getcartMapList() async {

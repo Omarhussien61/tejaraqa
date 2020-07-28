@@ -15,13 +15,11 @@ class SQL_Rercent {
   SQL_Rercent._createInstance();
 
   factory SQL_Rercent() {
-
     if (dbHelper == null) {
       dbHelper = SQL_Rercent._createInstance();
     }
     return dbHelper;
   }
-
   String tableName = "Recent_table";
   String _idRecent = "id";
   String _idCount = "count";

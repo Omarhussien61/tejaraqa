@@ -132,10 +132,24 @@ if(widget.address_shiping!=null){
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  getTransrlate(context, 'MyAddress'),
-                  style: GoogleFonts.poppins(
-                      fontSize: 18, color: Color(0xFF5D6A78)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      getTransrlate(context, 'MyAddress'),
+                      style: GoogleFonts.poppins(
+                          fontSize: 18, color: Color(0xFF5D6A78)),
+                    ),
+                    InkWell(
+                      focusColor:  Provider.of<ThemeNotifier>(context).getColor(),
+                      splashColor: Provider.of<ThemeNotifier>(context).getColor(),
+                      onTap: () {
+                        //Nav.routeReplacement(context, MapSample());
+                        _navigateAndDisplaySelection(context);
+                      },
+                      child: Icon(Icons.location_on),
+                    ),
+                  ],
                 ),
                 Container(
                     width: 28,
@@ -308,7 +322,19 @@ if(widget.address_shiping!=null){
       }
     }
   }
- get_City(String country) {
+  _navigateAndDisplaySelection(BuildContext context) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    address_shiping= await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MapSample(address_shiping: address_shiping,))
+    );
+
+    Navigator.pop(context);
+
+  }
+
+  get_City(String country) {
     if (country == 'Egypt')
       setState(() {
         city=Egypt;

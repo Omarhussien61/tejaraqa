@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 
 class ItemHiddenMenuRight extends StatelessWidget {
@@ -39,16 +41,30 @@ class ItemHiddenMenuRight extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: Container(
-                  margin: EdgeInsets.only(right: 20.0),
-                  child: Text(
-                    getTransrlate(context, 'HomePage'),
-                    style: (this.baseStyle ??
-                            TextStyle(color: Colors.grey, fontSize: 25.0))
-                        .merge(this.selected
+                  child: Row(
+                    children: <Widget>[
+                      Container(width: 32, child: Icon(
+                        Feather.home,
+                        size: 19,
+                        color: Colors.white,
+                      ),
+                      ),
+                      SizedBox(
+                        width: 16,
+                      ),
+                      Text(
+                        getTransrlate(context, 'HomePage'),
+                        style: (this.baseStyle ??
+                            GoogleFonts.poppins(color: Colors.grey, fontSize: 14.0))
+                            .merge(this.selected
                             ? this.selectedStyle ??
-                                TextStyle(color: Colors.white)
-                            : null),
-                    textAlign: TextAlign.right,
+                            GoogleFonts.poppins(
+                                color: Colors.white, fontSize: 14)
+                            : GoogleFonts.poppins(
+                            color: Colors.white, fontSize: 14)),
+                        textAlign: TextAlign.right,
+                      ),
+                    ],
                   )),
             ),
             ClipRRect(

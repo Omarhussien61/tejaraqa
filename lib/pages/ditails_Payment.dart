@@ -39,7 +39,7 @@ DetailScreen(this.confirmOrder);
                   Provider.of<ThemeNotifier>(context).getColor(),)),
             ),
             Padding(
-              padding: const EdgeInsets.all(50),
+              padding: const EdgeInsets.all(30),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -69,7 +69,7 @@ DetailScreen(this.confirmOrder);
                     height: ScreenUtil.getHeight(context)/1.5,
                     child: SingleChildScrollView(
                       child: Container(
-                        margin: EdgeInsets.only(top: 30),
+                        margin: EdgeInsets.only(top: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
@@ -89,43 +89,42 @@ DetailScreen(this.confirmOrder);
                               padding:  EdgeInsets.only(top: 5),
                               child: Column(
                                 children: <Widget>[
-                                  Container(
-                                    height:confirmOrder.lineItems==null?0:confirmOrder.lineItems.length<=4?
-                                    40*confirmOrder.lineItems.length.toDouble() :20*confirmOrder.lineItems.length.toDouble(),
-                                    child: ListView.builder(
-                                      physics: new NeverScrollableScrollPhysics(),
-                                      itemCount: confirmOrder.lineItems==null?0:confirmOrder.lineItems.length,
-                                      itemBuilder: (BuildContext context, int index) {
-                                        return Container(
-                                          height: 15,
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: <Widget>[
-                                              Text(
-                                                confirmOrder.lineItems[index].name,
-                                                style: TextStyle(
-                                                    color: Provider.of<ThemeNotifier>(context).getColor(),
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 15),
-                                              ),
-                                              Text(confirmOrder.lineItems[index].quantity.toString()+' × '+confirmOrder.lineItems[index].total,
-                                                style: TextStyle(color: Colors.black, fontSize: 15),
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
                                   Padding(
-                                    padding:  EdgeInsets.only(top: 30),
+                                    padding: const EdgeInsets.all(18.0),
                                     child: Container(
-                                      width: 300.0,
-                                      height: 1.0,
-                                      color: Colors.grey,
+                                      height:confirmOrder.lineItems==null?0:confirmOrder.lineItems.length<=4?
+                                      35*confirmOrder.lineItems.length.toDouble() :20*confirmOrder.lineItems.length.toDouble(),
+                                      child: ListView.builder(
+                                        physics: new NeverScrollableScrollPhysics(),
+                                        itemCount: confirmOrder.lineItems==null?0:confirmOrder.lineItems.length,
+                                        itemBuilder: (BuildContext context, int index) {
+                                          return Container(
+                                            height: 25,
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: <Widget>[
+                                                Text(
+                                                  confirmOrder.lineItems[index].name,
+                                                  style: TextStyle(
+                                                      color: Provider.of<ThemeNotifier>(context).getColor(),
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 15),
+                                                ),
+                                                Text(confirmOrder.lineItems[index].quantity.toString()+' × '+confirmOrder.lineItems[index].total,
+                                                  style: TextStyle(color: Colors.black, fontSize: 15),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      ),
                                     ),
                                   ),
-
+                                  Container(
+                                    width: 300.0,
+                                    height: 1.0,
+                                    color: Colors.grey,
+                                  ),
                                   ListTile(
                                     leading: Icon(
                                       Icons.check_circle,
