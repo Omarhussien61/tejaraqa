@@ -325,9 +325,17 @@ if(widget.address_shiping!=null){
   _navigateAndDisplaySelection(BuildContext context) async {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
-    address_shiping= await Navigator.push(
+    address = new Address_shiping(
+        _CountryController.text,
+        _cityController.text,
+        _nameController.text,
+        _streeetController.text,
+        _buildingController.text,
+        _AddressController.text,lang: widget.address_shiping.lang,lat:widget.address_shiping.lat,id: widget.address_shiping.id );
+    print(address.lat.toString()+' ----- '+address.lang.toString());
+     await Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => MapSample(address_shiping: address_shiping,))
+        MaterialPageRoute(builder: (context) => MapSample(address_shiping: address))
     );
 
     Navigator.pop(context);

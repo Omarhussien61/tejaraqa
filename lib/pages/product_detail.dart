@@ -22,6 +22,7 @@ import 'package:shoppingapp/modal/productmodel.dart';
 import 'package:shoppingapp/pages/order_page.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
 import 'package:shoppingapp/service/productdervice.dart';
+import 'package:shoppingapp/utils/commons/AddFavorite.dart';
 import 'package:shoppingapp/utils/dialogComment.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/utils/util/recentId.dart';
@@ -50,6 +51,8 @@ class ProductDetailPage extends StatefulWidget {
 
 class _ProductDetailPageState extends State<ProductDetailPage>
     with TickerProviderStateMixin {
+  bool isliked;
+
   AnimationController controller;
   SQL_Helper helper = new SQL_Helper();
   final formKey = GlobalKey<FormState>();
@@ -72,13 +75,11 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   int piece = 1;
   static int count = 0;
   List<Product_review> product_review = new List<Product_review>();
-
   int idProduct;
-
   @override
   void initState() {
+    onLikeButton();
     comment=TextEditingController();
-
     fetchUserId();
     countCart();
     tempScroll = ScrollController()
@@ -414,16 +415,19 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                               heroTag: null,
                                               elevation: 0,
                                               onPressed: () {
-                                                setState(() {
-                                                  isLiked = !isLiked;
-                                                });
+                                                onLikeTapped();
+
                                               },
                                               backgroundColor:
                                                   themeColor.getColor(),
-                                              child: Icon(Icons.favorite,
-                                                  color: Theme.of(context)
-                                                      .floatingActionButtonTheme
-                                                      .backgroundColor),
+                                              child: Icon(
+                                                isliked != null
+                                                    ? !isliked
+                                                    ? Icons.favorite
+                                                    : Icons.favorite_border
+                                                    : Icons.favorite_border,
+                                                color: Colors.white,
+                                              ),
                                             ),
                                           ),
                                         )
@@ -1200,5 +1204,23 @@ setState(() {
       });
     });
   }
+  bool onLikeButton() {
+    FavoritecheckItem(widget.product).then((value) => {
+      setState(() {
+        isliked = value;
+      }),
+      print(isliked)
+    });
+    return isliked;
+  }
 
+  bool onLikeTapped() {
+    Favorite(widget.product).then((value) => {
+      setState(() {
+        isliked = !value;
+      })
+    });
+
+    return isliked;
+  }
 }

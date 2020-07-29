@@ -7,7 +7,7 @@ class FavoriteModel extends Model{
   int _id;
   String _name;
   String _category;
-  double _price;
+  String _price;
   String _image;
 
 
@@ -35,7 +35,7 @@ class FavoriteModel extends Model{
     this._id = map["id"];
     this._name = map["name"];
     this._category = map["category"];
-    this._price =3.3;
+    this._price =map["prise"];
     this._image = map["image"];
   }
 
@@ -48,9 +48,9 @@ class FavoriteModel extends Model{
     _image = value;
   }
 
-  double get price => _price;
+  String get price => _price;
 
-  set price(double value) {
+  set price(String value) {
     _price = value;
   }
 

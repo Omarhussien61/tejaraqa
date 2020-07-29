@@ -179,12 +179,11 @@ class MapSampleState extends State<MapSample> {
       print(' ${first.locality}, ${first.adminArea},${first.subLocality}, ${first
           .subAdminArea},${first.addressLine}, ${first.featureName},${first
           .thoroughfare}, ${first.subThoroughfare}');
-      setState(() {
-       widget.address_shiping==null? address_shiping=new Address_shiping(
+        address_shiping=new Address_shiping(
             first.countryName,first.adminArea,'',
             first.featureName, '', first.addressLine,lang:latLng.longitude,
-            lat: latLng.latitude):address_shiping=widget.address_shiping;
-      });
+            lat: latLng.latitude,id: widget.address_shiping==null?null:widget.address_shiping.id);
+
       return first;
 
     } catch (e) {
@@ -193,6 +192,7 @@ class MapSampleState extends State<MapSample> {
 
   }
   getUserLocation() async {
+    print('fooooo');
     //call this async method from whereever you need
     String error;
     Location location = new Location();
@@ -217,9 +217,23 @@ class MapSampleState extends State<MapSample> {
     _goToPosition1(myLocation.latitude, myLocation.longitude);
     getUserLocationAddress(latLng);
   }
+  getUserinformation() async {
+    //call this async method from whereever you need
+    String error;
+    Location location = new Location();
+
+
+    LatLng latLng=new LatLng(widget.address_shiping.lat, widget.address_shiping.lang);
+    setState(() {
+      _markers.add(Marker(markerId: MarkerId('1'), icon: customIcon, position:latLng ));
+    });
+    _goToPosition1(widget.address_shiping.lat, widget.address_shiping.lang);
+    getUserLocationAddress(latLng);
+  }
+
   @override
   void initState() {
-    getUserLocation();
+    widget.address_shiping==null?getUserLocation():getUserinformation();
     _buildingController = TextEditingController();
     _streeetController = TextEditingController();
   }

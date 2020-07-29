@@ -73,7 +73,7 @@ class OrderItem extends StatelessWidget {
                   height: 2,
                 ),
                 Text(
-                  getTransrlate(context, 'totalOrder')+' : '+ NumberUtility.changeDigit(orders_model.total, NumStrLanguage.Farsi),
+                  getTransrlate(context, 'totalOrder')+' : '+orders_model.total +" "+orders_model.currencySymbol,
                   style: GoogleFonts.poppins(
                     fontSize: 13,
                     color: Color(0xFF5D6A78),

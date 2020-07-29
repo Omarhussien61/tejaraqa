@@ -70,7 +70,8 @@ class _OrdersDetailPageState extends State<OrdersDetailPage> {
             itemCount: orders.length,
             itemBuilder: (BuildContext context, int index) {
               return  OrderItem(
-                  themeColor: themeColor, orders_model:orders[index] );
+                  themeColor: themeColor, orders_model:orders[index]
+              );
             },
           ),
         ):

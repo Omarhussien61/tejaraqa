@@ -82,7 +82,7 @@ class SQL_Helper {
     await db.execute(
         "CREATE TABLE $tableFavorite($_id INTEGER PRIMARY KEY, "
             " $__nameFavorite TEXT, $__priseFavorite TEXT," +
-            " $__Categoryname DOUBLE, $__imageFavorite TEXT  )");
+            " $__Categoryname TEXT, $__imageFavorite TEXT  )");
   }
 
    Future<List<Map<String, dynamic>>> getcartMapList() async {

@@ -39,40 +39,40 @@ DetailScreen(this.confirmOrder);
                   Provider.of<ThemeNotifier>(context).getColor(),)),
             ),
             Padding(
-              padding: const EdgeInsets.all(30),
+              padding: const EdgeInsets.only(left: 30,right: 30,top: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Container(
-                      width: 101,
-                      height: 101,
-                      decoration: BoxDecoration(
-                        color: Colors.red[100],
-                        borderRadius: BorderRadius.all(Radius.circular(50.5)),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 40,
-                            height: 31,
-                            child: Icon(Icons.check,size: deviceHeight/20,
-                              color: Provider.of<ThemeNotifier>(context).getColor(),),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
                   Container(
-                    height: ScreenUtil.getHeight(context)/1.5,
+                    height: ScreenUtil.getHeight(context)/1.05,
                     child: SingleChildScrollView(
                       child: Container(
                         margin: EdgeInsets.only(top: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: Container(
+                                width: 101,
+                                height: 101,
+                                decoration: BoxDecoration(
+                                  color: Colors.red[100],
+                                  borderRadius: BorderRadius.all(Radius.circular(50.5)),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      width: 40,
+                                      height: 31,
+                                      child: Icon(Icons.check,size: deviceHeight/20,
+                                        color: Provider.of<ThemeNotifier>(context).getColor(),),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                             Align(
                               alignment: Alignment.topCenter,
                               child: Text(
@@ -85,146 +85,180 @@ DetailScreen(this.confirmOrder);
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding:  EdgeInsets.only(top: 5),
-                              child: Column(
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.all(18.0),
-                                    child: Container(
-                                      height:confirmOrder.lineItems==null?0:confirmOrder.lineItems.length<=4?
-                                      35*confirmOrder.lineItems.length.toDouble() :20*confirmOrder.lineItems.length.toDouble(),
-                                      child: ListView.builder(
-                                        physics: new NeverScrollableScrollPhysics(),
-                                        itemCount: confirmOrder.lineItems==null?0:confirmOrder.lineItems.length,
-                                        itemBuilder: (BuildContext context, int index) {
-                                          return Container(
-                                            height: 25,
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: <Widget>[
-                                                Text(
-                                                  confirmOrder.lineItems[index].name,
-                                                  style: TextStyle(
-                                                      color: Provider.of<ThemeNotifier>(context).getColor(),
-                                                      fontWeight: FontWeight.bold,
-                                                      fontSize: 15),
+                            Column(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 15,left: 15),
+                                  child: Container(
+                                    child: ListView.builder(
+                                      physics: new NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: confirmOrder.lineItems==null?0:confirmOrder.lineItems.length,
+                                      itemBuilder: (BuildContext context, int index) {
+                                        return Table(
+                                          border: TableBorder.all(color: Colors.black),
+                                          children: [
+                                            TableRow(children: [
+                                              Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Container(
+                                                  height: 25,
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: <Widget>[
+                                                      Text(
+                                                        confirmOrder.lineItems[index].name,
+                                                        style: TextStyle(
+                                                            color: Provider.of<ThemeNotifier>(context).getColor(),
+                                                            fontWeight: FontWeight.bold,
+                                                            fontSize: 15),
+                                                      ),
+                                                      Text(confirmOrder.lineItems[index].quantity.toString()+' × '+confirmOrder.lineItems[index].total,
+                                                        style: TextStyle(color: Colors.black, fontSize: 15),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
-                                                Text(confirmOrder.lineItems[index].quantity.toString()+' × '+confirmOrder.lineItems[index].total,
-                                                  style: TextStyle(color: Colors.black, fontSize: 15),
-                                                ),
-                                              ],
-                                            ),
-                                          );
-                                        },
-                                      ),
+                                              ),
+                                            ]),
+                                          ],
+                                        );
+                                      },
                                     ),
                                   ),
-                                  Container(
-                                    width: 300.0,
-                                    height: 1.0,
-                                    color: Colors.grey,
+                                ),
+                                ListTile(
+                                  leading: Icon(
+                                    Icons.check_circle,
+                                    color:Provider.of<ThemeNotifier>(context).getColor(),
+                                    size: deviceHeight/20,
                                   ),
-                                  ListTile(
-                                    leading: Icon(
-                                      Icons.check_circle,
-                                      color:Provider.of<ThemeNotifier>(context).getColor(),
-                                      size: deviceHeight/20,
-                                    ),
-                                    title: Text(
-                                      getTransrlate(context, 'totalOrder'),
+                                  title: Text(
+                                    getTransrlate(context, 'totalOrder'),
 
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15.0),
+                                  ),
+                                  subtitle: Text(
+                                    '# :'+confirmOrder.id.toString(),
+                                    style: TextStyle(
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12.0),
+                                  ),
+                                  trailing: Padding(
+                                    padding: const EdgeInsets.only(top: 20.0),
+                                    child: Text(
+                                      setTotal().toString()+confirmOrder.currencySymbol,
                                       style: TextStyle(
                                           color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15.0),
-                                    ),
-                                    subtitle: Text(
-                                      '# :'+confirmOrder.id.toString(),
-                                      style: TextStyle(
-                                          color: Colors.grey,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.0),
                                     ),
-                                    trailing: Padding(
-                                      padding: const EdgeInsets.only(top: 20.0),
-                                      child: Text(
-                                        setTotal().toString()+confirmOrder.currencySymbol,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 12.0),
-                                      ),
-                                    ),
                                   ),
-                                  Container(
-                                    width: 300.0,
-                                    height: 1.0,
-                                    color: Colors.grey,
+                                ),
+                                ListTile(
+                                  leading: Icon(
+                                    Icons.check_circle,
+                                    color:Provider.of<ThemeNotifier>(context).getColor(),
+                                    size: deviceHeight/20,
                                   ),
-                                  ListTile(
-                                    leading: Icon(
-                                      Icons.check_circle,
-                                      color:Provider.of<ThemeNotifier>(context).getColor(),
-                                      size: deviceHeight/20,
-                                    ),
+                                  title: Text(
+                                    getTransrlate(context, 'totaldiscount'),
 
-                                    title: Text(
-                                      getTransrlate(context, 'totalShipping'),
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15.0),
+                                  ),
+                                  subtitle: Text(
+                                    '# :'+confirmOrder.id.toString(),
+                                    style: TextStyle(
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12.0),
+                                  ),
+                                  trailing: Padding(
+                                    padding: const EdgeInsets.only(top: 20.0),
+                                    child: Text(
+                                      confirmOrder.discountTotal.toString()+confirmOrder.currencySymbol,
                                       style: TextStyle(
                                           color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15.0),
-                                    ),
-                                    subtitle: Text(
-                                      '#: '+confirmOrder.shippingLines[0].id.toString(),
-                                      style: TextStyle(
-                                          color: Colors.grey,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.0),
                                     ),
-                                    trailing: Padding(
-                                      padding: const EdgeInsets.only(top: 20.0),
-                                      child: Text(
-                                        confirmOrder.shippingTotal+confirmOrder.currencySymbol,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 12.0),
-                                      ),
-                                    ),
                                   ),
-                                  Container(
-                                    width: 300.0,
-                                    height: 1.0,
-                                    color: Colors.grey,
+                                ),
+
+                                Container(
+                                  width: 300.0,
+                                  height: 1.0,
+                                  color: Colors.grey,
+                                ),
+                                ListTile(
+                                  leading: Icon(
+                                    Icons.check_circle,
+                                    color:Provider.of<ThemeNotifier>(context).getColor(),
+                                    size: deviceHeight/20,
                                   ),
-                                  ListTile(
-                                    leading: Icon(
-                                      Icons.check_circle,
-                                      color:Provider.of<ThemeNotifier>(context).getColor(),
-                                      size: deviceHeight/20,
-                                    ),
-                                    title: Text(
-                                      getTransrlate(context, 'total'),
+
+                                  title: Text(
+                                    getTransrlate(context, 'totalShipping'),
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15.0),
+                                  ),
+                                  subtitle: Text(
+                                    '#: '+confirmOrder.shippingLines[0].id.toString(),
+                                    style: TextStyle(
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12.0),
+                                  ),
+                                  trailing: Padding(
+                                    padding: const EdgeInsets.only(top: 20.0),
+                                    child: Text(
+                                      confirmOrder.shippingTotal+confirmOrder.currencySymbol,
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 15.0),
-                                    ),
-                                    trailing: Padding(
-                                      padding: const EdgeInsets.only(top: 20.0),
-                                      child: Text(
-                                        confirmOrder.total+confirmOrder.currencySymbol,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 12.0),
-                                      ),
+                                          fontSize: 12.0),
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                                Container(
+                                  width: 300.0,
+                                  height: 1.0,
+                                  color: Colors.grey,
+                                ),
+                                ListTile(
+                                  leading: Icon(
+                                    Icons.check_circle,
+                                    color:Provider.of<ThemeNotifier>(context).getColor(),
+                                    size: deviceHeight/20,
+                                  ),
+                                  title: Text(
+                                    getTransrlate(context, 'total'),
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15.0),
+                                  ),
+                                  trailing: Padding(
+                                    padding: const EdgeInsets.only(top: 20.0),
+                                    child: Text(
+                                      confirmOrder.total+confirmOrder.currencySymbol,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.0),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),

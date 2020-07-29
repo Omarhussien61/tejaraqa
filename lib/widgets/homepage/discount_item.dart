@@ -137,26 +137,30 @@ class _DiscountItemState extends State<DiscountItem> {
                           )
                         ],
                       ),
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            widget.product.oldPrice,
-                            style: GoogleFonts.poppins(
-                                decoration: TextDecoration.lineThrough,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w300),
-                          ),
-                          SizedBox(
-                            width: 4,
-                          ),
-                          Text(
-                            widget.product.price,
-                            style: GoogleFonts.poppins(
-                                color: widget.themeColor.getColor(),
-                                fontSize: 18,
-                                fontWeight: FontWeight.w300),
-                          ),
-                        ],
+                      Text(
+                        (parse(widget.product.priceHtml
+                            .toString()
+                            .trim())
+                            .body
+                            .text
+                            .trim()
+                            .length >
+                            0 ||
+                            widget.product.price
+                                .toString()
+                                .trim() ==
+                                '')
+                            ? parse(widget.product.priceHtml
+                            .toString()
+                            .trim())
+                            .body
+                            .text
+                            .trim()
+                            : "Best",
+                        style: GoogleFonts.poppins(
+                            color: widget.themeColor.getColor(),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w300),
                       ),
                       Container(
                         width: 180,
@@ -201,8 +205,11 @@ class _DiscountItemState extends State<DiscountItem> {
                           child: InkWell(
                               onTap: (){
                                 onLikeTapped();
-                              },child: Icon(isliked!=null?!isliked?Icons.favorite:Icons.favorite_border:Icons.favorite_border,
-                          color: widget.themeColor.getColor(),))
+                              },child:
+                          Icon(
+                            isliked!=null?!isliked?Icons.favorite:Icons.favorite_border:Icons.favorite_border,
+                          color: widget.themeColor.getColor(),)
+                          )
                       ),
                     ],
                   ),
@@ -276,7 +283,6 @@ class _DiscountItemState extends State<DiscountItem> {
         isliked=value;
       }),
       print(isliked)
-
     });
     return isliked;
 

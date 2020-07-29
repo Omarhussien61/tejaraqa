@@ -1,6 +1,7 @@
 // ignore: file_names
 
 import 'package:flutter/cupertino.dart';
+import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shoppingapp/modal/cart.dart';
@@ -13,12 +14,29 @@ import '../theme_notifier.dart';
 
 
 Future<bool> Favorite(ProductModel productModel) async {
-  print('insa');
+  print(productModel.categories[0].name);
 
   favorite_sql helper = favorite_sql();
-  double myInt = await double.parse(productModel.price);
-  myInt=num.parse(myInt.toStringAsFixed(2));
-  FavoriteModel favorite= new FavoriteModel(  productModel.id,productModel.name, productModel.categories[0].name, myInt,
+String price=(parse(productModel.priceHtml
+    .toString()
+    .trim())
+    .body
+    .text
+    .trim()
+    .length >
+    0 ||
+    productModel.price
+        .toString()
+        .trim() ==
+        '')
+    ? parse(productModel.priceHtml
+    .toString()
+    .trim())
+    .body
+    .text
+    .trim()
+    : "Best";
+  FavoriteModel favorite= new FavoriteModel(  productModel.id,productModel.name, productModel.categories[0].name, price,
       productModel.images[0].src);
   int result;
   if (await helper.checkItem(favorite.id) == true) {

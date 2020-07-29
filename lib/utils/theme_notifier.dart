@@ -4,6 +4,7 @@ import 'package:shoppingapp/modal/Theme.dart';
 class ThemeNotifier with ChangeNotifier {
   Color _themeData;
   String local ;
+  String Currancy ='';
   Color color;
   ThemeModel themeModel;
   int theme_index = 1;
@@ -51,6 +52,10 @@ class ThemeNotifier with ChangeNotifier {
 
   setLocal(String st) {
     local = st;
+    notifyListeners();
+  }
+  setCurrancy(String currancy) {
+    Currancy = currancy;
     notifyListeners();
   }
 
