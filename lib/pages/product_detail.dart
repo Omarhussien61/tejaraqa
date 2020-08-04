@@ -1147,7 +1147,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
         piece,
         myInt,
         DateFormat.yMMMd().format(DateTime.now()),
-        await widget.product.images[0].src);
+        await widget.product.images[0].src,widget.product.Currancy);
     print(cart.id);
 
     if (product_variations != null) {

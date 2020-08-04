@@ -85,7 +85,9 @@
   "SortByNew": "Newest",
   "SortByold": "Oldest",
   "your_profile": "Profile Information",
-  "edit": "Edit Profile",
+  "editProfile": "Edit Profile",
+  "edit": "Edit",
+
   "profile_name": "Name",
   "mail": "Mail",
   "display_name": "Display Name",

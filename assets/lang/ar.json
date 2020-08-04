@@ -88,6 +88,7 @@
   "SortByold": "الاقدم",
   "Sort": "رتب حسب",
   "your_profile": "الملف الشخصى",
+  "editProfile": "تعديل",
   "edit": "تعديل",
   "profile_name": "الاسم",
   "mail": "البريد الألكترونى",
@@ -137,6 +138,7 @@
   "Done": "تم",
   "sorry": "نأسف",
   "notSavedAddress": "لم يتم أضافة العنوان",
+
   "SavedAddress": "تم أضافة العنوان ",
   "notSavedcart": "لم يتم أضافة الى العربة",
   "Savedcart": "تم أضافة الى العربة ",

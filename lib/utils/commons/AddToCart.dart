@@ -13,7 +13,7 @@ void save(ProductModel productModel,int id,String name,String price,BuildContext
   double myInt = await double.parse(price);
   myInt=num.parse(myInt.toStringAsFixed(2));
   Cart cart= new Cart(  id, name, 1, myInt,
-      DateFormat.yMMMd().format(DateTime.now()),productModel.images[0].src);
+      DateFormat.yMMMd().format(DateTime.now()),productModel.images[0].src,productModel.Currancy);
   int result;
   if (await helper.checkItem(cart.id) == true) {
     result =  await helper.insertCart(cart);

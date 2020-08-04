@@ -77,7 +77,7 @@ class OrderService {
   }
 
   List<Coupons> coupons;
-  static Future<double> getCoupons(String code,int id) async {
+  static Future<double> getCoupons(String code,int id,double total,int count) async {
     List<Coupons> coupons;
     var dio = Dio();
     String URL=APICONFIQ.getCopons+APICONFIQ.Key+'&code=$code';
@@ -102,9 +102,18 @@ class OrderService {
           return 0;
         }
           var moonLanding = DateTime.parse(coupon.dateExpires);
-        if(moonLanding.difference(DateTime.now()).inHours>=1)
-          return double.parse(coupon.amount);else return 0;
-
+        if(moonLanding.difference(DateTime.now()).inHours>=1){
+          if(coupon.discountType=='fixed_cart')
+          {
+          return double.parse(coupon.amount);
+          }
+          else  if(coupon.discountType=='percent'){
+            return total/double.parse(coupon.amount);
+          }
+          else  if(coupon.discountType=='fixed_product'){
+            return double.parse(coupon.amount)*count;
+          }
+        }else return 0;
       } else {
         return 0;
       }

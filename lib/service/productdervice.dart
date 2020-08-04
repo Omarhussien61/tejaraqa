@@ -64,6 +64,7 @@ class ProductService {
       APICONFIQ.getproducts+APICONFIQ.Key,
           options: buildCacheOptions(Duration(days: 7), forceRefresh: true),
     );
+
       if (response.statusCode == 200) {
         var list = response.data as List;
         completer.complete(products = list
@@ -137,7 +138,6 @@ class ProductService {
     }
     return ProductModel.fromJson(response.data);
   }
-
   static Future<List<ProductModel>> getMoreSaleProducts() async {
     List<ProductModel> products;
     var dio = Dio();

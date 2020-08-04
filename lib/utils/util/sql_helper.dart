@@ -29,6 +29,7 @@ class SQL_Helper {
   String __pass = "prise";
   String __date = "date";
   String __image = "image";
+  String _Currancy = "currancy";
 
   String _tableNameRecent = "Recent_table";
   String _idRecent = "id";
@@ -71,7 +72,7 @@ class SQL_Helper {
 
   void createDatabase(Database db, int version) async {
     await db.execute(
-        "CREATE TABLE $tableName($_id INTEGER PRIMARY KEY,$_idVariation INTEGER , $__name TEXT, $__quantity INTEGER," +
+        "CREATE TABLE $tableName($_id INTEGER PRIMARY KEY,$_idVariation INTEGER , $__name TEXT, $_Currancy TEXT, $__quantity INTEGER," +
             " $__pass DOUBLE, $__date TEXT , $__image TEXT )");
     await db.execute(
         "CREATE TABLE $_tableNameAddress($_idAddress INTEGER PRIMARY KEY, $__title TEXT, $__country TEXT, $__city TEXT," +

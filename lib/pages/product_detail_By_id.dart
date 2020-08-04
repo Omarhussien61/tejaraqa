@@ -1187,7 +1187,7 @@ class _ProductDetailPage_idState extends State<ProductDetailPage_id>
         piece,
         myInt,
         DateFormat.yMMMd().format(DateTime.now()),
-        await productModel.images[0].src);
+        await productModel.images[0].src,productModel.Currancy);
     if (product_variations != null) {
       cart.idVariation = checkboxValueB;
     }

@@ -162,7 +162,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
                             minFontSize: 11,
                           ),
                           Text(
-                            CartList[position].pass.toString(),
+                            CartList[position].pass.toString()+" "+ CartList[position].Currancy ,
                             style: GoogleFonts.poppins(
                                 color: Provider.of<ThemeNotifier>(context).getColor(),
                                 fontSize: 18,
@@ -394,14 +394,14 @@ class HomeWidgetState extends State<ShoppingCartPage>
 
     }
   }
-  double calculateTotal() {
+  String calculateTotal() {
     setState(() {
       total = 0;
       CartList.forEach((f) {
         total += f.quantity * f.pass;
       });
     });
-    return num.parse(total.toStringAsFixed(10));
+    return num.parse(total.toStringAsFixed(10)).toString()+'  '+CartList[0].Currancy;
   }
   void showLogintDialog(String title, String msg){
     Alert(

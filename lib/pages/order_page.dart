@@ -39,6 +39,7 @@ class OrderPage extends StatefulWidget {
 class _OrderPageState extends State<OrderPage> {
   bool state = false;
   double copon = 0;
+  double totalbeforedesc = 0;
   String code;
   bool coponState = true;
   TextEditingController _CoponController;
@@ -46,16 +47,23 @@ class _OrderPageState extends State<OrderPage> {
   Address_shiping address;
   SQL_Address helper = new SQL_Address();
   int count = 0;
+  int countItem = 0;
+
   int checkboxValueA =0, checkboxValueB=0;
   List<PaymentModel> PaymentList;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   bool _isLoading = false;
+  bool _isedit = false;
+
+  String _coponButton;
+
   String phone;
   String username, name, email;
   int id;
 
   @override
   void initState() {
+    totalbeforedesc=widget.total;
     fetchUserId();
     OrderService.getAllPayment().then((onValue) {
       setState(() {
@@ -63,6 +71,7 @@ class _OrderPageState extends State<OrderPage> {
       });
     });
     super.initState();
+
   }
 
   @override
@@ -324,6 +333,7 @@ class _OrderPageState extends State<OrderPage> {
                                   code = value;
                                 },
                                 controller: _CoponController,
+                                enabled: !_isedit,
                                 decoration: InputDecoration(
                                     enabledBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
@@ -344,57 +354,74 @@ class _OrderPageState extends State<OrderPage> {
                           Expanded(
                             child: FlatButton.icon(
                                 onPressed: () async {
-                                  _isLoading = true;
-                                  copon = await OrderService.getCoupons(code,id);
-                                  print('copoun = '+copon.toString());
-                                  if (copon == 0) {
-                                    final snackbar = SnackBar(
-                                      content: Text(getTransrlate(
-                                          context, 'codeInveild')),
-                                    );
-                                    scaffoldKey.currentState
-                                        .showSnackBar(snackbar);
-                                    setState(() {
-                                      _isLoading = false;
-
+                                  if(_isedit)
+                                    {
+                                      setState(() {
+                                        _isedit=false;
+                                        widget.total=totalbeforedesc;
+                                        copon=0;
+                                      });
+                                    }
+                                  else{
+                                    _isedit=true;
+                                     _coponButton= getTransrlate(context, 'edit');
+                                      _isLoading = true;
+                                    widget.items.forEach((f) {
+                                      countItem += f.quantity ;
                                     });
-                                   // _CoponController.clear();
-                                  } else {
-                                    setState(() {
-                                      _isLoading = false;
+                                    copon = await OrderService.getCoupons(code,id,widget.total,countItem);
+                                    print('copoun = '+copon.toString());
+                                    if (copon == 0) {
+                                      final snackbar = SnackBar(
+                                        content: Text(getTransrlate(
+                                            context, 'codeInveild')),
+                                      );
+                                      scaffoldKey.currentState
+                                          .showSnackBar(snackbar);
+                                      setState(() {
+                                        _isLoading = false;
 
-                                    });
-                                    final snackbar = SnackBar(
-                                      content: Text(
-                                          getTransrlate(context, 'codeUsage')),
-                                    );
-                                    final snackbarconfirmed = SnackBar(
-                                      content: Text(
-                                          getTransrlate(context, 'codeDone')),
-                                    );
-                                    coponState
-                                        ? setState(() {
-                                            copon = copon + 0;
-                                            widget.total =
-                                                (widget.total - copon < 0)
-                                                    ? 0
-                                                    : widget.total - copon;
-                                            coponState = false;
-                                            _isLoading = false;
-                                            scaffoldKey.currentState
-                                                .showSnackBar(
-                                                    snackbarconfirmed);
-                                          })
-                                        : scaffoldKey.currentState
-                                            .showSnackBar(snackbar);
+                                      });
+                                      // _CoponController.clear();
+                                    }
+                                    else {
+                                      setState(() {
+                                        _isLoading = false;
+
+                                      });
+                                      final snackbar = SnackBar(
+                                        content: Text(
+                                            getTransrlate(context, 'codeUsage')),
+                                      );
+                                      final snackbarconfirmed = SnackBar(
+                                        content: Text(
+                                            getTransrlate(context, 'codeDone')),
+                                      );
+                                      coponState
+                                          ? setState(() {
+                                        copon = copon + 0;
+                                        widget.total =
+                                        (widget.total - copon < 0)
+                                            ? 0
+                                            : widget.total - copon;
+                                        coponState = false;
+                                        _isLoading = false;
+                                        scaffoldKey.currentState
+                                            .showSnackBar(
+                                            snackbarconfirmed);
+                                      })
+                                          : scaffoldKey.currentState
+                                          .showSnackBar(snackbar);
+                                    }
                                   }
+
                                 },
                                 icon: Icon(
                                   Icons.local_offer,
                                   size: 15,
                                 ),
                                 label: Text(
-                                  getTransrlate(context, 'couponApplay'),
+                                    _isedit?getTransrlate(context, 'edit'):getTransrlate(context, 'couponApplay') ,
                                   style: TextStyle(fontSize: 15),
                                 )),
                           ),
@@ -435,7 +462,7 @@ class _OrderPageState extends State<OrderPage> {
                                 ),
                               ),
                               Text(
-                                widget.total.toString(),
+                                widget.total.toString()+' '+widget.items[0].Currancy,
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
                                   color: Colors.black87,
@@ -457,7 +484,8 @@ class _OrderPageState extends State<OrderPage> {
                                 ),
                               ),
                               Text(
-                                copon == null ? '0.0' : copon.toString(),
+                                copon == null ? '0.0'+' '+widget.items[0].Currancy
+                                    : copon.toString()+' '+widget.items[0].Currancy,
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
                                   color: Colors.black87,

@@ -57,6 +57,7 @@ class _HomeNavigatorState extends State<HomeNavigator> {
     db.then((database) {
       Future<List<Recentview>> ProductView = sql_rercent.getRecentViewList();
       ProductView.then((theList) {
+        theList!=null?
         setState(() {
           contVeiw=theList[0].id.toString();
           for (int i = 1; i <= theList.length-1 ; i++){
@@ -64,7 +65,7 @@ class _HomeNavigatorState extends State<HomeNavigator> {
             contVeiw=contVeiw+','+theList[i].id.toString();
           }
           productview=ProductService.getRecentviewProducts(contVeiw);
-        });
+        }):0;
       });
     });
 

@@ -12,16 +12,23 @@ class Cart extends Model{
   double _pass;
   String _date;
   String _image;
+  String _Currancy;
 
 
   Cart(this._id, this._name, this._quantity, this._pass, this._date,
-      this._image);
+      this._image,this._Currancy);
 
   Cart.withId(this._id, this._name, this._quantity, this._pass,
       this._date,this._image,[this._idVariation]);
   String get image => _image;
 
   String get date => _date;
+
+  String get Currancy => _Currancy;
+
+  set Currancy(String value) {
+    _Currancy = value;
+  }
 
   int get idVariation => _idVariation;
 
@@ -57,6 +64,7 @@ class Cart extends Model{
     map["prise"] = this._pass;
     map["date"] = this._date;
     map["image"] = this._image;
+    map["currancy"] = this._Currancy;
 
     return map;
   }
@@ -69,6 +77,8 @@ class Cart extends Model{
     this._pass = map["prise"];
     this._date = map["date"];
     this._image = map["image"];
+    this._Currancy = map["currancy"];
+
   }
 
   set quantity(int value) {

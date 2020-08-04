@@ -10,6 +10,8 @@ class ProductModel {
   String priceHtml;
   String oldPrice;
   String status;
+  String Currancy;
+
   String purchaseNote;
   String description;
   String salePrice;
@@ -43,9 +45,9 @@ class ProductModel {
         this.categories,
       this.averageRating,
       this.attri,
+        this.Currancy,
       this.variations,
       this.related_ids});
-
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     var list = json['images'] as List;
     var listcats = json['categories'] as List;
@@ -55,6 +57,10 @@ class ProductModel {
     var RealatedList =json['related_ids'].cast<int>() ;
 
     List<Categories> cats = listcats.map((i) => Categories.fromJson(i)).toList();
+
+    var document = parse(json['price_html']);
+    var priceElement = document.getElementsByClassName("woocommerce-Price-currencySymbol");
+    print(priceElement[0].text);
 
     List<Images> imagesList = list.map((i) => Images.fromJson(i)).toList();
     List<attributes> newAttributesList =
@@ -85,6 +91,7 @@ class ProductModel {
         averageRating: json['average_rating'],
        purchaseNote: json['purchase_note'],
         attri: newAttributesList,
+      Currancy: priceElement[0].text,
       variations: variationsList,
       related_ids: RealatedList
 
