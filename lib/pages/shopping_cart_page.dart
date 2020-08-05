@@ -13,6 +13,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shoppingapp/modal/cart.dart';
 import 'package:shoppingapp/modal/createOrder.dart';
 import 'package:shoppingapp/pages/order_page.dart';
+import 'package:shoppingapp/utils/commons/AddFavorite.dart';
 import 'package:shoppingapp/utils/commons/AddToCart.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
@@ -172,7 +173,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
                       ),
                     ),
                     Container(
-                      width: 100,
+                      width: 120,
                       height: 50,
                       margin: EdgeInsets.only(top: 26),
                       child: Align(
@@ -202,7 +203,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.only(
-                                        right: 16.0),
+                                        right: 8.0,left: 8.0),
                                     child: Text(
                                       "-",
                                       style: TextStyle(
@@ -235,7 +236,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.only(
-                                        left: 16.0),
+                                        right: 8.0,left: 8.0),
                                     child: Text("+",
                                         style: TextStyle(
                                             color: Colors.white)),
@@ -355,7 +356,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
             color: themeColor.getColor(),
             child: Text(
               getTransrlate(context, 'Confirm'),
-              style: GoogleFonts.poppins(color: whiteColor, fontSize: 10),
+              style: GoogleFonts.poppins(color: whiteColor, fontSize: 16),
             ),
             onPressed: () {
               if(connected) {
@@ -371,7 +372,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
                       .of<ThemeNotifier>(context)
                       .isLogin ?
                   Nav.route(context, OrderPage(CartList, total)) :
-                  showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'));
+                  showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
                 }
               }
               else{
@@ -402,37 +403,5 @@ class HomeWidgetState extends State<ShoppingCartPage>
       });
     });
     return num.parse(total.toStringAsFixed(10)).toString()+'  '+CartList[0].Currancy;
-  }
-  void showLogintDialog(String title, String msg){
-    Alert(
-        context: context,
-        title:getTransrlate(context, 'notlogin'),
-        desc: getTransrlate(context, 'PleaseLogin'),
-        content: Form(
-          child: Column(
-            children: <Widget>[
-            ],
-          ),
-        ),
-        buttons: [
-          DialogButton(
-            color:Colors.red,
-            onPressed: () {
-              Navigator.of(context).pop(false);
-            },
-            child:Text(getTransrlate(context, 'cancel')),
-          ),
-          DialogButton(
-            color:Provider.of<ThemeNotifier>(context).getColor(),
-            onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (_) {
-                    return LoginPage();
-                  });
-            },
-            child:Text(getTransrlate(context, 'login')),
-          )
-        ]).show();
   }
 }

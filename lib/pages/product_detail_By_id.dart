@@ -575,7 +575,7 @@ class _ProductDetailPage_idState extends State<ProductDetailPage_id>
                                                 child: Padding(
                                                   padding:
                                                       const EdgeInsets.only(
-                                                          right: 16.0),
+                                                          left: 8.0,right: 8.0),
                                                   child: Text(
                                                     "-",
                                                     style: TextStyle(
@@ -612,7 +612,7 @@ class _ProductDetailPage_idState extends State<ProductDetailPage_id>
                                                 child: Padding(
                                                   padding:
                                                       const EdgeInsets.only(
-                                                          left: 16.0),
+                                                          left: 8.0,right: 8.0),
                                                   child: Text("+",
                                                       style: TextStyle(
                                                           color: Colors.white)),

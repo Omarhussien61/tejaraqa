@@ -15,10 +15,12 @@ import 'commons/AddToCart.dart';
 
 class DialogVreations extends StatefulWidget {
   DialogVreations({
+  @required this.ctx,
     Key key,
     @required this.product,
   }) : super(key: key);
   final ProductModel product;
+  final BuildContext ctx;
 
 
   @override
@@ -35,7 +37,6 @@ class _DialogVreationsState extends State<DialogVreations> {
 String option;
   String price= '0';
   String photo= '0';
-
   _DialogVreationsState(this.productselect);
 
   @override
@@ -130,7 +131,7 @@ String option;
       actions: <Widget>[
         Center(child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text(getTransrlate(context, 'price')+' =  $price'+' \$ ',
+          child: Text(getTransrlate(context, 'price')+' =  $price '+widget.product.Currancy,
             style: GoogleFonts.poppins(color:bloc.getColor() , fontSize: 20),
           ),
         )),
@@ -145,14 +146,19 @@ String option;
               final form = formKey.currentState;
               if (form.validate()) {
                 form.save();
+
                 save(productselect,product_variations[checkboxValueA].id,widget.product.name+' - '+option,product_variations[checkboxValueA].price,context);
                 countCart(context);
                 Navigator.pop(context);
+
+                Scaffold.of(widget.ctx).showSnackBar(SnackBar(
+                  backgroundColor: bloc.getColor(),
+                    content: Text(getTransrlate(context, 'Savedcart'))));
               }
             },
             child: Text(
               getTransrlate(context, 'Confirm'),
-              style: TextStyle(color: Colors.white, fontSize: 20),
+              style: TextStyle(color: Colors.white, fontSize: 16),
             ),
           ),
         ):Container()

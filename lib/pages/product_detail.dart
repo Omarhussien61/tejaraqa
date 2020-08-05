@@ -450,12 +450,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                   Container(
                                     margin: EdgeInsets.only(bottom: 12),
                                     child: ExpandablePanel(
-//                                  hasIcon: true,
-//                                  iconColor: themeColor.getColor(),
-//                                  headerAlignment:
-//                                  ExpandablePanelHeaderAlignment.center,
-//                                  iconPlacement:
-//                                  ExpandablePanelIconPlacement.left,
                                       header: Text(
                                         getTransrlate(context, 'showAll'),
                                         style: GoogleFonts.poppins(
@@ -504,19 +498,55 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                           Row(
                                             children: <Widget>[
                                               Text(
-                                                getTransrlate(context, 'price')+": ",
+                                                getTransrlate(context, 'price')+" :  ",
                                                 style: GoogleFonts.poppins(
-                                                    color:
-                                                        themeColor.getColor(),
+                                                    color: themeColor.getColor(),
                                                     fontSize: 18),
                                               ),
-                                              Text(
-                                                widget.product.price,
+                                              widget.product.variations.isEmpty
+                                                  ? Row(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: <Widget>[
+                                                  Text(
+                                                    widget.product.oldPrice+' ',
+                                                    style: GoogleFonts.poppins(
+                                                        decoration: TextDecoration.lineThrough,
+                                                        fontSize: 14,
+                                                        fontWeight: FontWeight.w300),
+                                                  ),
+                                                  Text(
+                                                    widget.product.price+' '+widget.product.Currancy,
+                                                    style: GoogleFonts.poppins(
+                                                        color: themeColor.getColor(),
+                                                        fontSize: 18,
+                                                        fontWeight: FontWeight.w400),
+                                                  )
+                                                ],
+                                              )
+                                                  : Text(
+                                                (parse(widget.product.priceHtml
+                                                    .toString()
+                                                    .trim())
+                                                    .body
+                                                    .text
+                                                    .trim()
+                                                    .length >
+                                                    0 ||
+                                                    widget.product.price
+                                                        .toString()
+                                                        .trim() ==
+                                                        '')
+                                                    ? parse(widget.product.priceHtml
+                                                    .toString()
+                                                    .trim())
+                                                    .body
+                                                    .text
+                                                    .trim()
+                                                    : "Best",
                                                 style: GoogleFonts.poppins(
-                                                    color:
-                                                        themeColor.getColor(),
+                                                    color: themeColor.getColor(),
                                                     fontSize: 18),
-                                              ),
+                                              )
                                             ],
                                           ),
                                           SizedBox(
@@ -569,7 +599,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                                 child: Padding(
                                                   padding:
                                                       const EdgeInsets.only(
-                                                          right: 16.0),
+                                                          left: 8.0,right: 8.0),
                                                   child: Text(
                                                     "-",
                                                     style: TextStyle(
@@ -605,7 +635,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                                 child: Padding(
                                                   padding:
                                                       const EdgeInsets.only(
-                                                          left: 16.0),
+                                                          left: 8.0,right: 8.0),
                                                   child: Text("+",
                                                       style: TextStyle(
                                                           color: Colors.white)),
@@ -644,7 +674,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                                           setState(() {
                                                             checkboxValueA = position;
                                                             checkboxValueB=product_variations[position].id;
-                                                            widget.product.priceHtml=product_variations[position].price;
+                                                            widget.product.priceHtml=product_variations[position].price+' '+widget.product.Currancy;
                                                             widget.product.price=product_variations[position].price;
                                                             idProduct=product_variations[position].id;
                                                             vriationName=product_variations[position].attributes[pos].option;
@@ -1135,10 +1165,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   }
   void _save(BuildContext context) async {
 
-
-    print(widget.product.id);
-    print(widget.product.price);
-
     double myInt = await double.parse(widget.product.price);
     myInt = num.parse(myInt.toStringAsFixed(2));
     cart = Cart(
@@ -1215,11 +1241,12 @@ setState(() {
   }
 
   bool onLikeTapped() {
+    Provider.of<ThemeNotifier>(context).isLogin?
     Favorite(widget.product).then((value) => {
       setState(() {
         isliked = !value;
       })
-    });
+    }):showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
 
     return isliked;
   }

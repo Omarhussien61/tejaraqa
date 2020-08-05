@@ -8,6 +8,7 @@ import 'package:shoppingapp/pages/change_password_page.dart';
 import 'package:shoppingapp/pages/edit_user_info_page.dart';
 import 'package:shoppingapp/pages/login_page.dart';
 import 'package:shoppingapp/pages/notification_settings_page.dart';
+import 'package:shoppingapp/utils/commons/AddFavorite.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
@@ -71,7 +72,7 @@ class _MyProfileSettingsState extends State<MyProfileSettings> {
                 ListTile(
                   onTap: () {
                     themeColor.isLogin? Nav.route(context, ChangePasswordPage()):
-                    showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'));
+                    showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
                   },
                   leading: Image.asset(
                     "assets/icons/ic_lock.png",
@@ -117,34 +118,6 @@ class _MyProfileSettingsState extends State<MyProfileSettings> {
         ),
       ),
     );
-  }
-  void showLogintDialog(String title, String msg){
-    Alert(
-        context: context,
-        title:getTransrlate(context, 'notlogin'),
-        desc: getTransrlate(context, 'PleaseLogin'),
-        content: Form(
-          child: Column(
-            children: <Widget>[
-            ],
-          ),
-        ),
-        buttons: [
-          DialogButton(
-            color:Colors.red,
-            onPressed: () {
-              Navigator.of(context).pop(false);
-            },
-            child:Text(getTransrlate(context, 'cancel')),
-          ),
-          DialogButton(
-            color:Provider.of<ThemeNotifier>(context).getColor(),
-            onPressed: () {
-             Nav.route(context, LoginPage());
-            },
-            child:Text(getTransrlate(context, 'login')),
-          )
-        ]).show();
   }
 
 }

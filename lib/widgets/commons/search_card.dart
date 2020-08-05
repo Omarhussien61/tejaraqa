@@ -7,6 +7,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:html/parser.dart';
+import 'package:provider/provider.dart';
 import 'package:shoppingapp/modal/productmodel.dart';
 import 'package:shoppingapp/pages/product_detail.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
@@ -51,7 +52,11 @@ class _SearchCardState extends State<SearchCard> {
       children: <Widget>[
         InkWell(
           onTap: () {
-            Nav.route(context, ProductDetailPage(product: widget.product,));
+            Nav.route(
+                context,
+                ProductDetailPage(
+                  product: widget.product,
+                ));
           },
           child: Container(
             width: ScreenUtil.getWidth(context) / 2,
@@ -87,10 +92,11 @@ class _SearchCardState extends State<SearchCard> {
                               ),
                               child: CachedNetworkImage(
                                 fit: BoxFit.cover,
-                                imageUrl: (widget.product.images!=[])?
-                                widget.product.images[0].src:
-                                'http://arabimagefoundation.com/images/defaultImage.png',
-                                errorWidget: (context, url, error) => Icon(Icons.error),
+                                imageUrl: (widget.product.images != [])
+                                    ? widget.product.images[0].src
+                                    : 'http://arabimagefoundation.com/images/defaultImage.png',
+                                errorWidget: (context, url, error) =>
+                                    Icon(Icons.error),
                               ),
                             )),
                       ],
@@ -120,7 +126,8 @@ class _SearchCardState extends State<SearchCard> {
                           children: <Widget>[
                             RatingBar(
                               ignoreGestures: true,
-                              initialRating: double.parse(widget.product.averageRating),
+                              initialRating:
+                                  double.parse(widget.product.averageRating),
                               itemSize: 14.0,
                               minRating: 1,
                               direction: Axis.horizontal,
@@ -144,31 +151,54 @@ class _SearchCardState extends State<SearchCard> {
                             )
                           ],
                         ),
-                        Text(
-                          (parse(widget.product.priceHtml
-                              .toString()
-                              .trim())
-                              .body
-                              .text
-                              .trim()
-                              .length >
-                              0 ||
-                              widget.product.price
-                                  .toString()
-                                  .trim() ==
-                                  '')
-                              ? parse(widget.product.priceHtml
-                              .toString()
-                              .trim())
-                              .body
-                              .text
-                              .trim()
-                              : "Best",
-                          style: GoogleFonts.poppins(
-                              color: widget.themeColor.getColor(),
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400),
-                        )
+                        widget.product.variations.isEmpty
+                            ? Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  SizedBox(
+                                    height: 4,
+                                  ),
+                                  Text(
+                                    widget.product.oldPrice+' ',
+                                    style: GoogleFonts.poppins(
+                                        decoration: TextDecoration.lineThrough,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w300),
+                                  ),
+                                  Text(
+                                    widget.product.price+' '+widget.product.Currancy,
+                                    style: GoogleFonts.poppins(
+                                        color: widget.themeColor.getColor(),
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w400),
+                                  )
+                                ],
+                              )
+                            : Text(
+                                (parse(widget.product.priceHtml
+                                                    .toString()
+                                                    .trim())
+                                                .body
+                                                .text
+                                                .trim()
+                                                .length >
+                                            0 ||
+                                        widget.product.price
+                                                .toString()
+                                                .trim() ==
+                                            '')
+                                    ? parse(widget.product.priceHtml
+                                            .toString()
+                                            .trim())
+                                        .body
+                                        .text
+                                        .trim()
+                                    : "Best",
+                                style: GoogleFonts.poppins(
+                                    color: widget.themeColor.getColor(),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400),
+                              )
                       ],
                     ),
                   )
@@ -182,18 +212,32 @@ class _SearchCardState extends State<SearchCard> {
           right: 22,
           child: InkWell(
             onTap: () {
-              if(widget.product.variations.isEmpty) {
-                save(widget.product,widget.product.id,widget.product.name,widget.product.price,context);
-                Scaffold.of(context).showSnackBar(SnackBar(
-                    backgroundColor: widget.themeColor.getColor(),
-                    content: Text('Product added to cart')));}
+              if(!Provider.of<ThemeNotifier>(context).isLogin)
+                showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
               else{
-                showDialog(
-                    context: context,
-                    builder: (_) {
-                      print(widget.product.id);
-                      return DialogVreations(product:widget.product);
-                    });
+                if (widget.product.variations.isEmpty) {
+                  save(
+                      widget.product,
+                      widget.product.id,
+                      widget.product.name,
+                      widget.product.price,
+                      context);
+                  countCart(context);
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                      backgroundColor: mainColor,
+                      content: Text(getTransrlate(
+                          context, 'Savedcart'))));
+                }
+                else {
+                  showDialog(
+                      context: context,
+                      builder: (_) {
+                        print(widget.product.id);
+                        return DialogVreations(
+                            product: widget.product,
+                        ctx: context,);
+                      });
+                }
               }
             },
             child: Container(
@@ -233,8 +277,11 @@ class _SearchCardState extends State<SearchCard> {
                   onLikeTapped();
                 },
                 child: Icon(
-                  isliked!=null?!isliked?Icons.favorite:Icons.favorite_border:Icons.favorite_border,
-                  color: widget.themeColor.getColor(),)),
+                  isliked != null
+                      ? !isliked ? Icons.favorite : Icons.favorite_border
+                      : Icons.favorite_border,
+                  color: widget.themeColor.getColor(),
+                )),
           ),
         )
       ],
@@ -252,11 +299,13 @@ class _SearchCardState extends State<SearchCard> {
   }
 
   bool onLikeTapped() {
+    Provider.of<ThemeNotifier>(context).isLogin?
     Favorite(widget.product).then((value) => {
-          setState(() {
-            isliked = !value;
-          })
-        });
+      setState(() {
+        isliked = !value;
+      })
+    }):showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
+
 
     return isliked;
   }

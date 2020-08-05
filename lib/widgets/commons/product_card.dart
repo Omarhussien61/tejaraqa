@@ -7,6 +7,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:html/parser.dart';
+import 'package:provider/provider.dart';
 import 'package:shoppingapp/modal/productmodel.dart';
 import 'package:shoppingapp/pages/product_detail.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
@@ -156,7 +157,7 @@ class _ProductCardState extends State<ProductCard> {
                   },
                   child: Container(
                     color: Colors.white,
-                    width:ScreenUtil.getWidth(context)/2.6,
+                    width:ScreenUtil.getWidth(context)/2.1,
                     padding: EdgeInsets.only(left: 10, top: 4),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -207,7 +208,30 @@ class _ProductCardState extends State<ProductCard> {
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Text(
+                            widget.product.variations.isEmpty
+                                ? Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                SizedBox(
+                                  height: 4,
+                                ),
+                                Text(
+                                  widget.product.oldPrice+' ',
+                                  style: GoogleFonts.poppins(
+                                      decoration: TextDecoration.lineThrough,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w300),
+                                ),
+                                Text(
+                                  widget.product.price+' '+widget.product.Currancy,
+                                  style: GoogleFonts.poppins(
+                                      color: widget.themeColor.getColor(),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w400),
+                                )
+                              ],
+                            )
+                                : Text(
                               (parse(widget.product.priceHtml
                                   .toString()
                                   .trim())
@@ -229,66 +253,76 @@ class _ProductCardState extends State<ProductCard> {
                                   : "Best",
                               style: GoogleFonts.poppins(
                                   color: widget.themeColor.getColor(),
-                                  fontSize: 12,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.w400),
                             ),
                             SizedBox(
                               height: 8,
                             ),
-                            InkWell(
-                              onTap: () {
-                                if (widget.product.variations.isEmpty) {
-                                  save(
-                                      widget.product,
-                                      widget.product.id,
-                                      widget.product.name,
-                                      widget.product.price,
-                                      context);
-                                  countCart(context);
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                      backgroundColor: mainColor,
-                                      content: Text(getTransrlate(
-                                          context, 'Savedcart'))));
-                                } else {
-                                  showDialog(
-                                      context: context,
-                                      builder: (_) {
-                                        print(widget.product.id);
-                                        return DialogVreations(
-                                            product: widget.product);
-                                      });
-                                }
-                              },
-                              child: Container(
-                                padding: EdgeInsets.only(
-                                    top: 8, left: 8, bottom: 10, right: 8),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: Colors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Colors.grey[200],
-                                          blurRadius: 5.0,
-                                          spreadRadius: 1,
-                                          offset: Offset(0.0, 1)),
-                                    ]),
-                                child: Row(
-                                  children: <Widget>[
-                                    SvgPicture.asset(
-                                      "assets/icons/ic_product_shopping_cart.svg",
-                                      height: 12,
-                                    ),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Text(
-                                      getTransrlate(context, 'ADDtoCart'),
-                                      style: GoogleFonts.poppins(
-                                          color: Color(0xFF5D6A78),
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w400),
-                                    )
-                                  ],
+                            Container(
+                              width:ScreenUtil.getWidth(context)/2.8,
+                              child: InkWell(
+                                onTap: () {
+                                  if(!Provider.of<ThemeNotifier>(context).isLogin)
+                                  showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
+                                  else{
+                                    if (widget.product.variations.isEmpty) {
+                                      save(
+                                          widget.product,
+                                          widget.product.id,
+                                          widget.product.name,
+                                          widget.product.price,
+                                          context);
+                                      countCart(context);
+                                      Scaffold.of(context).showSnackBar(SnackBar(
+                                          backgroundColor: mainColor,
+                                          content: Text(getTransrlate(
+                                              context, 'Savedcart'))));
+                                    }
+                                    else {
+                                      showDialog(
+                                          context: context,
+                                          builder: (_) {
+                                            print(widget.product.id);
+                                            return DialogVreations(
+                                                product: widget.product,
+                                            ctx: context,);
+                                          });
+                                    }
+                                  }
+
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.only(
+                                      top: 8, left: 8, bottom: 10, right: 8),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: Colors.grey[200],
+                                            blurRadius: 5.0,
+                                            spreadRadius: 1,
+                                            offset: Offset(0.0, 1)),
+                                      ]),
+                                  child: Row(
+                                    children: <Widget>[
+                                      SvgPicture.asset(
+                                        "assets/icons/ic_product_shopping_cart.svg",
+                                        height: 12,
+                                      ),
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      Text(
+                                        getTransrlate(context, 'ADDtoCart'),
+                                        style: GoogleFonts.poppins(
+                                            color: Color(0xFF5D6A78),
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w400),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             )
@@ -317,11 +351,13 @@ class _ProductCardState extends State<ProductCard> {
   }
 
   bool onLikeTapped() {
+    Provider.of<ThemeNotifier>(context).isLogin?
     Favorite(widget.product).then((value) => {
-          setState(() {
-            isliked = !value;
-          })
-        });
+      setState(() {
+        isliked = !value;
+      })
+    }):showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
+
 
     return isliked;
   }

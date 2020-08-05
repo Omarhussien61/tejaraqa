@@ -360,6 +360,7 @@ class _OrderPageState extends State<OrderPage> {
                                         _isedit=false;
                                         widget.total=totalbeforedesc;
                                         copon=0;
+                                        countItem=0;
                                       });
                                     }
                                   else{
@@ -414,7 +415,6 @@ class _OrderPageState extends State<OrderPage> {
                                           .showSnackBar(snackbar);
                                     }
                                   }
-
                                 },
                                 icon: Icon(
                                   Icons.local_offer,
@@ -462,7 +462,7 @@ class _OrderPageState extends State<OrderPage> {
                                 ),
                               ),
                               Text(
-                                widget.total.toString()+' '+widget.items[0].Currancy,
+                                totalbeforedesc.toString()+' '+widget.items[0].Currancy,
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
                                   color: Colors.black87,
@@ -495,13 +495,35 @@ class _OrderPageState extends State<OrderPage> {
                               ),
                             ],
                           ),
+                          Row(
+                            children: <Widget>[
+                              Text(
+                                getTransrlate(context, 'total')+' : ',
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: 15,
+                                  letterSpacing: 0.7,
+                                ),
+                              ),
+                              Text(
+                                widget.total.toString()+' '+widget.items[0].Currancy,
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: 15,
+                                  letterSpacing: 0.7,
+                                ),
+                              ),
+                            ],
+                          ),
+
                         ],
                       ),
                     ),
                     SizedBox(
                       height: 16,
                     ),
-
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0, right: 8),
                       child: GFButton(

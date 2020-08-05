@@ -15,6 +15,7 @@ import 'package:shoppingapp/pages/contact_page.dart';
 import 'package:shoppingapp/pages/Support_page.dart';
 import 'package:shoppingapp/pages/login_page.dart';
 import 'package:shoppingapp/pages/profile_settings_page.dart';
+import 'package:shoppingapp/utils/commons/AddFavorite.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/utils/util/shared_preferences_helper.dart';
 import 'package:shoppingapp/utils/drawer_menu/simple_hidden_drawer/animated_drawer_content.dart';
@@ -215,7 +216,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                       InkWell(
                         onTap: () {
                           themeColor.isLogin?_navigateAndDisplaySelection(context):
-                          showLogintDialog(getTransrlate(context, 'login'),getTransrlate(context, 'PleaseLogin'));
+                          showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
                         },
                         child: ItemHiddenMenu(
                           icon: Icon(
@@ -372,38 +373,6 @@ class _HiddenMenuState extends State<HiddenMenu> {
         _indexSelected = position;
       });
     });
-  }
-  void showLogintDialog(String title, String msg){
-    Alert(
-        context: context,
-        title:getTransrlate(context, 'notlogin'),
-        desc: getTransrlate(context, 'PleaseLogin'),
-        content: Form(
-          child: Column(
-            children: <Widget>[
-            ],
-          ),
-        ),
-        buttons: [
-          DialogButton(
-            color:Colors.red,
-            onPressed: () {
-              Navigator.of(context).pop(false);
-            },
-            child:Text(getTransrlate(context, 'cancel')),
-          ),
-          DialogButton(
-            color:Provider.of<ThemeNotifier>(context).getColor(),
-            onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (_) {
-                    return LoginPage();
-                  });
-            },
-            child:Text(getTransrlate(context, 'login')),
-          )
-        ]).show();
   }
 
 

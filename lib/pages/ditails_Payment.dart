@@ -29,17 +29,8 @@ DetailScreen(this.confirmOrder);
         child: Stack(
           alignment: Alignment.center,
           children: [
-            Positioned(
-              top: 36,
-              right: 20,
-              child: GestureDetector(
-                  onTap: () =>Nav.routeReplacement(context, InitPage()),
-
-                  child: Icon(Icons.close,color:
-                  Provider.of<ThemeNotifier>(context).getColor(),)),
-            ),
             Padding(
-              padding: const EdgeInsets.only(left: 30,right: 30,top: 20),
+              padding: const EdgeInsets.only(left: 20,right: 20,top: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -106,15 +97,21 @@ DetailScreen(this.confirmOrder);
                                                   child: Row(
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: <Widget>[
-                                                      Text(
-                                                        confirmOrder.lineItems[index].name,
-                                                        style: TextStyle(
-                                                            color: Provider.of<ThemeNotifier>(context).getColor(),
-                                                            fontWeight: FontWeight.bold,
-                                                            fontSize: 15),
+                                                      Container(
+                                                        width: deviceWidth/2,
+                                                        child: Text(
+                                                          confirmOrder.lineItems[index].name,
+                                                          style: TextStyle(
+                                                              color: Provider.of<ThemeNotifier>(context).getColor(),
+                                                              fontWeight: FontWeight.bold,
+                                                              fontSize: 15),
+                                                        ),
                                                       ),
-                                                      Text(confirmOrder.lineItems[index].quantity.toString()+' × '+confirmOrder.lineItems[index].total,
-                                                        style: TextStyle(color: Colors.black, fontSize: 15),
+                                                      Container(
+                                                        width: deviceWidth/4,
+                                                        child: Text(confirmOrder.lineItems[index].quantity.toString()+' × '+confirmOrder.lineItems[index].total,
+                                                          style: TextStyle(color: Colors.black, fontSize: 15),
+                                                        ),
                                                       ),
                                                     ],
                                                   ),
@@ -129,29 +126,21 @@ DetailScreen(this.confirmOrder);
                                 ),
                                 ListTile(
                                   leading: Icon(
-                                    Icons.check_circle,
+                                    Icons.arrow_drop_down_circle,
                                     color:Provider.of<ThemeNotifier>(context).getColor(),
                                     size: deviceHeight/20,
                                   ),
                                   title: Text(
                                     getTransrlate(context, 'totalOrder'),
-
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15.0),
                                   ),
-                                  subtitle: Text(
-                                    '# :'+confirmOrder.id.toString(),
-                                    style: TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.0),
-                                  ),
                                   trailing: Padding(
-                                    padding: const EdgeInsets.only(top: 20.0),
+                                    padding: const EdgeInsets.only(top: 10.0),
                                     child: Text(
-                                      setTotal().toString()+confirmOrder.currencySymbol,
+                                      setTotalDesc().toString()+'  '+confirmOrder.currencySymbol,
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
@@ -161,7 +150,7 @@ DetailScreen(this.confirmOrder);
                                 ),
                                 ListTile(
                                   leading: Icon(
-                                    Icons.check_circle,
+                                    Icons.remove_circle,
                                     color:Provider.of<ThemeNotifier>(context).getColor(),
                                     size: deviceHeight/20,
                                   ),
@@ -173,17 +162,10 @@ DetailScreen(this.confirmOrder);
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15.0),
                                   ),
-                                  subtitle: Text(
-                                    '# :'+confirmOrder.id.toString(),
-                                    style: TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.0),
-                                  ),
                                   trailing: Padding(
-                                    padding: const EdgeInsets.only(top: 20.0),
+                                    padding: const EdgeInsets.only(top: 10.0),
                                     child: Text(
-                                      confirmOrder.discountTotal.toString()+confirmOrder.currencySymbol,
+                                      confirmOrder.discountTotal.toString()+'  '+confirmOrder.currencySymbol,
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
@@ -191,15 +173,9 @@ DetailScreen(this.confirmOrder);
                                     ),
                                   ),
                                 ),
-
-                                Container(
-                                  width: 300.0,
-                                  height: 1.0,
-                                  color: Colors.grey,
-                                ),
                                 ListTile(
                                   leading: Icon(
-                                    Icons.check_circle,
+                                    Icons.add_circle,
                                     color:Provider.of<ThemeNotifier>(context).getColor(),
                                     size: deviceHeight/20,
                                   ),
@@ -211,28 +187,16 @@ DetailScreen(this.confirmOrder);
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15.0),
                                   ),
-                                  subtitle: Text(
-                                    '#: '+confirmOrder.shippingLines[0].id.toString(),
-                                    style: TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.0),
-                                  ),
                                   trailing: Padding(
                                     padding: const EdgeInsets.only(top: 20.0),
                                     child: Text(
-                                      confirmOrder.shippingTotal+confirmOrder.currencySymbol,
+                                      confirmOrder.shippingTotal+'  '+confirmOrder.currencySymbol,
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.0),
                                     ),
                                   ),
-                                ),
-                                Container(
-                                  width: 300.0,
-                                  height: 1.0,
-                                  color: Colors.grey,
                                 ),
                                 ListTile(
                                   leading: Icon(
@@ -250,7 +214,7 @@ DetailScreen(this.confirmOrder);
                                   trailing: Padding(
                                     padding: const EdgeInsets.only(top: 20.0),
                                     child: Text(
-                                      confirmOrder.total+confirmOrder.currencySymbol,
+                                      confirmOrder.total+'  '+confirmOrder.currencySymbol,
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
@@ -270,6 +234,14 @@ DetailScreen(this.confirmOrder);
                 ],
               ),
             ),
+            Positioned(
+              top: 36,
+              right: 20,
+              child: InkWell(
+                  onTap: () =>Nav.routeReplacement(context, InitPage()),
+                  child: Icon(Icons.close,color:
+                  Provider.of<ThemeNotifier>(context).getColor(),)),
+            ),
           ],
         ),
       )
@@ -283,6 +255,15 @@ DetailScreen(this.confirmOrder);
     double totals=total-shippingTotal;
     return totals;
   }
+setTotalDesc(){
+  var shippingTotal = double.parse(confirmOrder.discountTotal);
+  assert(shippingTotal is double);
+  var total = setTotal();
+  assert(total is double);
+  double totals=total+shippingTotal;
+  return totals;
+}
+
 }
 
 

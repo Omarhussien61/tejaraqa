@@ -133,9 +133,6 @@ class _InitPageState extends State<InitPage> {
   SQL_Helper helper = new SQL_Helper();
   @override
   void initState() {
-
-
-
     WidgetsBinding.instance.addPostFrameCallback((_) =>
         MyApp.setlocal(context,
             Locale(Provider.of<ThemeNotifier>(context).getlocal(),'')));

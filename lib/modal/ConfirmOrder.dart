@@ -95,8 +95,7 @@ class ConfirmOrder {
     customerUserAgent = json['customer_user_agent'];
     customerNote = json['customer_note'];
     print('test');
-    billing =
-    json['billing'] != null ? new BillingConfirm.fromJson(json['billing']) : null;
+    billing = json['billing'] != null ? new BillingConfirm.fromJson(json['billing']) : null;
     shipping = json['shipping'] != null
         ? new Shippingconfirm.fromJson(json['shipping'])
         : null;
@@ -104,6 +103,7 @@ class ConfirmOrder {
     paymentMethodTitle = json['payment_method_title'];
     transactionId = json['transaction_id'];
     print('test123');
+
     if (json['line_items'] != null) {
       lineItems = new List<LineItemsConfirm>();
       json['line_items'].forEach((v) {
@@ -156,7 +156,7 @@ class ConfirmOrder {
     data['payment_method'] = this.paymentMethod;
     data['payment_method_title'] = this.paymentMethodTitle;
     data['transaction_id'] = this.transactionId;
-
+    print('go');
     if (this.shippingLines != null) {
       data['shipping_lines'] =
           this.shippingLines.map((v) => v.toJson()).toList();
@@ -286,7 +286,7 @@ class LineItemsConfirm {
   String totalTax;
 
   String sku;
-  int price;
+   String price;
 
   LineItemsConfirm(
       {this.id,
@@ -306,17 +306,23 @@ class LineItemsConfirm {
   LineItemsConfirm.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+
     productId = json['product_id'];
     variationId = json['variation_id'];
+
     quantity = json['quantity'];
+
     taxClass = json['tax_class'];
     subtotal = json['subtotal'];
+
     subtotalTax = json['subtotal_tax'];
     total = json['total'];
+
     totalTax = json['total_tax'];
 
     sku = json['sku'];
-    price = json['price'];
+    price = json['price'].toString();
+
   }
 
   Map<String, dynamic> toJson() {

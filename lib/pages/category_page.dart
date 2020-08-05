@@ -52,7 +52,7 @@ class _CategoryPageState extends State<CategoryPage> {
         selectedTabBackgroundColor: whiteColor,
         tabBackgroundColor: themeColor.getColor(),
         backgroundColor: greyBackground,
-        direction: TextDirection.rtl,
+        direction:themeColor.getlocal()=='ar' ?TextDirection.ltr:TextDirection.rtl,
         tabsWidth: 48,
         maincat: maincat,
         subcats: subcats,

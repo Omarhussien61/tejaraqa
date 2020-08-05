@@ -137,7 +137,30 @@ class _DiscountItemState extends State<DiscountItem> {
                           )
                         ],
                       ),
-                      Text(
+                      widget.product.variations.isEmpty
+                          ? Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 4,
+                          ),
+                          Text(
+                            widget.product.oldPrice+' ',
+                            style: GoogleFonts.poppins(
+                                decoration: TextDecoration.lineThrough,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w300),
+                          ),
+                          Text(
+                            widget.product.price+' '+widget.product.Currancy,
+                            style: GoogleFonts.poppins(
+                                color: widget.themeColor.getColor(),
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400),
+                          )
+                        ],
+                      )
+                          : Text(
                         (parse(widget.product.priceHtml
                             .toString()
                             .trim())
@@ -159,8 +182,8 @@ class _DiscountItemState extends State<DiscountItem> {
                             : "Best",
                         style: GoogleFonts.poppins(
                             color: widget.themeColor.getColor(),
-                            fontSize: 16,
-                            fontWeight: FontWeight.w300),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400),
                       ),
                       Container(
                         width: 180,
@@ -223,22 +246,32 @@ class _DiscountItemState extends State<DiscountItem> {
             child: Container(
               child: GFButton(
                 onPressed: () {
-                  if(widget.product.variations.isEmpty) {
-                    save(widget.product,widget.product.id,widget.product.name,widget.product.price,context);
-                    helper.getCount().then((value) {
-                      Provider.of<ThemeNotifier>(context).intcountCart(value);
-                    });
-                    Scaffold.of(context).showSnackBar(SnackBar(
-                        backgroundColor: mainColor,
-                        content: Text(getTransrlate(context, 'Savedcart'))));
-                  }
+                  if(!Provider.of<ThemeNotifier>(context).isLogin)
+                    showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
                   else{
-                    showDialog(
-                        context: context,
-                        builder: (_) {
-                          print(widget.product.id);
-                          return DialogVreations(product:widget.product);
-                        });
+                    if (widget.product.variations.isEmpty) {
+                      save(
+                          widget.product,
+                          widget.product.id,
+                          widget.product.name,
+                          widget.product.price,
+                          context);
+                      countCart(context);
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                          backgroundColor: mainColor,
+                          content: Text(getTransrlate(
+                              context, 'Savedcart'))));
+                    }
+                    else {
+                      showDialog(
+                          context: context,
+                          builder: (_) {
+                            print(widget.product.id);
+                            return DialogVreations(
+                                product: widget.product,
+                            ctx: context,);
+                          });
+                    }
                   }
 
                 },
@@ -290,11 +323,13 @@ class _DiscountItemState extends State<DiscountItem> {
 
   bool onLikeTapped() {
 
+    Provider.of<ThemeNotifier>(context).isLogin?
     Favorite(widget.product).then((value) => {
-    setState(() {
-    isliked=!value;
-    })
-    });
+      setState(() {
+        isliked = !value;
+      })
+    }):showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
+
 
     return isliked;
 }
