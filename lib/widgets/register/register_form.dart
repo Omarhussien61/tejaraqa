@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shoppingapp/modal/User.dart';
 import 'package:shoppingapp/service/loginservice.dart';
@@ -392,47 +393,84 @@ class _RegisterFormState extends State<RegisterForm> {
         });
   }
 
-  Future<bool> smsOTPDialog(BuildContext context) {
-    return showDialog(
+  Future<bool> smsOTPDialog(BuildContext ctx) {
+    String button=getTransrlate(context, 'Confirm');
+    Color c=Colors.lightBlue;
+    bool stat=true;
+    showDialog(
         context: context,
-        barrierDismissible: false,
         builder: (BuildContext context) {
-          return new AlertDialog(
-            title: Text(getTransrlate(context, 'CodeConfirm')),
-            content: Container(
-              height: 85,
-              child: Column(children: [
-                TextField(
-                  onChanged: (value) {
-                    this.smsOTP = value;
-                  },
+          return StatefulBuilder(builder: (context, StateSetter setState) {
+            return  Center(
+              child: Container(
+                height: ScreenUtil.getHeight(context)/1.7,
+                width: ScreenUtil.getWidth(context)/1.5,
+                child: Scaffold(
+                  body: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                              height: ScreenUtil.getHeight(context)/3,
+                              child: Image.network('https://d2.woo2.app/wp-content/uploads/2020/08/21638066-removebg-preview.png')),
+                          Text('Check sms inbox'),
+                          Form(
+                            child:  Padding(
+                              padding: const EdgeInsets.only(top: 16),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  prefixIcon:Icon(Icons.comment),
+                                  hintText: 'code',
 
-                ),
-                (errorMessage != ''
-                    ? Text(
-                  errorMessage,
-                  style: TextStyle(color: Colors.red),
-                )
-                    : Container())
-              ]),
-            ),
-            contentPadding: EdgeInsets.all(10),
-            actions: <Widget>[
+                                  contentPadding: EdgeInsets.all(15.0),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide(
+                                      width: 0,
+                                      style: BorderStyle.none,
+                                    ),
+                                  ),
+                                  filled: true,
+                                  fillColor: Color(0xFFEEEEF3),
+                                ),
+                                onChanged: (value){
+                                  this.smsOTP=value;
+                                },
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: DialogButton(
+                              color:c,
+                              child: Text(button,
+                                style:  TextStyle(
+                                  color: Colors.white,
+                                  fontSize:15,
+                                ),
+                              ),
+                              onPressed: () {
 
-              FlatButton(
-                child: Text(getTransrlate(context, 'Confirm'),
-                  style:  TextStyle(
-                    color: Colors.black,
-                    fontSize:15,
+                                if(stat) {
+                                  signIn();
+                                  setState(() {
+                                    c = Colors.red;
+                                    button = 'Loading';
+                                    stat = false;
+                                  });
+                                }
+                              },
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-                onPressed: () {
-                  signIn();
-                },
-              )
-
-            ],
-          );
+              ),
+            );
+          });
         });
   }
 

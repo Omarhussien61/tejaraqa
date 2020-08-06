@@ -107,18 +107,25 @@ class LoginService {
         body: model.password==null?bodyWithoutPassword:body,
         headers: {'Content-type': 'application/json'});
 
-    print(response.body);
     if (response.statusCode == 201) {
+      print(response.body);
+
       var user = new User.fromJson(jsonDecode(response.body));
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString("user_email", model.email);
       prefs.setString("user_Fristname", user.firstName);
       prefs.setString("user_lastname", user.lastName);
       prefs.setString("token", model.id.toString());
-      prefs.setInt("user_id",  model.id);
-      prefs.setString("password", model.password);
-      prefs.setString("user_nicename",  model.firstName+' '+model.lastName);
+
+      prefs.setInt("user_id",  user.id);
+      prefs.setString("user_nicename",  user.firstName+' '+user.lastName);
+      print('goooooooooooooooooooooooooooooo11111112222222323232323232323232');
+
       prefs.setString("phone", model.phone);
+
+      if(model.password==null){
+        return user;
+      }
      return loginUser(model.email,model.password);
     }
     else{
