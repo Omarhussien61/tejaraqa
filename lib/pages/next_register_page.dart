@@ -323,6 +323,7 @@ class _NextRegisterPageState extends State<NextRegisterPage> {
                               height: ScreenUtil.getHeight(context)/3,
                               child: Image.network('https://d2.woo2.app/wp-content/uploads/2020/08/21638066-removebg-preview.png')),
                           Text('Check sms inbox'),
+                          Text(widget.userM.phone),
                           Form(
                             child:  Padding(
                               padding: const EdgeInsets.only(top: 16),
