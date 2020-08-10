@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shoppingapp/modal/about_model.dart';
+import 'package:shoppingapp/service/information_servics.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/commons/text.dart';
 import 'package:shoppingapp/utils/screen.dart';
@@ -16,6 +18,17 @@ class AboutPage extends StatefulWidget {
 }
 
 class _AboutPageState extends State<AboutPage> {
+
+  about_model about;
+
+  @override
+  void initState() {
+    information_service.get_about().then((value) {
+      setState(() {
+        about=value;
+      });
+    });    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ThemeNotifier>(context);
@@ -25,12 +38,16 @@ class _AboutPageState extends State<AboutPage> {
       appBar: buildAppBar(themeColor),
       backgroundColor: greyBackground,
       body:  SingleChildScrollView(
-        child: Column(
+        child:  about==null?Center(child: CircularProgressIndicator()): Column(
           children: <Widget>[
-            Image.network('https://7lsoft.com/wp-content/uploads/2019/07/slide2.png',
-            height: ScreenUtil.getHeight(context)/4,
-            fit: BoxFit.cover),
-            aboutItem('حل سوفت','الخدمات الإلكترونية','حقيقة مثبتة من زمن طويل و هي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل'),
+            Container(
+              color: themeColor.getColor(),
+
+              child: Image.network(about.image,
+              height: ScreenUtil.getHeight(context)/4,
+              fit: BoxFit.contain),
+            ),
+            aboutItem(about.item1[0],about.item1[1],about.item1[2]),
 
           ],
 

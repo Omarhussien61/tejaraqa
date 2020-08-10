@@ -1,4 +1,9 @@
 {
+
+  "smsinbox": "Check sms inbox",
+  "Loading": "Loading",
+  "PleaseUpgrade": "Please Upgrade Plan",
+
   "OrderNote": "Order Note",
   "OrderHint": "Enter the order Notes",
   "couponcode": "Enter coupon code",
@@ -153,7 +158,7 @@
   "OrderDate": "Order Status",
   "OrderShipping": "Order Status",
   "custCode": "Order Status",
-  "name": "Order Statusa",
+  "name": "Name",
   "shipingclass": "Order Status",
   "orderTotal": "Total",
   "OrderContent": "View product specifications",

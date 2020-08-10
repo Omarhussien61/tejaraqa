@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           SearchBox(),
           CategoryListView(widget.maincat),
-          CarouselSlider(
+          themeColor.getPlan_index()==1?Container(): CarouselSlider(
             items: imageSliders,
             options: CarouselOptions(
                 autoPlay: false,
@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                   });
                 }),
           ),
-          SliderDot(current: _carouselCurrentPage),
+          themeColor.getPlan_index()==1?Container(): SliderDot(current: _carouselCurrentPage),
           DiscountList(
             product: widget.productDiscount,
             themeColor: themeColor,
@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
           SizedBox(
             height: 8,
           ),
-          CarouselSlider(
+         themeColor.getPlan_index()==1?Container(): CarouselSlider(
             items: imageSliders,
             options: CarouselOptions(
                 autoPlay: false,
@@ -126,7 +126,7 @@ class _HomePageState extends State<HomePage> {
           SizedBox(
             height: 8,
           ),
-          ProductList(
+          widget.productDiscount==null?Container():ProductList(
             themeColor: themeColor,
             product: widget.productview,
             productListTitleBar: ProductListTitleBar(

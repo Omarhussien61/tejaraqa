@@ -7,7 +7,7 @@ class ThemeNotifier with ChangeNotifier {
   String Currancy ='';
   Color color;
   ThemeModel themeModel;
-  int theme_index = 1;
+  int Plan_index = 1;
   int countCart = 1;
   bool isLogin = false;
 
@@ -15,6 +15,7 @@ class ThemeNotifier with ChangeNotifier {
 
   getColor() => _themeData;
   getlocal() => local;
+  getPlan_index() => Plan_index;
 
   setColor(Color themeData) async {
     _themeData = themeData;
@@ -33,15 +34,7 @@ class ThemeNotifier with ChangeNotifier {
   }
 
   intcnt(int st) {
-    theme_index = st;
-    if (theme_index == 1) {
-      setColor(Color(int.parse(themeModel.primaryCoustom)));
-    } else if (theme_index == 2) {
-      setColor(Colors.blueAccent);
-    }
-    else {
-      setColor(Colors.amber);
-    }
+    Plan_index = st;
     notifyListeners();
   }
 

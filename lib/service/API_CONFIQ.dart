@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:shoppingapp/modal/Config_Model.dart';
 
 class APICONFIQ{
+  static String getconfiq='https://app.woo2.app/configuration/get_config_d1.php';
   static String Base_url='https://d2.woo2.app/';
   static String url=Base_url+'/wp-json/wc/v3';
   static String consumer_key='ck_24b1dd0facc11dd602d29c37caea43f72d68394e';
@@ -47,14 +48,14 @@ class APICONFIQ{
     var client = new http.Client();
     var dio = Dio();
     dio.interceptors.add(DioCacheManager(CacheConfig(baseUrl:
-    'https://woo2.app/7l/d3/get_config_3.php'
+    getconfiq
     )).interceptor);
 
     Config_Model config_model;
     try {
 
       var response = await client.get(
-        'https://woo2.app/7l/d3/get_config_3.php',
+        getconfiq,
       );
       print(response.body);
       if (response.statusCode == 200) {

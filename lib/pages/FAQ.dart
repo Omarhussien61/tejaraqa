@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shoppingapp/modal/faq_model.dart';
+import 'package:shoppingapp/service/information_servics.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/commons/text.dart';
 import 'package:shoppingapp/utils/screen.dart';
@@ -40,7 +42,16 @@ class _FaqPageState extends State<FaqPage> {
         'By default, the last used shipping address will be saved intoto your Sample Store account. When you are checkingout your order, the default shipping address will be displayedand you have the option to amend it if you need to.',
         false)
   ];
-
+  faq_model faq;
+@override
+  void initState() {
+  information_service.get_faq().then((value) {
+    setState(() {
+      faq=value;
+    });
+  });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ThemeNotifier>(context);
@@ -68,32 +79,47 @@ class _FaqPageState extends State<FaqPage> {
             SizedBox(
               height: 16,
             ),
-
-            Container(
-              height: ScreenUtil.getHeight(context)-200,
-              child: ListView(
-                children: <Widget>[
-
-                  ... panels.map((panel)=>ExpansionTile(
-                      title: Text(
-                        panel.title,
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey[600]),
-                      ),
-
-                      children: [Container(
-                          padding: EdgeInsets.all(16.0),
-                          color: Color(0xffFAF1E2),
-                          child: Text(
-                              panel.content,
-                              style:
-                              TextStyle(color: Colors.grey, fontSize: 12)))])).toList(),
-
-                ],
+            faq==null?Center(child: CircularProgressIndicator()):Container(
+              height: ScreenUtil.getHeight(context) - 200,
+              child: ListView.builder(
+                itemCount: faq.quastions.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Text(
+                    faq.quastions[index],
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey[600]),
+                  );
+                },
               ),
             ),
+
+//            Container(
+//              height: ScreenUtil.getHeight(context)-200,
+//              child: ListView(
+//                children: <Widget>[
+//
+//                  ... panels.map((panel)=>ExpansionTile(
+//                      title: Text(
+//                        panel.title,
+//                        style: TextStyle(
+//                            fontSize: 14,
+//                            fontWeight: FontWeight.bold,
+//                            color: Colors.grey[600]),
+//                      ),
+//
+//                      children: [Container(
+//                          padding: EdgeInsets.all(16.0),
+//                          color: Color(0xffFAF1E2),
+//                          child: Text(
+//                              panel.content,
+//                              style:
+//                              TextStyle(color: Colors.grey, fontSize: 12)))])).toList(),
+//
+//                ],
+//              ),
+//            ),
           ],
         ),
       ),

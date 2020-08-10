@@ -37,7 +37,9 @@ class _NextRegisterPageState extends State<NextRegisterPage> {
   FirebaseAuth _auth = FirebaseAuth.instance;
   String smsOTP;
   final formKey = GlobalKey<FormState>();
-
+  bool stat=true;
+  String button;
+  Color c;
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ThemeNotifier>(context);
@@ -228,6 +230,7 @@ class _NextRegisterPageState extends State<NextRegisterPage> {
     switch (error.code) {
       case 'خطأ فى الكود':
         FocusScope.of(context).requestFocus(new FocusNode());
+        showAlertDialog('كود غير صحيح','Alart');
         setState(() {
           errorMessage = 'كود غير صحيح';
         });
@@ -238,6 +241,10 @@ class _NextRegisterPageState extends State<NextRegisterPage> {
       default:
         setState(() {
           errorMessage = error.message;
+          showAlertDialog(errorMessage,'Alart');
+          stat = false;
+          button=getTransrlate(context, 'Confirm');
+          c=Colors.lightBlue;
         });
 
         break;
@@ -285,12 +292,11 @@ class _NextRegisterPageState extends State<NextRegisterPage> {
       handleError(e);
     }
   }
-
   Future<bool> filedDialog(BuildContext context,String error) {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
-          return new AlertDialog(
+          return AlertDialog(
             title: Center(child: Text('خطأ')),
             content: Container(
                 child: Text(error)
@@ -300,11 +306,9 @@ class _NextRegisterPageState extends State<NextRegisterPage> {
           );
         });
   }
-
   Future<bool> smsOTPDialog(BuildContext ctx) {
-    String button=getTransrlate(context, 'Confirm');
-    Color c=Colors.lightBlue;
-    bool stat=true;
+     button=getTransrlate(context, 'Confirm');
+     c=Colors.lightBlue;
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -322,7 +326,7 @@ class _NextRegisterPageState extends State<NextRegisterPage> {
                           Container(
                               height: ScreenUtil.getHeight(context)/3,
                               child: Image.network('https://d2.woo2.app/wp-content/uploads/2020/08/21638066-removebg-preview.png')),
-                          Text('Check sms inbox'),
+                          Text(getTransrlate(context,'smsinbox')),
                           Text(widget.userM.phone),
                           Form(
                             child:  Padding(
@@ -360,15 +364,15 @@ class _NextRegisterPageState extends State<NextRegisterPage> {
                                 ),
                               ),
                               onPressed: () {
-
                                if(stat) {
                                  signIn();
                                  setState(() {
                                    c = Colors.red;
-                                   button = 'Loading';
+                                   button = getTransrlate(context, 'Loading');
                                    stat = false;
                                  });
                                }
+
                               },
                             ),
                           )

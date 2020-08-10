@@ -4,10 +4,10 @@ import 'package:shoppingapp/modal/Theme.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
 
-class theame_service{
+class theameservice{
   static Future<ThemeModel> getNewTheme() async {
     var dio = Dio();
-    String URL='https://woo2.app/7l/demo1/get_theme.php';
+    String URL='https://app.woo2.app/configuration/get_theme.php';
     dio.interceptors.add(DioCacheManager(
         CacheConfig(baseUrl:URL))
         .interceptor);

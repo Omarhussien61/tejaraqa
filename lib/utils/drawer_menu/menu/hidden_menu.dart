@@ -16,6 +16,7 @@ import 'package:shoppingapp/pages/Support_page.dart';
 import 'package:shoppingapp/pages/login_page.dart';
 import 'package:shoppingapp/pages/profile_settings_page.dart';
 import 'package:shoppingapp/utils/commons/AddFavorite.dart';
+import 'package:shoppingapp/utils/commons/show_dialog.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/utils/util/shared_preferences_helper.dart';
 import 'package:shoppingapp/utils/drawer_menu/simple_hidden_drawer/animated_drawer_content.dart';
@@ -60,7 +61,7 @@ class HiddenMenu extends StatefulWidget {
       this.initPositionSelected,
       this.backgroundColorMenu,
       this.enableShadowItensMenu = false,
-      this.typeOpen })
+      this.typeOpen})
       : super(key: key);
 
   @override
@@ -71,7 +72,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
   int _indexSelected;
   bool isconfiguredListern = false;
   int id;
-  String username,name,last,photo;
+  String username, name, last, photo;
   final facebookLogin = FacebookLogin();
   GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: [
@@ -79,7 +80,8 @@ class _HiddenMenuState extends State<HiddenMenu> {
       'https://www.googleapis.com/auth/contacts.readonly',
     ],
   );
-  Future fetchUserId() async{
+
+  Future fetchUserId() async {
     id = await SharedPreferencesHelper.getUserId();
     username = await SharedPreferencesHelper.getEmail();
     name = await SharedPreferencesHelper.getname();
@@ -119,13 +121,16 @@ class _HiddenMenuState extends State<HiddenMenu> {
               ),
               ListTile(
                 title: Text(
-                  name==null?'user':name+' '+last,
+                  name == null ? 'user' : name + ' ' + last,
                   style: GoogleFonts.poppins(color: Colors.white),
                 ),
                 leading: CircleAvatar(
-                    radius: 20,backgroundImage:CachedNetworkImageProvider(
-                   photo==null?'https://p.kindpng.com/picc/s/207-2074624_white-gray-circle-avatar-png-transparent-png.png':photo,
-                )),
+                    radius: 20,
+                    backgroundImage: CachedNetworkImageProvider(
+                      photo == null
+                          ? 'https://p.kindpng.com/picc/s/207-2074624_white-gray-circle-avatar-png-transparent-png.png'
+                          : photo,
+                    )),
               ),
               Container(
                 padding: EdgeInsets.only(
@@ -215,8 +220,12 @@ class _HiddenMenuState extends State<HiddenMenu> {
                     children: <Widget>[
                       InkWell(
                         onTap: () {
-                          themeColor.isLogin?_navigateAndDisplaySelection(context):
-                          showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
+                          themeColor.isLogin
+                              ? _navigateAndDisplaySelection(context)
+                              : showLogintDialog(
+                                  getTransrlate(context, 'login'),
+                                  getTransrlate(context, 'notlogin'),
+                                  context);
                         },
                         child: ItemHiddenMenu(
                           icon: Icon(
@@ -233,10 +242,15 @@ class _HiddenMenuState extends State<HiddenMenu> {
                       ),
                       InkWell(
                         onTap: () {
-                          Provider.of<ThemeNotifier>(context).local=='ar'?
-                          Provider.of<ThemeNotifier>(context).setLocal('en'):
-                          Provider.of<ThemeNotifier>(context).setLocal('ar');
-                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => InitPage()),
+                          Provider.of<ThemeNotifier>(context).local == 'ar'
+                              ? Provider.of<ThemeNotifier>(context)
+                                  .setLocal('en')
+                              : Provider.of<ThemeNotifier>(context)
+                                  .setLocal('ar');
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => InitPage()),
                               ModalRoute.withName("/home"));
                         },
                         child: ItemHiddenMenu(
@@ -245,7 +259,10 @@ class _HiddenMenuState extends State<HiddenMenu> {
                             size: 19,
                             color: Colors.white,
                           ),
-                          name: Provider.of<ThemeNotifier>(context).local=='ar'?'English':'عربى',
+                          name:
+                              Provider.of<ThemeNotifier>(context).local == 'ar'
+                                  ? 'English'
+                                  : 'عربى',
                           baseStyle: GoogleFonts.poppins(
                               color: Colors.white.withOpacity(0.6),
                               fontSize: 19.0),
@@ -324,17 +341,22 @@ class _HiddenMenuState extends State<HiddenMenu> {
                       ),
                       InkWell(
                         onTap: () {
-                          if (Provider.of<ThemeNotifier>(context).isLogin==false){
-                            Nav.route(context, LoginPage());
-                          }
-                          else {
-                            _logout();
-                          SharedPreferencesHelper.cleanlocal();
-                          Provider.of<ThemeNotifier>(context).setLogin(false);
-                          Navigator.pushAndRemoveUntil(context,
-                              MaterialPageRoute(builder: (context) =>
-                                  InitPage()),
-                              ModalRoute.withName("/main"));
+                          if (themeColor.getPlan_index() == 1) {
+                            show_Dialog(context);
+                          } else {
+                            if (themeColor.isLogin == false) {
+                              Nav.route(context, LoginPage());
+                            } else {
+                              _logout();
+                              SharedPreferencesHelper.cleanlocal();
+                              Provider.of<ThemeNotifier>(context)
+                                  .setLogin(false);
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => InitPage()),
+                                  ModalRoute.withName("/main"));
+                            }
                           }
                         },
                         child: ItemHiddenMenu(
@@ -343,7 +365,10 @@ class _HiddenMenuState extends State<HiddenMenu> {
                             size: 19,
                             color: Colors.white,
                           ),
-                          name:Provider.of<ThemeNotifier>(context).isLogin==false?getTransrlate(context, 'login'):getTransrlate(context, 'Logout'),
+                          name: Provider.of<ThemeNotifier>(context).isLogin ==
+                                  false
+                              ? getTransrlate(context, 'login')
+                              : getTransrlate(context, 'Logout'),
                           baseStyle: GoogleFonts.poppins(
                               color: Colors.white.withOpacity(0.6),
                               fontSize: 19.0,
@@ -361,10 +386,12 @@ class _HiddenMenuState extends State<HiddenMenu> {
       ),
     );
   }
-  _logout(){
+
+  _logout() {
     _googleSignIn.signOut();
     facebookLogin.logOut();
   }
+
   void confListern() {
     SimpleHiddenDrawerProvider.of(context)
         .getPositionSelectedListener()
@@ -375,15 +402,10 @@ class _HiddenMenuState extends State<HiddenMenu> {
     });
   }
 
-
   _navigateAndDisplaySelection(BuildContext context) async {
-
-    var result= await Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => MyProfileSettings())
-    );
+    var result = await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => MyProfileSettings()));
     print('object');
-  fetchUserId();
+    fetchUserId();
   }
-
 }

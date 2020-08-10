@@ -23,6 +23,7 @@ import 'package:shoppingapp/pages/order_page.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
 import 'package:shoppingapp/service/productdervice.dart';
 import 'package:shoppingapp/utils/commons/AddFavorite.dart';
+import 'package:shoppingapp/utils/commons/show_dialog.dart';
 import 'package:shoppingapp/utils/dialogComment.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/utils/util/recentId.dart';
@@ -722,7 +723,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                           width: 140,
                                           child: GFButton(
                                             onPressed: () {
-                                              Nav.route(
+                                              themeColor.getPlan_index()==1?show_Dialog(context):Nav.route(
                                                   context, ShoppingCartPage());
                                             },
                                             child: Text(getTransrlate(context, 'Buy'),
@@ -741,10 +742,12 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                               //Nav.route(context, OrderPage());
                                               setState(() {
                                                 // isLiked = !isLiked;
-                                                product_variations == null||product_variations.isEmpty?_save(context):checkboxValueA==null?
+
+                                                themeColor.isLogin? product_variations == null||product_variations.isEmpty?_save(context):checkboxValueA==null?
                                                 Scaffold.of(context)
                                                     .showSnackBar(SnackBar(content: Text(getTransrlate(context, 'SelectVariations')))):
-                                                _save(context);
+                                                showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context):
+                                                showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
                                               });
                                             },
                                             icon: Icon(
@@ -839,7 +842,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                     children: <Widget>[
                                       CircleAvatar(
                                         radius: 20,backgroundImage: CachedNetworkImageProvider(
-                                            photo==null?'https://p.kindpng.com/picc/s/207-2074624_white-gray-circle-avatar-png-transparent-png.png':photo,
+                                           ! themeColor.isLogin?'https://p.kindpng.com/picc/s/207-2074624_white-gray-circle-avatar-png-transparent-png.png':photo,
                                         ),
                                       ),
                                       SizedBox(
@@ -859,7 +862,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                           ),
                                           InkWell(
                                             onTap: () {
-                                              _displayDialog(
+                                             !themeColor.isLogin?showLogintDialog('','',context) :_displayDialog(
                                                   context, themeColor);
                                             },
                                             child: Container(

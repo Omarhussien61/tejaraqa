@@ -15,6 +15,7 @@ import 'package:shoppingapp/modal/createOrder.dart';
 import 'package:shoppingapp/pages/order_page.dart';
 import 'package:shoppingapp/utils/commons/AddFavorite.dart';
 import 'package:shoppingapp/utils/commons/AddToCart.dart';
+import 'package:shoppingapp/utils/commons/show_dialog.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/utils/util/sql_helper.dart';
@@ -67,10 +68,15 @@ class HomeWidgetState extends State<ShoppingCartPage>
             ? Center(
                 child: Hero(
                   tag: 'icon',
-                  child: CachedNetworkImage(
-                      errorWidget: (context, url, error) => Icon(Icons.error),
-                      imageUrl:
-                          'https://d2.woo2.app/wp-content/uploads/2020/07/Capture.png'),
+                  child: Column(
+                    children: [
+                      CachedNetworkImage(
+                          errorWidget: (context, url, error) => Icon(Icons.error),
+                          imageUrl:
+                              'https://d2.woo2.app/wp-content/uploads/2020/08/Capture__1_-removebg-preview.png'),
+                      Text(getTransrlate(context, 'CartEmpty'))
+                    ],
+                  ),
                 ),
               )
             : shoppingCartBottomSummary(themeColor),
@@ -368,11 +374,16 @@ class HomeWidgetState extends State<ShoppingCartPage>
                   );
                   scaffoldKey.currentState.showSnackBar(snackbar);
                 } else {
-                  Provider
-                      .of<ThemeNotifier>(context)
-                      .isLogin ?
-                  Nav.route(context, OrderPage(CartList, total)) :
-                  showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
+                  if(themeColor.getPlan_index()==1){
+                    show_Dialog(context);
+                  }else {
+                    Provider
+                        .of<ThemeNotifier>(context)
+                        .isLogin ?
+                    Nav.route(context, OrderPage(CartList, total)) :
+                    showLogintDialog(getTransrlate(context, 'login'),
+                        getTransrlate(context, 'notlogin'), context);
+                  }
                 }
               }
               else{

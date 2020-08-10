@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shoppingapp/modal/support_model.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
 import 'package:provider/provider.dart';
+import 'package:shoppingapp/service/information_servics.dart';
 
 class SupportPage extends StatefulWidget {
   @override
@@ -13,6 +15,17 @@ class SupportPage extends StatefulWidget {
 }
 
 class _SupportPageState extends State<SupportPage> {
+
+  support_model support;
+  @override
+  void initState() {
+    information_service.get_support().then((value) {
+      setState(() {
+        support=value;
+      });
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -26,17 +39,16 @@ class _SupportPageState extends State<SupportPage> {
     return Scaffold(
       appBar: buildAppBar(themeColor),
       backgroundColor: greyBackground,
-      body: Container(
+      body: support==null?Center(child: CircularProgressIndicator()): Container(
         child: Column(
           children: <Widget>[
             Container(
               color:themeData.primaryColor,
               child: Padding(
                 padding: const EdgeInsets.all(50.0),
-                child: Image.network('https://d2.woo2.app/wp-content/uploads/2020/07/rosen.png'),
+                child: Image.network(support.image),
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.all(24.0),
               child: IntrinsicHeight(
@@ -60,7 +72,7 @@ class _SupportPageState extends State<SupportPage> {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      Text('00966126505049'),
+                                      Text(support.phone[0]),
                                       Text(
                                         getTransrlate(context, 'phone'),
                                         style: TextStyle(
@@ -73,7 +85,7 @@ class _SupportPageState extends State<SupportPage> {
                                 ),
                                 InkWell(
                                   onTap: (){
-                                    _launchURL('sms:00966126573988');
+                                    _launchURL('sms:'+support.phone[0]);
                                   },
                                   child: SizedBox(
                                     child: Icon(
@@ -95,7 +107,7 @@ class _SupportPageState extends State<SupportPage> {
                                         height: 60,
                                       ),
                                       onTap: (){
-                                        _launchURL('tel:00966126505049');
+                                        _launchURL('tel:'+support.phone[0]);
                                       },
                                     )
                                   ],
@@ -110,7 +122,7 @@ class _SupportPageState extends State<SupportPage> {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      Text('00966126573988'),
+                                      Text(support.phone[1]),
                                       Text(
                                         getTransrlate(context, 'phone'),
                                         style: TextStyle(
@@ -124,7 +136,7 @@ class _SupportPageState extends State<SupportPage> {
                                 SizedBox(
                                   child: InkWell(
                                     onTap: (){
-                                      _launchURL('sms:00966126573988');
+                                      _launchURL('sms:'+support.phone[1]);
 
                                     },
                                     child: Icon(
@@ -139,7 +151,7 @@ class _SupportPageState extends State<SupportPage> {
                                   children: <Widget>[
                                     InkWell(
                                       onTap: (){
-                                        _launchURL('tel:00966126573988');
+                                        _launchURL('tel:'+support.phone[1]);
                                       },
                                       child: SizedBox(
                                         child: Icon(
@@ -177,7 +189,7 @@ class _SupportPageState extends State<SupportPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
 
                             children: <Widget>[
-                              Text('info@7lsoft.com'),
+                              Text(support.email[0]),
                               Text(
                                 getTransrlate(context, 'Email'),
                                 style: TextStyle(
@@ -190,7 +202,7 @@ class _SupportPageState extends State<SupportPage> {
                           )),
                           InkWell(
                             onTap: (){
-                              _launchURL('mailto:info@7lsoft.com');
+                              _launchURL('mailto:'+support.email[0]);
                             },
                             child: SizedBox(
                               child: Icon(
@@ -209,7 +221,7 @@ class _SupportPageState extends State<SupportPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
 
                             children: <Widget>[
-                              Text('info@7lsoft.com'),
+                              Text(support.email[1]),
                               Text(
                                 getTransrlate(context, 'Email'),
                                 style: TextStyle(
@@ -222,7 +234,7 @@ class _SupportPageState extends State<SupportPage> {
                           )),
                           InkWell(
                             onTap: (){
-                              _launchURL('mailto:info@7lsoft.com');
+                              _launchURL('mailto:'+support.email[1]);
                             },
                             child: SizedBox(
                               child: Icon(
