@@ -80,9 +80,9 @@ class _MyAppState extends State<MyApp> {
         APICONFIQ.Base_url=onValue.baseUrl;
         APICONFIQ.consumer_key=onValue.consumerKey;
         APICONFIQ.consumer_secret=onValue.consumerSecret;
-        Provider.of<ThemeNotifier>(context).intcnt(onValue.planIndex);
         APICONFIQ.kGoogleApiKey=onValue.kGoogleApiKey;
-       Provider.of<ThemeNotifier>(context).setLocal('en');
+        Provider.of<ThemeNotifier>(context).setLocal(onValue.local);
+        Provider.of<ThemeNotifier>(context).setConfig_model(onValue);
       });
     });
     super.initState();

@@ -1,23 +1,12 @@
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:html/parser.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:shoppingapp/modal/cart.dart';
-import 'package:shoppingapp/modal/Favorite.dart';
-import 'package:shoppingapp/modal/productmodel.dart';
 import 'package:shoppingapp/pages/login_page.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
-import 'package:shoppingapp/utils/util/sql_favorite.dart';
-import 'package:shoppingapp/utils/util/sql_helper.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../theme_notifier.dart';
-
 void show_Dialog(BuildContext context){
   Alert(
       context: context,

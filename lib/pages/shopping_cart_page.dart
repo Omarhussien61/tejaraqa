@@ -9,11 +9,9 @@ import 'package:getflutter/getflutter.dart';
 import 'package:getflutter/types/gf_button_type.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shoppingapp/modal/cart.dart';
 import 'package:shoppingapp/modal/createOrder.dart';
 import 'package:shoppingapp/pages/order_page.dart';
-import 'package:shoppingapp/utils/commons/AddFavorite.dart';
 import 'package:shoppingapp/utils/commons/AddToCart.dart';
 import 'package:shoppingapp/utils/commons/show_dialog.dart';
 import 'package:shoppingapp/utils/screen.dart';
@@ -22,7 +20,6 @@ import 'package:shoppingapp/utils/util/sql_helper.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
-import 'package:shoppingapp/widgets/homepage/search_box.dart';
 import 'package:shoppingapp/widgets/shopping_cart/shopping_cart_item.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -30,13 +27,11 @@ import 'login_page.dart';
 
 class ShoppingCartPage extends StatefulWidget {
   ShoppingCartPage({Key key}) : super(key: key);
-
   @override
   State<StatefulWidget> createState() {
     return new HomeWidgetState();
   }
 }
-
 class HomeWidgetState extends State<ShoppingCartPage>
     with SingleTickerProviderStateMixin {
   List<Cart> CartList;

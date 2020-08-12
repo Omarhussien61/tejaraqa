@@ -196,57 +196,65 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                         });
                       }),
                 ),
-                Positioned(
-                  left: 9,
-                  top: 32,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      height: 32,
-                      width: 32,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: Colors.white,
+                Padding(
+                  padding: const EdgeInsets.only(top: 24,left: 18,right: 20),
+                  child: Row(
+                  mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                    children: [
+                      Positioned(
+                        left: 9,
+                        top: 32,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            height: 32,
+                            width: 32,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: Colors.white,
+                            ),
+                            child: Icon(
+                              Icons.chevron_left,
+                              color: themeColor.getColor(),
+                            ),
+                          ),
+                        ),
                       ),
-                      child: Icon(
-                        Icons.chevron_left,
-                        color: themeColor.getColor(),
+                      Positioned(
+                        right: 24,
+                        top: 24,
+                        child: Container(
+                          height: 42,
+                          width: 48,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(8),
+                                bottomRight: Radius.circular(8)),
+                            color: Colors.white.withOpacity(0.5),
+                          ),
+                          child: Badge(
+                            animationDuration: Duration(milliseconds: 1500),
+                            badgeColor: themeColor.getColor(),
+                            alignment: Alignment(0, 0),
+                            position: BadgePosition.bottomRight(),
+                            padding: EdgeInsets.all(8),
+                            badgeContent: Text(
+                              Provider.of<ThemeNotifier>(context)
+                                  .countCart
+                                  .toString(),
+                              style: TextStyle(color: whiteColor, fontSize: 10),
+                            ),
+                            child: SvgPicture.asset(
+                              "assets/icons/ic_shopping_cart.svg",
+                              color: Colors.white,
+                              height: 26,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  right: 24,
-                  top: 24,
-                  child: Container(
-                    height: 42,
-                    width: 48,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(8),
-                          bottomRight: Radius.circular(8)),
-                      color: Colors.white.withOpacity(0.5),
-                    ),
-                    child: Badge(
-                      animationDuration: Duration(milliseconds: 1500),
-                      badgeColor: themeColor.getColor(),
-                      alignment: Alignment(0, 0),
-                      position: BadgePosition.bottomRight(),
-                      padding: EdgeInsets.all(8),
-                      badgeContent: Text(
-                        Provider.of<ThemeNotifier>(context)
-                            .countCart
-                            .toString(),
-                        style: TextStyle(color: whiteColor, fontSize: 10),
-                      ),
-                      child: SvgPicture.asset(
-                        "assets/icons/ic_shopping_cart.svg",
-                        color: Colors.white,
-                        height: 26,
-                      ),
-                    ),
+                    ],
                   ),
                 ),
 
@@ -743,10 +751,12 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                               setState(() {
                                                 // isLiked = !isLiked;
 
-                                                themeColor.isLogin? product_variations == null||product_variations.isEmpty?_save(context):checkboxValueA==null?
+                                                themeColor.isLogin?
+                                                product_variations == null||product_variations.isEmpty?_save(context)
+                                                    :checkboxValueA==null?
                                                 Scaffold.of(context)
                                                     .showSnackBar(SnackBar(content: Text(getTransrlate(context, 'SelectVariations')))):
-                                                showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context):
+                                                _save(context):
                                                 showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
                                               });
                                             },
@@ -1087,25 +1097,27 @@ class _ProductDetailPageState extends State<ProductDetailPage>
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: RatingBar(
-              initialRating: 5,
-              itemSize: 14.0,
-              minRating: 1,
-              direction: Axis.horizontal,
-              allowHalfRating: true,
-              itemCount: 5,
-              itemBuilder: (context, _) => Container(
-                height: 12,
-                child: SvgPicture.asset(
-                  "assets/icons/ic_star.svg",
-                  color: themeColor.getColor(),
-                  width: 9,
+            title: Center(
+              child: RatingBar(
+                initialRating: 5,
+                itemSize: 22,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                itemBuilder: (context, _) => Container(
+                  height: 12,
+                  child: SvgPicture.asset(
+                    "assets/icons/ic_star.svg",
+                    color: themeColor.getColor(),
+                    width: 9,
+                  ),
                 ),
+                onRatingUpdate: (rating) {
+                  rateing = rating;
+                  print(rating);
+                },
               ),
-              onRatingUpdate: (rating) {
-                rateing = rating;
-                print(rating);
-              },
             ),
             content: Form(
               key: formKey,

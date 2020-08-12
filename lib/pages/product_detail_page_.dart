@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -238,11 +239,7 @@ class _ProductDetailPageAlternativeState
                             SizedBox(
                               width: 30,
                             ),
-                            Text(product_review[position].productId.toString(),
-                                style: GoogleFonts.poppins(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w300,
-                                    color: Color(0xFF5D6A78)))
+                            Icon(Feather.chevrons_left,color: Colors.grey,)
                           ],
                         ),
                       ),
@@ -252,7 +249,6 @@ class _ProductDetailPageAlternativeState
             Center(child:
             CircularProgressIndicator(
                 valueColor:  AlwaysStoppedAnimation<Color>(themeColor.getColor()))),
-
 
           ],
         ),

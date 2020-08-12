@@ -49,9 +49,9 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Color.fromARGB(255, 252, 252, 252),
       body: ListView(
         children: <Widget>[
-          SearchBox(),
-          CategoryListView(widget.maincat),
-          themeColor.getPlan_index()==1?Container(): CarouselSlider(
+          themeColor.config_model.searchtextbox? SearchBox():Container(),
+          themeColor.config_model.productCategories? CategoryListView(widget.maincat):Container(),
+          themeColor.config_model.slider? CarouselSlider(
             items: imageSliders,
             options: CarouselOptions(
                 autoPlay: false,
@@ -63,9 +63,9 @@ class _HomePageState extends State<HomePage> {
                     _carouselCurrentPage = index;
                   });
                 }),
-          ),
-          themeColor.getPlan_index()==1?Container(): SliderDot(current: _carouselCurrentPage),
-          DiscountList(
+          ):Container(),
+          themeColor.config_model.slider? SliderDot(current: _carouselCurrentPage):Container(),
+          themeColor.config_model.productSale? DiscountList(
             product: widget.productDiscount,
             themeColor: themeColor,
             productListTitleBar: ProductListTitleBar(
@@ -73,11 +73,11 @@ class _HomePageState extends State<HomePage> {
               title: "Daily opportunity",
               isCountShow: true,
             ),
-          ),
+          ):Container(),
           SizedBox(
             height: 8,
           ),
-          ProductList(
+          themeColor.config_model.newProduct?ProductList(
             themeColor: themeColor,
             product: widget.productNew,
             productListTitleBar: ProductListTitleBar(
@@ -85,11 +85,11 @@ class _HomePageState extends State<HomePage> {
               title: "Products You May Like",
               isCountShow: false,
             ),
-          ),
+          ):Container(),
           SizedBox(
             height: 8,
           ),
-         themeColor.getPlan_index()==1?Container(): CarouselSlider(
+          themeColor.config_model.slider? CarouselSlider(
             items: imageSliders,
             options: CarouselOptions(
                 autoPlay: false,
@@ -101,11 +101,11 @@ class _HomePageState extends State<HomePage> {
                     _carouselCurrentPage = index;
                   });
                 }),
-          ),
+          ):Container(),
           SizedBox(
             height: 8,
           ),
-          ProductList(
+          themeColor.config_model.topProduct? ProductList(
             themeColor: themeColor,
             product: widget.moreSale,
             productListTitleBar: ProductListTitleBar(
@@ -113,8 +113,8 @@ class _HomePageState extends State<HomePage> {
               title: "Most Top Rated",
               isCountShow: false,
             ),
-          ),
-          DiscountList(
+          ):Container(),
+          themeColor.config_model.lowPriced? DiscountList(
             themeColor: themeColor,
             product: widget.product_low_priced,
             productListTitleBar: ProductListTitleBar(
@@ -122,11 +122,11 @@ class _HomePageState extends State<HomePage> {
               title: "Low-Priced Products",
               isCountShow: false,
             ),
-          ),
+          ):Container(),
           SizedBox(
             height: 8,
           ),
-          widget.productDiscount==null?Container():ProductList(
+          themeColor.config_model.mostRecentlyLooked? widget.productDiscount==null?Container():ProductList(
             themeColor: themeColor,
             product: widget.productview,
             productListTitleBar: ProductListTitleBar(
@@ -134,7 +134,7 @@ class _HomePageState extends State<HomePage> {
               title: "Most recently looked",
               isCountShow: false,
             ),
-          ),
+          ):Container(),
           SizedBox(
             height: 36,
           ),

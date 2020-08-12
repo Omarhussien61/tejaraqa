@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shoppingapp/modal/Config_Model.dart';
 import 'package:shoppingapp/modal/Theme.dart';
 
 class ThemeNotifier with ChangeNotifier {
@@ -10,7 +11,7 @@ class ThemeNotifier with ChangeNotifier {
   int Plan_index = 1;
   int countCart = 1;
   bool isLogin = false;
-
+  Config_Model config_model;
   ThemeNotifier(this._themeData);
 
   getColor() => _themeData;
@@ -27,7 +28,10 @@ class ThemeNotifier with ChangeNotifier {
     notifyListeners();
   }
 
-
+  setConfig_model(Config_Model config) {
+    config_model = config;
+    notifyListeners();
+  }
   setTheme(ThemeModel Model) {
     themeModel = Model;
     notifyListeners();

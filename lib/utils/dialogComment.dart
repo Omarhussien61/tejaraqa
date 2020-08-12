@@ -9,6 +9,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shoppingapp/modal/Product_review.dart';
 import 'package:shoppingapp/service/productdervice.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 
 class MyDialog extends StatefulWidget {
   int id;
@@ -112,7 +113,7 @@ class _MyDialogState extends State<MyDialog> {
                   RatingBar(
                     initialRating: rateing
                         .toDouble(),
-                    itemSize: 14.0,
+                    itemSize: 20,
                     minRating: 1,
                     direction:
                     Axis.horizontal,
@@ -136,12 +137,12 @@ class _MyDialogState extends State<MyDialog> {
                       initialValue:comment,
                       decoration: InputDecoration(
                         icon: Icon(Icons.add_comment),
-                        labelText: 'Add Comment',
+                        labelText: getTransrlate(context, 'AddComment'),
                       ),
                       onChanged: (String val) => comment = val,
                       validator: (value) {
                         if (value.isEmpty) {
-                          return 'Comment Empty';
+                          return getTransrlate(context, 'avalidComment');
                         }
                         return null;
                       }
@@ -168,7 +169,7 @@ class _MyDialogState extends State<MyDialog> {
                   }
                 },
                 child: Text(
-                  bloc.themeModel.commentConfirm[0],
+                  getTransrlate(context, 'Comment'),
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
               ),
