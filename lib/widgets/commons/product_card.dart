@@ -159,7 +159,7 @@ class _ProductCardState extends State<ProductCard> {
                   Container(
                     color: Colors.white,
                     width:ScreenUtil.getWidth(context)/2.1,
-                    padding: EdgeInsets.only(left: 10, top: 4),
+                    padding: EdgeInsets.only(left: 10, top: 4,right: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

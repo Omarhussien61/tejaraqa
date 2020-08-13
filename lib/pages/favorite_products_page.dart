@@ -1,9 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:getflutter/components/button/gf_button.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shoppingapp/modal/Favorite.dart';
+import 'package:shoppingapp/pages/search_page.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
+import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
@@ -54,7 +59,37 @@ class HomeWidgetState extends State<FavoriteProductsPage>
       child: Scaffold(
         backgroundColor: whiteColor,
         body:themeColor.isLogin? SingleChildScrollView(
-            child: Column(
+            child:favorites == null||favorites.isEmpty? Center(
+              child: Hero(
+                tag: 'icon',
+                child: Column(
+                  children: [
+
+                    Container(
+                      height: 400,
+                      child: CachedNetworkImage(
+                          errorWidget: (context, url, error) => Icon(Icons.error),
+                          imageUrl:
+                          'https://d2.woo2.app/wp-content/uploads/2020/08/3-removebg-preview.png'),
+                    ),
+                    Text(getTransrlate(context, 'nofavorites')),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    GFButton(
+                      onPressed: (){
+                        Nav.route(context, SearchPage());
+                      },
+                      text: getTransrlate(context, 'Browse'),
+                      color: themeColor.getColor(),
+                      textStyle: GoogleFonts.cairo(
+                          fontSize: 18
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ):Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             SizedBox(

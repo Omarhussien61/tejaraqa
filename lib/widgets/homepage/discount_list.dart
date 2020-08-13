@@ -19,31 +19,34 @@ class DiscountList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: 16, top: 16, bottom: 8),
+      margin: EdgeInsets.only( top: 16, bottom: 8),
       child: ListView(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         children: <Widget>[
           productListTitleBar,
-          Container(
-            height: 200,
-            child: FutureBuilder(
-              future: product,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return  ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (context, i) {
-                    return DiscountItem(
-                        themeColor: themeColor, product:snapshot.data[i]);
-                  });
-                } else {
-                  return Center(child:
-                  CircularProgressIndicator(
-                      valueColor:  AlwaysStoppedAnimation<Color>(themeColor.getColor())));
-                }
-              },
+          Padding(
+            padding:  EdgeInsets.only(left: 16,right: 16),
+            child: Container(
+              height: 200,
+              child: FutureBuilder(
+                future: product,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return  ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (context, i) {
+                      return DiscountItem(
+                          themeColor: themeColor, product:snapshot.data[i]);
+                    });
+                  } else {
+                    return Center(child:
+                    CircularProgressIndicator(
+                        valueColor:  AlwaysStoppedAnimation<Color>(themeColor.getColor())));
+                  }
+                },
+              ),
             ),
           ),
         ],

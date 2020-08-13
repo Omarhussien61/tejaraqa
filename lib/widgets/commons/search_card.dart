@@ -105,7 +105,7 @@ class _SearchCardState extends State<SearchCard> {
                   ),
                   Container(
                     color: Colors.white,
-                    padding: EdgeInsets.only(left: 10, top: 4),
+                    padding: EdgeInsets.only(left: 10, right: 10,top: 4),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -117,7 +117,7 @@ class _SearchCardState extends State<SearchCard> {
                             color: Color(0xFF5D6A78),
                             fontWeight: FontWeight.w300,
                           ),
-                          maxLines: 2,
+                          maxLines: 1,
                           minFontSize: 11,
                         ),
                         SizedBox(
@@ -195,69 +195,67 @@ class _SearchCardState extends State<SearchCard> {
                                         .text
                                         .trim()
                                     : "Best",
+                                maxLines: 1,
                                 style: GoogleFonts.poppins(
                                     color: widget.themeColor.getColor(),
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400),
-                              )
+                              ),
+                        InkWell(
+                          onTap: () {
+                            if(!Provider.of<ThemeNotifier>(context).isLogin)
+                              showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
+                            else{
+                              if (widget.product.variations.isEmpty) {
+                                save(
+                                    widget.product,
+                                    widget.product.id,
+                                    widget.product.name,
+                                    widget.product.price,
+                                    context);
+                                countCart(context);
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                    backgroundColor: mainColor,
+                                    content: Text(getTransrlate(
+                                        context, 'Savedcart'))));
+                              }
+                              else {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) {
+                                      print(widget.product.id);
+                                      return DialogVreations(
+                                        product: widget.product,
+                                        ctx: context,);
+                                    });
+                              }
+                            }
+                          },
+                          child: Container(
+                            padding: EdgeInsets.only(top: 8, left: 8, bottom: 8, right: 8),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.grey[200],
+                                      blurRadius: 5.0,
+                                      spreadRadius: 1,
+                                      offset: Offset(0.0, 1)),
+                                ]),
+                            child: Container(
+                              child: SvgPicture.asset(
+                                "assets/icons/ic_product_shopping_cart.svg",
+                                height: 12,
+                              ),
+                            ),
+                          ),
+                        ),
+
                       ],
                     ),
                   )
                 ],
-              ),
-            ),
-          ),
-        ),
-        Positioned(
-          bottom: 22,
-          right: 22,
-          child: InkWell(
-            onTap: () {
-              if(!Provider.of<ThemeNotifier>(context).isLogin)
-                showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
-              else{
-                if (widget.product.variations.isEmpty) {
-                  save(
-                      widget.product,
-                      widget.product.id,
-                      widget.product.name,
-                      widget.product.price,
-                      context);
-                  countCart(context);
-                  Scaffold.of(context).showSnackBar(SnackBar(
-                      backgroundColor: mainColor,
-                      content: Text(getTransrlate(
-                          context, 'Savedcart'))));
-                }
-                else {
-                  showDialog(
-                      context: context,
-                      builder: (_) {
-                        print(widget.product.id);
-                        return DialogVreations(
-                            product: widget.product,
-                        ctx: context,);
-                      });
-                }
-              }
-            },
-            child: Container(
-              padding: EdgeInsets.only(top: 8, left: 8, bottom: 8, right: 8),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.grey[200],
-                        blurRadius: 5.0,
-                        spreadRadius: 1,
-                        offset: Offset(0.0, 1)),
-                  ]),
-              child: Container(
-                child: SvgPicture.asset(
-                  "assets/icons/ic_product_shopping_cart.svg",
-                  height: 12,
-                ),
               ),
             ),
           ),

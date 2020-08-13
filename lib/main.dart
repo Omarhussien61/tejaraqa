@@ -171,10 +171,8 @@ class _InitPageState extends State<InitPage> {
       elevationAppBar: 0.0,
       backgroundColorAppBar: Color.fromARGB(255, 252, 252, 252),
       tittleAppBar: CachedNetworkImage(
-        height: 30,
-        width: 150,
-        fit: BoxFit.fill,
-        imageUrl: 'https://d2.woo2.app/wp-content/uploads/2020/04/log-new-1.png',
+        height: 35,
+        imageUrl: 'https://d2.woo2.app/wp-content/uploads/2020/07/rosen.png',
       ),
       actionsAppBar: <Widget>[
       ],

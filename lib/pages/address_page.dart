@@ -11,8 +11,14 @@ import 'package:shoppingapp/utils/theme_notifier.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/utils/util/sql_address.dart';
 import 'package:sqflite/sqflite.dart';
-
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:getflutter/components/button/gf_button.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'Edit_adress_page.dart';
+import 'package:shoppingapp/pages/search_page.dart';
 
 class AddressPage extends StatefulWidget {
 
@@ -77,7 +83,7 @@ class _AddressPageState extends State<AddressPage> {
           ),
         ),
         backgroundColor: Color(0xFFFCFCFC),
-        body: Container(
+        body: addressList.isNotEmpty?Container(
           padding: EdgeInsets.only(left: 24,right: 24,top: 24),
           child: SingleChildScrollView(
             child: Column(
@@ -109,6 +115,26 @@ class _AddressPageState extends State<AddressPage> {
                     ),
                   ),
                 )
+              ],
+            ),
+          ),
+        ):Center(
+          child: Hero(
+            tag: 'icon',
+            child: Column(
+              children: [
+                Container(
+                  height: 400,
+                  child: CachedNetworkImage(
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                      imageUrl:
+                      'https://d2.woo2.app/wp-content/uploads/2020/08/5-removebg-preview-1.png'),
+                ),
+                Text(getTransrlate(context, 'noMyaddress')),
+                SizedBox(
+                  height: 50,
+                ),
+
               ],
             ),
           ),

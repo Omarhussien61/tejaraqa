@@ -22,19 +22,22 @@ class ProductListTitleBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text(
-            title,
-            style: GoogleFonts.poppins(
-              fontSize: 15,
-              color: Color(0xFF5D6A78),
-              fontWeight: FontWeight.w400,
+          Padding(
+            padding:  EdgeInsets.only(left: 12, right: 12,),
+            child: Text(
+              title,
+              style: GoogleFonts.poppins(
+                fontSize: 15,
+                color: Color(0xFF5D6A78),
+                fontWeight: FontWeight.w400,
+              ),
             ),
           ),
           !this.isCountShow
               ? Container()
               : Container(
                   padding:
-                      EdgeInsets.only(left: 12, right: 12, top: 6, bottom: 6),
+                      EdgeInsets.only(left: 20, right: 20, top: 6, bottom: 6),
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(3),

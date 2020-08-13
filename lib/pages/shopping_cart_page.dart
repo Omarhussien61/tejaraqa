@@ -59,22 +59,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
     return SafeArea(
       child: Scaffold(
         key: scaffoldKey,
-        bottomSheet: CartList.isEmpty
-            ? Center(
-                child: Hero(
-                  tag: 'icon',
-                  child: Column(
-                    children: [
-                      CachedNetworkImage(
-                          errorWidget: (context, url, error) => Icon(Icons.error),
-                          imageUrl:
-                              'https://d2.woo2.app/wp-content/uploads/2020/08/Capture__1_-removebg-preview.png'),
-                      Text(getTransrlate(context, 'CartEmpty'))
-                    ],
-                  ),
-                ),
-              )
-            : shoppingCartBottomSummary(themeColor),
+        bottomNavigationBar:shoppingCartBottomSummary(themeColor),
         backgroundColor: whiteColor,
         body: OfflineBuilder(
           connectivityBuilder: (
@@ -86,7 +71,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
             return Stack(
               children: <Widget>[
                 SingleChildScrollView(
-                    child: Column(
+                    child:CartList.length!=0? Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         SizedBox(
@@ -98,6 +83,14 @@ class HomeWidgetState extends State<ShoppingCartPage>
                         ),
                         Container(height: ScreenUtil.getHeight(context)/1.6, child: getCartList())
                       ],
+                    ):Center(
+                      child: Hero(
+                        tag: 'icon',
+                        child: CachedNetworkImage(
+                            errorWidget: (context, url, error) => Icon(Icons.error),
+                            imageUrl:
+                            'https://d2.woo2.app/wp-content/uploads/2020/07/Capture.png'),
+                      ),
                     )),
               ],
             );
@@ -348,7 +341,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
                     fontWeight: FontWeight.bold, color: themeColor.getColor()),
               ),
               Text(
-                calculateTotal().toString(),
+                CartList.isNotEmpty?calculateTotal().toString():"",
                 style: GoogleFonts.poppins(color: themeColor.getColor()),
               ),
             ],

@@ -1,10 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:getflutter/components/button/gf_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shoppingapp/modal/Orders_model.dart';
+import 'package:shoppingapp/pages/search_page.dart';
 import 'package:shoppingapp/service/productdervice.dart';
+import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/utils/util/shared_preferences_helper.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
@@ -64,7 +68,37 @@ class _OrdersDetailPageState extends State<OrdersDetailPage> {
         backgroundColor: greyBackground,
         key: _drawerKey, // assign key to Scaffold
         body: orders!=null?
-        Container(
+        orders.isEmpty?Center(
+          child: Hero(
+            tag: 'icon',
+            child: Column(
+              children: [
+
+                Container(
+                  height: 400,
+                  child: CachedNetworkImage(
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                      imageUrl:
+                      'https://d2.woo2.app/wp-content/uploads/2020/08/bc3c19c1f32a6afdcdd403fe894c6f36-removebg-preview-1.png'),
+                ),
+                Text(getTransrlate(context, 'NoOrder')),
+                SizedBox(
+                  height: 50,
+                ),
+                GFButton(
+                  onPressed: (){
+                    Nav.route(context, SearchPage());
+                  },
+                  text: getTransrlate(context, 'Shopping'),
+                  color: themeColor.getColor(),
+                  textStyle: GoogleFonts.cairo(
+                    fontSize: 18
+                  ),
+                )
+              ],
+            ),
+          ),
+        ): Container(
           height: ScreenUtil.getHeight(context)-45,
           child: ListView.builder(
             itemCount: orders.length,

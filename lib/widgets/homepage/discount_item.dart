@@ -58,7 +58,7 @@ class _DiscountItemState extends State<DiscountItem> {
       child: Stack(
         children: <Widget>[
           Container(
-            margin: EdgeInsets.only(top: 8, left: 16, bottom: 8),
+            margin: EdgeInsets.only(top: 8, left: 16, bottom: 8,right: 8),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 color: Colors.white,

@@ -29,7 +29,7 @@ class MyTextFormFieldLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: ScreenUtil.getWidth(context) / 1.5,
+      width: ScreenUtil.getWidth(context),
       child: TextFormField(
         decoration: InputDecoration(
           hintText: hintText,

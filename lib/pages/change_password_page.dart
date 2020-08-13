@@ -226,7 +226,7 @@ TextEditingController emailController;
                             confirmPassword = value;
                           },
                         ),
-                    Padding(
+                        Padding(
                       padding:  EdgeInsets.only(top: 10),
                       child: InkWell(
                         onTap: _launchInBrowser,
@@ -236,7 +236,6 @@ TextEditingController emailController;
                         fontSize: 16),),
                       ),
                     ),
-
                       ],
                     ),
                   ),

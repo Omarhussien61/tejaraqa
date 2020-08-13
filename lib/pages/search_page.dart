@@ -65,25 +65,28 @@ class _SearchPageState extends State<SearchPage> {
           children: <Widget>[
             Row(
               children: <Widget>[
-                Container(
-                  width: 32,
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.chevron_left,
-                      color: themeColor.getColor(),
-                      size: 32,
+                Padding(
+                  padding: const EdgeInsets.only(right: 10,left: 10),
+                  child: Container(
+                    width: 32,
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.chevron_left,
+                        color: themeColor.getColor(),
+                        size: 32,
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                     ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
                   ),
                 ),
                 Container(
-                  width: ScreenUtil.getWidth(context) - 80,
+                  width: ScreenUtil.getWidth(context) - 90,
                   margin: EdgeInsets.only(left: 22, top: 14),
                   padding: EdgeInsets.only(left: 18, right: 18),
-                  height: 44,
+                  height: 50,
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
@@ -244,113 +247,116 @@ class _SearchPageState extends State<SearchPage> {
         ),
         builder: (BuildContext context) {
           return SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(
-                  height: 24,
-                ),
-                Container(
-                    margin: EdgeInsets.only(left: 36, top: 12),
-                    child: Text(
-                      "Sort Products By",
-                      style: GoogleFonts.poppins(color: Color(0xFF5D6A78)),
-                    )),
-                InkWell(
-                  onTap: () {
-                    ubdateCategory(LowToHigh);
-                    Navigator.pop(context);
+            child: Padding(
+              padding: const EdgeInsets.only(left: 16,right: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(
+                    height: 24,
+                  ),
+                  Container(
+                      margin: EdgeInsets.only(left: 36, top: 12),
+                      child: Text(
+                        "Sort Products By",
+                        style: GoogleFonts.poppins(color: Color(0xFF5D6A78)),
+                      )),
+                  InkWell(
+                    onTap: () {
+                      ubdateCategory(LowToHigh);
+                      Navigator.pop(context);
 
-                  },
-                  child: Container(
-                      margin: EdgeInsets.only(left: 32, top: 24),
-                      child: Row(
-                        children: <Widget>[
-                          SvgPicture.asset(
-                            "assets/icons/checkbox1.svg",
-                            height: 18,
-                          ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Text(getTransrlate(context, 'SortByold'),
-                              style: GoogleFonts.poppins(
-                                  color: Color(0xFFA1B1C2))),
-                        ],
-                      )),
-                ),
-                InkWell(
-                  onTap: () {
-                    ubdateCategory(New);
-                    Navigator.pop(context);
+                    },
+                    child: Container(
+                        margin: EdgeInsets.only(left: 32, top: 24),
+                        child: Row(
+                          children: <Widget>[
+                            SvgPicture.asset(
+                              "assets/icons/checkbox1.svg",
+                              height: 18,
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Text(getTransrlate(context, 'SortByold'),
+                                style: GoogleFonts.poppins(
+                                    color: Color(0xFFA1B1C2))),
+                          ],
+                        )),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      ubdateCategory(New);
+                      Navigator.pop(context);
 
-                  },
-                  child: Container(
-                      margin: EdgeInsets.only(left: 32, top: 20),
-                      child: Row(
-                        children: <Widget>[
-                          SvgPicture.asset(
-                            "assets/icons/checkbox2.svg",
-                            height: 18,
-                          ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Text(getTransrlate(context, 'SortByNew'),
-                              style: GoogleFonts.poppins(
-                                  color: Color(0xFFA1B1C2))),
-                        ],
-                      )),
-                ),
-                InkWell(
-                  onTap: () {
-                    ubdateCategory(LowToHigh);
-                    Navigator.pop(context);
+                    },
+                    child: Container(
+                        margin: EdgeInsets.only(left: 32, top: 20),
+                        child: Row(
+                          children: <Widget>[
+                            SvgPicture.asset(
+                              "assets/icons/checkbox2.svg",
+                              height: 18,
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Text(getTransrlate(context, 'SortByNew'),
+                                style: GoogleFonts.poppins(
+                                    color: Color(0xFFA1B1C2))),
+                          ],
+                        )),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      ubdateCategory(LowToHigh);
+                      Navigator.pop(context);
 
-                  },
-                  child: Container(
-                      margin: EdgeInsets.only(left: 32, top: 20),
-                      child: Row(
-                        children: <Widget>[
-                          SvgPicture.asset(
-                            "assets/icons/checkbox1.svg",
-                            height: 18,
-                          ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Text(getTransrlate(context, 'SortByPriceLess'),
-                              style: GoogleFonts.poppins(
-                                  color: Color(0xFFA1B1C2))),
-                        ],
-                      )),
-                ),
-                InkWell(
-                  onTap: () {
-                    ubdateCategory(HighToLow);
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                      margin: EdgeInsets.only(left: 32, top: 20),
-                      child: Row(
-                        children: <Widget>[
-                          SvgPicture.asset(
-                            "assets/icons/checkbox1.svg",
-                            height: 18,
-                          ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Text(getTransrlate(context, 'SortByPricemore'),
-                              style: GoogleFonts.poppins(
-                                  color: Color(0xFFA1B1C2))),
-                        ],
-                      )),
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-              ],
+                    },
+                    child: Container(
+                        margin: EdgeInsets.only(left: 32, top: 20),
+                        child: Row(
+                          children: <Widget>[
+                            SvgPicture.asset(
+                              "assets/icons/checkbox1.svg",
+                              height: 18,
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Text(getTransrlate(context, 'SortByPriceLess'),
+                                style: GoogleFonts.poppins(
+                                    color: Color(0xFFA1B1C2))),
+                          ],
+                        )),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      ubdateCategory(HighToLow);
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                        margin: EdgeInsets.only(left: 32, top: 20),
+                        child: Row(
+                          children: <Widget>[
+                            SvgPicture.asset(
+                              "assets/icons/checkbox1.svg",
+                              height: 18,
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Text(getTransrlate(context, 'SortByPricemore'),
+                                style: GoogleFonts.poppins(
+                                    color: Color(0xFFA1B1C2))),
+                          ],
+                        )),
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                ],
+              ),
             ),
           );
         });
@@ -360,7 +366,7 @@ class _SearchPageState extends State<SearchPage> {
       primary: false,
       gridDelegate:
       SliverGridDelegateWithFixedCrossAxisCount(
-        childAspectRatio: 0.8,
+        childAspectRatio: 0.77,
         crossAxisCount: 2,
       ),
       itemCount: filteredProduct == null ? 0 : filteredProduct.length,

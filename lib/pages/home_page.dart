@@ -71,8 +71,8 @@ class _HomePageState extends State<HomePage> {
             themeColor: themeColor,
             productListTitleBar: ProductListTitleBar(
               themeColor: themeColor,
-              title: "Daily opportunity",
-              isCountShow: true,
+              title: getTransrlate(context, 'Dailyopportunity'),
+              isCountShow: false,
             ),
           ):Container(),
           SizedBox(

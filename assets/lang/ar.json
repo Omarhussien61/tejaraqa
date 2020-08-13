@@ -184,10 +184,20 @@
   "paypal": "باي بال",
 
 
+  "Dailyopportunity": "العروض اليومية",
 
   "ProductsLike": "منتجات قد تعجبك",
   "MostRated": "ألاعلى تقيما",
   "Low-PricedProducts": "الاقل سعرا",
-  "Mostrecently": "اخر الزيارات"
+  "Mostrecently": "اخر الزيارات",
+
+  "Browse": "تصفح الأن",
+  "Shopping": "شراء الأن",
+  "NoOrder": "لا يوجد طلبات سابقة",
+  "nofavorites": "المفضلة فارغة",
+  "noProductratings": "لا توجد تقيمات لديك حتى الان",
+  "noMyaddress": "لا توجد عناوين مسجلة"
+
+
 
 }

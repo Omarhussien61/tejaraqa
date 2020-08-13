@@ -1,9 +1,11 @@
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:getflutter/components/button/gf_button.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:html/parser.dart';
@@ -12,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shoppingapp/modal/Product_review.dart';
 import 'package:shoppingapp/modal/productmodel.dart';
 import 'package:shoppingapp/pages/product_detail_By_id.dart';
+import 'package:shoppingapp/pages/search_page.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
 import 'package:shoppingapp/service/productdervice.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
@@ -89,7 +92,37 @@ class _ProductDetailPageAlternativeState
         ),
       ),
 
-      body:Container(
+      body:    product_review!=null?product_review.isEmpty?Center(
+        child: Hero(
+          tag: 'icon',
+          child: Column(
+            children: [
+
+              Container(
+                height: 400,
+                child: CachedNetworkImage(
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                    imageUrl:
+                    'https://d2.woo2.app/wp-content/uploads/2020/08/1-removebg-preview-1.png'),
+              ),
+              Text( getTransrlate(context, 'noProductratings')),
+              SizedBox(
+                height: 50,
+              ),
+              GFButton(
+                onPressed: (){
+                  Nav.route(context, SearchPage());
+                },
+                text: getTransrlate(context, 'Browse'),
+                color: themeColor.getColor(),
+                textStyle: GoogleFonts.cairo(
+                    fontSize: 18
+                ),
+              )
+            ],
+          ),
+        ),
+      ): Container(
         margin: EdgeInsets.only(top: 16),
         padding: AppTheme.padding.copyWith(top: 12),
         decoration: BoxDecoration(
@@ -252,7 +285,9 @@ class _ProductDetailPageAlternativeState
 
           ],
         ),
-      ),
+      ):  Center(child:
+      CircularProgressIndicator(
+          valueColor:  AlwaysStoppedAnimation<Color>(themeColor.getColor()))),
     );
   }
 

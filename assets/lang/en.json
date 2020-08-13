@@ -180,10 +180,19 @@
   "cod": "Cash on deliveryً",
   "paypal": "PayPal",
 
+  "Dailyopportunity": "Daily opportunity",
 
   "ProductsLike": "Products You May Like",
   "MostRated": "Most Top Rated",
   "Low-PricedProducts": "Low-Priced Products",
-  "Mostrecently": "Most recently looked"
+  "Mostrecently": "Most recently looked",
+
+  "Browse": "Browse Naw",
+  "Shopping": "Shopping Naw",
+  "NoOrder": "No Order yet !",
+  "nofavorites": "your Favorite Empty !",
+  "noProductratings": "no review  yet !",
+  "noMyaddress": "No Address yet !"
+
 
 }
