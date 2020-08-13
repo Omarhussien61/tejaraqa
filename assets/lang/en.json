@@ -176,10 +176,14 @@
   "Username": "User name",
   "UsernameError": "User name Short !",
   "RegisterError": "Error in Register Check your information",
-
-
   "bacs": "Direct bank transfer",
   "cod": "Cash on deliveryً",
-  "paypal": "PayPal"
+  "paypal": "PayPal",
+
+
+  "ProductsLike": "Products You May Like",
+  "MostRated": "Most Top Rated",
+  "Low-PricedProducts": "Low-Priced Products",
+  "Mostrecently": "Most recently looked"
 
 }
