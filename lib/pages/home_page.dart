@@ -12,6 +12,7 @@ import 'package:shoppingapp/service/productdervice.dart';
 import 'package:shoppingapp/utils/dummy_data/discountImages.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
+import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/utils/util/recentId.dart';
 import 'package:shoppingapp/utils/util/sql_helper.dart';
 import 'package:shoppingapp/widgets/homepage/category_list_view.dart';
@@ -82,7 +83,7 @@ class _HomePageState extends State<HomePage> {
             product: widget.productNew,
             productListTitleBar: ProductListTitleBar(
               themeColor: themeColor,
-              title: "Products You May Like",
+              title: getTransrlate(context, 'ProductsLike'),
               isCountShow: false,
             ),
           ):Container(),
@@ -110,7 +111,7 @@ class _HomePageState extends State<HomePage> {
             product: widget.moreSale,
             productListTitleBar: ProductListTitleBar(
               themeColor: themeColor,
-              title: "Most Top Rated",
+              title: getTransrlate(context, 'MostRated'),
               isCountShow: false,
             ),
           ):Container(),
@@ -119,7 +120,7 @@ class _HomePageState extends State<HomePage> {
             product: widget.product_low_priced,
             productListTitleBar: ProductListTitleBar(
               themeColor: themeColor,
-              title: "Low-Priced Products",
+              title: getTransrlate(context, 'Low-PricedProducts'),
               isCountShow: false,
             ),
           ):Container(),
@@ -131,7 +132,7 @@ class _HomePageState extends State<HomePage> {
             product: widget.productview,
             productListTitleBar: ProductListTitleBar(
               themeColor: themeColor,
-              title: "Most recently looked",
+              title: getTransrlate(context, 'Mostrecently'),
               isCountShow: false,
             ),
           ):Container(),
