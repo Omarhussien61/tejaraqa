@@ -13,7 +13,7 @@ import 'package:shoppingapp/pages/home_navigator.dart';
 import 'package:shoppingapp/pages/my_profile_page.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
 import 'package:shoppingapp/pages/splash_screen.dart';
-import 'package:shoppingapp/service/API_CONFIQ.dart';
+import 'package:shoppingapp/service/api_config.dart';
 import 'package:shoppingapp/service/productdervice.dart';
 import 'package:shoppingapp/service/theameservice.dart';
 import 'package:shoppingapp/utils/drawer_menu/hidden_drawer/hidden_drawer_menu.dart';
@@ -172,7 +172,7 @@ class _InitPageState extends State<InitPage> {
       backgroundColorAppBar: Color.fromARGB(255, 252, 252, 252),
       tittleAppBar: CachedNetworkImage(
         height: 35,
-        imageUrl: 'https://d2.woo2.app/wp-content/uploads/2020/07/rosen.png',
+        imageUrl: themeColor.themeModel.imageAppbar==null?' g':themeColor.themeModel.imageAppbar,
       ),
       actionsAppBar: <Widget>[
       ],

@@ -47,19 +47,18 @@ class APICONFIQ{
   static Future<Config_Model> getNewConfiq() async {
     var client = new http.Client();
     var dio = Dio();
-    dio.interceptors.add(DioCacheManager(CacheConfig(baseUrl:
-    getconfiq
-    )).interceptor);
+    dio.interceptors.add(DioCacheManager(CacheConfig(baseUrl: getconfiq)).interceptor);
 
     Config_Model config_model;
     try {
 
-      var response = await client.get(
-        getconfiq,
+      var response = await dio.get(getconfiq,
+        //options: buildCacheOptions(Duration(days: 7)),
+
       );
-      print(response.body);
+      print(response.data);
       if (response.statusCode == 200) {
-        var data = json.decode(response.body);
+        var data = json.decode(response.data);
         config_model = new Config_Model.fromJson(data);
       } else {
         print('Somthing went wrong');

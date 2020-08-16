@@ -345,7 +345,8 @@ class _HiddenMenuState extends State<HiddenMenu> {
                             show_Dialog(context);
                           } else {
                             if (themeColor.isLogin == false) {
-                              Nav.route(context, LoginPage());
+                              themeColor.config_model.login?
+                                Nav.route(context, LoginPage()):show_Dialog(context);
                             } else {
                               _logout();
                               SharedPreferencesHelper.cleanlocal();

@@ -94,7 +94,7 @@ class HiddenDrawerMenu extends StatelessWidget {
     this.tittleAppBar,
     this.isTitleCentered,
     this.enableShadowItensMenu = false,
-    this.curveAnimation = Curves.bounceOut,
+    this.curveAnimation = Curves.linear,
     this.isDraggable = true,
     this.slidePercent = 150.0,
     this.verticalScalePercent = 80.0,

@@ -1,17 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clippy_flutter/diagonal.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 const List<String> discountImageList = [
-  'assets/images/prodcut1.png',
-  'assets/images/prodcut2.png',
-  'assets/images/prodcut3.png',
-  'assets/images/prodcut4.png',
-  'assets/images/prodcut5.png',
-  'assets/images/prodcut1.png',
-  'assets/images/prodcut7.png',
-  'assets/images/prodcut8.png',
-  'assets/images/prodcut9.png',
+'https://d2.woo2.app/wp-content/uploads/2020/04/slide-new-1.jpg',
+  'https://d2.woo2.app/wp-content/uploads/2020/04/ad-1.jpg',
+  'https://d2.woo2.app/wp-content/uploads/2020/04/laptop-1.jpg'
 ];
 
 List<Widget> imageSliders = discountImageList
@@ -35,7 +30,7 @@ List<Widget> imageSliders = discountImageList
                       child: Container(
                           color: Colors.red,
                           width: 230,
-                          child: Image.asset(item,
+                          child: CachedNetworkImage(imageUrl: item,
                               fit: BoxFit.cover, width: 220.0))),
                   Align(
                     alignment: Alignment.centerLeft,

@@ -6,6 +6,7 @@ class Config_Model {
   String kGoogleApiKey;
   String local;
   int planIndex;
+  List<String> sortHome;
   bool newProduct;
   bool searchtextbox;
   bool productCategories;
@@ -46,6 +47,7 @@ class Config_Model {
         this.kGoogleApiKey,
         this.local,
         this.planIndex,
+        this.sortHome,
         this.newProduct,
         this.searchtextbox,
         this.productCategories,
@@ -86,6 +88,7 @@ class Config_Model {
     kGoogleApiKey = json['kGoogleApiKey'];
     local = json['local'];
     planIndex = json['Plan_index'];
+    sortHome = json['SortHome'].cast<String>();
     newProduct = json['NewProduct'];
     searchtextbox = json['Searchtextbox'];
     productCategories = json['product_categories'];
@@ -128,6 +131,7 @@ class Config_Model {
     data['kGoogleApiKey'] = this.kGoogleApiKey;
     data['local'] = this.local;
     data['Plan_index'] = this.planIndex;
+    data['SortHome'] = this.sortHome;
     data['NewProduct'] = this.newProduct;
     data['Searchtextbox'] = this.searchtextbox;
     data['product_categories'] = this.productCategories;

@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:shoppingapp/modal/category.dart';
 import 'package:shoppingapp/modal/productmodel.dart';
-import 'package:shoppingapp/service/API_CONFIQ.dart';
+import 'package:shoppingapp/service/api_config.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
 

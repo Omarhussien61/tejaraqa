@@ -11,7 +11,7 @@ import 'package:shoppingapp/modal/Create_user.dart';
 import 'package:shoppingapp/modal/User.dart';
 
 import 'package:shoppingapp/modal/usermodal.dart';
-import 'package:shoppingapp/service/API_CONFIQ.dart';
+import 'package:shoppingapp/service/api_config.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shoppingapp/utils/navigator.dart';

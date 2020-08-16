@@ -3,13 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shoppingapp/service/API_CONFIQ.dart';
-import 'package:shoppingapp/service/loginservice.dart';
-import 'package:shoppingapp/utils/commons/colors.dart';
-import 'package:shoppingapp/utils/navigator.dart';
-import 'package:shoppingapp/utils/theme_notifier.dart';
-import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
-import 'package:shoppingapp/widgets/commons/textfield_bottomline.dart';
+import '../service/api_config.dart';
+import '../service/loginservice.dart';
+import '../utils/commons/colors.dart';
+import '../utils/navigator.dart';
+import '../utils/theme_notifier.dart';
+import '../utils/util/LanguageTranslated.dart';
+import '../widgets/commons/textfield_bottomline.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:validators/validators.dart' as validator;
 
@@ -21,20 +21,21 @@ class ChangePasswordPage extends StatefulWidget {
 }
 
 class _ChangePasswordPageState extends State<ChangePasswordPage> {
-  String email, password, oldPassword,confirmPassword, Newpassword;
+  String email, password, oldPassword, newPassword,confirmPassword;
   int id;
   bool passwordVisible = true;
   final _formKey = GlobalKey<FormState>();
-TextEditingController emailController;
+  TextEditingController emailController;
+
   @override
   void initState() {
-    emailController=TextEditingController();
+    emailController = TextEditingController();
     SharedPreferences.getInstance().then((prefs) {
       setState(() {
         email = prefs.getString('user_email');
-        emailController.text=email;
+        emailController.text = email;
         password = prefs.getString('password');
-        print(password);
+        //print(password);
         id = prefs.getInt('user_id');
       });
     });
@@ -45,13 +46,7 @@ TextEditingController emailController;
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ThemeNotifier>(context);
 
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-          statusBarColor: Color(0xFFFCFCFC),
-          systemNavigationBarIconBrightness: Brightness.dark,
-          statusBarBrightness: Brightness.dark,
-          statusBarIconBrightness: Brightness.dark),
-    );
+
     return SafeArea(
       child: Scaffold(
         bottomNavigationBar: Builder(
@@ -59,8 +54,9 @@ TextEditingController emailController;
             onTap: () {
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
-                oldPassword == password ?
-                ubdate(Newpassword,context): Scaffold.of(context).showSnackBar(
+                oldPassword == password
+                    ? ubdate(newPassword, context)
+                    : Scaffold.of(context).showSnackBar(
                         SnackBar(content: Text('password invalid')));
               }
             },
@@ -69,7 +65,7 @@ TextEditingController emailController;
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                 getTransrlate(context, 'save'),
+                  getTransrlate(context, 'save'),
                   style: GoogleFonts.poppins(color: Colors.white),
                 ),
               ),
@@ -145,7 +141,7 @@ TextEditingController emailController;
                           ),
                           isPassword: passwordVisible,
                           validator: (String value) {
-                            if (value!=password) {
+                            if (value != password) {
                               return getTransrlate(context, 'passwordinvalid');
                             }
                             _formKey.currentState.save();
@@ -189,7 +185,7 @@ TextEditingController emailController;
                             return null;
                           },
                           onSaved: (String value) {
-                            Newpassword = value;
+                            newPassword = value;
                           },
                         ),
                         SizedBox(
@@ -215,7 +211,7 @@ TextEditingController emailController;
                           ),
                           isPassword: passwordVisible,
                           validator: (String value) {
-                            if (value!=Newpassword) {
+                            if (value != newPassword) {
                               return getTransrlate(context, 'Passwordmatch');
                             }
                             _formKey.currentState.save();
@@ -227,15 +223,18 @@ TextEditingController emailController;
                           },
                         ),
                         Padding(
-                      padding:  EdgeInsets.only(top: 10),
-                      child: InkWell(
-                        onTap: _launchInBrowser,
-                        child: Text(getTransrlate(context, 'LostPassword'),
-                        style: TextStyle(decoration: TextDecoration.underline,
-                        color: themeColor.getColor(),
-                        fontSize: 16),),
-                      ),
-                    ),
+                          padding: EdgeInsets.only(top: 10),
+                          child: InkWell(
+                            onTap: _launchInBrowser,
+                            child: Text(
+                              getTransrlate(context, 'LostPassword'),
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  color: themeColor.getColor(),
+                                  fontSize: 16),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -247,8 +246,9 @@ TextEditingController emailController;
       ),
     );
   }
+
   Future<void> _launchInBrowser() async {
-   String  url = APICONFIQ.Base_url+'my-account/lost-password/';
+    String url = APICONFIQ.Base_url + '/my-account/lost-password/';
     if (await canLaunch(url)) {
       await launch(
         url,
@@ -260,20 +260,20 @@ TextEditingController emailController;
       throw 'Could not launch $url';
     }
   }
-  ubdate(String newpassword,BuildContext context) async {
+
+  ubdate(String newpassword, BuildContext context) async {
     var result = await LoginService().ubdatePassword(id, newpassword);
     SharedPreferences.getInstance().then((prefs) {
       setState(() {
         if (newpassword == prefs.getString('password')) {
           Nav.routeReplacement(context, InitPage());
-          Scaffold.of(context)
-              .showSnackBar(SnackBar(content: Text(getTransrlate(context, 'PasswordChanged'))));
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: Text(getTransrlate(context, 'PasswordChanged'))));
         } else {
-          Scaffold.of(context)
-              .showSnackBar(SnackBar(content: Text(getTransrlate(context, 'passwordNotChanged'))));
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: Text(getTransrlate(context, 'passwordNotChanged'))));
         }
       });
     });
   }
-
 }

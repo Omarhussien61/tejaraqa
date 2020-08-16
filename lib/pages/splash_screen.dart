@@ -69,8 +69,13 @@ class _SplashScreenState extends State<SplashScreen> {
     } else {
 
       Provider.of<ThemeNotifier>(context).setLogin(false);
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (BuildContext context) => OnboardingPage()));
+      if(Provider.of<ThemeNotifier>(context).config_model.startScreen){
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (BuildContext context) => OnboardingPage()));}
+      else{
+        Nav.routeReplacement(context, InitPage());
+      }
+
     }
   }
 }

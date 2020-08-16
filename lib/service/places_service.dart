@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
 import 'package:shoppingapp/modal/place.dart';
-import 'package:shoppingapp/service/API_CONFIQ.dart';
+import 'package:shoppingapp/service/api_config.dart';
 
 class PlacesService {
   final key = APICONFIQ.kGoogleApiKey;

@@ -731,7 +731,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                           width: 140,
                                           child: GFButton(
                                             onPressed: () {
-                                              themeColor.getPlan_index()==1?show_Dialog(context):Nav.route(
+                                              themeColor.getPlan_index()==1?
+                                              show_Dialog(context):Nav.route(
                                                   context, ShoppingCartPage());
                                             },
                                             child: Text(getTransrlate(context, 'Buy'),
