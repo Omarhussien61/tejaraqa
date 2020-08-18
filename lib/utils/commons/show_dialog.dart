@@ -30,17 +30,6 @@ void show_Dialog(BuildContext context){
                   fontSize: 16,
                   fontWeight: FontWeight.w400)),
         ),
-        DialogButton(
-          color:Colors.green,
-          onPressed: () {
-            _launchURL('https://woo2.app/');
-          },
-          child:Text(getTransrlate(context, 'login'),
-            style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w400),),
-        )
       ]).show();
 }
 void showLogintDialog(String title, String msg,BuildContext context){

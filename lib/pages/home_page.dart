@@ -68,7 +68,8 @@ class _HomePageState extends State<HomePage> {
           Widget child,
         ) {
           connected = connectivity != ConnectivityResult.none;
-          return themeColor.config_model.offlineAppMode
+          return themeColor.config_model!=null?
+          themeColor.config_model.offlineAppMode
               ? getListview(context)
               : connected
                   ? getListview(context)
@@ -94,7 +95,29 @@ class _HomePageState extends State<HomePage> {
                           )
                         ],
                       ),
-                    ));
+                    )):Center(
+              child: Container(
+                child: Column(
+                  children: [
+                    Image.asset(
+                      'assets/images/not_found_smile.PNG',
+                      height: ScreenUtil.getHeight(context) / 2,
+                    ),
+                    Text(getTransrlate(context, 'NotConnection')),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    GFButton(
+                      onPressed: () {
+                        //Nav.route(context, SearchPage());
+                      },
+                      text: getTransrlate(context, 'retry'),
+                      color: themeColor.getColor(),
+                      textStyle: GoogleFonts.cairo(fontSize: 18),
+                    )
+                  ],
+                ),
+              ));
         },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

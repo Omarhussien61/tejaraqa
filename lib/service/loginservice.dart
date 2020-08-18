@@ -116,11 +116,8 @@ class LoginService {
       prefs.setString("user_Fristname", user.firstName);
       prefs.setString("user_lastname", user.lastName);
       prefs.setString("token", model.id.toString());
-
       prefs.setInt("user_id",  user.id);
       prefs.setString("user_nicename",  user.firstName+' '+user.lastName);
-      print('goooooooooooooooooooooooooooooo11111112222222323232323232323232');
-
       prefs.setString("phone", model.phone);
 
       if(model.password==null){
@@ -167,8 +164,11 @@ class LoginService {
         prefs.setString("user_nicename", user.firstName+' '+user.lastName);
         prefs.setString("image_url", model.avatar);
         var resp =await http.get(APICONFIQ.Ubdateplofile+'/'+user.id.toString()+'?'+ APICONFIQ.Key);
-        var da = json.decode(resp.body)['meta_data'];
-        prefs.setString("phone", da[0]['value']);
+        List da = json.decode(resp.body)['meta_data'];
+        if(da.isNotEmpty){
+          prefs.setString("phone", da[0]['value']);
+
+        }
 
         Nav.routeReplacement(context, InitPage());
         Provider.of<ThemeNotifier>(context).setLogin(true);

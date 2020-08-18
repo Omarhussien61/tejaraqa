@@ -302,16 +302,25 @@ if(widget.address_shiping!=null){
             _nameController.text,
             _streeetController.text,
             _buildingController.text,
-            _AddressController.text,lang: widget.address_shiping.lang,lat:widget.address_shiping.lat,id: widget.address_shiping.id );
+            _AddressController.text,lang: widget.address_shiping==null?
+            0.0:widget.address_shiping.lang,lat:widget.address_shiping==null?
+        0.0:widget.address_shiping.lat,id: widget.address_shiping== null?null:widget.address_shiping.id);
         int result;
-        print(widget.address_shiping.id);
 
-        if (widget.address_shiping.id==null) {
+        if (widget.address_shiping==null) {
+
           result = await helper.insertAddress(address);
           Navigator.pop(context);
         } else {
-          result = await helper.updateAddress(address);
-          Navigator.pop(context);
+
+          if (widget.address_shiping.id==null) {
+            result = await helper.insertAddress(address);
+            Navigator.pop(context);
+          }else {
+            result = await helper.updateAddress(address);
+            Navigator.pop(context);
+
+          }
 
         }
         if (result == 0) {

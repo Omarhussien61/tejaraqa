@@ -362,7 +362,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
                   );
                   scaffoldKey.currentState.showSnackBar(snackbar);
                 } else {
-                  if(themeColor.getPlan_index()==1){
+                  if(!themeColor.config_model.doneOrderScreen){
                     show_Dialog(context);
                   }else {
                     Provider

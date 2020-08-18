@@ -26,23 +26,24 @@ class _SplashScreenState extends State<SplashScreen> {
 
     super.initState();
     Timer(
-        Duration(seconds: 3),
-        () =>_auth()
+        Duration(seconds: 5),
+        () => Provider.of<ThemeNotifier>(context).config_model.active? _auth():null
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final themecolor=Provider.of<ThemeNotifier>(context);
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-          statusBarColor: mainColor,
+          statusBarColor: themecolor.getColor(),
           systemNavigationBarIconBrightness: Brightness.dark,
           statusBarBrightness: Brightness.dark,
           statusBarIconBrightness: Brightness.dark),
     );
     return Scaffold(
       backgroundColor: Provider.of<ThemeNotifier>(context).getColor(),
-      body: Center(
+      body:themecolor.config_model!=null? themecolor.config_model.active?Center(
         child: Container(
           height: 400,
           width: ScreenUtil.getWidth(context) /1.7,
@@ -51,7 +52,14 @@ class _SplashScreenState extends State<SplashScreen> {
             '':Provider.of<ThemeNotifier>(context).themeModel.imageSplash,
           ),
         ),
-      ),
+      ):Center(
+          child: Container(
+              height: ScreenUtil.getHeight(context),
+            color: Colors.white,
+              child: Image.asset(
+                'assets/images/not_found_smile.PNG',
+              ),
+          )):Container(),
     );
   }
   void _auth() async {
@@ -75,7 +83,6 @@ class _SplashScreenState extends State<SplashScreen> {
       else{
         Nav.routeReplacement(context, InitPage());
       }
-
     }
   }
 }

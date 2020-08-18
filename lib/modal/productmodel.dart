@@ -60,8 +60,6 @@ class ProductModel {
 
     var document = parse(json['price_html']);
     var priceElement = document.getElementsByClassName("woocommerce-Price-currencySymbol");
-    print(priceElement[0].text);
-
     List<Images> imagesList = list.map((i) => Images.fromJson(i)).toList();
     List<attributes> newAttributesList =
         attributeList.map((i) => attributes.fromJson(i)).toList();
@@ -75,13 +73,13 @@ class ProductModel {
         id: json['id'],
         name: json['name'],
         stockStatus: json['stock_status'],
-        price: json['price'],
+        price: json['price']==null||json['price']==''?' ':json['price'],
         images: imagesList,
         categories: cats,
         totalSales: json['total_sales'].toString(),
         status: json['status'],
-        priceHtml: json['price_html'],
-        oldPrice: json['regular_price'],
+        priceHtml: json['price_html']==null||json['price_html']==''?' ':json['price_html'],
+        oldPrice: json['regular_price']==null||json['regular_price']==''?' ':json['regular_price'],
         description: desc.outerHtml,
         onSale: json['on_sale'],
         downloadable: json['downloadable'],
@@ -91,7 +89,7 @@ class ProductModel {
         averageRating: json['average_rating'],
        purchaseNote: json['purchase_note'],
         attri: newAttributesList,
-      Currancy: priceElement[0].text,
+      Currancy: priceElement.isEmpty?' ':priceElement[0].text,
       variations: variationsList,
       related_ids: RealatedList
 

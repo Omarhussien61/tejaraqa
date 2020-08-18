@@ -40,16 +40,8 @@ class _HomeNavigatorState extends State<HomeNavigator> {
 
   @override
   void initState() {
-    CategoryService().getMainCategory().then((value) {
-      setState(() {
-        maincat=value;
-      });
-      productDiscount=ProductService.getAllProductsSale();
-      product_low_priced=ProductService.getLow_Priced_Products();
-      productNew=ProductService.getNewProducts();
-      moreSale=ProductService.getMoreSaleProducts();
-    });
-    updateListView();
+    getListData();
+
 
   }
   updateListView(){
@@ -107,7 +99,11 @@ class _HomeNavigatorState extends State<HomeNavigator> {
           ],
         ),
       ),
-      body: _pages[_currentPage],
+      body: RefreshIndicator(child:
+      _pages[_currentPage],
+      onRefresh: ()async{
+        getListData();
+        },),
     );
   }
 
@@ -141,6 +137,21 @@ class _HomeNavigatorState extends State<HomeNavigator> {
         ],
       ),
     );
+  }
+
+   getListData() async {
+    CategoryService().getMainCategory().then((value) {
+      setState(() {
+        maincat=value;
+        productDiscount=ProductService.getAllProductsSale();
+        product_low_priced=ProductService.getLow_Priced_Products();
+        productNew=ProductService.getNewProducts();
+        moreSale=ProductService.getMoreSaleProducts();
+      });
+      return true;
+    });
+    updateListView();
+
   }
 
 

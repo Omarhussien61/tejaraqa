@@ -181,7 +181,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   isPassword: passwordVisible,
                   validator: (String value) {
                     if (value.length < 7) {
-                      return  getTransrlate(context, 'password');
+                      return  getTransrlate(context, 'password'+'< 7');
                     }
 
                     _formKey.currentState.save();
@@ -297,7 +297,7 @@ class _RegisterFormState extends State<RegisterForm> {
             username: model.userName,
             email: model.email,
             lastName: model.lastName,
-            firstName: model.lastName,
+            firstName: model.firstName,
             phone: model.Phone,) );
       if(result.runtimeType==String)
       {

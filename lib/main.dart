@@ -70,7 +70,7 @@ class _MyAppState extends State<MyApp> {
     theameservice.getNewTheme().then((onValue){
       Provider.of<ThemeNotifier>(context).setTheme(onValue);
       Provider.of<ThemeNotifier>(context).setColor(Color(int.parse(onValue.primaryCoustom)));
-
+      mainColor=Color(int.parse(onValue.primaryCoustom));
       SharedPreferences.getInstance().then((prefs){
         prefs.setInt('color', int.parse(onValue.primaryCoustom));
       });

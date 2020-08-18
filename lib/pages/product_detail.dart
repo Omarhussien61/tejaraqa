@@ -164,7 +164,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                       child: Container(
                           width: ScreenUtil.getWidth(context),
                           height: ScreenUtil.getHeight(context) / 1.3,
-                          color: themeColor.getColor(),
                           child: CachedNetworkImage(
                             imageUrl: (widget.product.images == null&&widget.product.images.isEmpty)
                                 ? 'http://arabimagefoundation.com/images/defaultImage.png'
@@ -186,7 +185,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                 CarouselSlider(
                   items: imageSliders,
                   options: CarouselOptions(
-                      autoPlay: false,
+                      autoPlay: true,
                       height: ScreenUtil.getHeight(context) / 1.9,
                       viewportFraction: 1.0,
                       enlargeCenterPage: false,
@@ -196,61 +195,60 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                         });
                       }),
                 ),
-                Padding(
+                Container(
+                  constraints: BoxConstraints.expand(
+                    height:70,
+                  ),
+                  decoration: BoxDecoration(
+                      color: themeColor.getColor().withOpacity(0.3),
+                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
                   padding: const EdgeInsets.only(top: 24,left: 18,right: 20),
+
                   child: Row(
                   mainAxisAlignment:MainAxisAlignment.spaceBetween,
                     children: [
-                      Positioned(
-                        left: 9,
-                        top: 32,
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Container(
-                            height: 32,
-                            width: 32,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Colors.white,
-                            ),
-                            child: Icon(
-                              Icons.chevron_left,
-                              color: themeColor.getColor(),
-                            ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          height: 32,
+                          width: 32,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: Colors.white,
+                          ),
+                          child: Icon(
+                            Icons.chevron_left,
+                            color: themeColor.getColor(),
                           ),
                         ),
                       ),
-                      Positioned(
-                        right: 24,
-                        top: 24,
-                        child: Container(
-                          height: 42,
-                          width: 48,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(8),
-                                bottomRight: Radius.circular(8)),
-                            color: Colors.white.withOpacity(0.5),
+                      Container(
+                        height: 42,
+                        width: 48,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(8),
+                              bottomRight: Radius.circular(8)),
+                          color: Colors.white.withOpacity(0.5),
+                        ),
+                        child: Badge(
+                          animationDuration: Duration(milliseconds: 1500),
+                          badgeColor: themeColor.getColor(),
+                          alignment: Alignment(0, 0),
+                          position: BadgePosition.bottomRight(),
+                          padding: EdgeInsets.all(8),
+                          badgeContent: Text(
+                            Provider.of<ThemeNotifier>(context)
+                                .countCart
+                                .toString(),
+                            style: TextStyle(color: whiteColor, fontSize: 10),
                           ),
-                          child: Badge(
-                            animationDuration: Duration(milliseconds: 1500),
-                            badgeColor: themeColor.getColor(),
-                            alignment: Alignment(0, 0),
-                            position: BadgePosition.bottomRight(),
-                            padding: EdgeInsets.all(8),
-                            badgeContent: Text(
-                              Provider.of<ThemeNotifier>(context)
-                                  .countCart
-                                  .toString(),
-                              style: TextStyle(color: whiteColor, fontSize: 10),
-                            ),
-                            child: SvgPicture.asset(
-                              "assets/icons/ic_shopping_cart.svg",
-                              color: Colors.white,
-                              height: 26,
-                            ),
+                          child: SvgPicture.asset(
+                            "assets/icons/ic_shopping_cart.svg",
+                            color: Colors.white,
+                            height: 26,
                           ),
                         ),
                       ),
@@ -372,11 +370,15 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: <Widget>[
-                                            Text(widget.product.name,
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 19,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: Color(0xFF5D6A78))),
+                                            Container(
+                                              width:ScreenUtil.getWidth(context)/2,
+                                              child: Text(widget.product.name,
+                                                  maxLines: 2,
+                                                  style: GoogleFonts.poppins(
+                                                      fontSize: 19,
+                                                      fontWeight: FontWeight.w400,
+                                                      color: Color(0xFF5D6A78))),
+                                            ),
                                             Row(
                                               children: <Widget>[
                                                 RatingBar(
@@ -731,8 +733,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                           width: 140,
                                           child: GFButton(
                                             onPressed: () {
-                                              themeColor.getPlan_index()==1?
-                                              show_Dialog(context):Nav.route(
+                                          Nav.route(
                                                   context, ShoppingCartPage());
                                             },
                                             child: Text(getTransrlate(context, 'Buy'),
@@ -853,7 +854,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                     children: <Widget>[
                                       CircleAvatar(
                                         radius: 20,backgroundImage: CachedNetworkImageProvider(
-                                           ! themeColor.isLogin?'https://p.kindpng.com/picc/s/207-2074624_white-gray-circle-avatar-png-transparent-png.png':photo,
+                                           ! themeColor.isLogin?'https://p.kindpng.com/picc/s/207-2074624_white-gray-circle-avatar-png-transparent-png.png':photo==null?'s':photo,
                                         ),
                                       ),
                                       SizedBox(

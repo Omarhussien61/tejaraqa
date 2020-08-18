@@ -5,6 +5,7 @@ class Config_Model {
   bool login;
   String kGoogleApiKey;
   String local;
+  bool active;
   int planIndex;
   List<String> sortHome;
   bool newProduct;
@@ -46,6 +47,7 @@ class Config_Model {
         this.login,
         this.kGoogleApiKey,
         this.local,
+        this.active,
         this.planIndex,
         this.sortHome,
         this.newProduct,
@@ -87,6 +89,7 @@ class Config_Model {
     login = json['Login'];
     kGoogleApiKey = json['kGoogleApiKey'];
     local = json['local'];
+    active = json['active'];
     planIndex = json['Plan_index'];
     sortHome = json['SortHome'].cast<String>();
     newProduct = json['NewProduct'];
@@ -130,6 +133,7 @@ class Config_Model {
     data['Login'] = this.login;
     data['kGoogleApiKey'] = this.kGoogleApiKey;
     data['local'] = this.local;
+    data['active'] = this.active;
     data['Plan_index'] = this.planIndex;
     data['SortHome'] = this.sortHome;
     data['NewProduct'] = this.newProduct;

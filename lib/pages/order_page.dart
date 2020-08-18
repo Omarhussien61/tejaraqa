@@ -23,7 +23,7 @@ import 'package:shoppingapp/utils/util/shared_preferences_helper.dart';
 import 'package:shoppingapp/utils/util/sql_address.dart';
 import 'package:sqflite/sqflite.dart';
 
-import 'ditails_Payment.dart';
+import 'ditails_payment.dart';
 import 'new_adress_page.dart';
 
 class OrderPage extends StatefulWidget {

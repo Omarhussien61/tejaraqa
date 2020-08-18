@@ -7,7 +7,11 @@ import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 
+import 'package:getflutter/components/button/gf_button.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../main.dart';
+import '../pages/orders_detail_page.dart';
+
 import 'home_page.dart';
 
 
@@ -48,7 +52,7 @@ DetailScreen(this.confirmOrder);
                                 width: 101,
                                 height: 101,
                                 decoration: BoxDecoration(
-                                  color: Colors.red[100],
+                                  color: Provider.of<ThemeNotifier>(context).getColor() ,
                                   borderRadius: BorderRadius.all(Radius.circular(50.5)),
                                 ),
                                 child: Column(
@@ -58,7 +62,7 @@ DetailScreen(this.confirmOrder);
                                       width: 40,
                                       height: 31,
                                       child: Icon(Icons.check,size: deviceHeight/20,
-                                        color: Provider.of<ThemeNotifier>(context).getColor(),),
+                                        color: Colors.white,),
                                     ),
                                   ],
                                 ),
@@ -66,13 +70,16 @@ DetailScreen(this.confirmOrder);
                             ),
                             Align(
                               alignment: Alignment.topCenter,
-                              child: Text(
-                                getTransrlate(context, 'OrderDone'),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Provider.of<ThemeNotifier>(context).getColor(),
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 30,
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Text(
+                                  getTransrlate(context, 'OrderDone'),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Provider.of<ThemeNotifier>(context).getColor(),
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 30,
+                                  ),
                                 ),
                               ),
                             ),
@@ -221,7 +228,19 @@ DetailScreen(this.confirmOrder);
                                           fontSize: 12.0),
                                     ),
                                   ),
+
                                 ),
+                                Container(
+                                  height: 50,
+                                ),
+                                GFButton(
+                                  onPressed: () {
+                                    Nav.route(context, OrdersDetailPage());
+                                  },
+                                  text: getTransrlate(context, 'OrderDetails'),
+                                  color: Provider.of<ThemeNotifier>(context).getColor(),
+                                  textStyle: GoogleFonts.cairo(fontSize: 18),
+                                )
                               ],
                             ),
                           ],

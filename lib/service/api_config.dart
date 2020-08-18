@@ -53,7 +53,7 @@ class APICONFIQ{
     try {
 
       var response = await dio.get(getconfiq,
-        //options: buildCacheOptions(Duration(days: 7)),
+       // options: buildCacheOptions(Duration(days: 7)),
 
       );
       print(response.data);
@@ -61,7 +61,7 @@ class APICONFIQ{
         var data = json.decode(response.data);
         config_model = new Config_Model.fromJson(data);
       } else {
-        print('Somthing went wrong');
+        print('Something went wrong');
       }
     } catch (e) {
       print(e);

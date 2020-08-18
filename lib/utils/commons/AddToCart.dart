@@ -10,7 +10,7 @@ import '../theme_notifier.dart';
 
 void save(ProductModel productModel,int id,String name,String price,BuildContext context) async {
   SQL_Helper helper = new SQL_Helper();
-  double myInt = await double.parse(price);
+  double myInt = await double.parse(price==' '?'0':price);
   myInt=num.parse(myInt.toStringAsFixed(2));
   Cart cart= new Cart(  id, name, 1, myInt,
       DateFormat.yMMMd().format(DateTime.now()),productModel.images[0].src,productModel.Currancy);

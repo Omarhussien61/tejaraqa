@@ -341,7 +341,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                       ),
                       InkWell(
                         onTap: () {
-                          if (themeColor.getPlan_index() == 1) {
+                          if (!themeColor.config_model.login) {
                             show_Dialog(context);
                           } else {
                             if (themeColor.isLogin == false) {
