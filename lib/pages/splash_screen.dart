@@ -27,7 +27,8 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(
         Duration(seconds: 5),
-        () => Provider.of<ThemeNotifier>(context).config_model.active? _auth():null
+        () => Provider.of<ThemeNotifier>(context).config_model!=null?
+        Provider.of<ThemeNotifier>(context).config_model.active? _auth():null:null
     );
   }
 

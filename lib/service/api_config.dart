@@ -53,7 +53,7 @@ class APICONFIQ{
     try {
 
       var response = await dio.get(getconfiq,
-       // options: buildCacheOptions(Duration(days: 7)),
+        options: buildCacheOptions(Duration(days: 7)),
 
       );
       print(response.data);

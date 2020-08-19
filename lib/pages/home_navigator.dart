@@ -49,7 +49,7 @@ class _HomeNavigatorState extends State<HomeNavigator> {
     db.then((database) {
       Future<List<Recentview>> ProductView = sql_rercent.getRecentViewList();
       ProductView.then((theList) {
-        theList!=null?
+        theList!=null||theList.isNotEmpty?
         setState(() {
           contVeiw=theList[0].id.toString();
           for (int i = 1; i <= theList.length-1 ; i++){
@@ -106,6 +106,9 @@ class _HomeNavigatorState extends State<HomeNavigator> {
         },),
     );
   }
+
+
+
 
   bottomCenterItem(ThemeNotifier themeColor) {
     return Container(

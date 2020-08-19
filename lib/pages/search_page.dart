@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -228,7 +227,9 @@ class _SearchPageState extends State<SearchPage> {
                     Container(height: 600,
                         child: productModel==null?Center(child:
                         CircularProgressIndicator(
-                            valueColor:  AlwaysStoppedAnimation<Color>(Provider.of<ThemeNotifier>(context).getColor()))):list(themeColor)),
+                            valueColor:
+                            AlwaysStoppedAnimation<Color>(Provider.of<ThemeNotifier>(context).getColor()
+                            ))):list(themeColor)),
                   ],
                 ),
               ),

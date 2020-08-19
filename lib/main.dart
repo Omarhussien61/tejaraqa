@@ -68,22 +68,26 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     theameservice.getNewTheme().then((onValue){
+      onValue!=null?
+      setState(() {
       Provider.of<ThemeNotifier>(context).setTheme(onValue);
       Provider.of<ThemeNotifier>(context).setColor(Color(int.parse(onValue.primaryCoustom)));
       mainColor=Color(int.parse(onValue.primaryCoustom));
       SharedPreferences.getInstance().then((prefs){
         prefs.setInt('color', int.parse(onValue.primaryCoustom));
       });
+      }):null;
     });
     APICONFIQ.getNewConfiq().then((onValue){
-      setState(() {
+     onValue!=null?
+     setState(() {
         APICONFIQ.Base_url=onValue.baseUrl;
         APICONFIQ.consumer_key=onValue.consumerKey;
         APICONFIQ.consumer_secret=onValue.consumerSecret;
         APICONFIQ.kGoogleApiKey=onValue.kGoogleApiKey;
         Provider.of<ThemeNotifier>(context).setLocal(onValue.local);
         Provider.of<ThemeNotifier>(context).setConfig_model(onValue);
-      });
+      }):null;
     });
     super.initState();
   }

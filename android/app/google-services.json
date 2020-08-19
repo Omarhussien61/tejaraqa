@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:213408754299:android:e99432a79f8f95b0af10de",
         "android_client_info": {
-          "package_name": "com.hlsoft.Woo"
+          "package_name": "com.hlsoft.d1"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "213408754299-7dblcl0c8c5v8gbiildcsmkejipqp2hr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.hlsoft.Woo",
+            "package_name": "com.hlsoft.d1",
             "certificate_hash": "495277c09896714b3d2c318f1f74494071b98579"
           }
         },
