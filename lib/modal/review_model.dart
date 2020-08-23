@@ -1,4 +1,5 @@
-class Rat_model {
+// ignore: camel_case_types
+class Review_model {
   int id;
   String dateCreated;
   String dateCreatedGmt;
@@ -10,7 +11,7 @@ class Rat_model {
   int rating;
   bool verified;
 
-  Rat_model(
+  Review_model(
       {this.id,
         this.dateCreated,
         this.dateCreatedGmt,
@@ -22,7 +23,7 @@ class Rat_model {
         this.rating,
         this.verified});
 
-  Rat_model.fromJson(Map<String, dynamic> json) {
+  Review_model.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     dateCreated = json['date_created'];
     dateCreatedGmt = json['date_created_gmt'];

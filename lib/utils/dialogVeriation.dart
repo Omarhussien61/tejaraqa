@@ -11,7 +11,7 @@ import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 
-import 'commons/AddToCart.dart';
+import 'commons/add_to_cart.dart';
 
 class DialogVreations extends StatefulWidget {
   DialogVreations({

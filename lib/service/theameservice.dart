@@ -4,7 +4,7 @@ import 'package:shoppingapp/modal/Theme.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
 
-class theameservice{
+class theame_service{
   static Future<ThemeModel> getNewTheme() async {
     var dio = Dio();
     String URL='https://app.woo2.app/configuration/get_theme.php';

@@ -8,9 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shoppingapp/main.dart';
 import 'package:shoppingapp/modal/Create_user.dart';
-import 'package:shoppingapp/modal/User.dart';
+import 'package:shoppingapp/modal/user.dart';
 
-import 'package:shoppingapp/modal/usermodal.dart';
+import 'package:shoppingapp/modal/user_login.dart';
 import 'package:shoppingapp/service/api_config.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,8 +20,8 @@ import 'package:shoppingapp/utils/util/Constant.dart';
 import 'package:shoppingapp/utils/util/shared_preferences_helper.dart';
 import 'package:shoppingapp/widgets/register/register_form_model.dart';
 class LoginService {
-  UserModal userInfo;
-  Future<UserModal> loginUser(String user, String pass) async {
+  UserLogin userInfo;
+  Future<UserLogin> loginUser(String user, String pass) async {
     var client = new http.Client();
     int code;
     Map<String, dynamic> body = {
@@ -44,7 +44,7 @@ class LoginService {
       print(response.body);
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
-         userInfo = new UserModal.fromJson(data);
+         userInfo = new UserLogin.fromJson(data);
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString("user_email", userInfo.user.email);
 

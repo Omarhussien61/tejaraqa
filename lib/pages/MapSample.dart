@@ -10,10 +10,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:shoppingapp/modal/place.dart';
 import 'package:shoppingapp/pages/Edit_adress_page.dart';
-import 'package:shoppingapp/service/places_service.dart';
-import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
@@ -33,7 +30,6 @@ class MapSampleState extends State<MapSample> {
   static const LatLng _center = const LatLng(45.521563, -122.677433);
   final Set<Marker> _markers = {};
   LatLng _lastMapPosition = _center;
-  List<Place> places;
   MapType _currentMapType = MapType.normal;
   static const kGoogleApiKey = "AIzaSyBb0GpBvrtNExsQHDb55DcVVnmUgL85w4U";
   BitmapDescriptor customIcon;

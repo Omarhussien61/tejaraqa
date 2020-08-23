@@ -5,7 +5,7 @@ import 'package:shoppingapp/modal/Product_variations.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:shoppingapp/modal/Orders_model.dart';
-import 'package:shoppingapp/modal/Rat_model.dart';
+import 'package:shoppingapp/modal/review_model.dart';
 import 'package:shoppingapp/modal/cart.dart';
 import 'package:shoppingapp/modal/createOrder.dart';
 import 'package:shoppingapp/modal/productmodel.dart';
@@ -381,9 +381,9 @@ class ProductService {
     }
     return completer.future;
   }
-  static Future<Rat_model> Createrating(String name,String email,int id,double rating,String review ) async {
+  static Future<Review_model> Createrating(String name,String email,int id,double rating,String review ) async {
     var client = new http.Client();
-    Rat_model rat_model;
+    Review_model rat_model;
     Map<String, dynamic> body = {
       "product_id": '$id',
       "review": review,
@@ -408,7 +408,7 @@ class ProductService {
 
       if (response.statusCode==201){
         print(response.body);
-        rat_model = new Rat_model.fromJson(jsonDecode(response.body));
+        rat_model = new Review_model.fromJson(jsonDecode(response.body));
         return rat_model;
       }
     } catch (e) {

@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:getflutter/components/button/gf_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shoppingapp/modal/Profilefacebook.dart';
-import 'package:shoppingapp/modal/usermodal.dart';
+import 'package:shoppingapp/modal/user_login.dart';
 import 'package:shoppingapp/service/loginservice.dart';
 import 'package:shoppingapp/utils/keyboard.dart';
 import 'package:shoppingapp/utils/screen.dart';

@@ -1,12 +1,12 @@
-class UserModal {
+class UserLogin {
   String status;
   String cookie;
   String cookieName;
   UserM user;
 
-  UserModal({this.status, this.cookie, this.cookieName, this.user});
+  UserLogin({this.status, this.cookie, this.cookieName, this.user});
 
-  UserModal.fromJson(Map<String, dynamic> json) {
+  UserLogin.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     cookie = json['cookie'];
     cookieName = json['cookie_name'];

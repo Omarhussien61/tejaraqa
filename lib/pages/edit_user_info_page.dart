@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:shoppingapp/modal/usermodal.dart';
+import 'package:shoppingapp/modal/user_login.dart';
 import 'package:shoppingapp/service/loginservice.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/drop_down_menu/find_dropdown.dart';
@@ -28,7 +28,7 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
   String email,name,last_name,phone;
       int id;
   TextEditingController _frist_nameController,_Last_nameController,_EmailController,_PhoneController;
-  UserModal userModal;
+  UserLogin userModal;
   final _formKey = GlobalKey<FormState>();
 
 

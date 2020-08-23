@@ -22,7 +22,7 @@ import 'package:shoppingapp/modal/productmodel.dart';
 import 'package:shoppingapp/pages/order_page.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
 import 'package:shoppingapp/service/productdervice.dart';
-import 'package:shoppingapp/utils/commons/AddFavorite.dart';
+import 'package:shoppingapp/utils/commons/add_favorite.dart';
 import 'package:shoppingapp/utils/commons/show_dialog.dart';
 import 'package:shoppingapp/utils/dialogComment.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';

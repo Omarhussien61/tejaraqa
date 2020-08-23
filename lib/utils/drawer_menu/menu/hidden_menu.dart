@@ -15,7 +15,7 @@ import 'package:shoppingapp/pages/contact_page.dart';
 import 'package:shoppingapp/pages/Support_page.dart';
 import 'package:shoppingapp/pages/login_page.dart';
 import 'package:shoppingapp/pages/profile_settings_page.dart';
-import 'package:shoppingapp/utils/commons/AddFavorite.dart';
+import 'package:shoppingapp/utils/commons/add_favorite.dart';
 import 'package:shoppingapp/utils/commons/show_dialog.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/utils/util/shared_preferences_helper.dart';

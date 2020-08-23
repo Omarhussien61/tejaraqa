@@ -2,11 +2,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:shoppingapp/modal/cart.dart';
-import 'package:shoppingapp/modal/productmodel.dart';
-import 'package:shoppingapp/utils/util/sql_helper.dart';
-
+import '../../modal/cart.dart';
+import '../../modal/productmodel.dart';
+import '../util/sql_helper.dart';
 import '../theme_notifier.dart';
+
 
 void save(ProductModel productModel,int id,String name,String price,BuildContext context) async {
   SQL_Helper helper = new SQL_Helper();

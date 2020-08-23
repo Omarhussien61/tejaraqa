@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shoppingapp/main.dart';
-import 'package:shoppingapp/modal/usermodal.dart';
+import 'package:shoppingapp/modal/user_login.dart';
 import 'package:shoppingapp/service/loginservice.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';

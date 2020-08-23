@@ -14,7 +14,7 @@ import 'package:shoppingapp/pages/filter_page.dart';
 import 'package:shoppingapp/pages/product_detail.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
 import 'package:shoppingapp/service/productdervice.dart';
-import 'package:shoppingapp/utils/commons/AddToCart.dart';
+import 'package:shoppingapp/utils/commons/add_to_cart.dart';
 import 'package:shoppingapp/utils/dialogVeriation.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';

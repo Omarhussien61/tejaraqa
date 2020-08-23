@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:shoppingapp/modal/cart.dart';
 import 'package:shoppingapp/modal/createOrder.dart';
 import 'package:shoppingapp/pages/order_page.dart';
-import 'package:shoppingapp/utils/commons/AddToCart.dart';
+import 'package:shoppingapp/utils/commons/add_to_cart.dart';
 import 'package:shoppingapp/utils/commons/show_dialog.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';

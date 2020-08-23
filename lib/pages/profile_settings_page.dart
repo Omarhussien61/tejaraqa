@@ -8,7 +8,7 @@ import 'package:shoppingapp/pages/change_password_page.dart';
 import 'package:shoppingapp/pages/edit_user_info_page.dart';
 import 'package:shoppingapp/pages/login_page.dart';
 import 'package:shoppingapp/pages/notification_settings_page.dart';
-import 'package:shoppingapp/utils/commons/AddFavorite.dart';
+import 'package:shoppingapp/utils/commons/add_favorite.dart';
 import 'package:shoppingapp/utils/commons/show_dialog.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';

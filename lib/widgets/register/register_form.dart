@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shoppingapp/modal/User.dart';
+import 'package:shoppingapp/modal/user.dart';
 import 'package:shoppingapp/service/loginservice.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';

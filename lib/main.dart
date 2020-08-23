@@ -7,23 +7,17 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shoppingapp/pages/category_page.dart';
-import 'package:shoppingapp/pages/favorite_products_page.dart';
-import 'package:shoppingapp/pages/home_navigator.dart';
-import 'package:shoppingapp/pages/my_profile_page.dart';
-import 'package:shoppingapp/pages/shopping_cart_page.dart';
-import 'package:shoppingapp/pages/splash_screen.dart';
-import 'package:shoppingapp/service/api_config.dart';
-import 'package:shoppingapp/service/productdervice.dart';
-import 'package:shoppingapp/service/theameservice.dart';
-import 'package:shoppingapp/utils/drawer_menu/hidden_drawer/hidden_drawer_menu.dart';
-import 'package:shoppingapp/utils/drawer_menu/hidden_drawer/screen_hidden_drawer.dart';
-import 'package:shoppingapp/utils/drawer_menu/menu/item_hidden_menu.dart';
-import 'package:shoppingapp/utils/drawer_menu/simple_hidden_drawer/animated_drawer_content.dart';
-import 'package:shoppingapp/utils/navigator.dart';
-import 'package:shoppingapp/utils/theme_notifier.dart';
-import 'package:shoppingapp/utils/util/AppLocalizations.dart';
-import 'package:shoppingapp/utils/util/sql_helper.dart';
+import 'pages/home_navigator.dart';
+import 'pages/splash_screen.dart';
+import 'service/api_config.dart';
+import 'service/theameservice.dart';
+import 'utils/drawer_menu/hidden_drawer/hidden_drawer_menu.dart';
+import 'utils/drawer_menu/hidden_drawer/screen_hidden_drawer.dart';
+import 'utils/drawer_menu/menu/item_hidden_menu.dart';
+import 'utils/drawer_menu/simple_hidden_drawer/animated_drawer_content.dart';
+import 'utils/theme_notifier.dart';
+import 'utils/util/AppLocalizations.dart';
+import 'utils/util/sql_helper.dart';
 
 import 'config.dart';
 import 'modal/Theme.dart';
@@ -67,7 +61,7 @@ class _MyAppState extends State<MyApp> {
   }
   @override
   void initState() {
-    theameservice.getNewTheme().then((onValue){
+    theame_service.getNewTheme().then((onValue){
       onValue!=null?
       setState(() {
       Provider.of<ThemeNotifier>(context).setTheme(onValue);
