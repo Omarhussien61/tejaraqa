@@ -255,14 +255,14 @@ class _HiddenMenuState extends State<HiddenMenu> {
                         },
                         child: ItemHiddenMenu(
                           icon: Icon(
-                            Feather.edit,
+                            Icons.language,
                             size: 19,
                             color: Colors.white,
                           ),
                           name:
                               Provider.of<ThemeNotifier>(context).local == 'ar'
-                                  ? 'English'
-                                  : 'عربى',
+                                  ? 'EN'
+                                  : 'AR',
                           baseStyle: GoogleFonts.poppins(
                               color: Colors.white.withOpacity(0.6),
                               fontSize: 19.0),
@@ -362,7 +362,8 @@ class _HiddenMenuState extends State<HiddenMenu> {
                         },
                         child: ItemHiddenMenu(
                           icon: Icon(
-                            Icons.arrow_back,
+                            Provider.of<ThemeNotifier>(context).isLogin ==
+                                false?Feather.unlock:Feather.lock,
                             size: 19,
                             color: Colors.white,
                           ),
