@@ -34,18 +34,20 @@ class ItemHiddenMenuRight extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.only(bottom: 15.0),
+      margin: EdgeInsets.only(bottom: 15.0,left: 24),
       child: InkWell(
         onTap: onTap,
         child: Row(
           children: <Widget>[
             Expanded(
               child: Container(
+                  padding: EdgeInsets.only( right: 20),
+
                   child: Row(
                     children: <Widget>[
                       Container(width: 32, child: Icon(
                         Feather.home,
-                        size: 19,
+                        size: 22,
                         color: Colors.white,
                       ),
                       ),
@@ -55,13 +57,13 @@ class ItemHiddenMenuRight extends StatelessWidget {
                       Text(
                         getTransrlate(context, 'HomePage'),
                         style: (this.baseStyle ??
-                            GoogleFonts.poppins(color: Colors.grey, fontSize: 14.0))
+                            GoogleFonts.cairo(color: Colors.grey, fontSize: 16.0))
                             .merge(this.selected
                             ? this.selectedStyle ??
-                            GoogleFonts.poppins(
-                                color: Colors.white, fontSize: 14)
-                            : GoogleFonts.poppins(
-                            color: Colors.white, fontSize: 14)),
+                            GoogleFonts.cairo(
+                                color: Colors.white, fontSize: 17)
+                            : GoogleFonts.cairo(
+                            color: Colors.white, fontSize: 16)),
                         textAlign: TextAlign.right,
                       ),
                     ],

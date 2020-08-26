@@ -56,53 +56,56 @@ class CategoriesListView extends StatelessWidget {
                   ),
                 );
               },
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Container(
-                    width: 55,
-                    height: 63,
-                    margin:
-                        EdgeInsets.only(top: 4, bottom: 4, left: 12, right: 8),
-                    padding: EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.grey[200],
-                            blurRadius: 5.0,
-                            spreadRadius: 1,
-                            offset: Offset(0.0, 1)),
-                      ],
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      padding: EdgeInsets.all(2),
+              child: Padding(
+                padding: const EdgeInsets.only(left:16),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Container(
+                      width: 68,
+                      height: 68,
+                      margin:
+                          EdgeInsets.only(top: 4, bottom: 4, left: 12, right: 8),
                       decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.grey[200],
+                              blurRadius: 5.0,
+                              spreadRadius: 1,
+                              offset: Offset(0.0, 1)),
+                        ],
                         shape: BoxShape.circle,
+                        color: Colors.white,
                       ),
-                      child:  CachedNetworkImage(
-                        imageUrl: (categories[index].image==null)?
-                        'http://arabimagefoundation.com/images/defaultImage.png'
-                            :categories[index].image.src,
-                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      child: Container(
+                        width: 69,
+                        height: 69,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child:  CircleAvatar(
+                          backgroundColor: Provider.of<ThemeNotifier>(context).getColor(),
+                            radius: 20,backgroundImage: CachedNetworkImageProvider(
+                          categories[index].image==null?
+                          'http://arabimagefoundation.com/images/defaultImage.png'
+                              :categories[index].image.src,
+                        )
+                        ),
                       ),
                     ),
-                  ),
-                  Container(
-                    child: Text(
-                      categories[index].name,
-                      maxLines:1,
-                      style: GoogleFonts.poppins(
-                        fontSize: 12,
-                        color: textColor,
-                        fontWeight: FontWeight.w400,
+                    Container(
+                      child: Text(
+                        categories[index].name,
+                        maxLines:1,
+                        style: GoogleFonts.poppins(
+                          fontSize: 12,
+                          color: textColor,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
             );
           },

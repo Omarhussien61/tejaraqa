@@ -163,7 +163,7 @@ class _HomePageState extends State<HomePage> {
             CarouselSlider(
               items: imageSliders,
               options: CarouselOptions(
-                  autoPlay: false,
+                  autoPlay: true,
                   height: 175,
                   viewportFraction: 1.0,
                   enlargeCenterPage: false,

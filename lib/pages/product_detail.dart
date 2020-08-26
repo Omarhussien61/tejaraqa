@@ -733,7 +733,19 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                           width: 140,
                                           child: GFButton(
                                             onPressed: () {
-                                          Nav.route(
+                                              setState(() {
+                                                // isLiked = !isLiked;
+
+                                                themeColor.isLogin?
+                                                product_variations == null||product_variations.isEmpty?
+                                                {_save(context),Nav.route(context, ShoppingCartPage())}
+                                                    :checkboxValueA==null?
+                                                Scaffold.of(context)
+                                                    .showSnackBar(SnackBar(content: Text(getTransrlate(context, 'SelectVariations')))):
+                                                {_save(context),Nav.route(context, ShoppingCartPage())}:
+                                                showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
+                                              });
+                                              Nav.route(
                                                   context, ShoppingCartPage());
                                             },
                                             child: Text(getTransrlate(context, 'Buy'),
@@ -854,7 +866,9 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                     children: <Widget>[
                                       CircleAvatar(
                                         radius: 20,backgroundImage: CachedNetworkImageProvider(
-                                           ! themeColor.isLogin?'https://p.kindpng.com/picc/s/207-2074624_white-gray-circle-avatar-png-transparent-png.png':photo==null?'s':photo,
+                                           ! themeColor.isLogin?
+                                           'https://p.kindpng.com/picc/s/207-2074624_white-gray-circle-avatar-png-transparent-png.png'
+                                               :photo==null?'s':photo,
                                         ),
                                       ),
                                       SizedBox(

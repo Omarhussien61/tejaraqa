@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/dummy_data/discountImages.dart';
+import 'package:shoppingapp/utils/theme_notifier.dart';
 
 class SliderDot extends StatelessWidget {
   const SliderDot({
@@ -24,7 +26,7 @@ class SliderDot extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
             shape: BoxShape.rectangle,
-            color: _current == index ? Color(0xFF0055FF) : textColor,
+            color: _current == index ? Provider.of<ThemeNotifier>(context).getColor() : textColor,
           ),
         );
       }).toList(),

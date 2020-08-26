@@ -48,13 +48,13 @@ class ItemHiddenMenu extends StatelessWidget {
               child: Text(
                 name,
                 style: (this.baseStyle ??
-                        GoogleFonts.poppins(color: Colors.grey, fontSize: 14.0))
+                        GoogleFonts.cairo(color: Colors.grey, fontSize: 15.0))
                     .merge(this.selected
                         ? this.selectedStyle ??
-                            GoogleFonts.poppins(
-                                color: Colors.white, fontSize: 14)
-                        : GoogleFonts.poppins(
-                            color: Colors.white, fontSize: 14)),
+                            GoogleFonts.cairo(
+                                color: Colors.white, fontSize: 15)
+                        : GoogleFonts.cairo(
+                            color: Colors.white, fontSize: 15)),
               ),
             )
           ],

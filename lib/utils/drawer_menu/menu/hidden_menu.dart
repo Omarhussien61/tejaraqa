@@ -122,7 +122,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
               ListTile(
                 title: Text(
                   name == null ? 'user' : name + ' ' + last,
-                  style: GoogleFonts.poppins(color: Colors.white),
+                  style: GoogleFonts.cairo(color: Colors.white),
                 ),
                 leading: CircleAvatar(
                     radius: 20,
@@ -198,6 +198,8 @@ class _HiddenMenuState extends State<HiddenMenu> {
                     color: Colors.white.withOpacity(0.5),
                   )),
               Container(
+                padding: EdgeInsets.only( right: 20),
+
                 decoration: BoxDecoration(
                     boxShadow: widget.enableShadowItensMenu
                         ? [
@@ -230,11 +232,15 @@ class _HiddenMenuState extends State<HiddenMenu> {
                         child: ItemHiddenMenu(
                           icon: Icon(
                             Feather.user,
-                            size: 19,
+                            size: 25,
                             color: Colors.white,
                           ),
                           name: getTransrlate(context, 'ProfileSettings'),
-                          baseStyle: GoogleFonts.poppins(
+                         selectedStyle:GoogleFonts.cairo(
+                             color: Colors.white.withOpacity(0.6),
+                             fontSize: 19.0) ,
+
+                          baseStyle: GoogleFonts.cairo(
                               color: Colors.white.withOpacity(0.6),
                               fontSize: 19.0),
                           colorLineSelected: Colors.orange,
@@ -256,14 +262,14 @@ class _HiddenMenuState extends State<HiddenMenu> {
                         child: ItemHiddenMenu(
                           icon: Icon(
                             Icons.language,
-                            size: 19,
+                            size: 25,
                             color: Colors.white,
                           ),
                           name:
                               Provider.of<ThemeNotifier>(context).local == 'ar'
                                   ? 'EN'
                                   : 'AR',
-                          baseStyle: GoogleFonts.poppins(
+                          baseStyle: GoogleFonts.cairo(
                               color: Colors.white.withOpacity(0.6),
                               fontSize: 19.0),
                           colorLineSelected: Colors.orange,
@@ -276,11 +282,11 @@ class _HiddenMenuState extends State<HiddenMenu> {
                         child: ItemHiddenMenu(
                           icon: Icon(
                             Icons.question_answer,
-                            size: 19,
+                            size: 25,
                             color: Colors.white,
                           ),
                           name: getTransrlate(context, 'FAQ'),
-                          baseStyle: GoogleFonts.poppins(
+                          baseStyle: GoogleFonts.cairo(
                               color: Colors.white.withOpacity(0.6),
                               fontSize: 19.0,
                               fontWeight: FontWeight.w200),
@@ -291,11 +297,11 @@ class _HiddenMenuState extends State<HiddenMenu> {
                         child: ItemHiddenMenu(
                           icon: Icon(
                             Feather.list,
-                            size: 19,
+                            size: 22,
                             color: Colors.white,
                           ),
                           name: getTransrlate(context, 'About'),
-                          baseStyle: GoogleFonts.poppins(
+                          baseStyle: GoogleFonts.cairo(
                               color: Colors.white.withOpacity(0.6),
                               fontSize: 19.0),
                           colorLineSelected: Colors.orange,
@@ -308,11 +314,11 @@ class _HiddenMenuState extends State<HiddenMenu> {
                         child: ItemHiddenMenu(
                           icon: Icon(
                             Feather.clock,
-                            size: 19,
+                            size: 25,
                             color: Colors.white,
                           ),
                           name: getTransrlate(context, 'Support'),
-                          baseStyle: GoogleFonts.poppins(
+                          baseStyle: GoogleFonts.cairo(
                               color: Colors.white.withOpacity(0.6),
                               fontSize: 19.0),
                           colorLineSelected: Colors.orange,
@@ -328,11 +334,11 @@ class _HiddenMenuState extends State<HiddenMenu> {
                         child: ItemHiddenMenu(
                           icon: Icon(
                             Icons.call,
-                            size: 19,
+                            size: 25,
                             color: Colors.white,
                           ),
                           name: getTransrlate(context, 'Contact'),
-                          baseStyle: GoogleFonts.poppins(
+                          baseStyle: GoogleFonts.cairo(
                               color: Colors.white.withOpacity(0.6),
                               fontSize: 19.0,
                               fontWeight: FontWeight.w200),
@@ -364,16 +370,16 @@ class _HiddenMenuState extends State<HiddenMenu> {
                           icon: Icon(
                             Provider.of<ThemeNotifier>(context).isLogin ==
                                 false?Feather.unlock:Feather.lock,
-                            size: 19,
+                            size: 25,
                             color: Colors.white,
                           ),
                           name: Provider.of<ThemeNotifier>(context).isLogin ==
                                   false
                               ? getTransrlate(context, 'login')
                               : getTransrlate(context, 'Logout'),
-                          baseStyle: GoogleFonts.poppins(
+                          baseStyle: GoogleFonts.cairo(
                               color: Colors.white.withOpacity(0.6),
-                              fontSize: 19.0,
+                              fontSize: 30.0,
                               fontWeight: FontWeight.w200),
                           colorLineSelected: Colors.orange,
                         ),
