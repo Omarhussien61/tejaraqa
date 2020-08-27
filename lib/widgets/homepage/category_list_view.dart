@@ -84,7 +84,7 @@ class CategoriesListView extends StatelessWidget {
                           shape: BoxShape.circle,
                         ),
                         child:  CircleAvatar(
-                          backgroundColor: Provider.of<ThemeNotifier>(context).getColor(),
+                          backgroundColor: Colors.white70,
                             radius: 20,backgroundImage: CachedNetworkImageProvider(
                           categories[index].image==null?
                           'http://arabimagefoundation.com/images/defaultImage.png'

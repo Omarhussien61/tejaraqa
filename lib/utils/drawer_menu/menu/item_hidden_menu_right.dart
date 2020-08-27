@@ -48,7 +48,7 @@ class ItemHiddenMenuRight extends StatelessWidget {
                       Container(width: 32, child: Icon(
                         Feather.home,
                         size: 22,
-                        color: Colors.white,
+                        color: Colors.white.withOpacity(0.7),
                       ),
                       ),
                       SizedBox(
@@ -57,12 +57,15 @@ class ItemHiddenMenuRight extends StatelessWidget {
                       Text(
                         getTransrlate(context, 'HomePage'),
                         style: (this.baseStyle ??
-                            GoogleFonts.cairo(color: Colors.grey, fontSize: 16.0))
+                            GoogleFonts.cairo(color: Colors.grey,
+                                fontWeight: FontWeight.w700,fontSize: 16.0))
                             .merge(this.selected
                             ? this.selectedStyle ??
                             GoogleFonts.cairo(
+                              fontWeight: FontWeight.w700,
                                 color: Colors.white, fontSize: 17)
                             : GoogleFonts.cairo(
+                            fontWeight: FontWeight.w700,
                             color: Colors.white, fontSize: 16)),
                         textAlign: TextAlign.right,
                       ),

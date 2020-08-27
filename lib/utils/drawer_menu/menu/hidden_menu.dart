@@ -72,7 +72,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
   int _indexSelected;
   bool isconfiguredListern = false;
   int id;
-  String username, name, last, photo;
+  String Email, name, last, photo,phone;
   final facebookLogin = FacebookLogin();
   GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: [
@@ -83,7 +83,8 @@ class _HiddenMenuState extends State<HiddenMenu> {
 
   Future fetchUserId() async {
     id = await SharedPreferencesHelper.getUserId();
-    username = await SharedPreferencesHelper.getEmail();
+    Email = await SharedPreferencesHelper.getEmail();
+    phone = await SharedPreferencesHelper.getphone();
     name = await SharedPreferencesHelper.getname();
     last = await SharedPreferencesHelper.getLast_name();
     photo = await SharedPreferencesHelper.getUserimage();
@@ -119,18 +120,34 @@ class _HiddenMenuState extends State<HiddenMenu> {
               SizedBox(
                 height: 36,
               ),
-              ListTile(
-                title: Text(
-                  name == null ? 'user' : name + ' ' + last,
-                  style: GoogleFonts.cairo(color: Colors.white),
+              Container(
+                width: ScreenUtil.getWidth(context)/1.4,
+                child: ListTile(
+                  title: Text(
+                    name == null ? 'user' : name + ' ' + last,
+                    style: GoogleFonts.cairo(color: Colors.white),
+                    maxLines: 1,
+                    softWrap: true,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  subtitle: Text(
+                    phone == null? Email==null?'':Email : phone,
+                    maxLines: 1,
+                    softWrap: true,
+                    textAlign: themeColor.getlocal()=="ar"?TextAlign.end:TextAlign.start,
+                    textDirection: TextDirection.ltr,
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.cairo(color: Colors.white,
+                    ),
+                  ) ,
+                  leading: CircleAvatar(
+                      radius: 20,
+                      backgroundImage: CachedNetworkImageProvider(
+                        photo == null
+                            ? 'https://p.kindpng.com/picc/s/207-2074624_white-gray-circle-avatar-png-transparent-png.png'
+                            : photo,
+                      )),
                 ),
-                leading: CircleAvatar(
-                    radius: 20,
-                    backgroundImage: CachedNetworkImageProvider(
-                      photo == null
-                          ? 'https://p.kindpng.com/picc/s/207-2074624_white-gray-circle-avatar-png-transparent-png.png'
-                          : photo,
-                    )),
               ),
               Container(
                 padding: EdgeInsets.only(
@@ -193,7 +210,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
               ),
               Container(
                   height: 28,
-                  margin: EdgeInsets.only(left: 24, right: 48),
+                  margin: EdgeInsets.only(left: 24, right: 24),
                   child: Divider(
                     color: Colors.white.withOpacity(0.5),
                   )),
@@ -233,15 +250,16 @@ class _HiddenMenuState extends State<HiddenMenu> {
                           icon: Icon(
                             Feather.user,
                             size: 25,
-                            color: Colors.white,
+                            color: Colors.white.withOpacity(0.6),
                           ),
                           name: getTransrlate(context, 'ProfileSettings'),
                          selectedStyle:GoogleFonts.cairo(
                              color: Colors.white.withOpacity(0.6),
+                             fontWeight: FontWeight.w400,
                              fontSize: 19.0) ,
 
                           baseStyle: GoogleFonts.cairo(
-                              color: Colors.white.withOpacity(0.6),
+                              color: Colors.white.withOpacity(0.7),
                               fontSize: 19.0),
                           colorLineSelected: Colors.orange,
                         ),
@@ -263,7 +281,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                           icon: Icon(
                             Icons.language,
                             size: 25,
-                            color: Colors.white,
+                            color: Colors.white.withOpacity(0.7),
                           ),
                           name:
                               Provider.of<ThemeNotifier>(context).local == 'ar'
@@ -283,7 +301,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                           icon: Icon(
                             Icons.question_answer,
                             size: 25,
-                            color: Colors.white,
+                            color: Colors.white.withOpacity(0.7),
                           ),
                           name: getTransrlate(context, 'FAQ'),
                           baseStyle: GoogleFonts.cairo(
@@ -298,7 +316,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                           icon: Icon(
                             Feather.list,
                             size: 22,
-                            color: Colors.white,
+                            color: Colors.white.withOpacity(0.7),
                           ),
                           name: getTransrlate(context, 'About'),
                           baseStyle: GoogleFonts.cairo(
@@ -315,7 +333,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                           icon: Icon(
                             Feather.clock,
                             size: 25,
-                            color: Colors.white,
+                            color: Colors.white.withOpacity(0.7),
                           ),
                           name: getTransrlate(context, 'Support'),
                           baseStyle: GoogleFonts.cairo(
@@ -335,7 +353,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                           icon: Icon(
                             Icons.call,
                             size: 25,
-                            color: Colors.white,
+                            color: Colors.white.withOpacity(0.7),
                           ),
                           name: getTransrlate(context, 'Contact'),
                           baseStyle: GoogleFonts.cairo(
@@ -371,7 +389,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                             Provider.of<ThemeNotifier>(context).isLogin ==
                                 false?Feather.unlock:Feather.lock,
                             size: 25,
-                            color: Colors.white,
+                            color: Colors.white.withOpacity(0.7),
                           ),
                           name: Provider.of<ThemeNotifier>(context).isLogin ==
                                   false

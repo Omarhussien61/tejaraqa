@@ -79,168 +79,192 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           ),
         ),
         backgroundColor: Color(0xFFFCFCFC),
-        body: Container(
-          padding: EdgeInsets.all(24),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  getTransrlate(context, 'changePassword'),
-                  style: GoogleFonts.poppins(fontSize: 18, color: textColor),
-                ),
-                Container(
-                    width: 28,
-                    child: Divider(
-                      color: themeColor.getColor(),
-                      height: 3,
-                      thickness: 2,
-                    )),
-                SizedBox(
-                  height: 16,
-                ),
-                Container(
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: <Widget>[
-                        MyTextFormFieldLine(
-                          controller: emailController,
-                          labelText: getTransrlate(context, 'Email'),
-                          enabled: false,
-                          hintText: getTransrlate(context, 'Email'),
-                          isEmail: true,
-                          validator: (String value) {
-                            if (!validator.isEmail(value)) {
-                              return getTransrlate(context, 'invalidemail');
-                            }
-                            _formKey.currentState.save();
-                            return null;
-                          },
-                          onSaved: (String value) {},
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 24,right: 8),
+                child: Row(
+                  children: [
+                    InkWell(
+                      onTap:() {Navigator.pop(context);},
+                      child: Icon(
+                        Icons.chevron_left,
+                        color: textColor,
+                        size: 32,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 16,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          getTransrlate(context, 'changePassword'),
+                          style: GoogleFonts.poppins(
+                              fontSize: 18, color: Color(0xFF5D6A78)),
                         ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        MyTextFormFieldLine(
-                          labelText: getTransrlate(context, 'password'),
-                          hintText: getTransrlate(context, 'password'),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              // Based on passwordVisible state choose the icon
-                              passwordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
+                        Container(
+                            width: 28,
+                            child: Divider(
                               color: themeColor.getColor(),
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                passwordVisible = !passwordVisible;
-                              });
-                            },
+                              height: 3,
+                              thickness: 2,
+                            )),
+
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              Container(
+                padding: EdgeInsets.all(24),
+
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      MyTextFormFieldLine(
+                        controller: emailController,
+                        labelText: getTransrlate(context, 'Email'),
+                        enabled: false,
+                        hintText: getTransrlate(context, 'Email'),
+                        isEmail: true,
+                        validator: (String value) {
+                          if (!validator.isEmail(value)) {
+                            return getTransrlate(context, 'invalidemail');
+                          }
+                          _formKey.currentState.save();
+                          return null;
+                        },
+                        onSaved: (String value) {},
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      MyTextFormFieldLine(
+                        labelText: getTransrlate(context, 'password'),
+                        hintText: getTransrlate(context, 'password'),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            // Based on passwordVisible state choose the icon
+                            passwordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: themeColor.getColor(),
                           ),
-                          isPassword: passwordVisible,
-                          validator: (String value) {
-                            if (value != password) {
-                              return getTransrlate(context, 'passwordinvalid');
-                            }
-                            _formKey.currentState.save();
-                            return null;
-                          },
-                          onSaved: (String value) {
+                          onPressed: () {
                             setState(() {
-                              oldPassword = value;
+                              passwordVisible = !passwordVisible;
                             });
                           },
                         ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        MyTextFormFieldLine(
-                          labelText: getTransrlate(context, 'NewPassword'),
-                          hintText: getTransrlate(context, 'NewPassword'),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              // Based on passwordVisible state choose the icon
-                              passwordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                              color: themeColor.getColor(),
-                            ),
-                            onPressed: () {
-                              // Update the state i.e. toogle the state of passwordVisible variable
-                              setState(() {
-                                passwordVisible = !passwordVisible;
-                              });
-                            },
+                        isPassword: passwordVisible,
+                        validator: (String value) {
+                          if (value != password) {
+                            return getTransrlate(context, 'passwordinvalid');
+                          }
+                          _formKey.currentState.save();
+                          return null;
+                        },
+                        onSaved: (String value) {
+                          setState(() {
+                            oldPassword = value;
+                          });
+                        },
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      MyTextFormFieldLine(
+                        labelText: getTransrlate(context, 'NewPassword'),
+                        hintText: getTransrlate(context, 'NewPassword'),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            // Based on passwordVisible state choose the icon
+                            passwordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: themeColor.getColor(),
                           ),
-                          isPassword: passwordVisible,
-                          validator: (String value) {
-                            if (value.length < 7) {
-                              return getTransrlate(context, 'PasswordShorter');
-                            }
-
-                            _formKey.currentState.save();
-
-                            return null;
-                          },
-                          onSaved: (String value) {
-                            newPassword = value;
+                          onPressed: () {
+                            // Update the state i.e. toogle the state of passwordVisible variable
+                            setState(() {
+                              passwordVisible = !passwordVisible;
+                            });
                           },
                         ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        MyTextFormFieldLine(
-                          labelText: getTransrlate(context, 'ConfirmPassword'),
-                          hintText: getTransrlate(context, 'ConfirmPassword'),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              // Based on passwordVisible state choose the icon
-                              passwordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                              color: themeColor.getColor(),
-                            ),
-                            onPressed: () {
-                              // Update the state i.e. toogle the state of passwordVisible variable
-                              setState(() {
-                                passwordVisible = !passwordVisible;
-                              });
-                            },
+                        isPassword: passwordVisible,
+                        validator: (String value) {
+                          if (value.length < 7) {
+                            return getTransrlate(context, 'PasswordShorter');
+                          }
+
+                          _formKey.currentState.save();
+
+                          return null;
+                        },
+                        onSaved: (String value) {
+                          newPassword = value;
+                        },
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      MyTextFormFieldLine(
+                        labelText: getTransrlate(context, 'ConfirmPassword'),
+                        hintText: getTransrlate(context, 'ConfirmPassword'),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            // Based on passwordVisible state choose the icon
+                            passwordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: themeColor.getColor(),
                           ),
-                          isPassword: passwordVisible,
-                          validator: (String value) {
-                            if (value != newPassword) {
-                              return getTransrlate(context, 'Passwordmatch');
-                            }
-                            _formKey.currentState.save();
-
-                            return null;
-                          },
-                          onSaved: (String value) {
-                            confirmPassword = value;
+                          onPressed: () {
+                            // Update the state i.e. toogle the state of passwordVisible variable
+                            setState(() {
+                              passwordVisible = !passwordVisible;
+                            });
                           },
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 10),
-                          child: InkWell(
-                            onTap: _launchInBrowser,
-                            child: Text(
-                              getTransrlate(context, 'LostPassword'),
-                              style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  color: themeColor.getColor(),
-                                  fontSize: 16),
-                            ),
+                        isPassword: passwordVisible,
+                        validator: (String value) {
+                          if (value != newPassword) {
+                            return getTransrlate(context, 'Passwordmatch');
+                          }
+                          _formKey.currentState.save();
+
+                          return null;
+                        },
+                        onSaved: (String value) {
+                          confirmPassword = value;
+                        },
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 10),
+                        child: InkWell(
+                          onTap: _launchInBrowser,
+                          child: Text(
+                            getTransrlate(context, 'LostPassword'),
+                            style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                color: themeColor.getColor(),
+                                fontSize: 16),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
         ),
       ),

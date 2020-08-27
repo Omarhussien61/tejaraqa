@@ -34,6 +34,27 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
     );
     return SafeArea(
       child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(42.0), // here the desired height
+          child: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0,
+            centerTitle: true,
+            title: Text(
+              getTransrlate(context, 'Notification'),
+              style:
+              GoogleFonts.poppins(color: Color(0xFF5D6A78), fontSize: 15),
+            ),
+            leading: InkWell(
+              onTap:() {Navigator.pop(context);},
+              child: Icon(
+                Icons.chevron_left,
+                color: Colors.grey,
+                size: 32,
+              ),
+            ),
+          ),
+        ),
         backgroundColor: Color(0xFFFCFCFC),
         body: Container(
           padding: EdgeInsets.only(left: 0, right: 0),
@@ -41,23 +62,6 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(left: 16, top: 24),
-                  child: Text(
-                   getTransrlate(context, 'Notification'),
-                    style: GoogleFonts.poppins(
-                        fontSize: 18, color: Color(0xFF5D6A78)),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 16),
-                  width: 28,
-                  child: Divider(
-                    color: themeColor.getColor(),
-                    height: 3,
-                    thickness: 2,
-                  ),
-                ),
                 Container(
                   margin: EdgeInsets.all(6),
                   child: ListView(

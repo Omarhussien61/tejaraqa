@@ -59,84 +59,110 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
       child: Scaffold(
         backgroundColor: Color(0xFFFCFCFC),
         body: Container(
-          padding: EdgeInsets.all(24),
           child: SingleChildScrollView(
             child: Form(
               key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    getTransrlate(context, 'MyProfileInfo'),
-                    style: GoogleFonts.poppins(
-                        fontSize: 18, color: Color(0xFF5D6A78)),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24,right: 8),
+                    child: Row(
+                      children: [
+                        InkWell(
+                          onTap:() {Navigator.pop(context);},
+                          child: Icon(
+                            Icons.chevron_left,
+                            color: textColor,
+                            size: 32,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 16,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              getTransrlate(context, 'MyProfileInfo'),
+                              style: GoogleFonts.poppins(
+                                  fontSize: 18, color: Color(0xFF5D6A78)),
+                            ),
+                            Container(
+                                width: 28,
+                                child: Divider(
+                                  color: themeColor.getColor(),
+                                  height: 3,
+                                  thickness: 2,
+                                )),
+
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                  Container(
-                      width: 28,
-                      child: Divider(
-                        color: themeColor.getColor(),
-                        height: 3,
-                        thickness: 2,
-                      )),
                   SizedBox(
                     height: 16,
                   ),
-                  Column(
-                    children: <Widget>[
-                      NewAddressInput(
-                        controller:_frist_nameController ,
-                        labelText: getTransrlate(context, 'Firstname'),
-                        hintText: getTransrlate(context, 'Firstname'),
-                        isEmail: true,
-                        validator: (String value) {},
-                        onSaved: (String value) {
+                  Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Column(
+                      children: <Widget>[
+                        NewAddressInput(
+                          controller:_frist_nameController ,
+                          labelText: getTransrlate(context, 'Firstname'),
+                          hintText: getTransrlate(context, 'Firstname'),
+                          isEmail: true,
+                          validator: (String value) {},
+                          onSaved: (String value) {
 //                        model.email = value;
-                        },
-                      ),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      NewAddressInput(
-                        controller:_Last_nameController ,
-                        labelText: getTransrlate(context, 'Lastname'),
-                        hintText: getTransrlate(context, 'Lastname'),
-                        isEmail: true,
-                        validator: (String value) {},
-                        onSaved: (String value) {
-                        },
-                      ),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      NewAddressInput(
-                        controller:_EmailController ,
-                        labelText: getTransrlate(context, 'Email'),
-                        hintText: 'example@example.com',
-                        isEmail: true,
-                        validator: (String value) {},
-                        onSaved: (String value) {
+                          },
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        NewAddressInput(
+                          controller:_Last_nameController ,
+                          labelText: getTransrlate(context, 'Lastname'),
+                          hintText: getTransrlate(context, 'Lastname'),
+                          isEmail: true,
+                          validator: (String value) {},
+                          onSaved: (String value) {
+                          },
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        NewAddressInput(
+                          controller:_EmailController ,
+                          labelText: getTransrlate(context, 'Email'),
+                          hintText: 'example@example.com',
+                          isEmail: true,
+                          validator: (String value) {},
+                          onSaved: (String value) {
 //                        model.email = value;
-                        },
-                      ),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      NewAddressInput(
-                        controller: _PhoneController,
-                        labelText: getTransrlate(context, 'phone'),
-                        hintText: 'xxxx xxx xxx xx',
-                        validator: (String value) {
-                          if (value.length < 10) {
-                            return getTransrlate(context, 'shorterphone');
-                          }
-                        },
-                        onSaved: (String value) {
-                        },
-                      ),
-                      SizedBox(
-                        height: 32,
-                      ),
-                    ],
+                          },
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        NewAddressInput(
+                          controller: _PhoneController,
+                          labelText: getTransrlate(context, 'phone'),
+                          hintText: 'xxxx xxx xxx xx',
+                          validator: (String value) {
+                            if (value.length < 10) {
+                              return getTransrlate(context, 'shorterphone');
+                            }
+                          },
+                          onSaved: (String value) {
+                          },
+                        ),
+                        SizedBox(
+                          height: 32,
+                        ),
+                      ],
+                    ),
                   )
                 ],
               ),

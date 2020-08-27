@@ -1,177 +1,29 @@
 {
   "project_info": {
-    "project_number": "213408754299",
-    "firebase_url": "https://lsoft-4e0fd.firebaseio.com",
-    "project_id": "lsoft-4e0fd",
-    "storage_bucket": "lsoft-4e0fd.appspot.com"
+    "project_number": "1091352367011",
+    "firebase_url": "https://l-soft.firebaseio.com",
+    "project_id": "l-soft",
+    "storage_bucket": "l-soft.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:213408754299:android:e99432a79f8f95b0af10de",
-        "android_client_info": {
-          "package_name": "com.hlsoft.d1"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "213408754299-7dblcl0c8c5v8gbiildcsmkejipqp2hr.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.hlsoft.d1",
-            "certificate_hash": "495277c09896714b3d2c318f1f74494071b98579"
-          }
-        },
-        {
-          "client_id": "213408754299-egdckuugir2hnclvqrddtf9u4lhc7bfi.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyA--mh-8ySV_ChM9fXO5mioXMqjHk99tmA"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "213408754299-egdckuugir2hnclvqrddtf9u4lhc7bfi.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "213408754299-n26en2kieria4f4dd25fch3shcp1qm4q.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "h"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:213408754299:android:915c6ee0f2c34a01af10de",
-        "android_client_info": {
-          "package_name": "com.hlsoft.WooCommarce"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "213408754299-e2v7b9o9ekgaq9d5btmng19trg1lj382.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.hlsoft.WooCommarce",
-            "certificate_hash": "cbdd1509ca4d1dbbdee242d86fb05aa39e40bef7"
-          }
-        },
-        {
-          "client_id": "213408754299-puolnph09qupvs395b82o3ujffq5natf.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.hlsoft.WooCommarce",
-            "certificate_hash": "495277c09896714b3d2c318f1f74494071b98579"
-          }
-        },
-        {
-          "client_id": "213408754299-1k4s39vdkumscojs63nc8l5efql6ennv.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.hlsoft.WooCommarce",
-            "certificate_hash": "f87b305590a46af74caefba6f537491bbce1bc65"
-          }
-        },
-        {
-          "client_id": "213408754299-egdckuugir2hnclvqrddtf9u4lhc7bfi.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyA--mh-8ySV_ChM9fXO5mioXMqjHk99tmA"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "213408754299-egdckuugir2hnclvqrddtf9u4lhc7bfi.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "213408754299-n26en2kieria4f4dd25fch3shcp1qm4q.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "h"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:213408754299:android:e217374664bef0fcaf10de",
-        "android_client_info": {
-          "package_name": "com.hlsoft.Wooi"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "213408754299-fgmd9mkia7i8582db5ektdked42raqje.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.hlsoft.Wooi",
-            "certificate_hash": "495277c09896714b3d2c318f1f74494071b98579"
-          }
-        },
-        {
-          "client_id": "213408754299-rm4ja8cjqvdivafeijhh1lvj5p22q5tr.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.hlsoft.Wooi",
-            "certificate_hash": "cbdd1509ca4d1dbbdee242d86fb05aa39e40bef7"
-          }
-        },
-        {
-          "client_id": "213408754299-egdckuugir2hnclvqrddtf9u4lhc7bfi.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyA--mh-8ySV_ChM9fXO5mioXMqjHk99tmA"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "213408754299-egdckuugir2hnclvqrddtf9u4lhc7bfi.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "213408754299-n26en2kieria4f4dd25fch3shcp1qm4q.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "h"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:213408754299:android:5bffc1ca7cbd2f98af10de",
+        "mobilesdk_app_id": "1:1091352367011:android:8e270c43e747b9bd82d416",
         "android_client_info": {
           "package_name": "com.hlsoft.woo2app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "213408754299-p4tsfan67qg7avv99rocg51gter6rg98.apps.googleusercontent.com",
+          "client_id": "1091352367011-mrm720ltisfn18olmeufbptifhmvtak7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hlsoft.woo2app",
+            "certificate_hash": "cbdd1509ca4d1dbbdee242d86fb05aa39e40bef7"
+          }
+        },
+        {
+          "client_id": "1091352367011-03kpqaasurmdst1gphes1h0qpvs838k2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.hlsoft.woo2app",
@@ -179,27 +31,27 @@
           }
         },
         {
-          "client_id": "213408754299-egdckuugir2hnclvqrddtf9u4lhc7bfi.apps.googleusercontent.com",
+          "client_id": "1091352367011-sf5l9o69jq0s7d2j5f35mjihmnrfecb0.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA--mh-8ySV_ChM9fXO5mioXMqjHk99tmA"
+          "current_key": "AIzaSyBdQiPt3hFtNUtTngoziwIBmHgLmjoLvgY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "213408754299-egdckuugir2hnclvqrddtf9u4lhc7bfi.apps.googleusercontent.com",
+              "client_id": "1091352367011-sf5l9o69jq0s7d2j5f35mjihmnrfecb0.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "213408754299-n26en2kieria4f4dd25fch3shcp1qm4q.apps.googleusercontent.com",
+              "client_id": "1091352367011-b4nsimtepj97fb8hoghu9q0mrmvaqe56.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "h"
+                "bundle_id": "com.hlsoft.woo2app"
               }
             }
           ]

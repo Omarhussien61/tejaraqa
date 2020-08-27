@@ -60,6 +60,27 @@ class _AddressPageState extends State<AddressPage> {
 
     return SafeArea(
       child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(42.0), // here the desired height
+          child: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0,
+            centerTitle: true,
+            title: Text(
+              getTransrlate(context, 'MyAddress'),
+              style:
+              GoogleFonts.poppins(color: Color(0xFF5D6A78), fontSize: 15),
+            ),
+            leading: InkWell(
+              onTap:() {Navigator.pop(context);},
+              child: Icon(
+                Icons.chevron_left,
+                color: Colors.grey,
+                size: 32,
+              ),
+            ),
+          ),
+        ),
 
         bottomNavigationBar: InkWell(
           onTap: () {

@@ -129,18 +129,21 @@ class _ProductDetailPageState extends State<ProductDetailPage>
 
   Widget _buildBox({Color color, String name}) {
     return Container(
+
       child: Align(
           alignment: Alignment.center,
-          child: Text(
-            name,
-            maxLines: 1,
-            style: GoogleFonts.poppins(color: Color(0xFF5D6A78), fontSize: 10),
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Text(
+              name,
+              maxLines: 1,
+              style: GoogleFonts.poppins(color: Color(0xFF5D6A78), fontSize: 12),
+            ),
           )),
       decoration: BoxDecoration(
-          border: Border.all(color: Color(0xFF5D6A78), width: 0.7),
+          border: Border.all(color: Color(0xFF5D6A78), width: 1),
           borderRadius: BorderRadius.circular(32)),
       margin: EdgeInsets.only(right: 12),
-      width: 75,
     );
   }
   @override
@@ -256,55 +259,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                   ),
                 ),
 
-//            Positioned(
-//              right: 48,
-//              top: ScreenUtil.getHeight(context) / 2.40,
-//              child: FloatingActionButton(
-//                onPressed: () {},
-//                backgroundColor: LightColor.orange,
-//                child: Icon(Icons.shopping_basket,
-//                    color: Theme.of(context)
-//                        .floatingActionButtonTheme
-//                        .backgroundColor),
-//              ),
-//            ),
-//            AnimatedPositioned(
-//              duration: Duration(milliseconds: 400),
-//              bottom: isLiked ? ScreenUtil.getHeight(context) - 74 : 45,
-//              right: isLiked ? 14 : 25,
-//              child: AnimatedOpacity(
-//                duration: Duration(milliseconds: 1000),
-//                opacity: isLiked ? 0.5 : 1,
-//                child: Badge(
-//                  animationDuration: Duration(milliseconds: 1500),
-//                  badgeColor: themeColor.getColor(),
-//                  alignment: Alignment(0, 0),
-//                  position: BadgePosition.bottomRight(),
-//                  padding: EdgeInsets.all(8),
-//                  badgeContent: Text(
-//                    isLiked ? '4' : '5',
-//                    style: TextStyle(color: whiteColor, fontSize: 10),
-//                  ),
-//
-//                ),
-//              ),
-//            ),
-//            Positioned(
-//              bottom: 45,
-//              right: 12,
-//              child: FloatingActionButton(
-//                onPressed: () {
-//                  setState(() {
-//                    isLiked = !isLiked;
-//                  });
-//                },
-//                backgroundColor: LightColor.orange,
-//                child: Icon(Icons.shopping_basket,
-//                    color: Theme.of(context)
-//                        .floatingActionButtonTheme
-//                        .backgroundColor),
-//              ),
-//            )
                 DraggableScrollableSheet(
                   maxChildSize: 1,
                   initialChildSize: .53,
@@ -386,7 +340,9 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                                       widget.product
                                                           .averageRating),
                                                   itemSize: 18.0,
-                                                  minRating: 1,
+                                                  tapOnlyMode: true,
+                                                  ignoreGestures: true,
+
                                                   direction: Axis.horizontal,
                                                   allowHalfRating: true,
                                                   itemCount: 5,
@@ -446,14 +402,13 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                     ),
                                   ),
                                   Container(
-                                    margin: EdgeInsets.only(top: 12),
-                                    height: 24,
+                                    margin: EdgeInsets.only(top: 12,bottom: 8),
+                                    height: 33,
                                     child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
                                       itemCount:
                                           widget.product.categories.length,
                                       itemBuilder: (_, i) => _buildBox(
-                                          color: Colors.orange,
                                           name: widget
                                               .product.categories[i].name),
                                     ),
@@ -729,34 +684,34 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
-                                        Container(
-                                          width: 140,
-                                          child: GFButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                // isLiked = !isLiked;
-
-                                                themeColor.isLogin?
-                                                product_variations == null||product_variations.isEmpty?
-                                                {_save(context),Nav.route(context, ShoppingCartPage())}
-                                                    :checkboxValueA==null?
-                                                Scaffold.of(context)
-                                                    .showSnackBar(SnackBar(content: Text(getTransrlate(context, 'SelectVariations')))):
-                                                {_save(context),Nav.route(context, ShoppingCartPage())}:
-                                                showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
-                                              });
-                                              Nav.route(
-                                                  context, ShoppingCartPage());
-                                            },
-                                            child: Text(getTransrlate(context, 'Buy'),
-                                                style: GoogleFonts.poppins(
-                                                    fontWeight:
-                                                        FontWeight.w400)),
-                                            shape: GFButtonShape.pills,
-                                            type: GFButtonType.solid,
-                                            color: themeColor.getColor(),
-                                          ),
-                                        ),
+//                                        Container(
+//                                          width: 140,
+//                                          child: GFButton(
+//                                            onPressed: () {
+//                                              setState(() {
+//                                                // isLiked = !isLiked;
+//
+//                                                themeColor.isLogin?
+//                                                product_variations == null||product_variations.isEmpty?
+//                                                {_save(context),Nav.route(context, ShoppingCartPage())}
+//                                                    :checkboxValueA==null?
+//                                                Scaffold.of(context)
+//                                                    .showSnackBar(SnackBar(content: Text(getTransrlate(context, 'SelectVariations')))):
+//                                                {_save(context),Nav.route(context, ShoppingCartPage())}:
+//                                                showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
+//                                              });
+//                                              Nav.route(
+//                                                  context, ShoppingCartPage());
+//                                            },
+//                                            child: Text(getTransrlate(context, 'Buy'),
+//                                                style: GoogleFonts.poppins(
+//                                                    fontWeight:
+//                                                        FontWeight.w400)),
+//                                            shape: GFButtonShape.pills,
+//                                            type: GFButtonType.solid,
+//                                            color: themeColor.getColor(),
+//                                          ),
+//                                        ),
                                         Container(
                                           width: 140,
                                           child: GFButton(
@@ -832,6 +787,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                               widget.product.averageRating),
                                           itemSize: 20.0,
                                           minRating: 1,
+                                          ignoreGestures: true,
+
                                           direction: Axis.horizontal,
                                           allowHalfRating: true,
                                           itemCount: 5,
@@ -963,6 +920,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                                               .toDouble(),
                                                       itemSize: 14.0,
                                                       minRating: 1,
+                                                      ignoreGestures: true,
+
                                                       direction:
                                                           Axis.horizontal,
                                                       allowHalfRating: true,

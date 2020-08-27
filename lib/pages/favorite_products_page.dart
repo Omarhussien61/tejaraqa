@@ -57,6 +57,28 @@ class HomeWidgetState extends State<FavoriteProductsPage>
     }
     return SafeArea(
       child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(42.0), // here the desired height
+          child: AppBar(
+            backgroundColor: greyBackground,
+            elevation: 0,
+            centerTitle: true,
+            title: Text(
+              getTransrlate(context, 'MyFav'),
+              style:
+              GoogleFonts.poppins(color: Color(0xFF5D6A78), fontSize: 15),
+            ),
+            leading: InkWell(
+              onTap:() {Navigator.pop(context);},
+              child: Icon(
+                Icons.chevron_left,
+                color: textColor,
+                size: 32,
+              ),
+            ),
+          ),
+        ),
+
         backgroundColor: whiteColor,
         body:themeColor.isLogin? SingleChildScrollView(
             child:favorites == null||favorites.isEmpty? Center(

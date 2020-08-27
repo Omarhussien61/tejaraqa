@@ -52,8 +52,10 @@ class ItemHiddenMenu extends StatelessWidget {
                     .merge(this.selected
                         ? this.selectedStyle ??
                             GoogleFonts.cairo(
+                                fontWeight: FontWeight.w800,
                                 color: Colors.white, fontSize: 15)
                         : GoogleFonts.cairo(
+                    fontWeight: FontWeight.w600,
                             color: Colors.white, fontSize: 15)),
               ),
             )
