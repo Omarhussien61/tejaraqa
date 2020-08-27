@@ -24,7 +24,7 @@ import 'package:shoppingapp/pages/shopping_cart_page.dart';
 import 'package:shoppingapp/service/productdervice.dart';
 import 'package:shoppingapp/utils/commons/add_favorite.dart';
 import 'package:shoppingapp/utils/commons/show_dialog.dart';
-import 'package:shoppingapp/utils/dialogComment.dart';
+import 'package:shoppingapp/utils/dialog_comment.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/utils/util/recentId.dart';
 import 'package:shoppingapp/utils/util/shared_preferences_helper.dart';
@@ -451,166 +451,139 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                       ),
                                     ),
                                   ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+
+                                  Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                        CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                      Row(
                                         children: <Widget>[
-                                          Row(
-                                            children: <Widget>[
-                                              Text(
-                                                getTransrlate(context, 'price')+" :  ",
-                                                style: GoogleFonts.poppins(
-                                                    color: themeColor.getColor(),
-                                                    fontSize: 18),
-                                              ),
-                                              widget.product.variations.isEmpty
-                                                  ? Row(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: <Widget>[
-                                                  Text(
-                                                    widget.product.oldPrice+' ',
-                                                    style: GoogleFonts.poppins(
-                                                        decoration: TextDecoration.lineThrough,
-                                                        fontSize: 14,
-                                                        fontWeight: FontWeight.w300),
-                                                  ),
-                                                  Text(
-                                                    widget.product.price+' '+widget.product.Currancy,
-                                                    style: GoogleFonts.poppins(
-                                                        color: themeColor.getColor(),
-                                                        fontSize: 18,
-                                                        fontWeight: FontWeight.w400),
-                                                  )
-                                                ],
-                                              )
-                                                  : Text(
-                                                (parse(widget.product.priceHtml
-                                                    .toString()
-                                                    .trim())
-                                                    .body
-                                                    .text
-                                                    .trim()
-                                                    .length >
-                                                    0 ||
-                                                    widget.product.price
-                                                        .toString()
-                                                        .trim() ==
-                                                        '')
-                                                    ? parse(widget.product.priceHtml
-                                                    .toString()
-                                                    .trim())
-                                                    .body
-                                                    .text
-                                                    .trim()
-                                                    : "Best",
-                                                style: GoogleFonts.poppins(
-                                                    color: themeColor.getColor(),
-                                                    fontSize: 18),
-                                              )
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 6,
-                                          ),
                                           Text(
-                                            widget.product.stockStatus,
+                                            getTransrlate(context, 'price')+" :  ",
                                             style: GoogleFonts.poppins(
                                                 color: themeColor.getColor(),
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w300),
+                                                fontSize: 18),
                                           ),
-                                          SizedBox(
-                                            height: 6,
-                                          ),
-                                          Text(
-                                            widget.product.categories[0].name,
+                                          widget.product.variations.isEmpty
+                                              ? Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Text(
+                                                widget.product.oldPrice+' ',
+                                                style: GoogleFonts.poppins(
+                                                    decoration: TextDecoration.lineThrough,
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w300),
+                                              ),
+                                              Text(
+                                                widget.product.price+' '+widget.product.Currancy,
+                                                style: GoogleFonts.poppins(
+                                                    color: themeColor.getColor(),
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.w400),
+                                              )
+                                            ],
+                                          )
+                                              : Text(
+                                            (parse(widget.product.priceHtml
+                                                .toString()
+                                                .trim())
+                                                .body
+                                                .text
+                                                .trim()
+                                                .length >
+                                                0 ||
+                                                widget.product.price
+                                                    .toString()
+                                                    .trim() ==
+                                                    '')
+                                                ? parse(widget.product.priceHtml
+                                                .toString()
+                                                .trim())
+                                                .body
+                                                .text
+                                                .trim()
+                                                : "Best",
                                             style: GoogleFonts.poppins(
-                                                color: Color(0xFF5D6A78),
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w400),
-                                          ),
+                                                color: themeColor.getColor(),
+                                                fontSize: 18),
+                                          )
                                         ],
                                       ),
-                                      Container(
-                                        padding: EdgeInsets.only(
-                                            left: 8,
-                                            right: 8,
-                                            top: 4,
-                                            bottom: 4),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(18),
-                                          color: themeColor.getColor(),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    if (piece != 1) {
-                                                      piece--;
-                                                    }
-                                                  });
-                                                },
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 8.0,right: 8.0),
-                                                  child: Text(
-                                                    "-",
-                                                    style: TextStyle(
-                                                        fontSize: 24,
-                                                        color: Colors.white),
-                                                  ),
-                                                )),
-                                            Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(18),
-                                                  color: Color(0xFF707070),
-                                                ),
-                                                child: Container(
-                                                  alignment: Alignment.center,
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Text('$piece',
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 16)),
-                                                )),
-                                            InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    if (piece != 99) {
-                                                      piece++;
-                                                    }
-                                                  });
-                                                },
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 8.0,right: 8.0),
-                                                  child: Text("+",
-                                                      style: TextStyle(
-                                                          color: Colors.white)),
-                                                )),
-                                          ],
-                                        ),
-                                      )
+                                      SizedBox(
+                                        height: 6,
+                                      ),
+                                      Text(
+                                        widget.product.stockStatus,
+                                        style: GoogleFonts.poppins(
+                                            color: themeColor.getColor(),
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w300),
+                                      ),
                                     ],
                                   ),
+                                  Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.end,
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.end,
+                                    children: <Widget>[
+                                      Container(
+                                        height: 40,
+                                        child: FloatingActionButton(
+                                            heroTag: false,
+                                            onPressed: () {
+                                              setState(() {
+                                                if (piece != 1) {
+                                                  piece--;
+                                                }
+                                              });
+                                            },
+                                            backgroundColor: themeColor.getColor(),
+                                            child: Text(
+                                              "-",
+                                              style: TextStyle(
+                                                  fontSize: 24,
+                                                  color: Colors.white),
+                                            )),
+                                      ),
+                                      Container(
+
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                            BorderRadius.circular(18),
+                                            color: Color(0xFF707070),
+                                          ),
+                                          child: Container(
+                                            alignment: Alignment.center,
+                                            padding:
+                                            const EdgeInsets.all(8.0),
+                                            child: Text('$piece',
+                                                style:
+                                                GoogleFonts.poppins(
+                                                    color:
+                                                    Colors.white,
+                                                    fontSize: 16)),
+                                          )),
+                                      Container(
+                                        height: 40,
+                                        child: FloatingActionButton(
+                                            backgroundColor: themeColor.getColor(),
+
+                                            onPressed: () {
+                                              setState(() {
+                                                if (piece != 99) {
+                                                  piece++;
+                                                }
+                                              });
+                                            },
+                                            child: Text("+",
+                                                style: TextStyle(
+                                                    color: Colors.white))),
+                                      ),
+                                    ],
+                                  ),
+
                                   product_variations!=null? product_variations.isNotEmpty?Column(
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: <Widget>[
@@ -720,14 +693,12 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                               setState(() {
                                                 // isLiked = !isLiked;
 
-                                                themeColor.isLogin?
+
                                                 product_variations == null||product_variations.isEmpty?_save(context)
                                                     :checkboxValueA==null?
                                                 Scaffold.of(context)
                                                     .showSnackBar(SnackBar(content: Text(getTransrlate(context, 'SelectVariations')))):
-                                                _save(context):
-                                                showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
-                                              });
+                                                _save(context);});
                                             },
                                             icon: Icon(
                                               Icons.shopping_cart,
@@ -845,7 +816,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                           ),
                                           InkWell(
                                             onTap: () {
-                                             !themeColor.isLogin?showLogintDialog('','',context) :_displayDialog(
+                                             !themeColor.isLogin?
+                                             showLogintDialog('','',context) :_displayDialog(
                                                   context, themeColor);
                                             },
                                             child: Container(
@@ -1172,15 +1144,14 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     int result;
     if (await helper.checkItem(cart.id) == true) {
       print(11111111111);
-
       result = await helper.insertCart(cart);
     } else {
       Cart c=await helper.updateCartCount(cart.id);
       cart.quantity=piece+c.quantity;
       print(cart.quantity);
-setState(() {
-  piece==1;
-});
+      setState(() {
+        piece==1;
+      });
       result = await helper.updateCart(cart);
     }
     if (result == 0) {
@@ -1203,8 +1174,6 @@ setState(() {
     photo = await SharedPreferencesHelper.getUserimage();
     email = await SharedPreferencesHelper.getEmail();
   }
-
-
   _navigateAndDisplaySelection(BuildContext context) async {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
@@ -1229,14 +1198,12 @@ setState(() {
     });
     return isliked;
   }
-
   bool onLikeTapped() {
-    Provider.of<ThemeNotifier>(context).isLogin?
     Favorite(widget.product).then((value) => {
       setState(() {
         isliked = !value;
       })
-    }):showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
+    });
 
     return isliked;
   }

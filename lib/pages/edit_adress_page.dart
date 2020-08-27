@@ -127,157 +127,186 @@ if(widget.address_shiping!=null){
         ),
         backgroundColor: Color(0xFFFCFCFC),
         body: Container(
-          padding: EdgeInsets.all(24),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(
-                      getTransrlate(context, 'MyAddress'),
-                      style: GoogleFonts.poppins(
-                          fontSize: 18, color: Color(0xFF5D6A78)),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 24,right: 8),
+                      child: Row(
+                        children: [
+                          InkWell(
+                            onTap:() {Navigator.pop(context);},
+                            child: Icon(
+                              Icons.chevron_left,
+                              color: Colors.grey,
+                              size: 32,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 16,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                getTransrlate(context, 'MyAddress'),
+                                style: GoogleFonts.poppins(
+                                    fontSize: 18, color: Color(0xFF5D6A78)),
+                              ),
+                              Container(
+                                  width: 28,
+                                  child: Divider(
+                                    color: themeColor.getColor(),
+                                    height: 3,
+                                    thickness: 2,
+                                  )),
+
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                    InkWell(
-                      focusColor:  Provider.of<ThemeNotifier>(context).getColor(),
-                      splashColor: Provider.of<ThemeNotifier>(context).getColor(),
-                      onTap: () {
-                        //Nav.routeReplacement(context, MapSample());
-                        _navigateAndDisplaySelection(context);
-                      },
-                      child: Icon(Icons.location_on),
+                    Container(
+                      padding: const EdgeInsets.only(top: 24,right: 8,left: 8),
+
+                      child: InkWell(
+                        focusColor:  Provider.of<ThemeNotifier>(context).getColor(),
+                        splashColor: Provider.of<ThemeNotifier>(context).getColor(),
+                        onTap: () {
+                          //Nav.routeReplacement(context, MapSample());
+                          _navigateAndDisplaySelection(context);
+                        },
+                        child: Icon(Icons.location_on),
+                      ),
                     ),
                   ],
                 ),
                 Container(
-                    width: 28,
-                    child: Divider(
-                      color: themeColor.getColor(),
-                      height: 3,
-                      thickness: 2,
-                    )),
-                SizedBox(
-                  height: 16,
-                ),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    children: <Widget>[
-                      NewAddressInput(
-                        controller: _nameController,
-                        labelText: getTransrlate(context, 'AddressTitle'),
-                        hintText: '',
-                        isEmail: true,
-                        validator: (String value) {
-                          if (value.isEmpty){
-                            return getTransrlate(context, 'AddressTitle');
-                          }
-                        },
-                        onSaved: (String value) {
+                  padding: EdgeInsets.all(24),
+
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: <Widget>[
+                        NewAddressInput(
+                          controller: _nameController,
+                          labelText: getTransrlate(context, 'AddressTitle'),
+                          hintText: '',
+                          isEmail: true,
+                          validator: (String value) {
+                            if (value.isEmpty){
+                              return getTransrlate(context, 'AddressTitle');
+                            }
+                          },
+                          onSaved: (String value) {
 //                        model.email = value;
-                        },
-                      ),
-                      SizedBox(
-                        height: 32,
-                      ),
-                      NewAddressInput(
-                        controller: _CountryController,
-                        labelText: getTransrlate(context, 'Countroy'),
-                        hintText: '',
-                        isEmail: true,
-                        validator: (String value) {
-                          if (value.isEmpty){
-                            return  getTransrlate(context, 'Countroy');
-                          }
-                        },
-                        onSaved: (String value) {
-                        },
-                      ),
-                      SizedBox(
-                        height: 32,
-                      ),
-                      NewAddressInput(
-                        controller: _cityController,
-                        labelText: getTransrlate(context, 'City'),
-                        hintText: '',
-                        isEmail: true,
-                        validator: (String value) {
-                          if (value.isEmpty){
-                            return getTransrlate(context, 'City');
-                          }
-                        },
-                        onSaved: (String value) {
-                        },
-                      ),
-                      SizedBox(
-                        height: 32,
-                      ),
-                      NewAddressInput(
-                        controller: _AddressController,
-
-                        labelText: getTransrlate(context, 'Address'),
-                        hintText: '',
-                        isEmail: true,
-                        validator: (String value) {
-                          if (value.isEmpty){
-                            return getTransrlate(context, 'Address');
-                          }
-                        },
-                        onSaved: (String value) {
-//                        model.email = value;
-                        },
-                      ),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                        Container(
-                          width: ScreenUtil.divideWidth(context)/3,
-
-                          child: TextFormField(
-                            controller: _streeetController,
-                            validator: (String value) {
-                              if (value.isEmpty){
-                                return getTransrlate(context, 'Street');
-                              }
-                            },
-                          decoration: InputDecoration(
-                            labelText: getTransrlate(context, 'Street'),
-                            hintText: getTransrlate(context, 'Street'),
-                              labelStyle: GoogleFonts.poppins(fontSize: 12),
-                              helperStyle: GoogleFonts.poppins(fontSize: 12),
-                              hintStyle: GoogleFonts.poppins(fontSize: 12),
-                          ),
-
-                      ),
+                          },
                         ),
-                        Container(
+                        SizedBox(
+                          height: 32,
+                        ),
+                        NewAddressInput(
+                          controller: _CountryController,
+                          labelText: getTransrlate(context, 'Countroy'),
+                          hintText: '',
+                          isEmail: true,
+                          validator: (String value) {
+                            if (value.isEmpty){
+                              return  getTransrlate(context, 'Countroy');
+                            }
+                          },
+                          onSaved: (String value) {
+                          },
+                        ),
+                        SizedBox(
+                          height: 32,
+                        ),
+                        NewAddressInput(
+                          controller: _cityController,
+                          labelText: getTransrlate(context, 'City'),
+                          hintText: '',
+                          isEmail: true,
+                          validator: (String value) {
+                            if (value.isEmpty){
+                              return getTransrlate(context, 'City');
+                            }
+                          },
+                          onSaved: (String value) {
+                          },
+                        ),
+                        SizedBox(
+                          height: 32,
+                        ),
+                        NewAddressInput(
+                          controller: _AddressController,
+
+                          labelText: getTransrlate(context, 'Address'),
+                          hintText: '',
+                          isEmail: true,
+                          validator: (String value) {
+                            if (value.isEmpty){
+                              return getTransrlate(context, 'Address');
+                            }
+                          },
+                          onSaved: (String value) {
+//                        model.email = value;
+                          },
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                          Container(
                             width: ScreenUtil.divideWidth(context)/3,
 
                             child: TextFormField(
-                              controller: _buildingController,
+                              controller: _streeetController,
                               validator: (String value) {
                                 if (value.isEmpty){
-                                  return getTransrlate(context, 'Building');
+                                  return getTransrlate(context, 'Street');
                                 }
                               },
-                              decoration: InputDecoration(
-                                hintText: getTransrlate(context, 'Building'),
+                            decoration: InputDecoration(
+                              labelText: getTransrlate(context, 'Street'),
+                              hintText: getTransrlate(context, 'Street'),
                                 labelStyle: GoogleFonts.poppins(fontSize: 12),
                                 helperStyle: GoogleFonts.poppins(fontSize: 12),
                                 hintStyle: GoogleFonts.poppins(fontSize: 12),
-                                labelText: getTransrlate(context, 'Building')
-                              ),
-
                             ),
+
+                        ),
                           ),
-                        ],
-                      ),
-                    ],
+                          Container(
+                              width: ScreenUtil.divideWidth(context)/3,
+
+                              child: TextFormField(
+                                controller: _buildingController,
+                                validator: (String value) {
+                                  if (value.isEmpty){
+                                    return getTransrlate(context, 'Building');
+                                  }
+                                },
+                                decoration: InputDecoration(
+                                  hintText: getTransrlate(context, 'Building'),
+                                  labelStyle: GoogleFonts.poppins(fontSize: 12),
+                                  helperStyle: GoogleFonts.poppins(fontSize: 12),
+                                  hintStyle: GoogleFonts.poppins(fontSize: 12),
+                                  labelText: getTransrlate(context, 'Building')
+                                ),
+
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 )
               ],

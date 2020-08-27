@@ -17,7 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:getflutter/components/button/gf_button.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'Edit_adress_page.dart';
+import 'edit_adress_page.dart';
 import 'package:shoppingapp/pages/search_page.dart';
 
 class AddressPage extends StatefulWidget {

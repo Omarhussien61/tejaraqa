@@ -247,9 +247,7 @@ class _DiscountItemState extends State<DiscountItem> {
             child: Container(
               child: GFButton(
                 onPressed: () {
-                  if(!Provider.of<ThemeNotifier>(context).isLogin)
-                    showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
-                  else{
+
                     if (widget.product.variations.isEmpty) {
                       save(
                           widget.product,
@@ -273,7 +271,7 @@ class _DiscountItemState extends State<DiscountItem> {
                             ctx: context,);
                           });
                     }
-                  }
+
 
                 },
                 icon: SvgPicture.asset(
@@ -324,12 +322,11 @@ class _DiscountItemState extends State<DiscountItem> {
 
   bool onLikeTapped() {
 
-    Provider.of<ThemeNotifier>(context).isLogin?
     Favorite(widget.product).then((value) => {
       setState(() {
         isliked = !value;
       })
-    }):showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
+    });
 
 
     return isliked;

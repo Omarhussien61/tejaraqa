@@ -264,9 +264,6 @@ class _ProductCardState extends State<ProductCard> {
                               width:ScreenUtil.getWidth(context)/2.8,
                               child: InkWell(
                                 onTap: () {
-                                  if(!Provider.of<ThemeNotifier>(context).isLogin)
-                                  showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
-                                  else{
                                     if (widget.product.variations.isEmpty) {
                                       save(
                                           widget.product,
@@ -290,7 +287,7 @@ class _ProductCardState extends State<ProductCard> {
                                             ctx: context,);
                                           });
                                     }
-                                  }
+
 
                                 },
                                 child: Container(
@@ -340,7 +337,6 @@ class _ProductCardState extends State<ProductCard> {
       ],
     );
   }
-
   bool onLikeButton() {
     FavoritecheckItem(widget.product).then((value) => {
           setState(() {
@@ -350,14 +346,12 @@ class _ProductCardState extends State<ProductCard> {
         });
     return isliked;
   }
-
   bool onLikeTapped() {
-    Provider.of<ThemeNotifier>(context).isLogin?
     Favorite(widget.product).then((value) => {
       setState(() {
         isliked = !value;
       })
-    }):showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
+    });
 
 
     return isliked;

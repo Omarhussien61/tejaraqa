@@ -141,12 +141,12 @@ class _HiddenMenuState extends State<HiddenMenu> {
                     ),
                   ) ,
                   leading: CircleAvatar(
-                      radius: 20,
-                      backgroundImage: CachedNetworkImageProvider(
-                        photo == null
-                            ? 'https://p.kindpng.com/picc/s/207-2074624_white-gray-circle-avatar-png-transparent-png.png'
-                            : photo,
-                      )),
+                    radius: 20,backgroundImage: CachedNetworkImageProvider(
+                    ! themeColor.isLogin?
+                    'https://p.kindpng.com/picc/s/207-2074624_white-gray-circle-avatar-png-transparent-png.png'
+                        :photo==null?'s':photo,
+                  ),
+                  ),
                 ),
               ),
               Container(

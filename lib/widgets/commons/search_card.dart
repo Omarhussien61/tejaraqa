@@ -203,9 +203,6 @@ class _SearchCardState extends State<SearchCard> {
                               ),
                         InkWell(
                           onTap: () {
-                            if(!Provider.of<ThemeNotifier>(context).isLogin)
-                              showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
-                            else{
                               if (widget.product.variations.isEmpty) {
                                 save(
                                     widget.product,
@@ -229,7 +226,6 @@ class _SearchCardState extends State<SearchCard> {
                                         ctx: context,);
                                     });
                               }
-                            }
                           },
                           child: Container(
                             padding: EdgeInsets.only(top: 8, left: 8, bottom: 8, right: 8),
@@ -298,12 +294,11 @@ class _SearchCardState extends State<SearchCard> {
   }
 
   bool onLikeTapped() {
-    Provider.of<ThemeNotifier>(context).isLogin?
     Favorite(widget.product).then((value) => {
       setState(() {
         isliked = !value;
       })
-    }):showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
+    });
 
 
     return isliked;

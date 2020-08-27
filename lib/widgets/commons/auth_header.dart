@@ -36,31 +36,33 @@ class AuthHeader extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          Align(
-            alignment: Alignment.topCenter,
-            child: Text(
-              headerTitle,
-              style: GoogleFonts.poppins(
-                fontSize: 17,
-                color: Colors.white,
-                fontWeight: FontWeight.w300,
-              ),
-            ),
-          ),
-          this.isLoginHeader
-              ? Container()
-              : Align(
-                  alignment: Alignment.topLeft,
-                  child: InkWell(
-                    onTap: () {
-                      Nav.routeReplacement(context, LoginPage());
-                    },
-                    child: Icon(
-                      Icons.arrow_back,
-                      color: Colors.white,
-                    ),
-                  ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
                 ),
+              ),
+              SizedBox(
+                width: 100,
+              ),
+              Text(
+                headerTitle,
+                style: GoogleFonts.poppins(
+                  fontSize: 17,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
+
+            ],
+          ),
+
           Align(
             alignment: Alignment.bottomLeft,
             child: Padding(

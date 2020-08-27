@@ -15,7 +15,7 @@ class theame_service{
     try {
       var response = await dio.get(
         URL,
-        options: buildCacheOptions(Duration(days: 7)),
+        options: buildCacheOptions(Duration(days: 1),forceRefresh: true,),
       );
       print(json.decode(response.data));
       if (response.statusCode == 200) {

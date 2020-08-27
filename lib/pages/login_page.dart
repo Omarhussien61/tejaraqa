@@ -19,9 +19,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
-
-
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ThemeNotifier>(context);
@@ -82,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             onPressed: () {
-              Nav.routeReplacement(context, RegisterPage());
+              Nav.route(context, RegisterPage());
             },
           )
         ],

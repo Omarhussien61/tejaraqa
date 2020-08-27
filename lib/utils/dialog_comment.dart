@@ -110,43 +110,46 @@ class _MyDialogState extends State<MyDialog> {
                           );
                         }),
                   ),
-                  RatingBar(
-                    initialRating: rateing
-                        .toDouble(),
-                    itemSize: 20,
-                    minRating: 1,
-                    direction:
-                    Axis.horizontal,
-                    allowHalfRating: true,
-                    itemCount: 5,
-                    itemBuilder:
-                        (context, _) =>
-                        Container(
-                          height: 12,
-                          child: SvgPicture.asset(
-                            "assets/icons/ic_star.svg",
-                            color: bloc
-                                .getColor(),
-                            width: 9,
-                          ),
-                        ),
-                    onRatingUpdate: print,
-                  ),
-
-                  TextFormField(
-                      initialValue:comment,
-                      decoration: InputDecoration(
-                        icon: Icon(Icons.add_comment),
-                        labelText: getTransrlate(context, 'AddComment'),
+                  bloc.isLogin?Column(
+                    children: [
+                      RatingBar(
+                        initialRating: rateing
+                            .toDouble(),
+                        itemSize: 20,
+                        minRating: 1,
+                        direction:
+                        Axis.horizontal,
+                        allowHalfRating: true,
+                        itemCount: 5,
+                        itemBuilder:
+                            (context, _) =>
+                            Container(
+                              height: 12,
+                              child: SvgPicture.asset(
+                                "assets/icons/ic_star.svg",
+                                color: bloc
+                                    .getColor(),
+                                width: 9,
+                              ),
+                            ),
+                        onRatingUpdate: print,
                       ),
-                      onChanged: (String val) => comment = val,
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return getTransrlate(context, 'avalidComment');
-                        }
-                        return null;
-                      }
-                  ),
+                      TextFormField(
+                          initialValue:comment,
+                          decoration: InputDecoration(
+                            icon: Icon(Icons.add_comment),
+                            labelText: getTransrlate(context, 'AddComment'),
+                          ),
+                          onChanged: (String val) => comment = val,
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return getTransrlate(context, 'avalidComment');
+                            }
+                            return null;
+                          }
+                      ),
+                    ],
+                  ):Container(),
                 ],
               ),
             ),

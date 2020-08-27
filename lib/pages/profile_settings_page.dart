@@ -34,87 +34,109 @@ class _MyProfileSettingsState extends State<MyProfileSettings> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xFFFCFCFC),
-        body: Container(
-          padding: EdgeInsets.all(24),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  getTransrlate(context, 'ProfileSettings'),
-                  style: GoogleFonts.poppins(
-                      fontSize: 18, color: Color(0xFF5D6A78)),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 24,right: 8),
+                child: Row(
+                  children: [
+                    InkWell(
+                      onTap:() {Navigator.pop(context);},
+                      child: Icon(
+                        Icons.chevron_left,
+                        color: Colors.grey,
+                        size: 32,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 16,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          getTransrlate(context, 'ProfileSettings'),
+                          style: GoogleFonts.poppins(
+                              fontSize: 18, color: Color(0xFF5D6A78)),
+                        ),
+                        Container(
+                            width: 28,
+                            child: Divider(
+                              color: themeColor.getColor(),
+                              height: 3,
+                              thickness: 2,
+                            )),
+
+                      ],
+                    ),
+                  ],
                 ),
-                Container(
-                    width: 28,
-                    child: Divider(
-                      color: themeColor.getColor(),
-                      height: 3,
-                      thickness: 2,
-                    )),
-                SizedBox(
-                  height: 16,
+              ),
+              SizedBox(
+                height: 24,
+              ),
+
+              ListTile(
+                onTap: () {
+                  Nav.route(context, EditUserInfoPage());
+                },
+                leading: Image.asset(
+                  "assets/icons/ic_user.png",
+                  width: 22,
                 ),
-                ListTile(
-                  onTap: () {
-                    Nav.route(context, EditUserInfoPage());
-                  },
-                  leading: Image.asset(
-                    "assets/icons/ic_user.png",
-                    width: 22,
-                  ),
-                  title: Text(getTransrlate(context, 'MyProfileInfo'),
-                      style: GoogleFonts.poppins(
-                          fontSize: 15, color: Color(0xFF5D6A78))),
+                title: Text(getTransrlate(context, 'MyProfileInfo'),
+                    style: GoogleFonts.poppins(
+                        fontSize: 15, color: Color(0xFF5D6A78))),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              ListTile(
+                onTap: () {
+                  themeColor.isLogin? Nav.route(context, ChangePasswordPage()):
+                  showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
+                },
+                leading: Image.asset(
+                  "assets/icons/ic_lock.png",
+                  width: 22,
                 ),
-                SizedBox(
-                  height: 16,
+                title: Text(getTransrlate(context, 'changePassword'),
+                    style: GoogleFonts.poppins(
+                        fontSize: 15, color: Color(0xFF5D6A78))),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              ListTile(
+                onTap: () {
+                  Nav.route(context, AddressPage());
+                },
+                leading: Image.asset(
+                  "assets/icons/ic_location.png",
+                  width: 22,
                 ),
-                ListTile(
-                  onTap: () {
-                    themeColor.isLogin? Nav.route(context, ChangePasswordPage()):
-                    showLogintDialog(getTransrlate(context, 'login'), getTransrlate(context, 'notlogin'),context);
-                  },
-                  leading: Image.asset(
-                    "assets/icons/ic_lock.png",
-                    width: 22,
-                  ),
-                  title: Text(getTransrlate(context, 'changePassword'),
-                      style: GoogleFonts.poppins(
-                          fontSize: 15, color: Color(0xFF5D6A78))),
+                title: Text(getTransrlate(context,'MyAddress'),
+                    style: GoogleFonts.poppins(
+                        fontSize: 15, color: Color(0xFF5D6A78))),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              ListTile(
+                onTap: () {
+                  Nav.route(context, NotificationSettingsPage());
+                },
+                leading: Image.asset(
+                  "assets/icons/ic_notification.png",
+                  width: 22,
                 ),
-                SizedBox(
-                  height: 16,
-                ),
-                ListTile(
-                  onTap: () {
-                    Nav.route(context, AddressPage());
-                  },
-                  leading: Image.asset(
-                    "assets/icons/ic_location.png",
-                    width: 22,
-                  ),
-                  title: Text(getTransrlate(context,'MyAddress'),
-                      style: GoogleFonts.poppins(
-                          fontSize: 15, color: Color(0xFF5D6A78))),
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                ListTile(
-                  onTap: () {
-                    Nav.route(context, NotificationSettingsPage());
-                  },
-                  leading: Image.asset(
-                    "assets/icons/ic_notification.png",
-                    width: 22,
-                  ),
-                  title: Text(getTransrlate(context, 'Notification'),
-                      style: GoogleFonts.poppins(
-                          fontSize: 15, color: Color(0xFF5D6A78))),
-                ),
-              ],
-            ),
+                title: Text(getTransrlate(context, 'Notification'),
+                    style: GoogleFonts.poppins(
+                        fontSize: 15, color: Color(0xFF5D6A78))),
+              ),
+            ],
           ),
         ),
       ),
