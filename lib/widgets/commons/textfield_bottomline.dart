@@ -33,7 +33,7 @@ class MyTextFormFieldLine extends StatelessWidget {
       child: TextFormField(
         decoration: InputDecoration(
           hintText: hintText,
-          hintStyle: GoogleFonts.poppins(color: textColor),
+          hintStyle: GoogleFonts.cairo(color: textColor),
           contentPadding: EdgeInsets.all(15.0),
           border: new UnderlineInputBorder(
               borderSide: new BorderSide(color: textColor)),

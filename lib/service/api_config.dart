@@ -14,8 +14,8 @@ class APICONFIQ{
   static String   kGoogleApiKey = "AIzaSyBb0GpBvrtNExsQHDb55DcVVnmUgL85w4U";
 
   //getCategories
-  static String getAllCategories=url+'/products/categories?per_page=100&'+Key;
-  static String getMainCategories=url+'/products/categories?per_page=100&parent=0&'+Key;
+  static String getAllCategories=url+'/products/categories?hide_empty=false&exclude=[15,15]&per_page=100&'+Key;
+  static String getMainCategories=url+'/products/categories?hide_empty=false&exclude=[15,15]&per_page=100&parent=0&'+Key;
   static String getSubCategories=url+'/products/categories?per_page=100&'+Key;
 
   //getproducts

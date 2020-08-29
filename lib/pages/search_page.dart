@@ -120,7 +120,7 @@ class _SearchPageState extends State<SearchPage> {
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               hintText: getTransrlate(context, 'search'),
-                              hintStyle: GoogleFonts.poppins(
+                              hintStyle: GoogleFonts.cairo(
                                 fontSize: 13,
                                 color: Color(0xFF5D6A78),
                                 fontWeight: FontWeight.w400,
@@ -211,7 +211,7 @@ class _SearchPageState extends State<SearchPage> {
                                   ),
                                   Text(
                                     getTransrlate(context, 'Sort'),
-                                    style: GoogleFonts.poppins(
+                                    style: GoogleFonts.cairo(
                                         fontSize: 13, color: Color(0xFF5D6A78)),
                                   ),
                                 ]),
@@ -260,7 +260,7 @@ class _SearchPageState extends State<SearchPage> {
                       margin: EdgeInsets.only(left: 36, top: 12),
                       child: Text(
                         "Sort Products By",
-                        style: GoogleFonts.poppins(color: Color(0xFF5D6A78)),
+                        style: GoogleFonts.cairo(color: Color(0xFF5D6A78)),
                       )),
                   InkWell(
                     onTap: () {
@@ -280,7 +280,7 @@ class _SearchPageState extends State<SearchPage> {
                               width: 8,
                             ),
                             Text(getTransrlate(context, 'SortByold'),
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.cairo(
                                     color: Color(0xFFA1B1C2))),
                           ],
                         )),
@@ -303,7 +303,7 @@ class _SearchPageState extends State<SearchPage> {
                               width: 8,
                             ),
                             Text(getTransrlate(context, 'SortByNew'),
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.cairo(
                                     color: Color(0xFFA1B1C2))),
                           ],
                         )),
@@ -326,7 +326,7 @@ class _SearchPageState extends State<SearchPage> {
                               width: 8,
                             ),
                             Text(getTransrlate(context, 'SortByPriceLess'),
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.cairo(
                                     color: Color(0xFFA1B1C2))),
                           ],
                         )),
@@ -348,7 +348,7 @@ class _SearchPageState extends State<SearchPage> {
                               width: 8,
                             ),
                             Text(getTransrlate(context, 'SortByPricemore'),
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.cairo(
                                     color: Color(0xFFA1B1C2))),
                           ],
                         )),

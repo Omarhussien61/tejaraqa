@@ -61,7 +61,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
         children: <Widget>[
           Text(
             "Do you have an account?",
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.cairo(
               fontSize: 14,
               color: Colors.black,
               fontWeight: FontWeight.w300,
@@ -70,7 +70,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
           FlatButton(
             child: Text(
               "Register",
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.cairo(
                 fontSize: 14,
                 color: themeColor.getColor(),
                 fontWeight: FontWeight.w300,

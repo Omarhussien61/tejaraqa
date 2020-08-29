@@ -273,7 +273,7 @@ class _ContactPageState extends State<ContactPage> {
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
                               getTransrlate(context, 'Contact'),
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.cairo(
                                 fontSize: 17,
                                 color: Colors.grey,
                                 fontWeight: FontWeight.w300,
@@ -343,7 +343,7 @@ class _ContactPageState extends State<ContactPage> {
                               },
                               child: Text(
                                 getTransrlate(context, 'Submit'),
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.cairo(
                                   fontSize: 16,
                                   color: Colors.white,
                                   fontWeight: FontWeight.w400,
@@ -365,7 +365,7 @@ class _ContactPageState extends State<ContactPage> {
                 alignment: Alignment.center,
                 child: Text(
                   getTransrlate(context, 'ThankYou'),
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.cairo(
                     fontSize: 17,
                     color: Colors.grey,
                     fontWeight: FontWeight.w300,
@@ -387,7 +387,7 @@ class _ContactPageState extends State<ContactPage> {
       centerTitle: true,
       title: Text(
           getTransrlate(context, 'Contact'),
-        style: GoogleFonts.poppins(
+        style: GoogleFonts.cairo(
             color: themeColor.getColor(), fontWeight: FontWeight.bold),
       ),
       backgroundColor: Colors.white,
@@ -430,19 +430,19 @@ class _ContactPageState extends State<ContactPage> {
           children: <Widget>[
             Text(
               title,
-              style: GoogleFonts.poppins(color: Color(0xFF707070)),
+              style: GoogleFonts.cairo(color: Color(0xFF707070)),
             ),
             RichText(
               text: TextSpan(
                 text: description,
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.cairo(
                     color: textColor, fontWeight: FontWeight.w400),
               ),
             ),
             RichText(
               text: TextSpan(
                 text: secondDescription,
-                style: GoogleFonts.poppins(color: textColor),
+                style: GoogleFonts.cairo(color: textColor),
               ),
             )
           ],

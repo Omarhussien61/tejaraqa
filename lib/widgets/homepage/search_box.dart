@@ -42,7 +42,7 @@ class SearchBox extends StatelessWidget {
             ),
             Text(
               getTransrlate(context, 'search'),
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.cairo(
                 fontSize: 13,
                 color: Color(0xFFA1B1C2),
                 fontWeight: FontWeight.w400,

@@ -66,7 +66,7 @@ class _FaqPageState extends State<FaqPage> {
           children: <Widget>[
             Text(
               getTransrlate(context, 'FAQ'),
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.cairo(
                   fontSize: 18, color: Color(0xFF5D6A78)),
             ),
             Container(

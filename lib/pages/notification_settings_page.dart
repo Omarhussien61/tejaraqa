@@ -43,7 +43,7 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
             title: Text(
               getTransrlate(context, 'Notification'),
               style:
-              GoogleFonts.poppins(color: Color(0xFF5D6A78), fontSize: 15),
+              GoogleFonts.cairo(color: Color(0xFF5D6A78), fontSize: 15),
             ),
             leading: InkWell(
               onTap:() {Navigator.pop(context);},
@@ -77,7 +77,7 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
                         value: isAllNotifications,
                         title: Text(
                           getTransrlate(context, 'AllowNotification'),
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.cairo(
                             color: Color(0xFF5D6A78),
                           ),
                         ),
@@ -92,13 +92,13 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
                         value: isOrderNotifications,
                         title: Text(
                           getTransrlate(context, 'Order'),
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.cairo(
                             color: Color(0xFF5D6A78),
                           ),
                         ),
                         subtitle: Text(
                           getTransrlate(context, 'discOrder'),
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.cairo(
                               color: Color(0xFF5D6A78),
                               fontSize: 12,
                               fontWeight: FontWeight.w300),
@@ -114,13 +114,13 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
                         value: isFaqNotifications,
                         title: Text(
                           getTransrlate(context, 'StoreQ&A'),
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.cairo(
                             color: Color(0xFF5D6A78),
                           ),
                         ),
                         subtitle: Text(
                           getTransrlate(context, 'descStore'),
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.cairo(
                               color: Color(0xFF5D6A78),
                               fontSize: 12,
                               fontWeight: FontWeight.w300),
@@ -136,13 +136,13 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
                         value: isReminderNotifications,
                         title: Text(
                           getTransrlate(context, 'reminderCart'),
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.cairo(
                             color: Color(0xFF5D6A78),
                           ),
                         ),
                         subtitle: Text(
                           getTransrlate(context, 'DescCart'),
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.cairo(
                               color: Color(0xFF5D6A78),
                               fontSize: 12,
                               fontWeight: FontWeight.w300),
@@ -159,13 +159,13 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
                         value: isShoppingCartReminderNotifications,
                         title: Text(
                           getTransrlate(context, 'Opportunities'),
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.cairo(
                             color: Color(0xFF5D6A78),
                           ),
                         ),
                         subtitle: Text(
                           getTransrlate(context, 'DescOpportunities'),
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.cairo(
                               color: Color(0xFF5D6A78),
                               fontSize: 12,
                               fontWeight: FontWeight.w300),
@@ -182,13 +182,13 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
                         value: isDiscountReminderNotifications,
                         title: Text(
                           getTransrlate(context, 'SpecialBenefits'),
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.cairo(
                             color: Color(0xFF5D6A78),
                           ),
                         ),
                         subtitle: Text(
                           getTransrlate(context, 'DescBenefits'),
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.cairo(
                               color: Color(0xFF5D6A78),
                               fontSize: 12,
                               fontWeight: FontWeight.w300),
@@ -205,13 +205,13 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
                         value: isCustomizeUserDiscountReminderNotifications,
                         title: Text(
                           getTransrlate(context, 'updates'),
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.cairo(
                             color: Color(0xFF5D6A78),
                           ),
                         ),
                         subtitle: Text(
                           getTransrlate(context, 'descupdates'),
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.cairo(
                               color: Color(0xFF5D6A78),
                               fontSize: 12,
                               fontWeight: FontWeight.w300),

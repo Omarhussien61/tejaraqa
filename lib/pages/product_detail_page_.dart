@@ -78,7 +78,7 @@ class _ProductDetailPageAlternativeState
           title: Text(
             getTransrlate(context, 'productRateing'),
             style:
-            GoogleFonts.poppins(color: Color(0xFF5D6A78), fontSize: 15),
+            GoogleFonts.cairo(color: Color(0xFF5D6A78), fontSize: 15),
           ),
           leading: InkWell(
             onTap:() {
@@ -148,7 +148,7 @@ class _ProductDetailPageAlternativeState
               child: Column(
                 children: <Widget>[
                   Text(getTransrlate(context, 'Reviews'),
-                      style: GoogleFonts.poppins(
+                      style: GoogleFonts.cairo(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
                           color: Color(0xFF5D6A78))),
@@ -240,7 +240,7 @@ class _ProductDetailPageAlternativeState
                                       height: 8,
                                     ),
                                     Text(product_review[0].reviewer,
-                                        style: GoogleFonts.poppins(
+                                        style: GoogleFonts.cairo(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w300,
                                             color: Color(0xFF5D6A78))),
@@ -260,7 +260,7 @@ class _ProductDetailPageAlternativeState
                                             .text
                                             .trim()
                                             : "Best",
-                                        style: GoogleFonts.poppins(
+                                        style: GoogleFonts.cairo(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w300,
                                             color: Color(0xFF5D6A78)))

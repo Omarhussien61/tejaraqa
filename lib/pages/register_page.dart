@@ -62,7 +62,7 @@ class _RegisterPageState extends State<RegisterPage> {
             padding: const EdgeInsets.only(top: 4.0),
             child: Text(
               getTransrlate(context, 'haveanaccount'),
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.cairo(
                 fontSize: 14,
                 color: Colors.black,
                 fontWeight: FontWeight.w300,
@@ -72,7 +72,7 @@ class _RegisterPageState extends State<RegisterPage> {
           FlatButton(
             child: Text(
               getTransrlate(context, 'login'),
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.cairo(
                 fontSize: 14,
                 color: themeColor.getColor(),
                 fontWeight: FontWeight.w300,

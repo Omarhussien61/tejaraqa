@@ -53,7 +53,7 @@ class AuthHeader extends StatelessWidget {
               ),
               Text(
                 headerTitle,
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.cairo(
                   fontSize: 17,
                   color: Colors.white,
                   fontWeight: FontWeight.w300,

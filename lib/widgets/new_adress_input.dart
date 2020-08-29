@@ -28,9 +28,9 @@ class NewAddressInput extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
           hintText: hintText,
-          labelStyle: GoogleFonts.poppins(fontSize: 12),
-          helperStyle: GoogleFonts.poppins(fontSize: 12),
-          hintStyle: GoogleFonts.poppins(fontSize: 12),
+          labelStyle: GoogleFonts.cairo(fontSize: 12),
+          helperStyle: GoogleFonts.cairo(fontSize: 12),
+          hintStyle: GoogleFonts.cairo(fontSize: 12),
           labelText: labelText),
       validator: validator,
       onSaved: onSaved,

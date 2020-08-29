@@ -66,7 +66,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 alignment: Alignment.center,
                 child: Text(
                   getTransrlate(context, 'save'),
-                  style: GoogleFonts.poppins(color: Colors.white),
+                  style: GoogleFonts.cairo(color: Colors.white),
                 ),
               ),
               height: 42,
@@ -103,7 +103,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       children: [
                         Text(
                           getTransrlate(context, 'changePassword'),
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.cairo(
                               fontSize: 18, color: Color(0xFF5D6A78)),
                         ),
                         Container(

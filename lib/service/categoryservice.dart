@@ -22,7 +22,9 @@ class CategoryService {
       if (response.statusCode == 200) {
         var list = response.data as List;
         completer.complete(category =
-            list.map<Category>((i) => Category.fromJson(i)).toList());
+            list.map<Category>((i) => Category.fromJson(i))
+                .where((data) => data.id!=15)
+                .toList());
       }
     } catch (e) {
       print(e);

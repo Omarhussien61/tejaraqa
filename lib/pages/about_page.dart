@@ -110,14 +110,14 @@ class _AboutPageState extends State<AboutPage> {
             RichText(
               text: TextSpan(
                 text: description,
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.cairo(
                     color: textColor, fontWeight: FontWeight.w400),
               ),
             ),
             RichText(
               text: TextSpan(
                 text: secondDescription,
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.cairo(
                     color: textColor, fontWeight: FontWeight.w200),
               ),
             ),

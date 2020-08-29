@@ -103,7 +103,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
               alignment: Alignment.center,
               child: Text(
                 getTransrlate(context, 'save'),
-                style: GoogleFonts.poppins(color: Colors.white),
+                style: GoogleFonts.cairo(color: Colors.white),
               ),
             ),
             height: 42,
@@ -143,7 +143,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
                             children: [
                               Text(
                                 getTransrlate(context, 'MyAddress'),
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.cairo(
                                     fontSize: 18, color: Color(0xFF5D6A78)),
                               ),
                               Container(
@@ -264,9 +264,9 @@ class _NewAddressPageState extends State<NewAddressPage> {
                               },
                             decoration: InputDecoration(
                                 hintText: getTransrlate(context, 'Street'),
-                                labelStyle: GoogleFonts.poppins(fontSize: 12),
-                                helperStyle: GoogleFonts.poppins(fontSize: 12),
-                                hintStyle: GoogleFonts.poppins(fontSize: 12),
+                                labelStyle: GoogleFonts.cairo(fontSize: 12),
+                                helperStyle: GoogleFonts.cairo(fontSize: 12),
+                                hintStyle: GoogleFonts.cairo(fontSize: 12),
                             ),
 
                         ),
@@ -283,9 +283,9 @@ class _NewAddressPageState extends State<NewAddressPage> {
                                 },
                                 decoration: InputDecoration(
                                   hintText: getTransrlate(context, 'Building'),
-                                  labelStyle: GoogleFonts.poppins(fontSize: 12),
-                                  helperStyle: GoogleFonts.poppins(fontSize: 12),
-                                  hintStyle: GoogleFonts.poppins(fontSize: 12),
+                                  labelStyle: GoogleFonts.cairo(fontSize: 12),
+                                  helperStyle: GoogleFonts.cairo(fontSize: 12),
+                                  hintStyle: GoogleFonts.cairo(fontSize: 12),
                                 ),
 
                               ),

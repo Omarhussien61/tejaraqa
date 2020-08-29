@@ -118,7 +118,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     splashColor: Colors.blue[50],
                     child: Text(
                       getTransrlate(context, 'Skip'),
-                      style: GoogleFonts.poppins(color: Colors.blueGrey),
+                      style: GoogleFonts.cairo(color: Colors.blueGrey),
                     ),
                   ),
                   Container(
@@ -139,7 +139,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     splashColor: Colors.blue[50],
                     child: Text(
                       getTransrlate(context, 'Next'),
-                      style: GoogleFonts.poppins(color: mainColor),
+                      style: GoogleFonts.cairo(color: mainColor),
                     ),
                   )
                 ],
@@ -162,7 +162,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     },
                     child: Text(
                       getTransrlate(context, 'getStart'),
-                      style: GoogleFonts.poppins(
+                      style: GoogleFonts.cairo(
                           color: mainColor, fontWeight: FontWeight.w400),
                     ),
                   ),
@@ -194,14 +194,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
           Text(
             title,
             textAlign: TextAlign.center,
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.cairo(
                 fontSize: 16, height: 2.0, fontWeight: FontWeight.w600),
           ),
           SizedBox(height: 10),
           Text(
             body,
             textAlign: TextAlign.center,
-            style: GoogleFonts.poppins(fontSize: 14, height: 2.0),
+            style: GoogleFonts.cairo(fontSize: 14, height: 2.0),
           ),
         ],
       ),

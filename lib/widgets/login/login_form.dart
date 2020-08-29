@@ -128,7 +128,7 @@ class _LoginFormState extends State<LoginForm> {
                       },
                       child: Text(
                         getTransrlate(context, 'login'),
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.cairo(
                           fontSize: 16,
                           color: Colors.white,
                           fontWeight: FontWeight.w400,

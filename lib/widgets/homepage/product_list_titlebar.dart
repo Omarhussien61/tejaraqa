@@ -26,7 +26,7 @@ class ProductListTitleBar extends StatelessWidget {
             padding:  EdgeInsets.only(left: 12, right: 12,),
             child: Text(
               title,
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.cairo(
                 fontSize: 15,
                 color: Color(0xFF5D6A78),
                 fontWeight: FontWeight.w400,
@@ -62,7 +62,7 @@ class ProductListTitleBar extends StatelessWidget {
                     hoursSymbol: ":",
                     minSymbol: ":",
                     secSymbol: "",
-                    textStyle: GoogleFonts.poppins(
+                    textStyle: GoogleFonts.cairo(
                       fontSize: 12,
                       color: themeColor.getColor(),
                       fontWeight: FontWeight.w300,

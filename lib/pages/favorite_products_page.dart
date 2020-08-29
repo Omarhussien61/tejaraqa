@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shoppingapp/modal/Favorite.dart';
 import 'package:shoppingapp/pages/search_page.dart';
+import 'package:shoppingapp/pages/login_page.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';
@@ -66,7 +67,7 @@ class HomeWidgetState extends State<FavoriteProductsPage>
             title: Text(
               getTransrlate(context, 'MyFav'),
               style:
-              GoogleFonts.poppins(color: Color(0xFF5D6A78), fontSize: 15),
+              GoogleFonts.cairo(color: Color(0xFF5D6A78), fontSize: 15),
             ),
             leading: InkWell(
               onTap:() {Navigator.pop(context);},
@@ -140,8 +141,34 @@ class HomeWidgetState extends State<FavoriteProductsPage>
               },
             )
           ],
-        )):Container(
-          child: Center(child: Text(getTransrlate(context, 'registration'))),
+        )):
+        Center(
+          child: Container(
+            height:400  ,
+      child: Center(child: Column(
+          children: [
+            SizedBox(
+              height: 100,
+            ),
+
+            Center(child: Text(getTransrlate(context, 'PleaseLogin'))),
+            SizedBox(
+              height: 100,
+            ),
+
+            GFButton(
+              onPressed: (){
+                Nav.route(context, LoginPage());
+              },
+              text: getTransrlate(context, 'login'),
+              color: themeColor.getColor(),
+              textStyle: GoogleFonts.cairo(
+                  fontSize: 18
+              ),
+            )
+          ],
+      )),
+    ),
         ),
       ),
     );

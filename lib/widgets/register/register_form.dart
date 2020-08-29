@@ -216,7 +216,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       },
                       child: Text(
                         getTransrlate(context, 'RegisterNew'),
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.cairo(
                           fontSize: 16,
                           color: Colors.white,
                           fontWeight: FontWeight.w400,

@@ -92,7 +92,7 @@ class _HomeNavigatorState extends State<HomeNavigator> {
           style: TabStyle.fixedCircle,
           items: <TabItem>[
             TabItem(icon: Feather.home, title: ''),
-            TabItem(icon: Feather.search, title: ''),
+            TabItem(icon: Icons.apps, title: ''),
             TabItem(icon: bottomCenterItem(themeColor), title: ''),
             TabItem(icon: Feather.heart, title: ''),
             TabItem(icon: Feather.user, title: ''),

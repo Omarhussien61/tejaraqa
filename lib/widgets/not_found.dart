@@ -24,7 +24,7 @@ class _NotFoundState extends State<NotFound> {
           ),
           Text(
             widget.description,
-            style: GoogleFonts.poppins(color: textColor),
+            style: GoogleFonts.cairo(color: textColor),
           )
         ],
       ),

@@ -51,7 +51,7 @@ class _ForgetPasswordValidatePageState
                         margin: EdgeInsets.only(left: 10),
                         child: Text(
                           "Enter Code",
-                          style: GoogleFonts.poppins(color: Color(0xFF5D6A78)),
+                          style: GoogleFonts.cairo(color: Color(0xFF5D6A78)),
                         ),
                       ),
                       CodeInput(
@@ -93,7 +93,7 @@ class _ForgetPasswordValidatePageState
                       color: themeColor.getColor(),
                       child: Text(
                         'Verify',
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.cairo(
                           fontSize: 16,
                           color: Colors.white,
                           fontWeight: FontWeight.w400,
@@ -120,7 +120,7 @@ class _ForgetPasswordValidatePageState
         children: <Widget>[
           Text(
             "Do you have an account?",
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.cairo(
               fontSize: 14,
               color: Colors.black,
               fontWeight: FontWeight.w300,
@@ -129,7 +129,7 @@ class _ForgetPasswordValidatePageState
           FlatButton(
             child: Text(
               "Register",
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.cairo(
                 fontSize: 14,
                 color: themeColor.getColor(),
                 fontWeight: FontWeight.w300,

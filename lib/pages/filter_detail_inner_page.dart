@@ -42,7 +42,7 @@ class _FilterDetalInnerPageState extends State<FilterDetalInnerPage> {
                     alignment: Alignment.center,
                     child: Text(
                       "Apply",
-                      style: GoogleFonts.poppins(
+                      style: GoogleFonts.cairo(
                           fontSize: 18, color: Colors.white),
                     )),
               ),
@@ -94,7 +94,7 @@ class _FilterDetalInnerPageState extends State<FilterDetalInnerPage> {
             title: Text(
               title,
               style:
-                  GoogleFonts.poppins(fontSize: 14, color: Color(0xFFA1B1C2)),
+                  GoogleFonts.cairo(fontSize: 14, color: Color(0xFFA1B1C2)),
             ),
             groupValue: null,
             onChanged: (bool value) {},

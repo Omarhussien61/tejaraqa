@@ -137,7 +137,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             child: Text(
               name,
               maxLines: 1,
-              style: GoogleFonts.poppins(color: Color(0xFF5D6A78), fontSize: 12),
+              style: GoogleFonts.cairo(color: Color(0xFF5D6A78), fontSize: 12),
             ),
           )),
       decoration: BoxDecoration(
@@ -328,7 +328,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                               width:ScreenUtil.getWidth(context)/2,
                                               child: Text(widget.product.name,
                                                   maxLines: 2,
-                                                  style: GoogleFonts.poppins(
+                                                  style: GoogleFonts.cairo(
                                                       fontSize: 19,
                                                       fontWeight: FontWeight.w400,
                                                       color: Color(0xFF5D6A78))),
@@ -365,7 +365,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                                 ),
                                                 Text(
                                                   widget.product.averageRating,
-                                                  style: GoogleFonts.poppins(
+                                                  style: GoogleFonts.cairo(
                                                       fontSize: 11,
                                                       fontWeight:
                                                           FontWeight.w400),
@@ -386,14 +386,15 @@ class _ProductDetailPageState extends State<ProductDetailPage>
 
                                               },
                                               backgroundColor:
-                                                  themeColor.getColor(),
+                                                  Colors.white,
                                               child: Icon(
                                                 isliked != null
                                                     ? !isliked
                                                     ? Icons.favorite
                                                     : Icons.favorite_border
                                                     : Icons.favorite_border,
-                                                color: Colors.white,
+                                                color:isliked? Colors.grey:themeColor.getColor(),
+                                                size: 35,
                                               ),
                                             ),
                                           ),
@@ -418,7 +419,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                     child: ExpandablePanel(
                                       header: Text(
                                         getTransrlate(context, 'showAll'),
-                                        style: GoogleFonts.poppins(
+                                        style: GoogleFonts.cairo(
                                             color: themeColor.getColor(),
                                             fontSize: 12),
                                       ),
@@ -443,7 +444,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                             .trim()
                                             : "Best",
                                         softWrap: true,
-                                        style: GoogleFonts.poppins(
+                                        style: GoogleFonts.cairo(
                                           fontWeight: FontWeight.w300,
                                           color: Color(0xFF5D6A78),
                                           letterSpacing: 0.6,
@@ -460,7 +461,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                         children: <Widget>[
                                           Text(
                                             getTransrlate(context, 'price')+" :  ",
-                                            style: GoogleFonts.poppins(
+                                            style: GoogleFonts.cairo(
                                                 color: themeColor.getColor(),
                                                 fontSize: 18),
                                           ),
@@ -470,14 +471,14 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                             children: <Widget>[
                                               Text(
                                                 widget.product.oldPrice+' ',
-                                                style: GoogleFonts.poppins(
+                                                style: GoogleFonts.cairo(
                                                     decoration: TextDecoration.lineThrough,
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w300),
                                               ),
                                               Text(
                                                 widget.product.price+' '+widget.product.Currancy,
-                                                style: GoogleFonts.poppins(
+                                                style: GoogleFonts.cairo(
                                                     color: themeColor.getColor(),
                                                     fontSize: 18,
                                                     fontWeight: FontWeight.w400),
@@ -504,7 +505,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                                 .text
                                                 .trim()
                                                 : "Best",
-                                            style: GoogleFonts.poppins(
+                                            style: GoogleFonts.cairo(
                                                 color: themeColor.getColor(),
                                                 fontSize: 18),
                                           )
@@ -515,7 +516,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                       ),
                                       Text(
                                         widget.product.stockStatus,
-                                        style: GoogleFonts.poppins(
+                                        style: GoogleFonts.cairo(
                                             color: themeColor.getColor(),
                                             fontSize: 12,
                                             fontWeight: FontWeight.w300),
@@ -548,23 +549,16 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                             )),
                                       ),
                                       Container(
-
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                            BorderRadius.circular(18),
-                                            color: Color(0xFF707070),
-                                          ),
-                                          child: Container(
-                                            alignment: Alignment.center,
-                                            padding:
-                                            const EdgeInsets.all(8.0),
-                                            child: Text('$piece',
-                                                style:
-                                                GoogleFonts.poppins(
-                                                    color:
-                                                    Colors.white,
-                                                    fontSize: 16)),
-                                          )),
+                                        width: 40,
+                                        alignment: Alignment.center,
+                                        padding: const EdgeInsets.only(top: 8,bottom: 6),
+                                        child: Text('$piece',
+                                            style:
+                                            GoogleFonts.cairo(
+                                                color:themeColor.getColor(),
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 20)),
+                                      ),
                                       Container(
                                         height: 40,
                                         child: FloatingActionButton(
@@ -677,7 +671,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
 //                                                  context, ShoppingCartPage());
 //                                            },
 //                                            child: Text(getTransrlate(context, 'Buy'),
-//                                                style: GoogleFonts.poppins(
+//                                                style: GoogleFonts.cairo(
 //                                                    fontWeight:
 //                                                        FontWeight.w400)),
 //                                            shape: GFButtonShape.pills,
@@ -706,7 +700,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                               size: 16,
                                             ),
                                             child: Text(getTransrlate(context, 'ADDtoCart'),
-                                                style: GoogleFonts.poppins(
+                                                style: GoogleFonts.cairo(
                                                     fontWeight:
                                                         FontWeight.w400)),
                                             type: GFButtonType.outline2x,
@@ -746,7 +740,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                     child: Column(
                                       children: <Widget>[
                                         Text(getTransrlate(context, 'Reviews'),
-                                            style: GoogleFonts.poppins(
+                                            style: GoogleFonts.cairo(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w400,
                                                 color: Color(0xFF5D6A78))),
@@ -780,7 +774,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                         Text(
                                             widget.product.averageRating +
                                                ' '+ getTransrlate(context, 'Reviews'),
-                                            style: GoogleFonts.poppins(
+                                            style: GoogleFonts.cairo(
                                                 fontSize: 13,
                                                 fontWeight: FontWeight.w300,
                                                 color: Color(0xFF5D6A78))),
@@ -807,7 +801,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                             CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Text( name==null?' ':name,
-                                              style: GoogleFonts.poppins(
+                                              style: GoogleFonts.cairo(
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w400,
                                                   color: Color(0xFF5D6A78))),
@@ -825,7 +819,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                                 children: <Widget>[
                                                   Text(getTransrlate(context, 'AddComment'),
                                                       style:
-                                                          GoogleFonts.poppins(
+                                                          GoogleFonts.cairo(
                                                               fontSize: 12,
                                                               fontWeight:
                                                                   FontWeight
@@ -920,7 +914,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                                         product_review[position]
                                                             .reviewer,
                                                         style:
-                                                            GoogleFonts.poppins(
+                                                            GoogleFonts.cairo(
                                                                 fontSize: 12,
                                                                 fontWeight:
                                                                     FontWeight
@@ -950,7 +944,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                                                 .trim()
                                                             : "Best",
                                                         style:
-                                                            GoogleFonts.poppins(
+                                                            GoogleFonts.cairo(
                                                                 fontSize: 12,
                                                                 fontWeight:
                                                                     FontWeight
@@ -970,7 +964,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                     child: InkWell(
                                       child: Text(
                                         getTransrlate(context, 'SeeAllComments'),
-                                        style: GoogleFonts.poppins(
+                                        style: GoogleFonts.cairo(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w300,
                                             color: themeColor.getColor()),
@@ -1072,7 +1066,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                 controller: comment,
                 decoration: InputDecoration(
                     hintText: getTransrlate(context, 'yourComment'),
-                    hintStyle: GoogleFonts.poppins(),
+                    hintStyle: GoogleFonts.cairo(),
                     focusColor: themeColor.getColor()),
                 validator: (String value) {
                   if (value.isEmpty) {
@@ -1088,7 +1082,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
               new FlatButton(
                 child: new Text(
                   getTransrlate(context, 'cancel'),
-                  style: GoogleFonts.poppins(color: textColor),
+                  style: GoogleFonts.cairo(color: textColor),
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -1097,7 +1091,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
               new FlatButton(
                 child: new Text(
                   getTransrlate(context, 'Comment'),
-                  style: GoogleFonts.poppins(color: themeColor.getColor()),
+                  style: GoogleFonts.cairo(color: themeColor.getColor()),
                 ),
                 onPressed: () async {
                   final form = formKey.currentState;

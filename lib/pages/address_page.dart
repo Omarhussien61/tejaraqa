@@ -5,20 +5,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shoppingapp/modal/Address_shiping.dart';
 import 'package:shoppingapp/pages/new_adress_page.dart';
-import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/utils/util/sql_address.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
-import 'package:getflutter/components/button/gf_button.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'edit_adress_page.dart';
-import 'package:shoppingapp/pages/search_page.dart';
 
 class AddressPage extends StatefulWidget {
 
@@ -69,7 +62,7 @@ class _AddressPageState extends State<AddressPage> {
             title: Text(
               getTransrlate(context, 'MyAddress'),
               style:
-              GoogleFonts.poppins(color: Color(0xFF5D6A78), fontSize: 15),
+              GoogleFonts.cairo(color: Color(0xFF5D6A78), fontSize: 15),
             ),
             leading: InkWell(
               onTap:() {Navigator.pop(context);},
@@ -92,7 +85,7 @@ class _AddressPageState extends State<AddressPage> {
               alignment: Alignment.center,
               child: Text(
                 getTransrlate(context, 'AddNewAddress'),
-                style: GoogleFonts.poppins(color: Colors.white),
+                style: GoogleFonts.cairo(color: Colors.white),
               ),
             ),
             height: 42,
@@ -112,7 +105,7 @@ class _AddressPageState extends State<AddressPage> {
               children: <Widget>[
                 Text(
                   getTransrlate(context, 'MyAddress'),
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.cairo(
                       fontSize: 18, color: Color(0xFF5D6A78)),
                 ),
                 Container(
@@ -191,7 +184,7 @@ class _AddressPageState extends State<AddressPage> {
             children: <Widget>[
               Text(
                 address.title,
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.cairo(
                     fontSize: 16,
                     fontWeight: FontWeight.w300,
                     color: Color(0xFF5D6A78)),
@@ -211,14 +204,14 @@ class _AddressPageState extends State<AddressPage> {
           ),
           Text(
             address.Country,
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.cairo(
                 fontSize: 16,
                 fontWeight: FontWeight.w300,
                 color: Color(0xFF5D6A78)),
           ),
           Text(
             address.city,
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.cairo(
                 fontSize: 16,
                 fontWeight: FontWeight.w300,
                 color: Color(0xFF5D6A78)),
@@ -227,7 +220,7 @@ class _AddressPageState extends State<AddressPage> {
           Expanded(
               child: Text(
                 address.addres1,
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.cairo(
                     fontSize: 14,
                     fontWeight: FontWeight.w300,
                     color: Color(0xFF5D6A78)),
@@ -241,14 +234,14 @@ class _AddressPageState extends State<AddressPage> {
                 children: <Widget>[
                   Text(
                     getTransrlate(context, 'Street'),
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.cairo(
                         fontSize: 14,
                         fontWeight: FontWeight.w300,
                         color: Color(0xFF5D6A78)),
                   ),
                   Text(
                     address.street,
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.cairo(
                         fontSize: 14,
                         fontWeight: FontWeight.w300,
                         color: Color(0xFF5D6A78)),
@@ -260,14 +253,14 @@ class _AddressPageState extends State<AddressPage> {
                 children: <Widget>[
                   Text(
                     getTransrlate(context, 'Building'),
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.cairo(
                         fontSize: 14,
                         fontWeight: FontWeight.w300,
                         color: Color(0xFF5D6A78)),
                   ),
                   Text(
                     address.buildingNo,
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.cairo(
                         fontSize: 14,
                         fontWeight: FontWeight.w300,
                         color: Color(0xFF5D6A78)),

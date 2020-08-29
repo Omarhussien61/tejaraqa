@@ -75,7 +75,7 @@ DetailScreen(this.confirmOrder);
                                 child: Text(
                                   getTransrlate(context, 'OrderDone'),
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(
+                                  style: GoogleFonts.cairo(
                                     color: Provider.of<ThemeNotifier>(context).getColor(),
                                     fontWeight: FontWeight.w400,
                                     fontSize: 30,
@@ -108,7 +108,7 @@ DetailScreen(this.confirmOrder);
                                                         width: deviceWidth/2,
                                                         child: Text(
                                                           confirmOrder.lineItems[index].name,
-                                                          style: TextStyle(
+                                                          style: GoogleFonts.cairo(
                                                               color: Provider.of<ThemeNotifier>(context).getColor(),
                                                               fontWeight: FontWeight.bold,
                                                               fontSize: 15),
@@ -117,7 +117,7 @@ DetailScreen(this.confirmOrder);
                                                       Container(
                                                         width: deviceWidth/4,
                                                         child: Text(confirmOrder.lineItems[index].quantity.toString()+' × '+confirmOrder.lineItems[index].total,
-                                                          style: TextStyle(color: Colors.black, fontSize: 15),
+                                                          style: GoogleFonts.cairo(color: Colors.black, fontSize: 15),
                                                         ),
                                                       ),
                                                     ],
@@ -139,7 +139,7 @@ DetailScreen(this.confirmOrder);
                                   ),
                                   title: Text(
                                     getTransrlate(context, 'totalOrder'),
-                                    style: TextStyle(
+                                    style: GoogleFonts.cairo(
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15.0),
@@ -148,7 +148,7 @@ DetailScreen(this.confirmOrder);
                                     padding: const EdgeInsets.only(top: 10.0),
                                     child: Text(
                                       setTotalDesc().toString()+'  '+confirmOrder.currencySymbol,
-                                      style: TextStyle(
+                                      style: GoogleFonts.cairo(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.0),
@@ -164,7 +164,7 @@ DetailScreen(this.confirmOrder);
                                   title: Text(
                                     getTransrlate(context, 'totaldiscount'),
 
-                                    style: TextStyle(
+                                    style: GoogleFonts.cairo(
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15.0),
@@ -173,7 +173,7 @@ DetailScreen(this.confirmOrder);
                                     padding: const EdgeInsets.only(top: 10.0),
                                     child: Text(
                                       confirmOrder.discountTotal.toString()+'  '+confirmOrder.currencySymbol,
-                                      style: TextStyle(
+                                      style: GoogleFonts.cairo(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.0),
@@ -189,7 +189,7 @@ DetailScreen(this.confirmOrder);
 
                                   title: Text(
                                     getTransrlate(context, 'totalShipping'),
-                                    style: TextStyle(
+                                    style: GoogleFonts.cairo(
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15.0),
@@ -198,7 +198,7 @@ DetailScreen(this.confirmOrder);
                                     padding: const EdgeInsets.only(top: 20.0),
                                     child: Text(
                                       confirmOrder.shippingTotal+'  '+confirmOrder.currencySymbol,
-                                      style: TextStyle(
+                                      style: GoogleFonts.cairo(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.0),
@@ -213,7 +213,7 @@ DetailScreen(this.confirmOrder);
                                   ),
                                   title: Text(
                                     getTransrlate(context, 'total'),
-                                    style: TextStyle(
+                                    style: GoogleFonts.cairo(
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15.0),
@@ -222,7 +222,7 @@ DetailScreen(this.confirmOrder);
                                     padding: const EdgeInsets.only(top: 20.0),
                                     child: Text(
                                       confirmOrder.total+'  '+confirmOrder.currencySymbol,
-                                      style: TextStyle(
+                                      style: GoogleFonts.cairo(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.0),

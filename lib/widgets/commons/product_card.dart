@@ -116,7 +116,7 @@ class _ProductCardState extends State<ProductCard> {
                               child: Text(
                                 widget.product.categories[0].name,
                                 maxLines: 1,
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.cairo(
                                   fontSize: 12,
                                   color: widget.themeColor.getColor(),
                                   fontWeight: FontWeight.w300,
@@ -167,7 +167,7 @@ class _ProductCardState extends State<ProductCard> {
                         AutoSizeText(
                           widget.product.name,
                           maxLines: 1,
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.cairo(
                             fontSize: 12,
                             color: Color(0xFF5D6A78),
                             fontWeight: FontWeight.w300,
@@ -201,7 +201,7 @@ class _ProductCardState extends State<ProductCard> {
                             ),
                             Text(
                               widget.product.averageRating,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.cairo(
                                   fontSize: 9, fontWeight: FontWeight.w400),
                             )
                           ],
@@ -218,14 +218,14 @@ class _ProductCardState extends State<ProductCard> {
                                 ),
                                 Text(
                                   widget.product.oldPrice+' ',
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.cairo(
                                       decoration: TextDecoration.lineThrough,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w300),
                                 ),
                                 Text(
                                   widget.product.price+' '+widget.product.Currancy,
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.cairo(
                                       color: widget.themeColor.getColor(),
                                       fontSize: 18,
                                       fontWeight: FontWeight.w400),
@@ -252,7 +252,7 @@ class _ProductCardState extends State<ProductCard> {
                                   .text
                                   .trim()
                                   : "Best",
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.cairo(
                                   color: widget.themeColor.getColor(),
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400),
@@ -314,7 +314,7 @@ class _ProductCardState extends State<ProductCard> {
                                       ),
                                       Text(
                                         getTransrlate(context, 'ADDtoCart'),
-                                        style: GoogleFonts.poppins(
+                                        style: GoogleFonts.cairo(
                                             color: Color(0xFF5D6A78),
                                             fontSize: 10,
                                             fontWeight: FontWeight.w400),

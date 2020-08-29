@@ -89,7 +89,7 @@ class _CategoryPageState extends State<CategoryPage> {
          return ExpansionTile(
            title: Text(
              children[index].name,
-             style: GoogleFonts.poppins(color: Color(0xFF5D6A78)),
+             style: GoogleFonts.cairo(color: Color(0xFF5D6A78)),
              textDirection: TextDirection.rtl,
            ),
            leading: null,
@@ -140,7 +140,7 @@ class _CategoryPageState extends State<CategoryPage> {
                      child: Text(
                        childr[index].name,
                        maxLines: 1,
-                       style: GoogleFonts.poppins(
+                       style: GoogleFonts.cairo(
                          fontSize: 12,
                          color: Color(0xFF5D6A78),
                          fontWeight: FontWeight.w400,

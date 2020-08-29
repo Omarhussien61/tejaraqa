@@ -47,7 +47,7 @@ class _FilterPageState extends State<FilterPage> {
                 alignment: Alignment.center,
                 child: Text(
                   "Apply",
-                  style: GoogleFonts.poppins(fontSize: 18, color: Colors.white),
+                  style: GoogleFonts.cairo(fontSize: 18, color: Colors.white),
                 )),
           ),
         ),
@@ -65,7 +65,7 @@ class _FilterPageState extends State<FilterPage> {
                     title: Text(
                       "Daily",
                       style:
-                          GoogleFonts.poppins(fontSize: 14, color: textColor),
+                          GoogleFonts.cairo(fontSize: 14, color: textColor),
                     ),
                     trailing: Transform.scale(
                       scale: 0.7,
@@ -85,7 +85,7 @@ class _FilterPageState extends State<FilterPage> {
                   height: 54,
                   child: ListTile(
                     title: Text("Free Cargo",
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.cairo(
                             fontSize: 14, color: textColor)),
                     trailing: Transform.scale(
                       scale: 0.7,
@@ -138,9 +138,9 @@ class _FilterPageState extends State<FilterPage> {
           },
           title: Text(title,
               style:
-                  GoogleFonts.poppins(fontSize: 14, color: Color(0xFFA1B1C2))),
+                  GoogleFonts.cairo(fontSize: 14, color: Color(0xFFA1B1C2))),
           subtitle: Text(subTitle,
-              style: GoogleFonts.poppins(fontSize: 12, color: textColor)),
+              style: GoogleFonts.cairo(fontSize: 12, color: textColor)),
           trailing: IconButton(
             icon: Icon(
               Icons.chevron_right,

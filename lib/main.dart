@@ -117,6 +117,11 @@ class _MyAppState extends State<MyApp> {
           TargetPlatform.android: CupertinoPageTransitionsBuilder(),
         }),
         primaryColor: themeColor.getColor(),
+        textTheme: TextTheme(
+          headline1: GoogleFonts.cairo(),
+          headline6:  GoogleFonts.cairo(),
+          bodyText2:  GoogleFonts.cairo(),
+        ),
       ),
       home:SplashScreen(),
       );
@@ -143,7 +148,7 @@ class _InitPageState extends State<InitPage> {
             color: Colors.white,
           ),
           name: "Home Page",
-          baseStyle: GoogleFonts.poppins(
+          baseStyle: GoogleFonts.cairo(
               color: Colors.white.withOpacity(0.6), fontSize: 19.0),
           colorLineSelected: Colors.transparent,
         ),

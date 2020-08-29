@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
         children: <Widget>[
           Text(
             getTransrlate(context, 'haveanaccount'),
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.cairo(
               fontSize: 14,
               color: Colors.black,
               fontWeight: FontWeight.w200,
@@ -72,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
           FlatButton(
             child: Text(
               getTransrlate(context, 'Register'),
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.cairo(
                 fontSize: 14,
                 color: themeColor.getColor(),
                 fontWeight: FontWeight.w300,

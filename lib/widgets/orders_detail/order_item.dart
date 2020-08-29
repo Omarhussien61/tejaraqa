@@ -48,7 +48,7 @@ class OrderItem extends StatelessWidget {
               children: <Widget>[
                 AutoSizeText(
                   getTransrlate(context, 'OrderDitails')+' : '+orders_model.number,
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.cairo(
                     fontSize: 13,
                     color: Color(0xFF5D6A78),
                     fontWeight: FontWeight.w300,
@@ -61,7 +61,7 @@ class OrderItem extends StatelessWidget {
                 ),
                 AutoSizeText(
                   getTransrlate(context, 'paymentMethod')+' : '+ isPymentString(orders_model.paymentMethod,context),
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.cairo(
                     fontSize: 12,
                     color: Color(0xFF5D6A78),
                     fontWeight: FontWeight.w300,
@@ -74,7 +74,7 @@ class OrderItem extends StatelessWidget {
                 ),
                 Text(
                   getTransrlate(context, 'totalOrder')+' : '+orders_model.total +" "+orders_model.currencySymbol,
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.cairo(
                     fontSize: 13,
                     color: Color(0xFF5D6A78),
                     fontWeight: FontWeight.w300,
@@ -87,7 +87,7 @@ class OrderItem extends StatelessWidget {
                   child: Row(
                     children: <Widget>[
                       Text(getTransrlate(context, 'OrderState')+' : ',
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.cairo(
                           fontSize: 13,
                           color: Color(0xFF5D6A78),
                           fontWeight: FontWeight.w300,
@@ -112,7 +112,7 @@ class OrderItem extends StatelessWidget {
                           children: <Widget>[
                             Text(
                               themeColor.local=='ar'? isPassedString(orders_model.status):orders_model.status,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.cairo(
                                   color: Color(0xFF5D6A78),
                                   fontSize: 10,
                                   fontWeight: FontWeight.w400),
@@ -144,7 +144,7 @@ class OrderItem extends StatelessWidget {
 //                  iconPlacement: ExpandablePanelIconPlacement.right,
                 header: Text(
                   getTransrlate(context, 'OrderContent'),
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.cairo(
                       color: Color(0xFF5D6A78), fontSize: 12),
                 ),
                 expanded: Container(
@@ -262,7 +262,7 @@ openAlertBox(context, themeColor) {
                   height: 32,
                 ),
                 Text("Rate",
-                    style: GoogleFonts.poppins(color: Color(0xFF5D6A78))),
+                    style: GoogleFonts.cairo(color: Color(0xFF5D6A78))),
                 SizedBox(
                   height: 16,
                 ),
@@ -289,7 +289,7 @@ openAlertBox(context, themeColor) {
                   height: 16,
                 ),
                 Text("You gave 4 points",
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.cairo(
                         fontSize: 13, color: Color(0xFF5D6A78))),
                 SizedBox(
                   height: 32,
@@ -303,7 +303,7 @@ openAlertBox(context, themeColor) {
                     color: themeColor.getColor(),
                     child: Text(
                       "Rate",
-                      style: GoogleFonts.poppins(color: Colors.white),
+                      style: GoogleFonts.cairo(color: Colors.white),
                     ),
                   ),
                 ),

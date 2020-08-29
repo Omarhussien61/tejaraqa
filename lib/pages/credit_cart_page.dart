@@ -110,7 +110,7 @@ class CreditCartPageState extends State<CreditCartPage> {
                   Container(
                     width: 180,
                     child: Text("Your order has been successfully completed.",
-                        style: GoogleFonts.poppins(color: Color(0xFF5D6A78))),
+                        style: GoogleFonts.cairo(color: Color(0xFF5D6A78))),
                   ),
                   SizedBox(
                     height: 16,
@@ -124,7 +124,7 @@ class CreditCartPageState extends State<CreditCartPage> {
                       color: themeColor.getColor(),
                       child: Text(
                         "OKEY",
-                        style: GoogleFonts.poppins(color: Colors.white),
+                        style: GoogleFonts.cairo(color: Colors.white),
                       ),
                     ),
                   ),

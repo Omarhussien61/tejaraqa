@@ -106,7 +106,7 @@ class _OrderPageState extends State<OrderPage> {
                       padding: const EdgeInsets.only(left: 8.0),
                       child: Text(
                         getTransrlate(context, 'addressShipping'),
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.cairo(
                             fontSize: 12, color: Color(0xFF5D6A78)),
                       ),
                     ),
@@ -127,7 +127,7 @@ class _OrderPageState extends State<OrderPage> {
                       padding: const EdgeInsets.only(left: 8.0),
                       child: Text(
                         getTransrlate(context, 'paymentMethod'),
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.cairo(
                             fontSize: 12, color: Color(0xFF5D6A78)),
                       ),
                     ),
@@ -191,7 +191,7 @@ class _OrderPageState extends State<OrderPage> {
                                     left: 8.0, top: 16, bottom: 8),
                                 child: Text(
                                   getTransrlate(context, 'phone'),
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.cairo(
                                       fontSize: 12, color: Color(0xFF5D6A78)),
                                 ),
                               ),
@@ -247,7 +247,7 @@ class _OrderPageState extends State<OrderPage> {
                                                   hintText:
                                                       getTransrlate(context, 'hintphone'),
                                                   hintStyle:
-                                                      GoogleFonts.poppins(
+                                                      GoogleFonts.cairo(
                                                           fontSize: 12,
                                                           color: textColor)),
                                               onChanged: (String value) {
@@ -269,7 +269,7 @@ class _OrderPageState extends State<OrderPage> {
                           const EdgeInsets.only(left: 8.0, top: 16, bottom: 8),
                       child: Text(
                         getTransrlate(context, 'OrderNote'),
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.cairo(
                             fontSize: 12, color: Color(0xFF5D6A78)),
                       ),
                     ),
@@ -310,7 +310,7 @@ class _OrderPageState extends State<OrderPage> {
                                     labelStyle: new TextStyle(
                                         color: const Color(0xFF424242)),
                                     hintText: getTransrlate(context, 'OrderHint'),
-                                    hintStyle: GoogleFonts.poppins(
+                                    hintStyle: GoogleFonts.cairo(
                                         fontSize: 12, color: textColor)),
                               ),
                             ),
@@ -346,7 +346,7 @@ class _OrderPageState extends State<OrderPage> {
                                     labelStyle: new TextStyle(
                                         color: const Color(0xFF424242)),
                                     hintText: getTransrlate(context, 'couponcode'),
-                                    hintStyle: GoogleFonts.poppins(
+                                    hintStyle: GoogleFonts.cairo(
                                         fontSize: 12, color: textColor)),
                               ),
                             ),
@@ -601,7 +601,7 @@ class _OrderPageState extends State<OrderPage> {
             ),
             Text(
               title,
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.cairo(
                   fontSize: 12,
                   fontWeight: FontWeight.w300,
                   color: Color(0xFF5D6A78)),
@@ -702,7 +702,7 @@ class _OrderPageState extends State<OrderPage> {
           Expanded(
               child: Text(
             address_shiping.addres1,
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.cairo(
                 fontSize: 12,
                 fontWeight: FontWeight.w300,
                 color: Color(0xFF5D6A78)),

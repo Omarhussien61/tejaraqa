@@ -112,7 +112,7 @@ class _SearchCardState extends State<SearchCard> {
                       children: <Widget>[
                         AutoSizeText(
                           widget.product.name,
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.cairo(
                             fontSize: 12,
                             color: Color(0xFF5D6A78),
                             fontWeight: FontWeight.w300,
@@ -147,7 +147,7 @@ class _SearchCardState extends State<SearchCard> {
                             ),
                             Text(
                               widget.product.averageRating,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.cairo(
                                   fontSize: 9, fontWeight: FontWeight.w400),
                             )
                           ],
@@ -161,14 +161,14 @@ class _SearchCardState extends State<SearchCard> {
                                   ),
                                   Text(
                                     widget.product.oldPrice+' ',
-                                    style: GoogleFonts.poppins(
+                                    style: GoogleFonts.cairo(
                                         decoration: TextDecoration.lineThrough,
                                         fontSize: 14,
                                         fontWeight: FontWeight.w300),
                                   ),
                                   Text(
                                     widget.product.price+' '+widget.product.Currancy,
-                                    style: GoogleFonts.poppins(
+                                    style: GoogleFonts.cairo(
                                         color: widget.themeColor.getColor(),
                                         fontSize: 18,
                                         fontWeight: FontWeight.w400),
@@ -196,7 +196,7 @@ class _SearchCardState extends State<SearchCard> {
                                         .trim()
                                     : "Best",
                                 maxLines: 1,
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.cairo(
                                     color: widget.themeColor.getColor(),
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400),

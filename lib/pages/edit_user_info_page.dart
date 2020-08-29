@@ -85,7 +85,7 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
                           children: [
                             Text(
                               getTransrlate(context, 'MyProfileInfo'),
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.cairo(
                                   fontSize: 18, color: Color(0xFF5D6A78)),
                             ),
                             Container(
@@ -183,7 +183,7 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
                 alignment: Alignment.center,
                 child: Text(
                   getTransrlate(context, 'save'),
-                  style: GoogleFonts.poppins(color: Colors.white),
+                  style: GoogleFonts.cairo(color: Colors.white),
                 ),
               ),
               height: 42,
@@ -223,14 +223,14 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
         children: <Widget>[
           Text(
             "My Home Address",
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.cairo(
                 fontSize: 16, fontWeight: FontWeight.w300, color: textColor),
           ),
           Container(width: 64, child: Divider()),
           Expanded(
               child: Text(
             "Salvus devatios ducunt ad apolloniates. ducunt ad apolloniates.",
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.cairo(
                 fontSize: 14, fontWeight: FontWeight.w300, color: textColor),
           )),
           Container(width: 64, child: Divider()),
@@ -242,14 +242,14 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
                 children: <Widget>[
                   Text(
                     "Invoice",
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.cairo(
                         fontSize: 14,
                         fontWeight: FontWeight.w300,
                         color: textColor),
                   ),
                   Text(
                     "ID No",
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.cairo(
                         fontSize: 14,
                         fontWeight: FontWeight.w300,
                         color: textColor),
@@ -261,14 +261,14 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
                 children: <Widget>[
                   Text(
                     "Individual",
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.cairo(
                         fontSize: 14,
                         fontWeight: FontWeight.w300,
                         color: textColor),
                   ),
                   Text(
                     "xxx xxxx xxxx xx",
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.cairo(
                         fontSize: 14,
                         fontWeight: FontWeight.w300,
                         color: textColor),

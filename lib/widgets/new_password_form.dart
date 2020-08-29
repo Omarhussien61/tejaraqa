@@ -148,7 +148,7 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
                   },
                   child: Text(
                     'Send',
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.cairo(
                       fontSize: 16,
                       color: Colors.white,
                       fontWeight: FontWeight.w400,

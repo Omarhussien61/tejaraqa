@@ -63,7 +63,7 @@ class CategoriesListView extends StatelessWidget {
                   children: <Widget>[
                     Container(
                       width: 68,
-                      height: 68,
+                      height: 65,
                       margin:
                           EdgeInsets.only(top: 4, bottom: 4, left: 12, right: 8),
                       decoration: BoxDecoration(
@@ -97,7 +97,7 @@ class CategoriesListView extends StatelessWidget {
                       child: Text(
                         categories[index].name,
                         maxLines:1,
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.cairo(
                           fontSize: 12,
                           color: textColor,
                           fontWeight: FontWeight.w400,

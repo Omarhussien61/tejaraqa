@@ -148,7 +148,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
                         children: <Widget>[
                           AutoSizeText(
                             CartList[position].name,
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.cairo(
                               fontSize: 12,
                               color: Color(0xFF5D6A78),
                               fontWeight: FontWeight.w300,
@@ -158,7 +158,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
                           ),
                           Text(
                             CartList[position].pass.toString()+" "+ CartList[position].Currancy ,
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.cairo(
                                 color: Provider.of<ThemeNotifier>(context).getColor(),
                                 fontSize: 18,
                                 fontWeight: FontWeight.w300),
@@ -216,7 +216,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
                                     padding:
                                     const EdgeInsets.all(8.0),
                                     child: Text(this.CartList[position].quantity.toString(),
-                                        style: GoogleFonts.poppins(
+                                        style: GoogleFonts.cairo(
                                             color: Colors.white,
                                             fontSize: 16)),
                                   )),
@@ -292,7 +292,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
         children: <Widget>[
           Text(
             getTransrlate(context, 'ShoppingCart'),
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.cairo(
                 fontWeight: FontWeight.w600,
                 fontSize: 12,
                 color: Color(0xFF5D6A78)),
@@ -301,7 +301,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
             width: 16,
           ),
           Text(Provider.of<ThemeNotifier>(context).countCart.toString()+' '+ getTransrlate(context, 'product'),
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.cairo(
                   fontWeight: FontWeight.w400,
                   fontSize: 12,
                   color: Color(0xFF5D6A78))),
@@ -337,12 +337,12 @@ class HomeWidgetState extends State<ShoppingCartPage>
             children: <Widget>[
               Text(
                 getTransrlate(context, 'total'),
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.cairo(
                     fontWeight: FontWeight.bold, color: themeColor.getColor()),
               ),
               Text(
                 CartList.isNotEmpty?calculateTotal().toString():"",
-                style: GoogleFonts.poppins(color: themeColor.getColor()),
+                style: GoogleFonts.cairo(color: themeColor.getColor()),
               ),
             ],
           ),
@@ -350,7 +350,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
             color: themeColor.getColor(),
             child: Text(
               getTransrlate(context, 'Confirm'),
-              style: GoogleFonts.poppins(color: whiteColor, fontSize: 16),
+              style: GoogleFonts.cairo(color: whiteColor, fontSize: 16),
             ),
             onPressed: () {
               if(connected) {

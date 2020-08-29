@@ -74,7 +74,7 @@ class WishListItem extends StatelessWidget {
                     children: <Widget>[
                       AutoSizeText(
                         favoriteModel.name,
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.cairo(
                           fontSize: 12,
                           color: Color(0xFF5D6A78),
                           fontWeight: FontWeight.w300,
@@ -84,14 +84,14 @@ class WishListItem extends StatelessWidget {
                       ),
                       Text(
                         favoriteModel.price.toString(),
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.cairo(
                             color: themeColor.getColor(),
                             fontSize: 18,
                             fontWeight: FontWeight.w300),
                       ),
                       Text(
                         favoriteModel.category,
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.cairo(
                             color: themeColor.getColor(),
                             fontSize: 10,
                             fontWeight: FontWeight.w300),

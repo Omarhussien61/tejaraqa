@@ -265,7 +265,7 @@ class _SupportPageState extends State<SupportPage> {
       centerTitle: true,
       title: Text(
         getTransrlate(context, 'Support'),
-        style: GoogleFonts.poppins(
+        style: GoogleFonts.cairo(
             color: themeColor.getColor(), fontWeight: FontWeight.bold),
       ),
       backgroundColor: Colors.white,
@@ -308,19 +308,19 @@ class _SupportPageState extends State<SupportPage> {
           children: <Widget>[
             Text(
               title,
-              style: GoogleFonts.poppins(color: Color(0xFF707070)),
+              style: GoogleFonts.cairo(color: Color(0xFF707070)),
             ),
             RichText(
               text: TextSpan(
                 text: description,
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.cairo(
                     color: textColor, fontWeight: FontWeight.w400),
               ),
             ),
             RichText(
               text: TextSpan(
                 text: secondDescription,
-                style: GoogleFonts.poppins(color: textColor),
+                style: GoogleFonts.cairo(color: textColor),
               ),
             )
           ],

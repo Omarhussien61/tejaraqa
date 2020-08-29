@@ -53,7 +53,7 @@ class _OrdersDetailPageState extends State<OrdersDetailPage> {
             title: Text(
               getTransrlate(context, 'OrderDetails'),
               style:
-                  GoogleFonts.poppins(color: Color(0xFF5D6A78), fontSize: 15),
+                  GoogleFonts.cairo(color: Color(0xFF5D6A78), fontSize: 15),
             ),
             leading: InkWell(
               onTap:() {Navigator.pop(context);},

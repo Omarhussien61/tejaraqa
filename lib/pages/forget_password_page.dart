@@ -75,7 +75,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                       color: themeColor.getColor(),
                       child: Text(
                         'Send',
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.cairo(
                           fontSize: 16,
                           color: Colors.white,
                           fontWeight: FontWeight.w400,
@@ -100,7 +100,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
         children: <Widget>[
           Text(
             "Do you have an account?",
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.cairo(
               fontSize: 14,
               color: Colors.black,
               fontWeight: FontWeight.w300,
@@ -109,7 +109,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
           FlatButton(
             child: Text(
               "Register",
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.cairo(
                 fontSize: 14,
                 color: themeColor.getColor(),
                 fontWeight: FontWeight.w300,

@@ -58,7 +58,7 @@ class _MyProfileSettingsState extends State<MyProfileSettings> {
                       children: [
                         Text(
                           getTransrlate(context, 'ProfileSettings'),
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.cairo(
                               fontSize: 18, color: Color(0xFF5D6A78)),
                         ),
                         Container(
@@ -87,7 +87,7 @@ class _MyProfileSettingsState extends State<MyProfileSettings> {
                   width: 22,
                 ),
                 title: Text(getTransrlate(context, 'MyProfileInfo'),
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.cairo(
                         fontSize: 15, color: Color(0xFF5D6A78))),
               ),
               SizedBox(
@@ -103,7 +103,7 @@ class _MyProfileSettingsState extends State<MyProfileSettings> {
                   width: 22,
                 ),
                 title: Text(getTransrlate(context, 'changePassword'),
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.cairo(
                         fontSize: 15, color: Color(0xFF5D6A78))),
               ),
               SizedBox(
@@ -118,7 +118,7 @@ class _MyProfileSettingsState extends State<MyProfileSettings> {
                   width: 22,
                 ),
                 title: Text(getTransrlate(context,'MyAddress'),
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.cairo(
                         fontSize: 15, color: Color(0xFF5D6A78))),
               ),
               SizedBox(
@@ -133,7 +133,7 @@ class _MyProfileSettingsState extends State<MyProfileSettings> {
                   width: 22,
                 ),
                 title: Text(getTransrlate(context, 'Notification'),
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.cairo(
                         fontSize: 15, color: Color(0xFF5D6A78))),
               ),
             ],

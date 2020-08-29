@@ -132,7 +132,7 @@ String option;
         Center(child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(getTransrlate(context, 'price')+' =  $price '+widget.product.Currancy,
-            style: GoogleFonts.poppins(color:bloc.getColor() , fontSize: 20),
+            style: GoogleFonts.cairo(color:bloc.getColor() , fontSize: 20),
           ),
         )),
         SizedBox(

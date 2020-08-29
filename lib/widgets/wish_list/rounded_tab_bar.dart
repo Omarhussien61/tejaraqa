@@ -51,7 +51,7 @@ class _RoundedTabBarState extends State<RoundedTabBar> {
                   alignment: Alignment.center,
                   child: Text(
                     "All",
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.cairo(
                       fontSize: 12,
                       color: isAllSelect ? Colors.white : Color(0xFF5D6A78),
                       fontWeight: FontWeight.w600,
@@ -80,7 +80,7 @@ class _RoundedTabBarState extends State<RoundedTabBar> {
                     alignment: Alignment.center,
                     child: Text(
                       "Discount",
-                      style: GoogleFonts.poppins(
+                      style: GoogleFonts.cairo(
                         fontSize: 12,
                         color: !isAllSelect ? Colors.white : Color(0xFF5D6A78),
                         fontWeight: FontWeight.w600,
