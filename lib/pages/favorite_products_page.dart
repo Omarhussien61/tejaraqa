@@ -21,7 +21,8 @@ import 'package:shoppingapp/widgets/wish_list/wish_list_item.dart';
 import 'package:sqflite/sqflite.dart';
 
 class FavoriteProductsPage extends StatefulWidget {
-  FavoriteProductsPage({Key key}) : super(key: key);
+   bool fav_state;
+   FavoriteProductsPage(this.fav_state,{Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -36,10 +37,8 @@ class HomeWidgetState extends State<FavoriteProductsPage>
   @override
   void initState() {
     updateListView();
-
     super.initState();
   }
-
 
   @override
   void dispose() {
@@ -58,7 +57,7 @@ class HomeWidgetState extends State<FavoriteProductsPage>
     }
     return SafeArea(
       child: Scaffold(
-        appBar: PreferredSize(
+        appBar: widget.fav_state? PreferredSize(
           preferredSize: Size.fromHeight(42.0), // here the desired height
           child: AppBar(
             backgroundColor: greyBackground,
@@ -78,8 +77,7 @@ class HomeWidgetState extends State<FavoriteProductsPage>
               ),
             ),
           ),
-        ),
-
+        ):null,
         backgroundColor: whiteColor,
         body:themeColor.isLogin? SingleChildScrollView(
             child:favorites == null||favorites.isEmpty? Center(

@@ -3,6 +3,7 @@ import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:getflutter/components/button/gf_button.dart';
 import 'package:getflutter/types/gf_button_type.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shoppingapp/modal/Profilefacebook.dart';
 import 'package:http/http.dart' as http;
@@ -41,6 +42,7 @@ class SocialRegisterButtons extends StatelessWidget {
                 offset: Offset(0, 0),
               ),
               color: themeColor.getColor(),
+              textStyle: GoogleFonts.cairo(),
               onPressed: () {
                 _login(context);
               },
@@ -56,6 +58,7 @@ class SocialRegisterButtons extends StatelessWidget {
                 offset: Offset(0, 0),
               ),
               color: themeColor.getColor(),
+              textStyle: GoogleFonts.cairo(),
               onPressed: () {
                 _loginWithFB(context);
               },

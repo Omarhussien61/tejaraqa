@@ -52,7 +52,6 @@ class ProductDetailPage extends StatefulWidget {
 
 class _ProductDetailPageState extends State<ProductDetailPage>
     with TickerProviderStateMixin {
-  bool isliked;
 
   AnimationController controller;
   SQL_Helper helper = new SQL_Helper();
@@ -79,7 +78,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   int idProduct;
   @override
   void initState() {
-    onLikeButton();
     comment=TextEditingController();
     fetchUserId();
     countCart();
@@ -137,7 +135,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             child: Text(
               name,
               maxLines: 1,
-              style: GoogleFonts.cairo(color: Color(0xFF5D6A78), fontSize: 12),
+              style: TextStyle(color: Color(0xFF5D6A78), fontSize: 12),
             ),
           )),
       decoration: BoxDecoration(
@@ -200,12 +198,11 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                 ),
                 Container(
                   constraints: BoxConstraints.expand(
-                    height:70,
+                    height:80,
                   ),
                   decoration: BoxDecoration(
-                      color: themeColor.getColor().withOpacity(0.3),
                       borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                  padding: const EdgeInsets.only(top: 24,left: 18,right: 20),
+                  padding: const EdgeInsets.only(top: 40,left: 18,right: 20),
 
                   child: Row(
                   mainAxisAlignment:MainAxisAlignment.spaceBetween,
@@ -219,11 +216,11 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                           width: 32,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
-                            color: Colors.white,
                           ),
                           child: Icon(
                             Icons.chevron_left,
-                            color: themeColor.getColor(),
+                            color: Colors.grey,
+                            size: 40,
                           ),
                         ),
                       ),
@@ -234,24 +231,25 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                           borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(8),
                               bottomRight: Radius.circular(8)),
-                          color: Colors.white.withOpacity(0.5),
+
                         ),
+
                         child: Badge(
                           animationDuration: Duration(milliseconds: 1500),
                           badgeColor: themeColor.getColor(),
-                          alignment: Alignment(0, 0),
+                          alignment: Alignment(1, 0),
                           position: BadgePosition.bottomRight(),
-                          padding: EdgeInsets.all(8),
+                          padding: EdgeInsets.all(5),
                           badgeContent: Text(
                             Provider.of<ThemeNotifier>(context)
                                 .countCart
                                 .toString(),
-                            style: TextStyle(color: whiteColor, fontSize: 10),
+                            style: TextStyle(color: whiteColor, fontSize: 14,fontWeight: FontWeight.w600),
                           ),
                           child: SvgPicture.asset(
                             "assets/icons/ic_shopping_cart.svg",
-                            color: Colors.white,
-                            height: 26,
+                            color: Colors.grey,
+                            height: 35,
                           ),
                         ),
                       ),
@@ -328,7 +326,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                               width:ScreenUtil.getWidth(context)/2,
                                               child: Text(widget.product.name,
                                                   maxLines: 2,
-                                                  style: GoogleFonts.cairo(
+                                                  style: TextStyle(
                                                       fontSize: 19,
                                                       fontWeight: FontWeight.w400,
                                                       color: Color(0xFF5D6A78))),
@@ -365,7 +363,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                                 ),
                                                 Text(
                                                   widget.product.averageRating,
-                                                  style: GoogleFonts.cairo(
+                                                  style: TextStyle(
                                                       fontSize: 11,
                                                       fontWeight:
                                                           FontWeight.w400),
@@ -374,31 +372,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                             ),
                                           ],
                                         ),
-                                        Align(
-                                          alignment: Alignment.centerRight,
-                                          child: Container(
-                                            height: 48,
-                                            child: FloatingActionButton(
-                                              heroTag: null,
-                                              elevation: 0,
-                                              onPressed: () {
-                                                onLikeTapped();
-
-                                              },
-                                              backgroundColor:
-                                                  Colors.white,
-                                              child: Icon(
-                                                isliked != null
-                                                    ? !isliked
-                                                    ? Icons.favorite
-                                                    : Icons.favorite_border
-                                                    : Icons.favorite_border,
-                                                color:isliked? Colors.grey:themeColor.getColor(),
-                                                size: 35,
-                                              ),
-                                            ),
-                                          ),
-                                        )
                                       ],
                                     ),
                                   ),
@@ -419,7 +392,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                     child: ExpandablePanel(
                                       header: Text(
                                         getTransrlate(context, 'showAll'),
-                                        style: GoogleFonts.cairo(
+                                        style: TextStyle(
                                             color: themeColor.getColor(),
                                             fontSize: 12),
                                       ),
@@ -444,7 +417,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                             .trim()
                                             : "Best",
                                         softWrap: true,
-                                        style: GoogleFonts.cairo(
+                                        style: TextStyle(
                                           fontWeight: FontWeight.w300,
                                           color: Color(0xFF5D6A78),
                                           letterSpacing: 0.6,
@@ -457,11 +430,13 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      Row(
+                                      Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Text(
-                                            getTransrlate(context, 'price')+" :  ",
-                                            style: GoogleFonts.cairo(
+                                            getTransrlate(context, 'price')+"  ",
+                                            style: TextStyle(
                                                 color: themeColor.getColor(),
                                                 fontSize: 18),
                                           ),
@@ -470,19 +445,20 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: <Widget>[
                                               Text(
-                                                widget.product.oldPrice+' ',
-                                                style: GoogleFonts.cairo(
+                                                widget.product.price+' '+widget.product.Currancy,
+                                                style: TextStyle(
+                                                    color: themeColor.getColor(),
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.w400),
+                                              ),
+                                              SizedBox(width: 10,),
+                                              Text(
+                                                widget.product.oldPrice+' '+widget.product.Currancy,
+                                                style: TextStyle(
                                                     decoration: TextDecoration.lineThrough,
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w300),
                                               ),
-                                              Text(
-                                                widget.product.price+' '+widget.product.Currancy,
-                                                style: GoogleFonts.cairo(
-                                                    color: themeColor.getColor(),
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.w400),
-                                              )
                                             ],
                                           )
                                               : Text(
@@ -505,18 +481,15 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                                 .text
                                                 .trim()
                                                 : "Best",
-                                            style: GoogleFonts.cairo(
+                                            style: TextStyle(
                                                 color: themeColor.getColor(),
                                                 fontSize: 18),
                                           )
                                         ],
                                       ),
-                                      SizedBox(
-                                        height: 6,
-                                      ),
                                       Text(
                                         widget.product.stockStatus,
-                                        style: GoogleFonts.cairo(
+                                        style: TextStyle(
                                             color: themeColor.getColor(),
                                             fontSize: 12,
                                             fontWeight: FontWeight.w300),
@@ -529,9 +502,10 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                     crossAxisAlignment:
                                     CrossAxisAlignment.end,
                                     children: <Widget>[
-                                      Container(
+                                      SizedBox(
                                         height: 40,
                                         child: FloatingActionButton(
+
                                             heroTag: false,
                                             onPressed: () {
                                               setState(() {
@@ -541,22 +515,20 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                               });
                                             },
                                             backgroundColor: themeColor.getColor(),
-                                            child: Text(
-                                              "-",
-                                              style: TextStyle(
-                                                  fontSize: 24,
-                                                  color: Colors.white),
+                                            child: Icon(
+                                              Icons.remove, size: 25,
+
                                             )),
                                       ),
                                       Container(
-                                        width: 40,
+                                        width: 23,
                                         alignment: Alignment.center,
-                                        padding: const EdgeInsets.only(top: 8,bottom: 6),
+                                        padding: const EdgeInsets.only(top: 8,bottom: 4),
                                         child: Text('$piece',
                                             style:
-                                            GoogleFonts.cairo(
-                                                color:themeColor.getColor(),
-                                                fontWeight: FontWeight.w600,
+                                            TextStyle(
+                                                color:Colors.grey,
+                                                fontWeight: FontWeight.w800,
                                                 fontSize: 20)),
                                       ),
                                       Container(
@@ -571,9 +543,10 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                                 }
                                               });
                                             },
-                                            child: Text("+",
-                                                style: TextStyle(
-                                                    color: Colors.white))),
+                                            child: Icon(
+                                              Icons.add, size: 25,
+
+                                            )),
                                       ),
                                     ],
                                   ),
@@ -628,7 +601,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                                               child: Text(
                                                                 product_variations[position].attributes[pos].option,
                                                                 style:TextStyle(
-                                                                  fontFamily: 'El_Messiri',
                                                                   color: Colors.black,
                                                                   fontSize: ScreenUtil.getHeight(context)/35,
                                                                 ),
@@ -671,7 +643,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
 //                                                  context, ShoppingCartPage());
 //                                            },
 //                                            child: Text(getTransrlate(context, 'Buy'),
-//                                                style: GoogleFonts.cairo(
+//                                                style: TextStyle(
 //                                                    fontWeight:
 //                                                        FontWeight.w400)),
 //                                            shape: GFButtonShape.pills,
@@ -680,7 +652,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
 //                                          ),
 //                                        ),
                                         Container(
-                                          width: 140,
+                                          width: 150,
                                           child: GFButton(
                                             onPressed: () {
                                               //Nav.route(context, OrderPage());
@@ -700,11 +672,11 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                               size: 16,
                                             ),
                                             child: Text(getTransrlate(context, 'ADDtoCart'),
-                                                style: GoogleFonts.cairo(
+                                                style: TextStyle(
                                                     fontWeight:
-                                                        FontWeight.w400)),
+                                                        FontWeight.w600)),
                                             type: GFButtonType.outline2x,
-                                            shape: GFButtonShape.pills,
+                                            textStyle: GoogleFonts.cairo( color: themeColor.getColor()),
                                             color: themeColor.getColor(),
                                           ),
                                         )
@@ -740,7 +712,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                     child: Column(
                                       children: <Widget>[
                                         Text(getTransrlate(context, 'Reviews'),
-                                            style: GoogleFonts.cairo(
+                                            style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w400,
                                                 color: Color(0xFF5D6A78))),
@@ -774,7 +746,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                         Text(
                                             widget.product.averageRating +
                                                ' '+ getTransrlate(context, 'Reviews'),
-                                            style: GoogleFonts.cairo(
+                                            style: TextStyle(
                                                 fontSize: 13,
                                                 fontWeight: FontWeight.w300,
                                                 color: Color(0xFF5D6A78))),
@@ -801,7 +773,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                             CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Text( name==null?' ':name,
-                                              style: GoogleFonts.cairo(
+                                              style: TextStyle(
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w400,
                                                   color: Color(0xFF5D6A78))),
@@ -819,7 +791,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                                 children: <Widget>[
                                                   Text(getTransrlate(context, 'AddComment'),
                                                       style:
-                                                          GoogleFonts.cairo(
+                                                          TextStyle(
                                                               fontSize: 12,
                                                               fontWeight:
                                                                   FontWeight
@@ -914,7 +886,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                                         product_review[position]
                                                             .reviewer,
                                                         style:
-                                                            GoogleFonts.cairo(
+                                                            TextStyle(
                                                                 fontSize: 12,
                                                                 fontWeight:
                                                                     FontWeight
@@ -944,7 +916,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                                                 .trim()
                                                             : "Best",
                                                         style:
-                                                            GoogleFonts.cairo(
+                                                            TextStyle(
                                                                 fontSize: 12,
                                                                 fontWeight:
                                                                     FontWeight
@@ -964,7 +936,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                     child: InkWell(
                                       child: Text(
                                         getTransrlate(context, 'SeeAllComments'),
-                                        style: GoogleFonts.cairo(
+                                        style: TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w300,
                                             color: themeColor.getColor()),
@@ -1066,7 +1038,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                 controller: comment,
                 decoration: InputDecoration(
                     hintText: getTransrlate(context, 'yourComment'),
-                    hintStyle: GoogleFonts.cairo(),
+                    hintStyle: TextStyle(),
                     focusColor: themeColor.getColor()),
                 validator: (String value) {
                   if (value.isEmpty) {
@@ -1082,7 +1054,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
               new FlatButton(
                 child: new Text(
                   getTransrlate(context, 'cancel'),
-                  style: GoogleFonts.cairo(color: textColor),
+                  style: TextStyle(color: textColor),
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -1091,7 +1063,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
               new FlatButton(
                 child: new Text(
                   getTransrlate(context, 'Comment'),
-                  style: GoogleFonts.cairo(color: themeColor.getColor()),
+                  style: TextStyle(color: themeColor.getColor()),
                 ),
                 onPressed: () async {
                   final form = formKey.currentState;
@@ -1183,22 +1155,5 @@ class _ProductDetailPageState extends State<ProductDetailPage>
       });
     });
   }
-  bool onLikeButton() {
-    FavoritecheckItem(widget.product).then((value) => {
-      setState(() {
-        isliked = value;
-      }),
-      print(isliked)
-    });
-    return isliked;
-  }
-  bool onLikeTapped() {
-    Favorite(widget.product).then((value) => {
-      setState(() {
-        isliked = !value;
-      })
-    });
 
-    return isliked;
-  }
 }

@@ -91,7 +91,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                 ),
                 ListTile(
                   onTap: () {
-                    Nav.route(context, FavoriteProductsPage());
+                    Nav.route(context, FavoriteProductsPage(true));
                   },
                   leading: Image.asset("assets/icons/ic_heart_profile.png",
                       width: 22, color: Color(0xFF5D6A78)),

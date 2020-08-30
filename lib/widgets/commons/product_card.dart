@@ -82,7 +82,7 @@ class _ProductCardState extends State<ProductCard> {
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   Container(
-                    height: 160,
+                    height: 150,
                     child: Stack(
                       children: <Widget>[
                         Container(
@@ -134,7 +134,7 @@ class _ProductCardState extends State<ProductCard> {
                               height: 38,
                               width: 32,
                               decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.4),
+                                  color: Colors.grey.withOpacity(0.4),
                                   borderRadius: BorderRadius.only(
                                       bottomLeft: Radius.circular(8),
                                       bottomRight: Radius.circular(8))),
@@ -159,7 +159,7 @@ class _ProductCardState extends State<ProductCard> {
                   Container(
                     color: Colors.white,
                     width:ScreenUtil.getWidth(context)/2.1,
-                    padding: EdgeInsets.only(left: 10, top: 4,right: 10),
+                    padding: EdgeInsets.only(left: 10, top: 2,right: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -175,7 +175,7 @@ class _ProductCardState extends State<ProductCard> {
                           minFontSize: 11,
                         ),
                         SizedBox(
-                          height: 2,
+                          height: 1,
                         ),
                         Row(
                           children: <Widget>[
@@ -197,7 +197,7 @@ class _ProductCardState extends State<ProductCard> {
                               },
                             ),
                             SizedBox(
-                              width: 8,
+                              width: 6,
                             ),
                             Text(
                               widget.product.averageRating,
@@ -218,6 +218,8 @@ class _ProductCardState extends State<ProductCard> {
                                 ),
                                 Text(
                                   widget.product.oldPrice+' ',
+                                  maxLines: 1,
+
                                   style: GoogleFonts.cairo(
                                       decoration: TextDecoration.lineThrough,
                                       fontSize: 14,
@@ -225,6 +227,8 @@ class _ProductCardState extends State<ProductCard> {
                                 ),
                                 Text(
                                   widget.product.price+' '+widget.product.Currancy,
+                                  maxLines: 1,
+
                                   style: GoogleFonts.cairo(
                                       color: widget.themeColor.getColor(),
                                       fontSize: 18,
@@ -232,7 +236,7 @@ class _ProductCardState extends State<ProductCard> {
                                 )
                               ],
                             )
-                                : Text(
+                                : AutoSizeText(
                               (parse(widget.product.priceHtml
                                   .toString()
                                   .trim())
@@ -252,13 +256,15 @@ class _ProductCardState extends State<ProductCard> {
                                   .text
                                   .trim()
                                   : "Best",
+                              maxLines: 1,
+                              minFontSize: 10,
+                              maxFontSize: 14,
                               style: GoogleFonts.cairo(
                                   color: widget.themeColor.getColor(),
-                                  fontSize: 14,
                                   fontWeight: FontWeight.w400),
                             ),
                             SizedBox(
-                              height: 8,
+                              height: 6,
                             ),
                             Container(
                               width:ScreenUtil.getWidth(context)/2.8,
@@ -287,8 +293,6 @@ class _ProductCardState extends State<ProductCard> {
                                             ctx: context,);
                                           });
                                     }
-
-
                                 },
                                 child: Container(
                                   padding: EdgeInsets.only(

@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:getflutter/components/button/gf_button.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shoppingapp/modal/Profilefacebook.dart';
 import 'package:shoppingapp/modal/user_login.dart';
 import 'package:shoppingapp/service/loginservice.dart';
+import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/keyboard.dart';
 import 'package:shoppingapp/utils/screen.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
@@ -47,7 +49,8 @@ class SocialLoginButtons extends StatelessWidget {
                 blurRadius: 6,
                 offset: Offset(0, 0),
               ),
-              color: themeColor.getColor(),
+        textStyle:GoogleFonts.cairo(),
+        color: themeColor.getColor(),
 //              type: GFButtonType.outline,
               onPressed: () {_login(context);},
               text: "     "+getTransrlate(context, 'google')+"     "),
@@ -69,6 +72,8 @@ class SocialLoginButtons extends StatelessWidget {
               onPressed: () {
                 _loginWithFB(context);
               },
+              textStyle:GoogleFonts.cairo()
+    ,
               text: "     "+getTransrlate(context, 'facebook')+"     "),
         ],
       ),

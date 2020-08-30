@@ -148,8 +148,9 @@ class OrderItem extends StatelessWidget {
                       color: Color(0xFF5D6A78), fontSize: 12),
                 ),
                 expanded: Container(
-                  height:30*orders_model.lineItems.length.toDouble() ,
                   child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
                     itemCount: orders_model.lineItems.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Padding(

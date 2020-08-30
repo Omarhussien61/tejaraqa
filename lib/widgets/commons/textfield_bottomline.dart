@@ -38,6 +38,7 @@ class MyTextFormFieldLine extends StatelessWidget {
           border: new UnderlineInputBorder(
               borderSide: new BorderSide(color: textColor)),
           labelText: labelText,
+          labelStyle:  GoogleFonts.cairo(color: textColor),
           filled: true,
           suffixIcon: this.suffixIcon,
           fillColor: Color(0xFFFCFCFC),

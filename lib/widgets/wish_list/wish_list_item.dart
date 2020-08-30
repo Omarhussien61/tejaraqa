@@ -9,7 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:like_button/like_button.dart';
 import 'package:provider/provider.dart';
 import 'package:shoppingapp/modal/Favorite.dart';
-import 'package:shoppingapp/pages/product_detail_By_id.dart';
+import 'package:shoppingapp/pages/product_detail_by_id.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
 import 'package:shoppingapp/utils/commons/colors.dart';
 import 'package:shoppingapp/utils/drop_down_menu/find_dropdown.dart';
@@ -75,18 +75,19 @@ class WishListItem extends StatelessWidget {
                       AutoSizeText(
                         favoriteModel.name,
                         style: GoogleFonts.cairo(
-                          fontSize: 12,
                           color: Color(0xFF5D6A78),
                           fontWeight: FontWeight.w300,
                         ),
                         maxLines: 2,
-                        minFontSize: 11,
+                        minFontSize: 14,
                       ),
-                      Text(
+                      AutoSizeText(
                         favoriteModel.price.toString(),
+                        minFontSize: 10,
+                        maxFontSize: 16,
+                        maxLines: 1,
                         style: GoogleFonts.cairo(
                             color: themeColor.getColor(),
-                            fontSize: 18,
                             fontWeight: FontWeight.w300),
                       ),
                       Text(

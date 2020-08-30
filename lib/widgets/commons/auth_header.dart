@@ -56,7 +56,7 @@ class AuthHeader extends StatelessWidget {
                 style: GoogleFonts.cairo(
                   fontSize: 17,
                   color: Colors.white,
-                  fontWeight: FontWeight.w300,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
 

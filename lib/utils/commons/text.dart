@@ -19,7 +19,7 @@ class CustomText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: GoogleFonts.poppins(
+      style: GoogleFonts.cairo(
           fontSize: fontSize, color: color, fontWeight: fontWeight),
     );
   }

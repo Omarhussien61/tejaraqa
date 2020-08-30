@@ -69,7 +69,7 @@ class _HomeNavigatorState extends State<HomeNavigator> {
       HomePage(maincat,productDiscount,productNew,moreSale,productview,product_low_priced),
       CategoryPage(),
       ShoppingCartPage(),
-      FavoriteProductsPage(),
+      FavoriteProductsPage(false),
       MyProfilePage()
     ];
     return Scaffold(

@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shoppingapp/modal/Product_review.dart';
 import 'package:shoppingapp/modal/productmodel.dart';
-import 'package:shoppingapp/pages/product_detail_By_id.dart';
+import 'package:shoppingapp/pages/product_detail_by_id.dart';
 import 'package:shoppingapp/pages/search_page.dart';
 import 'package:shoppingapp/pages/shopping_cart_page.dart';
 import 'package:shoppingapp/service/productdervice.dart';

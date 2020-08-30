@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MyTextFormField extends StatelessWidget {
   final String hintText;
@@ -40,7 +41,8 @@ class MyTextFormField extends StatelessWidget {
         decoration: InputDecoration(
           prefixIcon:prefix,
           hintText: hintText,
-
+          hintStyle: GoogleFonts.cairo(),
+          labelStyle: GoogleFonts.cairo(),
           contentPadding: EdgeInsets.all(15.0),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),

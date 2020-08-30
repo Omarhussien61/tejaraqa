@@ -291,6 +291,8 @@ class _ContactPageState extends State<ContactPage> {
                                 title: new TextField(
                                   decoration: new InputDecoration(
                                     hintText: getTransrlate(context, 'name'),
+                                      hintStyle:  GoogleFonts.cairo(color: textColor)
+
                                   ),
                                 ),
                               ),
@@ -299,6 +301,8 @@ class _ContactPageState extends State<ContactPage> {
                                 title: new TextField(
                                   decoration: new InputDecoration(
                                     hintText: getTransrlate(context, 'phone'),
+                                      hintStyle:  GoogleFonts.cairo(color: textColor)
+
                                   ),
                                 ),
                               ),
@@ -307,6 +311,8 @@ class _ContactPageState extends State<ContactPage> {
                                 title: new TextField(
                                   decoration: new InputDecoration(
                                     hintText: getTransrlate(context, 'Email'),
+                                      hintStyle:  GoogleFonts.cairo(color: textColor)
+
                                   ),
                                 ),
                               ),
@@ -315,6 +321,7 @@ class _ContactPageState extends State<ContactPage> {
                                 title: new TextField(
                                   decoration: new InputDecoration(
                                     hintText: getTransrlate(context, 'Content'),
+                                    hintStyle:  GoogleFonts.cairo(color: textColor)
                                   ),
                                 ),
                               ),

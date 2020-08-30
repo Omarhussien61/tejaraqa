@@ -167,74 +167,69 @@ class HomeWidgetState extends State<ShoppingCartPage>
                       ),
                     ),
                     Container(
-                      width: 120,
-                      height: 50,
+                      width: 150,
+                      height: 60,
                       margin: EdgeInsets.only(top: 26),
                       child: Align(
                         alignment: Alignment.centerRight,
                         child:  Container(
                           padding: EdgeInsets.only(
-                              left: 8, right: 8, top: 4, bottom: 4),
+                              left: 4, right: 8, top: 4, bottom: 4),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(18),
-                            color: Provider.of<ThemeNotifier>(context).getColor(),
-                          ),
+                         ),
                           child: Row(
                             mainAxisAlignment:
                             MainAxisAlignment.center,
                             crossAxisAlignment:
                             CrossAxisAlignment.center,
                             children: <Widget>[
-                              InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      if (this.CartList[position].quantity != 1) {
-                                        this.CartList[position].quantity--;
-                                        helper.updateCart(this.CartList[position]);
-                                      }
-                                    });
-
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 8.0,left: 8.0),
-                                    child: Text(
-                                      "-",
-                                      style: TextStyle(
-                                          fontSize: 24,
-                                          color: Colors.white),
-                                    ),
-                                  )),
                               Container(
+                                height: 40,
+                                child: FloatingActionButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        if (this.CartList[position].quantity != 1) {
+                                          this.CartList[position].quantity--;
+                                          helper.updateCart(this.CartList[position]);
+                                        }
+                                      });
+
+                                    },
+                                    backgroundColor: Provider.of<ThemeNotifier>(context).getColor(),
+                                    child: Icon(
+                                      Icons.remove, size: 25,
+
+                                    )),
+                              ),
+                              Container(
+                                  width: 23,
+                                  alignment: Alignment.center,
                                   decoration: BoxDecoration(
                                     borderRadius:
                                     BorderRadius.circular(18),
-                                    color: Color(0xFF707070),
                                   ),
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    padding:
-                                    const EdgeInsets.all(8.0),
-                                    child: Text(this.CartList[position].quantity.toString(),
-                                        style: GoogleFonts.cairo(
-                                            color: Colors.white,
-                                            fontSize: 16)),
-                                  )),
-                              InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      this.CartList[position].quantity++;
-                                    });
-                                    helper.updateCart(this.CartList[position]);
+                                  child: Text(this.CartList[position].quantity.toString(),
+                                      style: GoogleFonts.cairo(
+                                          color: Colors.grey,
+                                          fontSize: 16))),
+                              Container(
+                                height: 40,
 
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 8.0,left: 8.0),
-                                    child: Text("+",
-                                        style: TextStyle(
-                                            color: Colors.white)),
-                                  )),
+                                child: FloatingActionButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        this.CartList[position].quantity++;
+                                      });
+                                      helper.updateCart(this.CartList[position]);
+
+                                    },
+                                    backgroundColor: Provider.of<ThemeNotifier>(context).getColor(),
+                                    child: Icon(
+                                      Icons.add, size: 25,
+
+                                    )),
+                              ),
                             ],
                           ),
                         ),
