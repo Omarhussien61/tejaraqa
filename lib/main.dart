@@ -41,7 +41,6 @@ void main() async {
     );
   });
 }
-
 class MyApp extends StatefulWidget {
 
   static void setlocal(BuildContext context,Locale locale)

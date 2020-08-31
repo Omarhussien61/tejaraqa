@@ -525,14 +525,14 @@ class _OrderPageState extends State<OrderPage> {
                       height: 16,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 8.0, right: 8),
+                      padding: const EdgeInsets.only(left:34, right:34),
                       child: GFButton(
                         borderShape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
                             6,
                           ),
                         ),
-                        child: Text(getTransrlate(context, 'ORDERCOMPLETE')),
+                        child: Text(getTransrlate(context, 'ORDERCOMPLETE'),style: GoogleFonts.cairo(fontSize: 18),),
                         color: themeColor.getColor(),
                         onPressed: () {
                           //Nav.route(context, CreditCartPage());
@@ -542,13 +542,15 @@ class _OrderPageState extends State<OrderPage> {
                                 content: Text(getTransrlate(context, 'addressSelected')),
                               );
                               scaffoldKey.currentState.showSnackBar(snackbar);
-                            } else {
+                            }
+                            else {
                               create_New_order(phone);
                               setState(() {
                                 _isLoading = true;
                               });
                             }
-                          } else {
+                          }
+                          else {
                             final snackbar = SnackBar(
                               content: Text(getTransrlate(context, 'SelectPhone')),
                             );

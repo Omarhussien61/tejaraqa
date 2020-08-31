@@ -84,13 +84,10 @@ class HomeWidgetState extends State<ShoppingCartPage>
                         Container(height: ScreenUtil.getHeight(context)/1.6, child: getCartList())
                       ],
                     ):Center(
-                      child: Hero(
-                        tag: 'icon',
-                        child: CachedNetworkImage(
-                            errorWidget: (context, url, error) => Icon(Icons.error),
-                            imageUrl:
-                            'https://d2.woo2.app/wp-content/uploads/2020/07/Capture.png'),
-                      ),
+                      child: CachedNetworkImage(
+                          errorWidget: (context, url, error) => Icon(Icons.error),
+                          imageUrl:
+                          'https://d2.woo2.app/wp-content/uploads/2020/07/Capture.png'),
                     )),
               ],
             );
@@ -187,6 +184,7 @@ class HomeWidgetState extends State<ShoppingCartPage>
                               Container(
                                 height: 40,
                                 child: FloatingActionButton(
+                                    heroTag: "btn1$position",
                                     onPressed: () {
                                       setState(() {
                                         if (this.CartList[position].quantity != 1) {
@@ -217,6 +215,8 @@ class HomeWidgetState extends State<ShoppingCartPage>
                                 height: 40,
 
                                 child: FloatingActionButton(
+                                    heroTag: "btn2$position",
+
                                     onPressed: () {
                                       setState(() {
                                         this.CartList[position].quantity++;
