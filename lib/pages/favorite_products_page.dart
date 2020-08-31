@@ -55,119 +55,117 @@ class HomeWidgetState extends State<FavoriteProductsPage>
         updateListView();
       });
     }
-    return SafeArea(
-      child: Scaffold(
-        appBar: widget.fav_state? PreferredSize(
-          preferredSize: Size.fromHeight(42.0), // here the desired height
-          child: AppBar(
-            backgroundColor: greyBackground,
-            elevation: 0,
-            centerTitle: true,
-            title: Text(
-              getTransrlate(context, 'MyFav'),
-              style:
-              GoogleFonts.cairo(color: Color(0xFF5D6A78), fontSize: 15),
-            ),
-            leading: InkWell(
-              onTap:() {Navigator.pop(context);},
-              child: Icon(
-                Icons.chevron_left,
-                color: textColor,
-                size: 32,
-              ),
+    return Scaffold(
+      appBar: widget.fav_state? PreferredSize(
+        preferredSize: Size.fromHeight(42.0), // here the desired height
+        child: AppBar(
+          backgroundColor: greyBackground,
+          elevation: 0,
+          centerTitle: true,
+          title: Text(
+            getTransrlate(context, 'MyFav'),
+            style:
+            GoogleFonts.cairo(color: Color(0xFF5D6A78), fontSize: 15),
+          ),
+          leading: InkWell(
+            onTap:() {Navigator.pop(context);},
+            child: Icon(
+              Icons.chevron_left,
+              color: textColor,
+              size: 32,
             ),
           ),
-        ):null,
-        backgroundColor: whiteColor,
-        body:themeColor.isLogin? SingleChildScrollView(
-            child:favorites == null||favorites.isEmpty? Center(
-              child: Hero(
-                tag: 'icon',
-                child: Column(
-                  children: [
-
-                    Container(
-                      height: 400,
-                      child: CachedNetworkImage(
-                          errorWidget: (context, url, error) => Icon(Icons.error),
-                          imageUrl:
-                          'https://d2.woo2.app/wp-content/uploads/2020/08/3-removebg-preview.png'),
-                    ),
-                    Text(getTransrlate(context, 'nofavorites')),
-                    SizedBox(
-                      height: 50,
-                    ),
-                    GFButton(
-                      onPressed: (){
-                        Nav.route(context, SearchPage());
-                      },
-                      text: getTransrlate(context, 'Browse'),
-                      color: themeColor.getColor(),
-                      textStyle: GoogleFonts.cairo(
-                          fontSize: 18
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ):Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              height: 26,
-            ),
-            ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: favorites==null?0:favorites.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Row(
-                  children: <Widget>[
-                    WishListItem(favoriteModel: favorites[index]),
-                    InkWell(
-                      child: Icon(
-                        Feather.trash,
-                        color: themeColor.getColor(),
-                        size: 25,
-                      ),
-                      onTap: (){
-                        delete(context,favorites[index]);
-                      },
-                    )
-                  ],
-                );
-              },
-            )
-          ],
-        )):
-        Center(
-          child: Container(
-            height:400  ,
-      child: Center(child: Column(
-          children: [
-            SizedBox(
-              height: 100,
-            ),
-
-            Center(child: Text(getTransrlate(context, 'PleaseLogin'))),
-            SizedBox(
-              height: 100,
-            ),
-
-            GFButton(
-              onPressed: (){
-                Nav.route(context, LoginPage());
-              },
-              text: getTransrlate(context, 'login'),
-              color: themeColor.getColor(),
-              textStyle: GoogleFonts.cairo(
-                  fontSize: 18
-              ),
-            )
-          ],
-      )),
-    ),
         ),
+      ):null,
+      backgroundColor: whiteColor,
+      body:themeColor.isLogin? SingleChildScrollView(
+          child:favorites == null||favorites.isEmpty? Center(
+            child: Hero(
+              tag: 'icon',
+              child: Column(
+                children: [
+
+                  Container(
+                    height: 400,
+                    child: CachedNetworkImage(
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                        imageUrl:
+                        'https://d2.woo2.app/wp-content/uploads/2020/08/3-removebg-preview.png'),
+                  ),
+                  Text(getTransrlate(context, 'nofavorites')),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  GFButton(
+                    onPressed: (){
+                      Nav.route(context, SearchPage());
+                    },
+                    text: getTransrlate(context, 'Browse'),
+                    color: themeColor.getColor(),
+                    textStyle: GoogleFonts.cairo(
+                        fontSize: 18
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ):Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          SizedBox(
+            height: 26,
+          ),
+          ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: favorites==null?0:favorites.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Row(
+                children: <Widget>[
+                  WishListItem(favoriteModel: favorites[index]),
+                  InkWell(
+                    child: Icon(
+                      Feather.trash,
+                      color: themeColor.getColor(),
+                      size: 25,
+                    ),
+                    onTap: (){
+                      delete(context,favorites[index]);
+                    },
+                  )
+                ],
+              );
+            },
+          )
+        ],
+      )):
+      Center(
+        child: Container(
+          height:400  ,
+    child: Center(child: Column(
+        children: [
+          SizedBox(
+            height: 100,
+          ),
+
+          Center(child: Text(getTransrlate(context, 'PleaseLogin'))),
+          SizedBox(
+            height: 100,
+          ),
+
+          GFButton(
+            onPressed: (){
+              Nav.route(context, LoginPage());
+            },
+            text: getTransrlate(context, 'login'),
+            color: themeColor.getColor(),
+            textStyle: GoogleFonts.cairo(
+                fontSize: 18
+            ),
+          )
+        ],
+    )),
+    ),
       ),
     );
   }

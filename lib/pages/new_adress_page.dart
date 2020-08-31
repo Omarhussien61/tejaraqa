@@ -15,7 +15,7 @@ import 'package:shoppingapp/utils/navigator.dart';
 import 'package:shoppingapp/utils/theme_notifier.dart';
 import 'package:shoppingapp/widgets/new_adress_input.dart';
 
-import 'MapSample.dart';
+import 'map_sample.dart';
 
 class NewAddressPage extends StatefulWidget {
 

@@ -27,7 +27,7 @@ MapSample({this.address_shiping});
 class MapSampleState extends State<MapSample> {
   SQL_Address helper = new SQL_Address();
   Completer<GoogleMapController> _controller = Completer();
-  static const LatLng _center = const LatLng(45.521563, -122.677433);
+  static const LatLng _center = const LatLng(21.422683,39.8258004);
   final Set<Marker> _markers = {};
   LatLng _lastMapPosition = _center;
   MapType _currentMapType = MapType.normal;

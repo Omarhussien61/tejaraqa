@@ -51,106 +51,104 @@ class _AddressPageState extends State<AddressPage> {
     );
 
 
-    return SafeArea(
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(42.0), // here the desired height
-          child: AppBar(
-            backgroundColor: Colors.white,
-            elevation: 0,
-            centerTitle: true,
-            title: Text(
-              getTransrlate(context, 'MyAddress'),
-              style:
-              GoogleFonts.cairo(color: Color(0xFF5D6A78), fontSize: 15),
-            ),
-            leading: InkWell(
-              onTap:() {Navigator.pop(context);},
-              child: Icon(
-                Icons.chevron_left,
-                color: Colors.grey,
-                size: 32,
-              ),
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(42.0), // here the desired height
+        child: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          centerTitle: true,
+          title: Text(
+            getTransrlate(context, 'MyAddress'),
+            style:
+            GoogleFonts.cairo(color: Color(0xFF5D6A78), fontSize: 15),
+          ),
+          leading: InkWell(
+            onTap:() {Navigator.pop(context);},
+            child: Icon(
+              Icons.chevron_left,
+              color: Colors.grey,
+              size: 32,
             ),
           ),
         ),
+      ),
 
-        bottomNavigationBar: InkWell(
-          onTap: () {
-            _navigateAndDisplaySelection(context);
-          },
-          child: Container(
-            margin: EdgeInsets.only(left: 14, right: 14),
-            child: Align(
-              alignment: Alignment.center,
-              child: Text(
-                getTransrlate(context, 'AddNewAddress'),
-                style: GoogleFonts.cairo(color: Colors.white),
-              ),
+      bottomNavigationBar: InkWell(
+        onTap: () {
+          _navigateAndDisplaySelection(context);
+        },
+        child: Container(
+          margin: EdgeInsets.only(left: 14, right: 14),
+          child: Align(
+            alignment: Alignment.center,
+            child: Text(
+              getTransrlate(context, 'AddNewAddress'),
+              style: GoogleFonts.cairo(color: Colors.white),
             ),
-            height: 42,
-            decoration: BoxDecoration(
-                color: themeColor.getColor(),
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(32),
-                    topRight: Radius.circular(32))),
           ),
+          height: 42,
+          decoration: BoxDecoration(
+              color: themeColor.getColor(),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(32),
+                  topRight: Radius.circular(32))),
         ),
-        backgroundColor: Color(0xFFFCFCFC),
-        body: addressList.isNotEmpty?Container(
-          padding: EdgeInsets.only(left: 24,right: 24,top: 24),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  getTransrlate(context, 'MyAddress'),
-                  style: GoogleFonts.cairo(
-                      fontSize: 18, color: Color(0xFF5D6A78)),
-                ),
-                Container(
-                    width: 28,
-                    child: Divider(
-                      color: themeColor.getColor(),
-                      height: 3,
-                      thickness: 2,
-                    )),
-                SizedBox(
-                  height: 16,
-                ),
-                Container(
-                  child: Container(
-                    height: ScreenUtil.getHeight(context)-110,
-                    child: ListView.builder(
-                      itemCount: count,
-                      itemBuilder: (BuildContext context, int index) {
-                       return buildAddressItem(context,addressList[index]);
-                      },
-                    ),
+      ),
+      backgroundColor: Color(0xFFFCFCFC),
+      body: addressList.isNotEmpty?Container(
+        padding: EdgeInsets.only(left: 24,right: 24,top: 24),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                getTransrlate(context, 'MyAddress'),
+                style: GoogleFonts.cairo(
+                    fontSize: 18, color: Color(0xFF5D6A78)),
+              ),
+              Container(
+                  width: 28,
+                  child: Divider(
+                    color: themeColor.getColor(),
+                    height: 3,
+                    thickness: 2,
+                  )),
+              SizedBox(
+                height: 16,
+              ),
+              Container(
+                child: Container(
+                  height: ScreenUtil.getHeight(context)-110,
+                  child: ListView.builder(
+                    itemCount: count,
+                    itemBuilder: (BuildContext context, int index) {
+                     return buildAddressItem(context,addressList[index]);
+                    },
                   ),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
-        ):Center(
-          child: Hero(
-            tag: 'icon',
-            child: Column(
-              children: [
-                Container(
-                  height: 400,
-                  child: CachedNetworkImage(
-                      errorWidget: (context, url, error) => Icon(Icons.error),
-                      imageUrl:
-                      'https://d2.woo2.app/wp-content/uploads/2020/08/5-removebg-preview-1.png'),
-                ),
-                Text(getTransrlate(context, 'noMyaddress')),
-                SizedBox(
-                  height: 50,
-                ),
+        ),
+      ):Center(
+        child: Hero(
+          tag: 'icon',
+          child: Column(
+            children: [
+              Container(
+                height: 400,
+                child: CachedNetworkImage(
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                    imageUrl:
+                    'https://d2.woo2.app/wp-content/uploads/2020/08/5-removebg-preview-1.png'),
+              ),
+              Text(getTransrlate(context, 'noMyaddress')),
+              SizedBox(
+                height: 50,
+              ),
 
-              ],
-            ),
+            ],
           ),
         ),
       ),

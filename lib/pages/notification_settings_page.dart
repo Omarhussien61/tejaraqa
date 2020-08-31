@@ -32,197 +32,195 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
           statusBarBrightness: Brightness.dark,
           statusBarIconBrightness: Brightness.dark),
     );
-    return SafeArea(
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(42.0), // here the desired height
-          child: AppBar(
-            backgroundColor: Colors.white,
-            elevation: 0,
-            centerTitle: true,
-            title: Text(
-              getTransrlate(context, 'Notification'),
-              style:
-              GoogleFonts.cairo(color: Color(0xFF5D6A78), fontSize: 15),
-            ),
-            leading: InkWell(
-              onTap:() {Navigator.pop(context);},
-              child: Icon(
-                Icons.chevron_left,
-                color: Colors.grey,
-                size: 32,
-              ),
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(42.0), // here the desired height
+        child: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          centerTitle: true,
+          title: Text(
+            getTransrlate(context, 'Notification'),
+            style:
+            GoogleFonts.cairo(color: Color(0xFF5D6A78), fontSize: 15),
+          ),
+          leading: InkWell(
+            onTap:() {Navigator.pop(context);},
+            child: Icon(
+              Icons.chevron_left,
+              color: Colors.grey,
+              size: 32,
             ),
           ),
         ),
-        backgroundColor: Color(0xFFFCFCFC),
-        body: Container(
-          padding: EdgeInsets.only(left: 0, right: 0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.all(6),
-                  child: ListView(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    children: <Widget>[
-                      SwitchListTile(
-                        onChanged: (bool value) {
-                          setState(() {
-                            isAllNotifications = !isAllNotifications;
-                          });
-                        },
-                        value: isAllNotifications,
-                        title: Text(
-                          getTransrlate(context, 'AllowNotification'),
-                          style: GoogleFonts.cairo(
-                            color: Color(0xFF5D6A78),
-                          ),
+      ),
+      backgroundColor: Color(0xFFFCFCFC),
+      body: Container(
+        padding: EdgeInsets.only(left: 0, right: 0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.all(6),
+                child: ListView(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  children: <Widget>[
+                    SwitchListTile(
+                      onChanged: (bool value) {
+                        setState(() {
+                          isAllNotifications = !isAllNotifications;
+                        });
+                      },
+                      value: isAllNotifications,
+                      title: Text(
+                        getTransrlate(context, 'AllowNotification'),
+                        style: GoogleFonts.cairo(
+                          color: Color(0xFF5D6A78),
                         ),
-                        activeColor: themeColor.getColor(),
                       ),
-                      SwitchListTile(
-                        onChanged: (bool value) {
-                          setState(() {
-                            isOrderNotifications = !isOrderNotifications;
-                          });
-                        },
-                        value: isOrderNotifications,
-                        title: Text(
-                          getTransrlate(context, 'Order'),
-                          style: GoogleFonts.cairo(
-                            color: Color(0xFF5D6A78),
-                          ),
+                      activeColor: themeColor.getColor(),
+                    ),
+                    SwitchListTile(
+                      onChanged: (bool value) {
+                        setState(() {
+                          isOrderNotifications = !isOrderNotifications;
+                        });
+                      },
+                      value: isOrderNotifications,
+                      title: Text(
+                        getTransrlate(context, 'Order'),
+                        style: GoogleFonts.cairo(
+                          color: Color(0xFF5D6A78),
                         ),
-                        subtitle: Text(
-                          getTransrlate(context, 'discOrder'),
-                          style: GoogleFonts.cairo(
-                              color: Color(0xFF5D6A78),
-                              fontSize: 12,
-                              fontWeight: FontWeight.w300),
-                        ),
-                        activeColor: themeColor.getColor(),
                       ),
-                      SwitchListTile(
-                        onChanged: (bool value) {
-                          setState(() {
-                            isFaqNotifications = !isOrderNotifications;
-                          });
-                        },
-                        value: isFaqNotifications,
-                        title: Text(
-                          getTransrlate(context, 'StoreQ&A'),
-                          style: GoogleFonts.cairo(
+                      subtitle: Text(
+                        getTransrlate(context, 'discOrder'),
+                        style: GoogleFonts.cairo(
                             color: Color(0xFF5D6A78),
-                          ),
-                        ),
-                        subtitle: Text(
-                          getTransrlate(context, 'descStore'),
-                          style: GoogleFonts.cairo(
-                              color: Color(0xFF5D6A78),
-                              fontSize: 12,
-                              fontWeight: FontWeight.w300),
-                        ),
-                        activeColor: themeColor.getColor(),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w300),
                       ),
-                      SwitchListTile(
-                        onChanged: (bool value) {
-                          setState(() {
-                            isReminderNotifications = !isReminderNotifications;
-                          });
-                        },
-                        value: isReminderNotifications,
-                        title: Text(
-                          getTransrlate(context, 'reminderCart'),
-                          style: GoogleFonts.cairo(
+                      activeColor: themeColor.getColor(),
+                    ),
+                    SwitchListTile(
+                      onChanged: (bool value) {
+                        setState(() {
+                          isFaqNotifications = !isOrderNotifications;
+                        });
+                      },
+                      value: isFaqNotifications,
+                      title: Text(
+                        getTransrlate(context, 'StoreQ&A'),
+                        style: GoogleFonts.cairo(
+                          color: Color(0xFF5D6A78),
+                        ),
+                      ),
+                      subtitle: Text(
+                        getTransrlate(context, 'descStore'),
+                        style: GoogleFonts.cairo(
                             color: Color(0xFF5D6A78),
-                          ),
-                        ),
-                        subtitle: Text(
-                          getTransrlate(context, 'DescCart'),
-                          style: GoogleFonts.cairo(
-                              color: Color(0xFF5D6A78),
-                              fontSize: 12,
-                              fontWeight: FontWeight.w300),
-                        ),
-                        activeColor: themeColor.getColor(),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w300),
                       ),
-                      SwitchListTile(
-                        onChanged: (bool value) {
-                          setState(() {
-                            isShoppingCartReminderNotifications =
-                                !isShoppingCartReminderNotifications;
-                          });
-                        },
-                        value: isShoppingCartReminderNotifications,
-                        title: Text(
-                          getTransrlate(context, 'Opportunities'),
-                          style: GoogleFonts.cairo(
+                      activeColor: themeColor.getColor(),
+                    ),
+                    SwitchListTile(
+                      onChanged: (bool value) {
+                        setState(() {
+                          isReminderNotifications = !isReminderNotifications;
+                        });
+                      },
+                      value: isReminderNotifications,
+                      title: Text(
+                        getTransrlate(context, 'reminderCart'),
+                        style: GoogleFonts.cairo(
+                          color: Color(0xFF5D6A78),
+                        ),
+                      ),
+                      subtitle: Text(
+                        getTransrlate(context, 'DescCart'),
+                        style: GoogleFonts.cairo(
                             color: Color(0xFF5D6A78),
-                          ),
-                        ),
-                        subtitle: Text(
-                          getTransrlate(context, 'DescOpportunities'),
-                          style: GoogleFonts.cairo(
-                              color: Color(0xFF5D6A78),
-                              fontSize: 12,
-                              fontWeight: FontWeight.w300),
-                        ),
-                        activeColor: themeColor.getColor(),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w300),
                       ),
-                      SwitchListTile(
-                        onChanged: (bool value) {
-                          setState(() {
-                            isDiscountReminderNotifications =
-                                !isDiscountReminderNotifications;
-                          });
-                        },
-                        value: isDiscountReminderNotifications,
-                        title: Text(
-                          getTransrlate(context, 'SpecialBenefits'),
-                          style: GoogleFonts.cairo(
+                      activeColor: themeColor.getColor(),
+                    ),
+                    SwitchListTile(
+                      onChanged: (bool value) {
+                        setState(() {
+                          isShoppingCartReminderNotifications =
+                              !isShoppingCartReminderNotifications;
+                        });
+                      },
+                      value: isShoppingCartReminderNotifications,
+                      title: Text(
+                        getTransrlate(context, 'Opportunities'),
+                        style: GoogleFonts.cairo(
+                          color: Color(0xFF5D6A78),
+                        ),
+                      ),
+                      subtitle: Text(
+                        getTransrlate(context, 'DescOpportunities'),
+                        style: GoogleFonts.cairo(
                             color: Color(0xFF5D6A78),
-                          ),
-                        ),
-                        subtitle: Text(
-                          getTransrlate(context, 'DescBenefits'),
-                          style: GoogleFonts.cairo(
-                              color: Color(0xFF5D6A78),
-                              fontSize: 12,
-                              fontWeight: FontWeight.w300),
-                        ),
-                        activeColor: themeColor.getColor(),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w300),
                       ),
-                      SwitchListTile(
-                        onChanged: (bool value) {
-                          setState(() {
-                            isCustomizeUserDiscountReminderNotifications =
-                                !isCustomizeUserDiscountReminderNotifications;
-                          });
-                        },
-                        value: isCustomizeUserDiscountReminderNotifications,
-                        title: Text(
-                          getTransrlate(context, 'updates'),
-                          style: GoogleFonts.cairo(
+                      activeColor: themeColor.getColor(),
+                    ),
+                    SwitchListTile(
+                      onChanged: (bool value) {
+                        setState(() {
+                          isDiscountReminderNotifications =
+                              !isDiscountReminderNotifications;
+                        });
+                      },
+                      value: isDiscountReminderNotifications,
+                      title: Text(
+                        getTransrlate(context, 'SpecialBenefits'),
+                        style: GoogleFonts.cairo(
+                          color: Color(0xFF5D6A78),
+                        ),
+                      ),
+                      subtitle: Text(
+                        getTransrlate(context, 'DescBenefits'),
+                        style: GoogleFonts.cairo(
                             color: Color(0xFF5D6A78),
-                          ),
-                        ),
-                        subtitle: Text(
-                          getTransrlate(context, 'descupdates'),
-                          style: GoogleFonts.cairo(
-                              color: Color(0xFF5D6A78),
-                              fontSize: 12,
-                              fontWeight: FontWeight.w300),
-                        ),
-                        activeColor: themeColor.getColor(),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w300),
                       ),
-                    ],
-                  ),
-                )
-              ],
-            ),
+                      activeColor: themeColor.getColor(),
+                    ),
+                    SwitchListTile(
+                      onChanged: (bool value) {
+                        setState(() {
+                          isCustomizeUserDiscountReminderNotifications =
+                              !isCustomizeUserDiscountReminderNotifications;
+                        });
+                      },
+                      value: isCustomizeUserDiscountReminderNotifications,
+                      title: Text(
+                        getTransrlate(context, 'updates'),
+                        style: GoogleFonts.cairo(
+                          color: Color(0xFF5D6A78),
+                        ),
+                      ),
+                      subtitle: Text(
+                        getTransrlate(context, 'descupdates'),
+                        style: GoogleFonts.cairo(
+                            color: Color(0xFF5D6A78),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w300),
+                      ),
+                      activeColor: themeColor.getColor(),
+                    ),
+                  ],
+                ),
+              )
+            ],
           ),
         ),
       ),
