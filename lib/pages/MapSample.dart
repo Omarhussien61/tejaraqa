@@ -31,7 +31,7 @@ class MapSampleState extends State<MapSample> {
   final Set<Marker> _markers = {};
   LatLng _lastMapPosition = _center;
   MapType _currentMapType = MapType.normal;
-  static const kGoogleApiKey = "AIzaSyBb0GpBvrtNExsQHDb55DcVVnmUgL85w4U";
+  static const kGoogleApiKey = "AIzaSyDVxCnJfJAsem75m89aCg8AYeqmElt8XpM";
   BitmapDescriptor customIcon;
   LocationData myLocation;
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -113,6 +113,13 @@ class MapSampleState extends State<MapSample> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      appBar: AppBar(
+        title: Center(child: Text(getTransrlate(context, 'LocationSelected'))),
+        backgroundColor: Provider.of<ThemeNotifier>(context).getColor(),
+        actions: <Widget>[
+        ],
+      ),
+
       body: Stack(
         children: <Widget>[
           Padding(

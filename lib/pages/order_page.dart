@@ -644,7 +644,7 @@ class _OrderPageState extends State<OrderPage> {
                 }),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 14.0, bottom: 10, top: 24),
+            padding: const EdgeInsets.only(left: 14.0, right:14,bottom: 10, top: 24),
             child: Container(
               height: ScreenUtil.getHeight(context) * 0.05,
               width: ScreenUtil.getWidth(context) * 0.30,

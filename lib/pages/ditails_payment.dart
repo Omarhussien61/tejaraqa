@@ -34,7 +34,7 @@ DetailScreen(this.confirmOrder);
           alignment: Alignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 20,right: 20,top: 20),
+              padding: const EdgeInsets.only(left: 20,right: 20,top: 40),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -249,7 +249,6 @@ DetailScreen(this.confirmOrder);
                     ),
                   ),
                   Spacer(),
-
                 ],
               ),
             ),

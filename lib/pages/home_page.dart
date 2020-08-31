@@ -59,6 +59,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ThemeNotifier>(context);
+
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 252, 252, 252),
       body: OfflineBuilder(

@@ -103,6 +103,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
       ),
       bottomSheet: _currentPage != 2
           ? Container(
+        padding: EdgeInsets.only(bottom: 20),
               color: Colors.white,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -146,7 +147,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
               ),
             )
           : Container(
-              color: Colors.white,
+        padding: EdgeInsets.only(bottom: 20),
+
+        color: Colors.white,
               height: 60,
               child: Align(
                 child: Container(

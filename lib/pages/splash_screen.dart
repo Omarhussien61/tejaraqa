@@ -53,7 +53,8 @@ class _SplashScreenState extends State<SplashScreen> {
             '':Provider.of<ThemeNotifier>(context).themeModel.imageSplash,
           ),
         ),
-      ):Center(
+      ):
+      Center(
           child: Container(
               height: ScreenUtil.getHeight(context),
             color: Colors.white,
@@ -64,7 +65,6 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
   void _auth() async {
-
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     if (null != prefs.getString("token")) {
       Provider.of<ThemeNotifier>(context).setLogin(true);

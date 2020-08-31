@@ -51,14 +51,7 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ThemeNotifier>(context);
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: Color.fromARGB(255, 252, 252, 252),
-        systemNavigationBarIconBrightness: Brightness.dark,
-        statusBarIconBrightness: Brightness.dark,
-        statusBarBrightness: Brightness.dark));
-
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
         backgroundColor: Color.fromARGB(255, 252, 252, 252),
         body: Stack(
           children: <Widget>[
@@ -224,7 +217,7 @@ class _SearchPageState extends State<SearchPage> {
                     SizedBox(
                       height: 32,
                     ),
-                    Container(height: 600,
+                    Container(
                         child: productModel==null?Center(child:
                         CircularProgressIndicator(
                             valueColor:
@@ -236,8 +229,7 @@ class _SearchPageState extends State<SearchPage> {
             ),
           ],
         ),
-      ),
-    );
+      );
   }
   void _sortingBottomSheet() {
     showModalBottomSheet(
@@ -365,8 +357,8 @@ class _SearchPageState extends State<SearchPage> {
   Widget list(ThemeNotifier themeColor) {
     return GridView.builder(
       primary: false,
-      gridDelegate:
-      SliverGridDelegateWithFixedCrossAxisCount(
+      shrinkWrap: true,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         childAspectRatio: 0.77,
         crossAxisCount: 2,
       ),
@@ -413,7 +405,6 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 }
-
 class Debouncer {
   final int milliseconds;
   VoidCallback action;

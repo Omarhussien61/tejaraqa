@@ -24,14 +24,13 @@ class _LoginPageState extends State<LoginPage> {
     final themeColor = Provider.of<ThemeNotifier>(context);
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-          statusBarColor: mainColor,
+          statusBarColor: Colors.white,
           systemNavigationBarIconBrightness: Brightness.dark,
           statusBarBrightness: Brightness.dark,
           statusBarIconBrightness: Brightness.dark),
     );
     return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Column(
