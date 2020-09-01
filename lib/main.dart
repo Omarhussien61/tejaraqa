@@ -120,7 +120,9 @@ class _MyAppState extends State<MyApp> {
           headline1: GoogleFonts.cairo(),
           headline6:  GoogleFonts.cairo(),
           bodyText2:  GoogleFonts.cairo(),
+
         ),
+
       ),
       home:SplashScreen(),
       );
@@ -134,6 +136,7 @@ class InitPage extends StatefulWidget {
 class _InitPageState extends State<InitPage> {
   List<ScreenHiddenDrawer> items = new List();
   SQL_Helper helper = new SQL_Helper();
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) =>
@@ -152,11 +155,11 @@ class _InitPageState extends State<InitPage> {
           colorLineSelected: Colors.transparent,
         ),
         HomeNavigator()));
-
     helper.getCount().then((value) {
       Provider.of<ThemeNotifier>(context).intcountCart(value);
     });
   }
+
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ThemeNotifier>(context);
@@ -174,7 +177,7 @@ class _InitPageState extends State<InitPage> {
       backgroundColorAppBar: Color.fromARGB(255, 252, 252, 252),
       tittleAppBar: CachedNetworkImage(
         height: 35,
-        imageUrl: themeColor.themeModel.imageAppbar==null?' g':themeColor.themeModel.imageAppbar,
+        imageUrl:themeColor.themeModel==null?'': themeColor.themeModel.imageAppbar==null?' g':themeColor.themeModel.imageAppbar,
       ),
       actionsAppBar: <Widget>[
       ],
