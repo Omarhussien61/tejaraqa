@@ -102,18 +102,7 @@ class _AddressPageState extends State<AddressPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
-                getTransrlate(context, 'MyAddress'),
-                style: GoogleFonts.cairo(
-                    fontSize: 18, color: Color(0xFF5D6A78)),
-              ),
-              Container(
-                  width: 28,
-                  child: Divider(
-                    color: themeColor.getColor(),
-                    height: 3,
-                    thickness: 2,
-                  )),
+
               SizedBox(
                 height: 16,
               ),
