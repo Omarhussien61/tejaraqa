@@ -90,214 +90,214 @@ class _NewAddressPageState extends State<NewAddressPage> {
           statusBarBrightness: Brightness.dark,
           statusBarIconBrightness: Brightness.dark),
     );
-    return SafeArea(
-      child: Scaffold(
-        key: scaffoldKey,
-        bottomNavigationBar: InkWell(
-          onTap: () {
-            _save();
-          },
-          child: Container(
-            margin: EdgeInsets.only(left: 14, right: 14),
-            child: Align(
-              alignment: Alignment.center,
-              child: Text(
-                getTransrlate(context, 'save'),
-                style: GoogleFonts.cairo(color: Colors.white),
-              ),
+    return Scaffold(
+      key: scaffoldKey,
+      bottomNavigationBar: InkWell(
+        onTap: () {
+          _save();
+        },
+        child: Container(
+          padding: EdgeInsets.only(bottom: 14),
+
+          margin: EdgeInsets.only(left: 14, right: 14,),
+          child: Align(
+            alignment: Alignment.center,
+            child: Text(
+              getTransrlate(context, 'save'),
+              style: GoogleFonts.cairo(color: Colors.white),
             ),
-            height: 42,
-            decoration: BoxDecoration(
-                color: themeColor.getColor(),
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(32),
-                    topRight: Radius.circular(32))),
           ),
+          height: 52,
+          decoration: BoxDecoration(
+              color: themeColor.getColor(),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(32),
+                  topRight: Radius.circular(32))),
         ),
-        backgroundColor: Color(0xFFFCFCFC),
-        body: Container(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(top: 24,right: 8),
-                      child: Row(
-                        children: [
-                          InkWell(
-                            onTap:() {Navigator.pop(context);},
-                            child: Icon(
-                              Icons.chevron_left,
-                              color: Colors.grey,
-                              size: 32,
+      ),
+      backgroundColor: Color(0xFFFCFCFC),
+      body: Container(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24,right: 8),
+                    child: Row(
+                      children: [
+                        InkWell(
+                          onTap:() {Navigator.pop(context);},
+                          child: Icon(
+                            Icons.chevron_left,
+                            color: Colors.grey,
+                            size: 32,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 16,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              getTransrlate(context, 'MyAddress'),
+                              style: GoogleFonts.cairo(
+                                  fontSize: 18, color: Color(0xFF5D6A78)),
                             ),
-                          ),
-                          SizedBox(
-                            width: 16,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                getTransrlate(context, 'MyAddress'),
-                                style: GoogleFonts.cairo(
-                                    fontSize: 18, color: Color(0xFF5D6A78)),
-                              ),
-                              Container(
-                                  width: 28,
-                                  child: Divider(
-                                    color: themeColor.getColor(),
-                                    height: 3,
-                                    thickness: 2,
-                                  )),
+                            Container(
+                                width: 28,
+                                child: Divider(
+                                  color: themeColor.getColor(),
+                                  height: 3,
+                                  thickness: 2,
+                                )),
 
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 24,right: 8,left: 8),
-                      child: InkWell(
-                        focusColor:  Provider.of<ThemeNotifier>(context).getColor(),
-                        splashColor: Provider.of<ThemeNotifier>(context).getColor(),
-                        onTap: () {
-                          //Nav.routeReplacement(context, MapSample());
-                          _navigateAndDisplaySelection(context);
-                        },
-                        child: Icon(Icons.location_on),
-                      ),
-                    ),
-                  ],
-                ),
-                Container(
-                  padding: EdgeInsets.all(24),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: <Widget>[
-                        NewAddressInput(
-                          controller: _nameController,
-                          labelText: getTransrlate(context, 'AddressTitle'),
-                          hintText: '',
-                          isEmail: true,
-                          validator: (String value) {
-                            if (value.isEmpty){
-                              return getTransrlate(context, 'AddressTitle');
-                            }
-                          },
-                          onSaved: (String value) {
-//                        model.email = value;
-                          },
-                        ),
-                        SizedBox(
-                          height: 32,
-                        ),
-                        FindDropdown(
-                            items: ['Egypt','Saudi Arabia'],
-                            onChanged: (String item) {
-                              setState(() {
-                                _CountryController.text=item;
-                              });
-                              get_City(item);
-                            },
-                            validate: (String value) {
-                              if (value.isEmpty){
-                                return getTransrlate(context, 'Countroy');
-                              }
-                            },
-                            selectedItem: getTransrlate(context, 'Countroy'),
-                            isUnderLine: true),
-                        SizedBox(
-                          height: 32,
-                        ),
-                        FindDropdown(
-                            items: city,
-                            onChanged: (String item) {
-                              setState(() {
-                                _cityController.text=item;
-                              });
-                            },
-                            validate: (String value) {
-                              if (value.isEmpty){
-                                return getTransrlate(context, 'City');
-                              }
-                            },
-                            selectedItem: getTransrlate(context, 'City'),
-                            isUnderLine: true),
-                        SizedBox(
-                          height: 32,
-                        ),
-                        NewAddressInput(
-                          controller: _AddressController,
-
-                          labelText: getTransrlate(context, 'Address'),
-                          hintText: '',
-                          isEmail: true,
-                          validator: (String value) {
-                            if (value.isEmpty){
-                              return getTransrlate(context, 'Address');
-                            }
-                          },
-                          onSaved: (String value) {
-//                        model.email = value;
-                          },
-                        ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                          Container(
-                            width: ScreenUtil.divideWidth(context)/3,
-
-                            child: TextFormField(
-                              controller: _streeetController,
-                              validator: (String value) {
-                                if (value.isEmpty){
-                                  return getTransrlate(context, 'Street');
-                                }
-                              },
-                            decoration: InputDecoration(
-                                hintText: getTransrlate(context, 'Street'),
-                                labelStyle: GoogleFonts.cairo(fontSize: 12),
-                                helperStyle: GoogleFonts.cairo(fontSize: 12),
-                                hintStyle: GoogleFonts.cairo(fontSize: 12),
-                            ),
-
-                        ),
-                          ),
-                          Container(
-                              width: ScreenUtil.divideWidth(context)/3,
-
-                              child: TextFormField(
-                                controller: _buildingController,
-                                validator: (String value) {
-                                  if (value.isEmpty){
-                                    return getTransrlate(context, 'Building');
-                                  }
-                                },
-                                decoration: InputDecoration(
-                                  hintText: getTransrlate(context, 'Building'),
-                                  labelStyle: GoogleFonts.cairo(fontSize: 12),
-                                  helperStyle: GoogleFonts.cairo(fontSize: 12),
-                                  hintStyle: GoogleFonts.cairo(fontSize: 12),
-                                ),
-
-                              ),
-                            ),
                           ],
                         ),
                       ],
                     ),
                   ),
-                )
-              ],
-            ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24,right: 8,left: 8),
+                    child: InkWell(
+                      focusColor:  Provider.of<ThemeNotifier>(context).getColor(),
+                      splashColor: Provider.of<ThemeNotifier>(context).getColor(),
+                      onTap: () {
+                        //Nav.routeReplacement(context, MapSample());
+                        _navigateAndDisplaySelection(context);
+                      },
+                      child: Icon(Icons.location_on),
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                padding: EdgeInsets.all(24),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      NewAddressInput(
+                        controller: _nameController,
+                        labelText: getTransrlate(context, 'AddressTitle'),
+                        hintText: '',
+                        isEmail: true,
+                        validator: (String value) {
+                          if (value.isEmpty){
+                            return getTransrlate(context, 'AddressTitle');
+                          }
+                        },
+                        onSaved: (String value) {
+//                        model.email = value;
+                        },
+                      ),
+                      SizedBox(
+                        height: 32,
+                      ),
+                      FindDropdown(
+                          items: ['Egypt','Saudi Arabia'],
+                          onChanged: (String item) {
+                            setState(() {
+                              _CountryController.text=item;
+                            });
+                            get_City(item);
+                          },
+                          validate: (String value) {
+                            if (value.isEmpty){
+                              return getTransrlate(context, 'Countroy');
+                            }
+                          },
+                          selectedItem: getTransrlate(context, 'Countroy'),
+                          isUnderLine: true),
+                      SizedBox(
+                        height: 32,
+                      ),
+                      FindDropdown(
+                          items: city,
+                          onChanged: (String item) {
+                            setState(() {
+                              _cityController.text=item;
+                            });
+                          },
+                          validate: (String value) {
+                            if (value.isEmpty){
+                              return getTransrlate(context, 'City');
+                            }
+                          },
+                          selectedItem: getTransrlate(context, 'City'),
+                          isUnderLine: true),
+                      SizedBox(
+                        height: 32,
+                      ),
+                      NewAddressInput(
+                        controller: _AddressController,
+
+                        labelText: getTransrlate(context, 'Address'),
+                        hintText: '',
+                        isEmail: true,
+                        validator: (String value) {
+                          if (value.isEmpty){
+                            return getTransrlate(context, 'Address');
+                          }
+                        },
+                        onSaved: (String value) {
+//                        model.email = value;
+                        },
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                        Container(
+                          width: ScreenUtil.divideWidth(context)/3,
+
+                          child: TextFormField(
+                            controller: _streeetController,
+                            validator: (String value) {
+                              if (value.isEmpty){
+                                return getTransrlate(context, 'Street');
+                              }
+                            },
+                          decoration: InputDecoration(
+                              hintText: getTransrlate(context, 'Street'),
+                              labelStyle: GoogleFonts.cairo(fontSize: 12),
+                              helperStyle: GoogleFonts.cairo(fontSize: 12),
+                              hintStyle: GoogleFonts.cairo(fontSize: 12),
+                          ),
+
+                      ),
+                        ),
+                        Container(
+                            width: ScreenUtil.divideWidth(context)/3,
+
+                            child: TextFormField(
+                              controller: _buildingController,
+                              validator: (String value) {
+                                if (value.isEmpty){
+                                  return getTransrlate(context, 'Building');
+                                }
+                              },
+                              decoration: InputDecoration(
+                                hintText: getTransrlate(context, 'Building'),
+                                labelStyle: GoogleFonts.cairo(fontSize: 12),
+                                helperStyle: GoogleFonts.cairo(fontSize: 12),
+                                hintStyle: GoogleFonts.cairo(fontSize: 12),
+                              ),
+
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
           ),
         ),
       ),

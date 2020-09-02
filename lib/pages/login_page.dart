@@ -31,24 +31,27 @@ class _LoginPageState extends State<LoginPage> {
     );
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            AuthHeader(
-                headerTitle: getTransrlate(context, 'login'),
-                headerBigTitle: getTransrlate(context, 'New'),
-                isLoginHeader: true),
-            SizedBox(
-              height: 36,
-            ),
-            LoginForm(),
-            SizedBox(
-              height: 8,
-            ),
-            routeRegisterWidget(themeColor, context),
-            SocialLoginButtons(themeColor: themeColor,),
+      body: Padding(
+        padding: const EdgeInsets.only(top:8.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              AuthHeader(
+                  headerTitle: getTransrlate(context, 'login'),
+                  headerBigTitle: getTransrlate(context, 'New'),
+                  isLoginHeader: true),
+              SizedBox(
+                height: 36,
+              ),
+              LoginForm(),
+              SizedBox(
+                height: 8,
+              ),
+              routeRegisterWidget(themeColor, context),
+              SocialLoginButtons(themeColor: themeColor,),
 
-          ],
+            ],
+          ),
         ),
       ),
     );

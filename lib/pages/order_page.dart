@@ -90,494 +90,492 @@ class _OrderPageState extends State<OrderPage> {
           statusBarBrightness: Brightness.dark,
           statusBarIconBrightness: Brightness.dark),
     );
-    return SafeArea(
-      child: Scaffold(
-        key: scaffoldKey,
-        backgroundColor: Color(0xFFFCFCFC),
-        body: Stack(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.all(16),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Text(
-                        getTransrlate(context, 'addressShipping'),
-                        style: GoogleFonts.cairo(
-                            fontSize: 12, color: Color(0xFF5D6A78)),
-                      ),
+    return Scaffold(
+      key: scaffoldKey,
+      backgroundColor: Color(0xFFFCFCFC),
+      body: Stack(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.all(16),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Text(
+                      getTransrlate(context, 'addressShipping'),
+                      style: GoogleFonts.cairo(
+                          fontSize: 12, color: Color(0xFF5D6A78)),
                     ),
-                    Container(
-                      margin: EdgeInsets.all(8),
-                      child: ListView(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        children: <Widget>[
-                          buildAddressItem(context, themeColor),
-                        ],
-                      ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.all(8),
+                    child: ListView(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      children: <Widget>[
+                        buildAddressItem(context, themeColor),
+                      ],
                     ),
-                    SizedBox(
-                      height: 16,
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Text(
+                      getTransrlate(context, 'paymentMethod'),
+                      style: GoogleFonts.cairo(
+                          fontSize: 12, color: Color(0xFF5D6A78)),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Text(
-                        getTransrlate(context, 'paymentMethod'),
-                        style: GoogleFonts.cairo(
-                            fontSize: 12, color: Color(0xFF5D6A78)),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.all(8),
-                      child: ListView(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(.2),
-                                    blurRadius: 6.0, // soften the shadow
-                                    spreadRadius: 0.0, //extend the shadow
-                                    offset: Offset(
-                                      0.0, // Move to right 10  horizontally
-                                      1.0, // Move to bottom 10 Vertically
-                                    ),
-                                  )
-                                ]),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                PaymentList != null
-                                    ? Container(
-                                        height: PaymentList == null
-                                            ? 50
-                                            : PaymentList.length *
-                                                50.toDouble(),
-                                        child: ListView.builder(
-                                            itemCount: PaymentList == null
-                                                ? 0
-                                                : PaymentList.length,
-                                            itemBuilder: (BuildContext context,
-                                                int pos) {
-                                              return buildPayMethodItem(
-                                                  context,
-                                                  PaymentList[pos].title,
-                                                  themeColor,
-                                                  pos);
-                                            }),
-                                      )
-                                    : Center(
-                                        child: CircularProgressIndicator()),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    phone == null
-                        ? Column(
+                  ),
+                  Container(
+                    margin: EdgeInsets.all(8),
+                    child: ListView(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(.2),
+                                  blurRadius: 6.0, // soften the shadow
+                                  spreadRadius: 0.0, //extend the shadow
+                                  offset: Offset(
+                                    0.0, // Move to right 10  horizontally
+                                    1.0, // Move to bottom 10 Vertically
+                                  ),
+                                )
+                              ]),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 8.0, top: 16, bottom: 8),
-                                child: Text(
-                                  getTransrlate(context, 'phone'),
-                                  style: GoogleFonts.cairo(
-                                      fontSize: 12, color: Color(0xFF5D6A78)),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                    bottom: 8, right: 8, left: 8),
-                                child: ListView(
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  children: <Widget>[
-                                    Container(
-                                      padding: EdgeInsets.all(8),
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Colors.grey.withOpacity(.2),
-                                              blurRadius:
-                                                  6.0, // soften the shadow
-                                              spreadRadius:
-                                                  0.0, //extend the shadow
-                                              offset: Offset(
-                                                0.0, // Move to right 10  horizontally
-                                                1.0, // Move to bottom 10 Vertically
-                                              ),
-                                            )
-                                          ]),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: TextFormField(
-                                              decoration: InputDecoration(
-                                                  enabledBorder:
-                                                      UnderlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                        color: themeColor
-                                                            .getColor()),
-                                                  ),
-                                                  focusedBorder:
-                                                      UnderlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                        color: textColor),
-                                                  ),
-                                                  labelStyle: new TextStyle(
-                                                      color: const Color(
-                                                          0xFF424242)),
-                                                  hintText:
-                                                      getTransrlate(context, 'hintphone'),
-                                                  hintStyle:
-                                                      GoogleFonts.cairo(
-                                                          fontSize: 12,
-                                                          color: textColor)),
-                                              onChanged: (String value) {
-                                                phone = value;
-                                              },
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              PaymentList != null
+                                  ? Container(
+                                      height: PaymentList == null
+                                          ? 50
+                                          : PaymentList.length *
+                                              50.toDouble(),
+                                      child: ListView.builder(
+                                          itemCount: PaymentList == null
+                                              ? 0
+                                              : PaymentList.length,
+                                          itemBuilder: (BuildContext context,
+                                              int pos) {
+                                            return buildPayMethodItem(
+                                                context,
+                                                PaymentList[pos].title,
+                                                themeColor,
+                                                pos);
+                                          }),
+                                    )
+                                  : Center(
+                                      child: CircularProgressIndicator()),
                             ],
-                          )
-                        : Container(),
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(left: 8.0, top: 16, bottom: 8),
-                      child: Text(
-                        getTransrlate(context, 'OrderNote'),
-                        style: GoogleFonts.cairo(
-                            fontSize: 12, color: Color(0xFF5D6A78)),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(bottom: 8, right: 8, left: 8),
-                      child: ListView(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(.2),
-                                    blurRadius: 6.0, // soften the shadow
-                                    spreadRadius: 0.0, //extend the shadow
-                                    offset: Offset(
-                                      0.0, // Move to right 10  horizontally
-                                      1.0, // Move to bottom 10 Vertically
-                                    ),
-                                  )
-                                ]),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: themeColor.getColor()),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: textColor),
-                                    ),
-                                    labelStyle: new TextStyle(
-                                        color: const Color(0xFF424242)),
-                                    hintText: getTransrlate(context, 'OrderHint'),
-                                    hintStyle: GoogleFonts.cairo(
-                                        fontSize: 12, color: textColor)),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Card(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        children: <Widget>[
-                          Expanded(
-                            flex: 2,
-                            child: Padding(
-                              padding:  EdgeInsets.only(right: 16,left: 16,top: 8,bottom: 8),
-                              child: TextFormField(
-                                onChanged: (value) {
-                                  code = value;
-                                },
-                                controller: _CoponController,
-                                enabled: !_isedit,
-                                decoration: InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: themeColor.getColor()),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide:
-                                      BorderSide(color: textColor),
-                                    ),
-                                    labelStyle: new TextStyle(
-                                        color: const Color(0xFF424242)),
-                                    hintText: getTransrlate(context, 'couponcode'),
-                                    hintStyle: GoogleFonts.cairo(
-                                        fontSize: 12, color: textColor)),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: FlatButton.icon(
-                                onPressed: () async {
-                                  if(_isedit)
-                                    {
-                                      setState(() {
-                                        _isedit=false;
-                                        widget.total=totalbeforedesc;
-                                        copon=0;
-                                        countItem=0;
-                                      });
-                                    }
-                                  else{
-                                    _isedit=true;
-                                     _coponButton= getTransrlate(context, 'edit');
-                                      _isLoading = true;
-                                    widget.items.forEach((f) {
-                                      countItem += f.quantity ;
-                                    });
-                                    copon = await OrderService.getCoupons(code,id,widget.total,countItem);
-                                    print('copoun = '+copon.toString());
-                                    if (copon == 0) {
-                                      final snackbar = SnackBar(
-                                        content: Text(getTransrlate(
-                                            context, 'codeInveild')),
-                                      );
-                                      scaffoldKey.currentState
-                                          .showSnackBar(snackbar);
-                                      setState(() {
-                                        _isLoading = false;
-
-                                      });
-                                      // _CoponController.clear();
-                                    }
-                                    else {
-                                      setState(() {
-                                        _isLoading = false;
-
-                                      });
-                                      final snackbar = SnackBar(
-                                        content: Text(
-                                            getTransrlate(context, 'codeUsage')),
-                                      );
-                                      final snackbarconfirmed = SnackBar(
-                                        content: Text(
-                                            getTransrlate(context, 'codeDone')),
-                                      );
-                                      coponState
-                                          ? setState(() {
-                                        copon = copon + 0;
-                                        widget.total =
-                                        (widget.total - copon < 0)
-                                            ? 0
-                                            : widget.total - copon;
-                                        coponState = false;
-                                        _isLoading = false;
-                                        scaffoldKey.currentState
-                                            .showSnackBar(
-                                            snackbarconfirmed);
-                                      })
-                                          : scaffoldKey.currentState
-                                          .showSnackBar(snackbar);
-                                    }
-                                  }
-                                },
-                                icon: Icon(
-                                  Icons.local_offer,
-                                  size: 15,
-                                ),
-                                label: Text(
-                                    _isedit?getTransrlate(context, 'edit'):getTransrlate(context, 'couponApplay') ,
-                                  style: TextStyle(fontSize: 15),
-                                )),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(.2),
-                              blurRadius: 6.0, // soften the shadow
-                              spreadRadius: 0.0, //extend the shadow
-                              offset: Offset(
-                                0.0, // Move to right 10  horizontally
-                                1.0, // Move to bottom 10 Vertically
-                              ),
-                            )
-                          ]),
-                      width: ScreenUtil.divideWidth(context),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: <Widget>[
-                              Text(
-                                getTransrlate(context, 'totalOrder')+' : ',
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  color: Colors.black87,
-                                  fontSize: 15,
-                                  letterSpacing: 0.7,
-                                ),
-                              ),
-                              Text(
-                                totalbeforedesc.toString()+' '+widget.items[0].Currancy,
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  color: Colors.black87,
-                                  fontSize: 15,
-                                  letterSpacing: 0.7,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Text(
-                               getTransrlate(context, 'totaldiscount')+ ' : ',
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  color: Colors.black87,
-                                  fontSize: 15,
-                                  letterSpacing: 0.7,
-                                ),
-                              ),
-                              Text(
-                                copon == null ? '0.0'+' '+widget.items[0].Currancy
-                                    : copon.toString()+' '+widget.items[0].Currancy,
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  color: Colors.black87,
-                                  fontSize: 15,
-                                  letterSpacing: 0.7,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Text(
-                                getTransrlate(context, 'total')+' : ',
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  color: Colors.black87,
-                                  fontSize: 15,
-                                  letterSpacing: 0.7,
-                                ),
-                              ),
-                              Text(
-                                widget.total.toString()+' '+widget.items[0].Currancy,
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  color: Colors.black87,
-                                  fontSize: 15,
-                                  letterSpacing: 0.7,
-                                ),
-                              ),
-                            ],
-                          ),
-
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left:34, right:34),
-                      child: GFButton(
-                        borderShape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                            6,
                           ),
                         ),
-                        child: Text(getTransrlate(context, 'ORDERCOMPLETE'),style: GoogleFonts.cairo(fontSize: 18),),
-                        color: themeColor.getColor(),
-                        onPressed: () {
-                          //Nav.route(context, CreditCartPage());
-                          if (phone != null) {
-                            if (checkboxValueA == null) {
-                              final snackbar = SnackBar(
-                                content: Text(getTransrlate(context, 'addressSelected')),
-                              );
-                              scaffoldKey.currentState.showSnackBar(snackbar);
-                            }
-                            else {
-                              create_New_order(phone);
-                              setState(() {
-                                _isLoading = true;
-                              });
-                            }
-                          }
-                          else {
+                      ],
+                    ),
+                  ),
+                  phone == null
+                      ? Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 8.0, top: 16, bottom: 8),
+                              child: Text(
+                                getTransrlate(context, 'phone'),
+                                style: GoogleFonts.cairo(
+                                    fontSize: 12, color: Color(0xFF5D6A78)),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(
+                                  bottom: 8, right: 8, left: 8),
+                              child: ListView(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                children: <Widget>[
+                                  Container(
+                                    padding: EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(8),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.grey.withOpacity(.2),
+                                            blurRadius:
+                                                6.0, // soften the shadow
+                                            spreadRadius:
+                                                0.0, //extend the shadow
+                                            offset: Offset(
+                                              0.0, // Move to right 10  horizontally
+                                              1.0, // Move to bottom 10 Vertically
+                                            ),
+                                          )
+                                        ]),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: TextFormField(
+                                            decoration: InputDecoration(
+                                                enabledBorder:
+                                                    UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: themeColor
+                                                          .getColor()),
+                                                ),
+                                                focusedBorder:
+                                                    UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: textColor),
+                                                ),
+                                                labelStyle: new TextStyle(
+                                                    color: const Color(
+                                                        0xFF424242)),
+                                                hintText:
+                                                    getTransrlate(context, 'hintphone'),
+                                                hintStyle:
+                                                    GoogleFonts.cairo(
+                                                        fontSize: 12,
+                                                        color: textColor)),
+                                            onChanged: (String value) {
+                                              phone = value;
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        )
+                      : Container(),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 8.0, top: 16, bottom: 8),
+                    child: Text(
+                      getTransrlate(context, 'OrderNote'),
+                      style: GoogleFonts.cairo(
+                          fontSize: 12, color: Color(0xFF5D6A78)),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 8, right: 8, left: 8),
+                    child: ListView(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(.2),
+                                  blurRadius: 6.0, // soften the shadow
+                                  spreadRadius: 0.0, //extend the shadow
+                                  offset: Offset(
+                                    0.0, // Move to right 10  horizontally
+                                    1.0, // Move to bottom 10 Vertically
+                                  ),
+                                )
+                              ]),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: themeColor.getColor()),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: textColor),
+                                  ),
+                                  labelStyle: new TextStyle(
+                                      color: const Color(0xFF424242)),
+                                  hintText: getTransrlate(context, 'OrderHint'),
+                                  hintStyle: GoogleFonts.cairo(
+                                      fontSize: 12, color: textColor)),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Card(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        Expanded(
+                          flex: 2,
+                          child: Padding(
+                            padding:  EdgeInsets.only(right: 16,left: 16,top: 8,bottom: 8),
+                            child: TextFormField(
+                              onChanged: (value) {
+                                code = value;
+                              },
+                              controller: _CoponController,
+                              enabled: !_isedit,
+                              decoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: themeColor.getColor()),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                    BorderSide(color: textColor),
+                                  ),
+                                  labelStyle: new TextStyle(
+                                      color: const Color(0xFF424242)),
+                                  hintText: getTransrlate(context, 'couponcode'),
+                                  hintStyle: GoogleFonts.cairo(
+                                      fontSize: 12, color: textColor)),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: FlatButton.icon(
+                              onPressed: () async {
+                                if(_isedit)
+                                  {
+                                    setState(() {
+                                      _isedit=false;
+                                      widget.total=totalbeforedesc;
+                                      copon=0;
+                                      countItem=0;
+                                    });
+                                  }
+                                else{
+                                  _isedit=true;
+                                   _coponButton= getTransrlate(context, 'edit');
+                                    _isLoading = true;
+                                  widget.items.forEach((f) {
+                                    countItem += f.quantity ;
+                                  });
+                                  copon = await OrderService.getCoupons(code,id,widget.total,countItem);
+                                  print('copoun = '+copon.toString());
+                                  if (copon == 0) {
+                                    final snackbar = SnackBar(
+                                      content: Text(getTransrlate(
+                                          context, 'codeInveild')),
+                                    );
+                                    scaffoldKey.currentState
+                                        .showSnackBar(snackbar);
+                                    setState(() {
+                                      _isLoading = false;
+
+                                    });
+                                    // _CoponController.clear();
+                                  }
+                                  else {
+                                    setState(() {
+                                      _isLoading = false;
+
+                                    });
+                                    final snackbar = SnackBar(
+                                      content: Text(
+                                          getTransrlate(context, 'codeUsage')),
+                                    );
+                                    final snackbarconfirmed = SnackBar(
+                                      content: Text(
+                                          getTransrlate(context, 'codeDone')),
+                                    );
+                                    coponState
+                                        ? setState(() {
+                                      copon = copon + 0;
+                                      widget.total =
+                                      (widget.total - copon < 0)
+                                          ? 0
+                                          : widget.total - copon;
+                                      coponState = false;
+                                      _isLoading = false;
+                                      scaffoldKey.currentState
+                                          .showSnackBar(
+                                          snackbarconfirmed);
+                                    })
+                                        : scaffoldKey.currentState
+                                        .showSnackBar(snackbar);
+                                  }
+                                }
+                              },
+                              icon: Icon(
+                                Icons.local_offer,
+                                size: 15,
+                              ),
+                              label: Text(
+                                  _isedit?getTransrlate(context, 'edit'):getTransrlate(context, 'couponApplay') ,
+                                style: TextStyle(fontSize: 15),
+                              )),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(.2),
+                            blurRadius: 6.0, // soften the shadow
+                            spreadRadius: 0.0, //extend the shadow
+                            offset: Offset(
+                              0.0, // Move to right 10  horizontally
+                              1.0, // Move to bottom 10 Vertically
+                            ),
+                          )
+                        ]),
+                    width: ScreenUtil.divideWidth(context),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              getTransrlate(context, 'totalOrder')+' : ',
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                color: Colors.black87,
+                                fontSize: 15,
+                                letterSpacing: 0.7,
+                              ),
+                            ),
+                            Text(
+                              totalbeforedesc.toString()+' '+widget.items[0].Currancy,
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                color: Colors.black87,
+                                fontSize: 15,
+                                letterSpacing: 0.7,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Text(
+                             getTransrlate(context, 'totaldiscount')+ ' : ',
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                color: Colors.black87,
+                                fontSize: 15,
+                                letterSpacing: 0.7,
+                              ),
+                            ),
+                            Text(
+                              copon == null ? '0.0'+' '+widget.items[0].Currancy
+                                  : copon.toString()+' '+widget.items[0].Currancy,
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                color: Colors.black87,
+                                fontSize: 15,
+                                letterSpacing: 0.7,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              getTransrlate(context, 'total')+' : ',
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                color: Colors.black87,
+                                fontSize: 15,
+                                letterSpacing: 0.7,
+                              ),
+                            ),
+                            Text(
+                              widget.total.toString()+' '+widget.items[0].Currancy,
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                color: Colors.black87,
+                                fontSize: 15,
+                                letterSpacing: 0.7,
+                              ),
+                            ),
+                          ],
+                        ),
+
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left:34, right:34),
+                    child: GFButton(
+                      borderShape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          6,
+                        ),
+                      ),
+                      child: Text(getTransrlate(context, 'ORDERCOMPLETE'),style: GoogleFonts.cairo(fontSize: 18),),
+                      color: themeColor.getColor(),
+                      onPressed: () {
+                        //Nav.route(context, CreditCartPage());
+                        if (phone != null) {
+                          if (checkboxValueA == null) {
                             final snackbar = SnackBar(
-                              content: Text(getTransrlate(context, 'SelectPhone')),
+                              content: Text(getTransrlate(context, 'addressSelected')),
                             );
                             scaffoldKey.currentState.showSnackBar(snackbar);
                           }
-                        },
-                        type: GFButtonType.solid,
-                        fullWidthButton: true,
-                      ),
-                    )
-                  ],
-                ),
+                          else {
+                            create_New_order(phone);
+                            setState(() {
+                              _isLoading = true;
+                            });
+                          }
+                        }
+                        else {
+                          final snackbar = SnackBar(
+                            content: Text(getTransrlate(context, 'SelectPhone')),
+                          );
+                          scaffoldKey.currentState.showSnackBar(snackbar);
+                        }
+                      },
+                      type: GFButtonType.solid,
+                      fullWidthButton: true,
+                    ),
+                  )
+                ],
               ),
             ),
-            _isLoading
-                ? Container(
-                    height: double.infinity,
-                    width: double.infinity,
-                    color: Colors.black45,
-                    child: Center(
-                        child: CircularProgressIndicator(
-                      valueColor:
-                          AlwaysStoppedAnimation<Color>(themeColor.getColor()),
-                    )))
-                : Container()
-          ],
-        ),
+          ),
+          _isLoading
+              ? Container(
+                  height: double.infinity,
+                  width: double.infinity,
+                  color: Colors.black45,
+                  child: Center(
+                      child: CircularProgressIndicator(
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(themeColor.getColor()),
+                  )))
+              : Container()
+        ],
       ),
     );
   }
