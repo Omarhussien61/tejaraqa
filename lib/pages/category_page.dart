@@ -127,8 +127,8 @@ class _CategoryPageState extends State<CategoryPage> {
                  children: <Widget>[
                    ClipRRect(
                      child: CachedNetworkImage(
-                       imageUrl: childr[index].images==null?
-                       '':childr[index].images[0].src,
+                       imageUrl: childr[index].images==null||childr[index].images.isEmpty?
+                       'http://arabimagefoundation.com/images/defaultImage.png':childr[index].images[0].src,
                        height: 75,
                        width: 84,
                        fit: BoxFit.cover,

@@ -6,12 +6,12 @@ import 'package:shoppingapp/modal/Config_Model.dart';
 
 class APICONFIQ{
   static String getconfiq='https://app.woo2.app/configuration/get_config_d1.php';
-  static String Base_url='https://d2.woo2.app/';
+  static String Base_url='https://tejaraqa.com';
   static String url=Base_url+'/wp-json/wc/v3';
-  static String consumer_key='ck_24b1dd0facc11dd602d29c37caea43f72d68394e';
-  static String consumer_secret='cs_c10599bd4dc55e7f10a1bad03d299a9ad60e0ade';
+  static String consumer_key='ck_d4065c31c25dea4fa17949fd4630f2090216622e';
+  static String consumer_secret='cs_262eca37a4a117539644a96012098bfd6e417596';
   static String Key='consumer_key=$consumer_key&consumer_secret=$consumer_secret';
-  static String   kGoogleApiKey = "AIzaSyBb0GpBvrtNExsQHDb55DcVVnmUgL85w4U";
+  static String kGoogleApiKey = "AIzaSyBb0GpBvrtNExsQHDb55DcVVnmUgL85w4U";
 
   //getCategories
   static String getAllCategories=url+'/products/categories?hide_empty=false&exclude=[15,15]&per_page=100&'+Key;

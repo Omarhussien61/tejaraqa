@@ -159,24 +159,7 @@ class _HomePageState extends State<HomePage> {
       case 'Slider':
         return    themeColor.config_model.slider != null
             ? themeColor.config_model.slider
-            ? Column(
-          children: [
-            CarouselSlider(
-              items: imageSliders,
-              options: CarouselOptions(
-                  autoPlay: true,
-                  height: 175,
-                  viewportFraction: 1.0,
-                  enlargeCenterPage: false,
-                  onPageChanged: (index, reason) {
-                    setState(() {
-                      _carouselCurrentPage = index;
-                    });
-                  }),
-            ),
-            SliderDot(current: _carouselCurrentPage)
-          ],
-        )
+            ? Container()
             : Container()
             : Container();
       case 'productSale':

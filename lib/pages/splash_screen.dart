@@ -43,14 +43,12 @@ class _SplashScreenState extends State<SplashScreen> {
           statusBarIconBrightness: Brightness.dark),
     );
     return Scaffold(
-      backgroundColor: Provider.of<ThemeNotifier>(context).getColor(),
       body:themecolor.config_model!=null? themecolor.config_model.active?Center(
         child: Container(
           height: 400,
           width: ScreenUtil.getWidth(context) /1.7,
           child: CachedNetworkImage(
-            imageUrl:  Provider.of<ThemeNotifier>(context).themeModel==null?
-            '':Provider.of<ThemeNotifier>(context).themeModel.imageSplash,
+            imageUrl:  'https://tejaraqa.com/wp-content/uploads/2020/08/1-e1598682256275.png',
           ),
         ),
       ):
