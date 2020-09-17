@@ -293,58 +293,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                           colorLineSelected: Colors.orange,
                         ),
                       ),
-                      InkWell(
-                        onTap: () {
-                          Nav.route(context, FaqPage());
-                        },
-                        child: ItemHiddenMenu(
-                          icon: Icon(
-                            Icons.question_answer,
-                            size: 25,
-                            color: Colors.white.withOpacity(0.7),
-                          ),
-                          name: getTransrlate(context, 'FAQ'),
-                          baseStyle: GoogleFonts.cairo(
-                              color: Colors.white.withOpacity(0.6),
-                              fontSize: 19.0,
-                              fontWeight: FontWeight.w200),
-                          colorLineSelected: Colors.orange,
-                        ),
-                      ),
-                      InkWell(
-                        child: ItemHiddenMenu(
-                          icon: Icon(
-                            Feather.list,
-                            size: 22,
-                            color: Colors.white.withOpacity(0.7),
-                          ),
-                          name: getTransrlate(context, 'About'),
-                          baseStyle: GoogleFonts.cairo(
-                              color: Colors.white.withOpacity(0.6),
-                              fontSize: 19.0),
-                          colorLineSelected: Colors.orange,
-                        ),
-                        onTap: () {
-                          Nav.route(context, AboutPage());
-                        },
-                      ),
-                      InkWell(
-                        child: ItemHiddenMenu(
-                          icon: Icon(
-                            Feather.clock,
-                            size: 25,
-                            color: Colors.white.withOpacity(0.7),
-                          ),
-                          name: getTransrlate(context, 'Support'),
-                          baseStyle: GoogleFonts.cairo(
-                              color: Colors.white.withOpacity(0.6),
-                              fontSize: 19.0),
-                          colorLineSelected: Colors.orange,
-                        ),
-                        onTap: () {
-                          Nav.route(context, SupportPage());
-                        },
-                      ),
+
                       InkWell(
                         onTap: () {
                           Nav.route(context, ContactPage());

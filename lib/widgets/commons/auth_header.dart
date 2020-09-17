@@ -19,18 +19,6 @@ class AuthHeader extends StatelessWidget {
     final themeColor = Provider.of<ThemeNotifier>(context);
 
     return Container(
-      decoration: BoxDecoration(
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: themeColor.getColor().withOpacity(0.5),
-              blurRadius: 15,
-              offset: Offset(0, 0),
-            ),
-          ],
-          color: themeColor.getColor(),
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(24),
-              bottomRight: Radius.circular(24))),
       padding: EdgeInsets.all(16),
       height: ScreenUtil.getHeight(context) * 0.3,
       child: Stack(
@@ -64,15 +52,14 @@ class AuthHeader extends StatelessWidget {
           ),
 
           Align(
-            alignment: Alignment.bottomLeft,
+            alignment: Alignment.center,
             child: Padding(
               padding: const EdgeInsets.only(bottom: 8, left: 8,
               top: 100),
               child: CachedNetworkImage(
                 height: 200,
                 width: 200,
-                imageUrl:  Provider.of<ThemeNotifier>(context).themeModel==null?
-                '':Provider.of<ThemeNotifier>(context).themeModel.imageSplash,
+                imageUrl:  'https://tejaraqa.com/wp-content/uploads/2020/08/1-e1598682256275.png',
               ),
             ),
           )

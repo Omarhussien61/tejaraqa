@@ -9,7 +9,6 @@ import 'package:shoppingapp/utils/theme_notifier.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/widgets/commons/auth_header.dart';
 import 'package:shoppingapp/widgets/login/login_form.dart';
-import 'package:shoppingapp/widgets/login/social_auth_login.dart';
 
 import '../config.dart';
 
@@ -48,7 +47,6 @@ class _LoginPageState extends State<LoginPage> {
                 height: 8,
               ),
               routeRegisterWidget(themeColor, context),
-              SocialLoginButtons(themeColor: themeColor,),
 
             ],
           ),

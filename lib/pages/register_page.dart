@@ -8,7 +8,6 @@ import 'package:shoppingapp/utils/theme_notifier.dart';
 import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/widgets/commons/auth_header.dart';
 import 'package:shoppingapp/widgets/register/register_form.dart';
-import 'package:shoppingapp/widgets/register/social_auth_register.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -43,7 +42,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   RegisterForm(),
                   routeLoginWidget(themeColor, context),
-                  SocialRegisterButtons(themeColor: themeColor)
                 ],
               ),
             ),

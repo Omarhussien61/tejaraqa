@@ -11,7 +11,6 @@ import 'package:shoppingapp/utils/util/LanguageTranslated.dart';
 import 'package:shoppingapp/widgets/Show_dialg.dart';
 import 'package:shoppingapp/widgets/commons/shadow_button.dart';
 import 'package:shoppingapp/widgets/login/login_form_model.dart';
-import 'package:shoppingapp/widgets/login/social_auth_login.dart';
 import 'package:validators/validators.dart' as validator;
 
 import '../commons/custom_textfield.dart';
