@@ -42,7 +42,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   int _carouselCurrentPage = 0;
   SQL_Helper helper = new SQL_Helper();
   SQL_Rercent sql_rercent = new SQL_Rercent();
@@ -69,56 +68,57 @@ class _HomePageState extends State<HomePage> {
           Widget child,
         ) {
           connected = connectivity != ConnectivityResult.none;
-          return themeColor.config_model!=null?
-          themeColor.config_model.offlineAppMode
-              ? getListview(context)
-              : connected
+          return themeColor.config_model != null
+              ? themeColor.config_model.offlineAppMode
                   ? getListview(context)
-                  : Center(
-                      child: Container(
-                      child: Column(
-                        children: [
-                          Image.asset(
-                            'assets/images/not_found_smile.PNG',
-                            height: ScreenUtil.getHeight(context) / 2,
+                  : connected
+                      ? getListview(context)
+                      : Center(
+                          child: Container(
+                          child: Column(
+                            children: [
+                              Image.asset(
+                                'assets/images/not_found_smile.PNG',
+                                height: ScreenUtil.getHeight(context) / 2,
+                              ),
+                              Text(getTransrlate(context, 'NotConnection')),
+                              SizedBox(
+                                height: 50,
+                              ),
+                              GFButton(
+                                onPressed: () {
+                                  //Nav.route(context, SearchPage());
+                                },
+                                text: getTransrlate(context, 'retry'),
+                                color: themeColor.getColor(),
+                                textStyle: GoogleFonts.cairo(fontSize: 18),
+                              )
+                            ],
                           ),
-                          Text(getTransrlate(context, 'NotConnection')),
-                          SizedBox(
-                            height: 50,
-                          ),
-                          GFButton(
-                            onPressed: () {
-                              //Nav.route(context, SearchPage());
-                            },
-                            text: getTransrlate(context, 'retry'),
-                            color: themeColor.getColor(),
-                            textStyle: GoogleFonts.cairo(fontSize: 18),
-                          )
-                        ],
+                        ))
+              : Center(
+                  child: Container(
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        'assets/images/not_found_smile.PNG',
+                        height: ScreenUtil.getHeight(context) / 2,
                       ),
-                    )):Center(
-              child: Container(
-                child: Column(
-                  children: [
-                    Image.asset(
-                      'assets/images/not_found_smile.PNG',
-                      height: ScreenUtil.getHeight(context) / 2,
-                    ),
-                    Text(getTransrlate(context, 'NotConnection')),
-                    SizedBox(
-                      height: 50,
-                    ),
-                    GFButton(
-                      onPressed: () {
-                        //Nav.route(context, SearchPage());
-                      },
-                      text: getTransrlate(context, 'retry'),
-                      color: themeColor.getColor(),
-                      textStyle: GoogleFonts.cairo(fontSize: 18),
-                    )
-                  ],
-                ),
-              ));
+                      Text(getTransrlate(context, 'NotConnection')),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      GFButton(
+                        onPressed: () {
+                          //Nav.route(context, SearchPage());
+                        },
+                        text: getTransrlate(context, 'retry'),
+                        color: themeColor.getColor(),
+                        textStyle: GoogleFonts.cairo(fontSize: 18),
+                      )
+                    ],
+                  ),
+                ));
         },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -141,119 +141,13 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  Widget getWidget(String name) {
-    final themeColor = Provider.of<ThemeNotifier>(context);
-    switch (name) {
-      case 'SearchBox':
-        return  themeColor.config_model.searchtextbox != null
-            ? themeColor.config_model.searchtextbox ? SearchBox() : Container()
-            : Container();
-        break;
-      case 'productCategories':
-        return  themeColor.config_model.productCategories != null
-            ? themeColor.config_model.productCategories
-            ? CategoryListView(widget.maincat)
-            : Container()
-            : Container();
-        break;
-      case 'Slider':
-        return    themeColor.config_model.slider != null
-            ? themeColor.config_model.slider
-            ? Container()
-            : Container()
-            : Container();
-      case 'productSale':
-        return  themeColor.config_model.productSale != null
-            ? themeColor.config_model.productSale
-            ? DiscountList(
-          product: widget.productDiscount,
-          themeColor: themeColor,
-          productListTitleBar: ProductListTitleBar(
-            themeColor: themeColor,
-            title: getTransrlate(context, 'Dailyopportunity'),
-            isCountShow: false,
-          ),
-        )
-            : Container()
-            : Container();
-        break;
-
-      case 'newProduct':
-        return  themeColor.config_model.newProduct != null
-            ? themeColor.config_model.newProduct
-            ? ProductList(
-          themeColor: themeColor,
-          product: widget.productNew,
-          productListTitleBar: ProductListTitleBar(
-            themeColor: themeColor,
-            title: getTransrlate(context, 'ProductsLike'),
-            isCountShow: false,
-          ),
-        )
-            : Container()
-            : Container();
-        break;
-        case 'topProduct':
-      return themeColor.config_model.topProduct != null
-          ? themeColor.config_model.topProduct
-          ? ProductList(
-        themeColor: themeColor,
-        product: widget.moreSale,
-        productListTitleBar: ProductListTitleBar(
-          themeColor: themeColor,
-          title: getTransrlate(context, 'MostRated'),
-          isCountShow: false,
-        ),
-      )
-          : Container()
-          : Container();
-      break; case 'lowPriced':
-      return    themeColor.config_model.lowPriced != null
-          ? themeColor.config_model.lowPriced
-          ? DiscountList(
-        themeColor: themeColor,
-        product: widget.product_low_priced,
-        productListTitleBar: ProductListTitleBar(
-          themeColor: themeColor,
-          title: getTransrlate(context, 'Low-PricedProducts'),
-          isCountShow: false,
-        ),
-      )
-          : Container()
-          : Container();
-      break;
-      case 'mostRecentlyLooked':
-      return themeColor.config_model.mostRecentlyLooked != null
-          ? themeColor.config_model.mostRecentlyLooked
-          ? widget.productview == null
-          ? Container()
-          : ProductList(
-        themeColor: themeColor,
-        product: widget.productview,
-        productListTitleBar: ProductListTitleBar(
-          themeColor: themeColor,
-          title: getTransrlate(context, 'Mostrecently'),
-          isCountShow: false,
-        ),
-      )
-          : Container()
-          : Container();
-      break;
-      default:
-        return Container();
-    }
-  }
 
   Widget getListview(BuildContext context) {
     final themeColor = Provider.of<ThemeNotifier>(context);
 
-      return  ListView.builder(
-            shrinkWrap: true,
-            itemCount: themeColor.config_model.sortHome.length,
-            itemBuilder: (BuildContext context, int index) {
-              return getWidget(themeColor.config_model.sortHome[index]);
-            });
-
+    return ListView(shrinkWrap: true, children: [
+      SearchBox(),
+      CategoryListView(widget.maincat),
+    ]);
   }
-
 }

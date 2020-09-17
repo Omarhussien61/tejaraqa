@@ -203,11 +203,14 @@ class _SearchPageState extends State<SearchPage> {
                   ),
                 ),
                 Container(
-                    child: productModel==null?Center(child:
-                    CircularProgressIndicator(
-                        valueColor:
-                        AlwaysStoppedAnimation<Color>(Provider.of<ThemeNotifier>(context).getColor()
-                        ))):list(themeColor)),
+                    child: productModel==null?Padding(
+                      padding: const EdgeInsets.all(30.0),
+                      child: Center(child:
+                      CircularProgressIndicator(
+                          valueColor:
+                          AlwaysStoppedAnimation<Color>(Provider.of<ThemeNotifier>(context).getColor()
+                          ))),
+                    ):list(themeColor)),
               ],
             ),
           ),
@@ -342,7 +345,7 @@ class _SearchPageState extends State<SearchPage> {
       primary: false,
       shrinkWrap: true,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        childAspectRatio: 0.77,
+        childAspectRatio: 0.70,
         crossAxisCount: 2,
       ),
       itemCount: filteredProduct == null ? 0 : filteredProduct.length,

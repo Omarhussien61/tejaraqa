@@ -93,9 +93,9 @@ class _SearchCardState extends State<SearchCard> {
                               ),
                               child: CachedNetworkImage(
                                 fit: BoxFit.cover,
-                                imageUrl: (widget.product.images != [])
-                                    ? widget.product.images[0].src
-                                    : 'http://arabimagefoundation.com/images/defaultImage.png',
+                                imageUrl: (widget.product.images == null||widget.product.images.isEmpty)
+                                    ? 'http://arabimagefoundation.com/images/defaultImage.png'
+                                    : widget.product.images[0].src,
                                 errorWidget: (context, url, error) =>
                                     Icon(Icons.error),
                               ),
@@ -166,11 +166,12 @@ class _SearchCardState extends State<SearchCard> {
                                         fontSize: 14,
                                         fontWeight: FontWeight.w300),
                                   ),
-                                  Text(
+                                  AutoSizeText(
                                     widget.product.price+' '+widget.product.Currancy,
+                                   minFontSize: 11,
+                                    maxFontSize: 13,
                                     style: GoogleFonts.cairo(
                                         color: widget.themeColor.getColor(),
-                                        fontSize: 18,
                                         fontWeight: FontWeight.w400),
                                   )
                                 ],

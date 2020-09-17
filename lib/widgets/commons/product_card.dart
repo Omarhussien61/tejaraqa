@@ -82,7 +82,7 @@ class _ProductCardState extends State<ProductCard> {
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   Container(
-                    height: 150,
+                    height: 140,
                     child: Stack(
                       children: <Widget>[
                         Container(

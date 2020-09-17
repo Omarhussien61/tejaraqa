@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -122,29 +123,26 @@ class _CategoryPageState extends State<CategoryPage> {
                Nav.route(context, ProductDetailPage(product: childr[index],));
              },
              child: Container(
-               width: 85,
+               width: 90,
                child: Column(
                  children: <Widget>[
                    ClipRRect(
                      child: CachedNetworkImage(
                        imageUrl: childr[index].images==null||childr[index].images.isEmpty?
                        'http://arabimagefoundation.com/images/defaultImage.png':childr[index].images[0].src,
-                       height: 75,
+                       height: 73,
                        width: 84,
                        fit: BoxFit.cover,
                      ),
                      borderRadius: BorderRadius.circular(8),
                    ),
-                   Container(
-                     width: 84,
-                     child: Text(
-                       childr[index].name,
-                       maxLines: 1,
-                       style: GoogleFonts.cairo(
-                         fontSize: 12,
-                         color: Color(0xFF5D6A78),
-                         fontWeight: FontWeight.w400,
-                       ),
+                   AutoSizeText(
+                     childr[index].name,
+                     maxLines: 2,
+                     style: GoogleFonts.cairo(
+                       fontSize: 10,
+                       color: Color(0xFF5D6A78),
+                       fontWeight: FontWeight.w400,
                      ),
                    )
                  ],

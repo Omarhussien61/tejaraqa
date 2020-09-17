@@ -37,13 +37,17 @@ class CategoriesListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 14, left: 4),
-      height: 95,
       child: Center(
         child:categories==null?Center(child:
         CircularProgressIndicator(
             valueColor:  AlwaysStoppedAnimation<Color>(Provider.of<ThemeNotifier>(context).getColor()))):
-        ListView.builder(
-          scrollDirection: Axis.horizontal,
+        GridView.builder(
+          primary: false,
+          shrinkWrap: true,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            childAspectRatio: 0.99,
+            crossAxisCount: 2,
+          ),
           itemCount:categories==null?0:categories.length,
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
@@ -62,10 +66,10 @@ class CategoriesListView extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
                     Container(
-                      width: 68,
-                      height: 65,
+                      width: 110,
+                      height: 110,
                       margin:
-                          EdgeInsets.only(top: 4, bottom: 4, left: 12, right: 8),
+                          EdgeInsets.only(top: 4, bottom: 4, left: 8, right: 8),
                       decoration: BoxDecoration(
                         boxShadow: [
                           BoxShadow(
@@ -78,8 +82,7 @@ class CategoriesListView extends StatelessWidget {
                         color: Colors.white,
                       ),
                       child: Container(
-                        width: 69,
-                        height: 69,
+
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                         ),
