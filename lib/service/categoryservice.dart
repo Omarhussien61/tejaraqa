@@ -14,17 +14,20 @@ class CategoryService {
   Future<List<Category>> getAllCategory() async {
     var completer = new Completer<List<Category>>();
     var dio = Dio();
-    dio.interceptors.add(DioCacheManager(CacheConfig(baseUrl:  APICONFIQ.getAllCategories)).interceptor);
+    dio.interceptors.add(
+        DioCacheManager(CacheConfig(baseUrl: APICONFIQ.getAllCategories))
+            .interceptor);
     try {
-      var response = await dio.get(APICONFIQ.getAllCategories,
+      var response = await dio.get(
+        APICONFIQ.getAllCategories,
         options: buildCacheOptions(Duration(days: 7), forceRefresh: true),
       );
       if (response.statusCode == 200) {
         var list = response.data as List;
-        completer.complete(category =
-            list.map<Category>((i) => Category.fromJson(i))
-                .where((data) => data.id!=15)
-                .toList());
+        completer.complete(category = list
+            .map<Category>((i) => Category.fromJson(i))
+            .where((data) => data.count != 0)
+            .toList());
       }
     } catch (e) {
       print(e);
@@ -32,16 +35,17 @@ class CategoryService {
     return completer.future;
   }
 
-
-
   Future<List<Category>> getMainCategory() async {
     var completer = new Completer<List<Category>>();
     var dio = Dio();
-    dio.interceptors.add(DioCacheManager(CacheConfig(baseUrl:  APICONFIQ.getMainCategories)).interceptor);
+    dio.interceptors.add(
+        DioCacheManager(CacheConfig(baseUrl: APICONFIQ.getMainCategories))
+            .interceptor);
     try {
-     var response = await dio.get(APICONFIQ.getMainCategories,
-       options: buildCacheOptions(Duration(days: 7), forceRefresh: true),
-     );
+      var response = await dio.get(
+        APICONFIQ.getMainCategories,
+        options: buildCacheOptions(Duration(days: 7), forceRefresh: true),
+      );
       if (response.statusCode == 200) {
         var list = response.data as List;
         completer.complete(category =
@@ -52,18 +56,23 @@ class CategoryService {
     }
     return completer.future;
   }
+
   Future<List<Category>> getSubCategory() async {
     var completer = new Completer<List<Category>>();
     var dio = Dio();
-    dio.interceptors.add(DioCacheManager(CacheConfig(baseUrl:  APICONFIQ.getSubCategories)).interceptor);
+    dio.interceptors.add(
+        DioCacheManager(CacheConfig(baseUrl: APICONFIQ.getSubCategories))
+            .interceptor);
     try {
-      var response = await dio.get(APICONFIQ.getSubCategories,
+      var response = await dio.get(
+        APICONFIQ.getSubCategories,
         options: buildCacheOptions(Duration(days: 7), forceRefresh: true),
       );
       if (response.statusCode == 200) {
         var list = response.data as List;
-        completer.complete(category = list.map<Category>((i) => Category.fromJson(i))
-            .where((data) => data.parent!=0)
+        completer.complete(category = list
+            .map<Category>((i) => Category.fromJson(i))
+            .where((data) => data.parent != 0 && data.count != 0)
             .toList());
       }
     } catch (e) {
@@ -76,8 +85,11 @@ class CategoryService {
     var completer = new Completer<List<Category>>();
     var dio = Dio();
 
-    String url = APICONFIQ.url+'/products/categories?per_page=100&parent=$id&'+APICONFIQ.Key;
-    dio.interceptors.add(DioCacheManager(CacheConfig(baseUrl: url)).interceptor);
+    String url = APICONFIQ.url +
+        '/products/categories?per_page=100&parent=$id&' +
+        APICONFIQ.Key;
+    dio.interceptors
+        .add(DioCacheManager(CacheConfig(baseUrl: url)).interceptor);
     try {
       var response = await dio.get(
         url,
@@ -94,16 +106,20 @@ class CategoryService {
     return completer.future;
   }
 
-  Future<List<ProductModel>> getSubCategoryDetails(int id, int currentPage,String url) async {
+  Future<List<ProductModel>> getSubCategoryDetails(
+      int id, int currentPage, String url) async {
     var completer = new Completer<List<ProductModel>>();
     var dio = Dio();
 
-    String baseurl=APICONFIQ.getproducts+'category=$id'+url+'&'+APICONFIQ.Key;
+    String baseurl =
+        APICONFIQ.getproducts + 'category=$id' + url + '&' + APICONFIQ.Key;
 
-    dio.interceptors.add(DioCacheManager(CacheConfig(baseUrl: baseurl)).interceptor);    var response;
+    dio.interceptors
+        .add(DioCacheManager(CacheConfig(baseUrl: baseurl)).interceptor);
+    var response;
     try {
       var response = await dio.get(
-       baseurl,
+        baseurl,
         options: buildCacheOptions(Duration(days: 7), forceRefresh: true),
       );
       print(response.data);
